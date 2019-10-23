@@ -14,7 +14,7 @@ An interactive restaurant management and reservation system. The purpose of this
 
 ### Built With
 
-* [Laravel 6.0.2](https://laravel.com/)
+* [Laravel](https://laravel.com/) - PHP Framework
 
 ### Authors
 
