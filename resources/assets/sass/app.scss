@@ -1,8 +1,17 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
 //FontAwesome 5.11.2
 @import "~@fortawesome/fontawesome-free/css/all";
 
 //MDBootstrap
 @import './../../../node_modules/mdbootstrap/scss/mdb.scss';
 
-//Custom SCSS
-@import './custom';
+// Custom CSS
+@import 'custom'
