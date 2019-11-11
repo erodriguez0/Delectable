@@ -10,12 +10,33 @@
     <title>{{$title}}</title>
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
 </head>
-<body class="body-bg">
-    @include('includes.navbar')
-    <div class="container-fluid">
-        @yield('content')
-    </div>
+<body>
+@yield('body-container')
 
+    {{-- Fixed top navbar --}}
+    @yield('navbar')
+
+    {{-- Main content --}}
+    <main>
+        <div class="container-fluid">
+
+            {{-- Sidebar for admins and restaurants --}}
+            @hasSection ('sidenav')
+                @yield('sidenav')
+            @endif
+
+            {{-- Content based on user --}}
+            @yield('content')
+
+        </div>
+    </main>
+
+    {{-- Footer for customers --}}
+    @hasSection ('footer')
+        @yield('footer')
+    @endif
+    
+</div>
     <script src="{{asset('js/app.js')}}"></script>
 </body>
 </html>

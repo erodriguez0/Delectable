@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class PagesController extends Controller
+class AdminController extends Controller
 {
     public function index() {
         $data = array(
             'title' => "Delectable | Slogan Here"
         );
-        return view('pages.index')->with($data);
+        return view('admin.index')->with($data);
     }
 }
