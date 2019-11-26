@@ -1,2 +1,2 @@
 # Delectable
-## An interactive restaurant reservation web app
+**An interactive restaurant reservation web app**
