@@ -11,5 +11,16 @@
 |
 */
 
+Route::get('/', function () {
+    return view('welcome');
+});
 
-Route::get('/admin', 'AdminController@index');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+// namespace()->prefix()->name() applies prefixes to routes inside (e.g. admin/users)
+// middleware('can:GateName) can be ran on individual routes or namespace to apply to all
+Route::namespace('Admin')->prefix('admin')->name('admin.')->middleware('can:manage-all-users')->group(function() {
+    Route::resource('/users', 'UsersController', ['except' => ['show', 'create', 'store']]);
+});
