@@ -24,3 +24,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::namespace('Admin')->prefix('admin')->name('admin.')->middleware('can:manage-all-users')->group(function() {
     Route::resource('/users', 'UsersController', ['except' => ['show', 'create', 'store']]);
 });
+
+Route::namespace('Restaurant')->prefix('restaurant')->name('restaurant.')->middleware('can:manage-employees')->group(function() {
+    Route::resource('/employees', 'EmployeesController');
+});

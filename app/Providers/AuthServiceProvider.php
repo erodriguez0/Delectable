@@ -25,22 +25,14 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        // Check if user is an admin before allowing
-        // to edit users
-        Gate::define('edit-users', function($user) {
-            // return $user->hasRole('admin');
-            return $user->hasAnyRoles(['admin', 'employee']);
-        });
-
-        // Check if user is an admin before allowing
-        // to delete users
-        Gate::define('delete-users', function($user) {
+        // Check can view, edit, or delete any user
+        Gate::define('manage-all-users', function($user) {
             return $user->hasRole('admin');
         });
 
-        
-        Gate::define('manage-all-users', function($user) {
-            return $user->hasAnyRoles(['admin', 'employee']);
+        // Managers can edit or delete employees
+        Gate::define('manage-employees', function($user) {
+            return $user->hasRole('manager');
         });
     }
 }

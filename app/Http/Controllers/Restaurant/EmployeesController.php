@@ -1,20 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Restaurant;
 
 use App\Http\Controllers\Controller;
 use App\User;
-use App\Role;
-use Gate;
 use Illuminate\Http\Request;
 
-class UsersController extends Controller
+class EmployeesController extends Controller
 {
     // Authenticate before granting access
     public function __construct()
     {
         $this->middleware('auth');
     }
+    
     /**
      * Display a listing of the resource.
      *
@@ -24,7 +23,39 @@ class UsersController extends Controller
     {
         $users = User::all()->sortBy('id');
 
-        return view('admin.users.index')->with('users', $users);
+        return view('restaurant.employees.index')->with('users', $users);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function show(User $user)
+    {
+        //
     }
 
     /**
@@ -35,17 +66,7 @@ class UsersController extends Controller
      */
     public function edit(User $user)
     {
-        // Redirect if not an admin
-        if(Gate::denies('manage-all-users')) {
-            return redirect(route('admin.users.index'));
-        }
-
-        $roles = Role::all();
-        
-        return view('admin.users.edit')->with([
-            'user' => $user,
-            'roles' => $roles
-        ]);
+        //
     }
 
     /**
@@ -57,12 +78,7 @@ class UsersController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        $user->roles()->sync($request->roles);
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->save();
-        // return dd($request);
-        return redirect()->route('admin.users.index');
+        //
     }
 
     /**
@@ -73,15 +89,6 @@ class UsersController extends Controller
      */
     public function destroy(User $user)
     {
-        // Redirect if not an admin
-        if(Gate::denies('manage-all-users')) {
-            return redirect(route('admin.users.index'));
-        }
-
-        // Remove roles from user
-        $user->roles()->detach();
-        $user->delete();
-
-        return redirect()->route('admin.users.index');
+        //
     }
 }

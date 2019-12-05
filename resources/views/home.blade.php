@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+{{-- <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
@@ -19,5 +19,15 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
+@if(auth()->user()->hasRole('admin'))
+    @include('admin.dashboard.index')
+@elseif(auth()->user()->hasRole('manager'))
+    @include('restaurant.dashboard.index')
+@elseif(auth()->user()->hasRole('employee'))
+    @include('restaurant.dashboard.index')
+@elseif(auth()->user()->hasRole('customer'))
+    @include('customer.profile.index')
+@endif
+
 @endsection

@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Delectable') }}</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -55,9 +55,17 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right">
+                                    <a class="dropdown-item" href="{{ route('home') }}">
+                                        Home
+                                    </a>
                                     @can('manage-all-users')
                                     <a class="dropdown-item" href="{{ route('admin.users.index') }}">
                                         User Management
+                                    </a>
+                                    @endcan
+                                    @can('manage-employees')
+                                    <a class="dropdown-item" href="{{ route('restaurant.employees.index') }}">
+                                        Employees
                                     </a>
                                     @endcan
                                     <a class="dropdown-item" href="{{ route('logout') }}"
