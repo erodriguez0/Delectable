@@ -11100,3 +11100,25 @@ a.text-dark:focus {
   }
 }
 
+body,
+html {
+  overflow-y: hidden;
+}
+
+.main-content {
+  height: 1500px;
+  overflow: scroll;
+}
+
+.dashboard {
+  height: 100vh;
+}
+
+.fixed-side {
+  position: fixed;
+}
+
+.empty-page {
+  height: 1500px;
+}
+

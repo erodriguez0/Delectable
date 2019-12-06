@@ -20,14 +20,14 @@
         </div>
     </div>
 </div> --}}
-@if(auth()->user()->hasRole('admin'))
-    @include('admin.dashboard.index')
-@elseif(auth()->user()->hasRole('manager'))
-    @include('restaurant.dashboard.index')
-@elseif(auth()->user()->hasRole('employee'))
-    @include('restaurant.dashboard.index')
-@elseif(auth()->user()->hasRole('customer'))
-    @include('customer.profile.index')
-@endif
+    @if(auth()->user()->hasRole('admin'))
+        @include('admin.dashboard.index')
+    @elseif(auth()->user()->hasRole('manager'))
+        @include('restaurant.dashboard.index')
+    @elseif(auth()->user()->hasRole('employee'))
+        @include('restaurant.dashboard.index')
+    @elseif(auth()->user()->hasRole('customer'))
+        @include('customer.profile.index')
+    @endif
 
 @endsection
