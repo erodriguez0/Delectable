@@ -107,23 +107,23 @@ CREATE TABLE IF NOT EXISTS `delectable`.`employee` (
   `emp_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `emp_first_name` VARCHAR(64) NOT NULL,
   `emp_last_name` VARCHAR(64) NOT NULL,
-  `emp_username` VARCHAR(64) NOT NULL,
-  `emp_password` VARCHAR(255) NOT NULL,
+  `emp_username` VARCHAR(64) NULL,
+  `emp_password` VARCHAR(255) NULL,
   `emp_email` VARCHAR(255) NOT NULL,
   `emp_access` INT UNSIGNED NOT NULL,
   `emp_status` INT UNSIGNED NOT NULL,
   `emp_last_login` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  `emp_gender` VARCHAR(32) NOT NULL,
-  `emp_birth_date` DATE NOT NULL,
-  `emp_address_1` VARCHAR(64) NOT NULL,
+  `emp_gender` VARCHAR(32) NULL,
+  `emp_birth_date` DATE NULL,
+  `emp_address_1` VARCHAR(64) NULL,
   `emp_address_2` VARCHAR(64) NULL,
-  `emp_city` VARCHAR(64) NOT NULL,
-  `emp_state` VARCHAR(64) NOT NULL,
-  `emp_postal_code` VARCHAR(64) NOT NULL,
-  `emp_phone` VARCHAR(64) NOT NULL,
-  `emp_pay_type` BIT(1) NOT NULL,
-  `emp_pay_rate` DECIMAL(15,2) NOT NULL,
-  `emp_job` VARCHAR(64) NOT NULL,
+  `emp_city` VARCHAR(64) NULL,
+  `emp_state` VARCHAR(64) NULL,
+  `emp_postal_code` VARCHAR(64) NULL,
+  `emp_phone` VARCHAR(64) NULL,
+  `emp_pay_type` BIT(1) NULL,
+  `emp_pay_rate` DECIMAL(15,2) NULL,
+  `emp_job` VARCHAR(64) NULL,
   `emp_manager` BIT(1) NOT NULL,
   `emp_hire_date` DATE NULL DEFAULT NULL,
   `emp_dismissed` TIMESTAMP NULL,
@@ -150,7 +150,7 @@ DROP TABLE IF EXISTS `delectable`.`salary` ;
 
 CREATE TABLE IF NOT EXISTS `delectable`.`salary` (
   `salary_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `salary_start_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `salary_start_date` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
   `salary_end_date` TIMESTAMP NULL,
   `salary_pay_rate` DECIMAL(10,2) UNSIGNED NULL,
   `fk_emp_id` INT UNSIGNED NOT NULL,
@@ -409,8 +409,7 @@ CREATE TABLE IF NOT EXISTS `delectable`.`layout` (
     REFERENCES `delectable`.`location` (`loc_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB
-COMMENT = '       ';
+ENGINE = InnoDB;
 
 CREATE INDEX `fk_loc_id_idx` ON `delectable`.`layout` (`fk_loc_id` ASC) VISIBLE;
 

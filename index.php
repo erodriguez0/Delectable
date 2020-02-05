@@ -25,8 +25,89 @@ if(!$_SESSION['active']):
 
 				<!-- Login/Sign In -->
 				<div class="welcome-btn-group pt-3">
-					<button type="button" class="btn btn-primary btn-lg">Create Account</button>
-					<button type="button" class="btn btn-secondary btn-lg">Login</button>
+					<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#create-account-modal">Create Account</button>
+
+					<!-- Create Account Modal -->
+					<div class="modal fade" id="create-account-modal" tabindex="-1" role="dialog">
+						<div class="modal-dialog modal-dialog-centered" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title">Create New Account</h5>
+									<button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+								</div>
+								<div class="modal-body">
+									<form>
+										<div class="container-fluid">
+											<div class="row pt-4">
+												<div class="col-6">
+													<input type="text" class="form-control" name="first-name" placeholder="First Name">
+												</div>
+												<div class="col-6">
+													<input type="text" class="form-control" name="last-name" placeholder="Last Name">
+												</div>
+											</div>
+											<div class="row pt-4">
+												<div class="col-12">
+													<input type="text" class="form-control" name="username" placeholder="Userame">
+												</div>
+											</div>
+											<div class="row pt-4">
+												<div class="col-12">
+													<input type="email" class="form-control" name="email" placeholder="Email">
+												</div>
+											</div>
+											<div class="row pt-4">
+												<div class="col-12">
+													<input type="password" class="form-control" name="create-password" placeholder="Create Password">
+												</div>
+											</div>
+											<div class="row pt-4">
+												<div class="col-12">
+													<input type="password" class="form-control" name="confirm-password" placeholder="Confirm Password">
+												</div>
+											</div>
+										</div>
+									</form>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-primary">Create Account</button>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<button type="button" class="btn btn-secondary btn-lg" data-toggle="modal" data-target="#login-modal">Login</button>
+
+					<!-- Login Modal -->
+					<div class="modal fade" id="login-modal" tabindex="-1" role="dialog">
+						<div class="modal-dialog modal-dialog-centered" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title">Access Your Account</h5>
+									<button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+								</div>
+								<div class="modal-body">
+									<form>
+										<div class="container-fluid">
+											<div class="row pt-4">
+												<div class="col-12">
+													<input type="text" class="form-control" name="username" placeholder="Username">
+												</div>
+											</div>
+											<div class="row pt-4">
+												<div class="col-12">
+													<input type="password" class="form-control" name="password" placeholder="Password">
+												</div>
+											</div>
+										</div>
+									</form>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-primary">Login</button>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 
 				<div class="welcome-restaurant pt-3">
