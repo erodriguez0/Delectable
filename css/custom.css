@@ -17,6 +17,13 @@ M O D I F I E D  B O O T S T R A P  C L A S S E S
 .btn-secondary { background-color: rgba(0, 0, 0, 0); }
 .btn-secondary:hover { background-color: rgba(0, 0, 0, 0); text-decoration: underline; }
 
+/*
+####################################################
+C L A S S E S
+####################################################
+*/
+
+.primary-text-color { color: #71100f; }
 
 /*
 ####################################################
