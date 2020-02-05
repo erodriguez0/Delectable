@@ -1,0 +1,93 @@
+/*
+####################################################
+M O D I F I E D  B O O T S T R A P  C L A S S E S
+####################################################
+*/
+
+.btn {
+	border-radius: 0;
+	border: none;
+	text-transform: uppercase;
+	font-size: 1em;
+	padding: .85em 2em;
+}
+
+.btn-primary { background-color: #71100f; }
+.btn-primary:hover { background-color: #5a0d0c; }
+.btn-secondary { background-color: rgba(0, 0, 0, 0); }
+.btn-secondary:hover { background-color: rgba(0, 0, 0, 0); text-decoration: underline; }
+
+
+/*
+####################################################
+M E D I A  Q U E R I E S
+####################################################
+*/
+ 
+/*
+::::::::::::::::::::::::::::::::::::::::::::::::::::
+Bootstrap 4 breakpoints
+*/
+ 
+/* 
+Extra small devices (portrait phones, less than 576px) 
+No media query since this is the default in Bootstrap because it is "mobile first"
+*/
+
+.fit-viewport {
+	height: 100vh;
+	width: 100vw;
+}
+
+.welcome-bg {
+	background: url(../img/layout/welcome.jpg) center center no-repeat fixed;
+	background-size: cover;
+	background-color: #464646;
+}
+
+.overlay {
+	height: 100%;
+	width: 100%;
+	background-color: rgba(0, 0, 0, 0.7);
+}
+
+.welcome-title {
+	color: #fff;
+	text-transform: uppercase;
+	text-decoration: underline;
+	font-size: 5em;
+	letter-spacing: 0.1em;
+	font-family: 'Oswald', sans-serif;
+}
+ 
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {  
+
+}
+ 
+/* Medium devices (tablets, 768px and up) The navbar toggle appears at this breakpoint */
+@media (min-width: 768px) {  
+ 
+}
+ 
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) { 
+ 
+}
+ 
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {  
+    
+}
+ 
+ 
+ 
+/*
+::::::::::::::::::::::::::::::::::::::::::::::::::::
+Custom media queries
+*/
+ 
+/* Set width to make card deck cards 100% width */
+@media (max-width: 950px) { 
+ 
+}
