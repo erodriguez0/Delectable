@@ -25,6 +25,8 @@ C L A S S E S
 
 .primary-text-color { color: #71100f; }
 
+.welcome-link:hover { text-decoration: underline; }
+
 /*
 ####################################################
 M E D I A  Q U E R I E S
@@ -79,7 +81,9 @@ No media query since this is the default in Bootstrap because it is "mobile firs
  
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) { 
- 
+	.paragraph-container {
+		max-width: 50%;
+	}
 }
  
 /* Extra large devices (large desktops, 1200px and up) */

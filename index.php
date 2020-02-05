@@ -14,7 +14,7 @@ if(!$_SESSION['active']):
 	<div class="col-12 welcome-bg px-0">
 
 		<!-- Overlay To Darken Image -->
-		<div class="overlay">
+		<div class="overlay">		
 
 			<!-- Container For Landing Page Content -->
 			<!-- Centered Vertically And Horizontally -->
@@ -29,9 +29,17 @@ if(!$_SESSION['active']):
 					<button type="button" class="btn btn-secondary btn-lg">Login</button>
 				</div>
 
+				<div class="welcome-restaurant pt-3">
+					<a href="#" class="nav-link text-white welcome-link">
+						Own A Restaurant?
+					</a>
+				</div>
+
 				<!-- Company Statement -->
-				<div class="welcome-about text-white pt-3">
-					<p>Delectable blah blah blah...</p>
+				<div class="welcome-about text-white pt-5 px-5 px-md-4 px-lg-2 px-xl-0">
+					<div class="paragraph-container mx-auto">
+						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In gravida elit metus, quis aliquet arcu blandit id. Duis eu diam gravida eros ornare imperdiet. Etiam in nisl sollicitudin, mollis nunc eget, condimentum elit. Vivamus a rutrum mauris. Nam ac ligula scelerisque, vestibulum lacus sed, rhoncus mi.</p>
+					</div>
 				</div>
 			</div>
 			<!-- ./Container -->
