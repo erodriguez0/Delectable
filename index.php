@@ -25,89 +25,81 @@ if(!$_SESSION['active']):
 
 				<!-- Login/Sign In -->
 				<div class="welcome-btn-group pt-3">
-					<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#create-account-modal">Create Account</button>
+					<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#create-account-modal">Create Account or Login</button>
 
 					<!-- Create Account Modal -->
 					<div class="modal fade" id="create-account-modal" tabindex="-1" role="dialog">
-						<div class="modal-dialog modal-dialog-centered" role="document">
+						<div class="modal-dialog modal-dialog-centered modal-lg">
 							<div class="modal-content">
 								<div class="modal-header">
-									<h5 class="modal-title">Create New Account</h5>
-									<button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
-								</div>
-								<form method="POST" action="./inc/scripts/create-account.php">
-								<div class="modal-body">
-										<div class="container-fluid">
-											<div class="row pt-4">
-												<div class="col-6">
-													<input type="text" class="form-control" name="first-name" placeholder="First Name">
-												</div>
-												<div class="col-6">
-													<input type="text" class="form-control" name="last-name" placeholder="Last Name">
-												</div>
-											</div>
-											<div class="row pt-4">
-												<div class="col-12">
-													<input type="text" class="form-control" name="username" placeholder="Userame">
-												</div>
-											</div>
-											<div class="row pt-4">
-												<div class="col-12">
-													<input type="email" class="form-control" name="email" placeholder="Email">
-												</div>
-											</div>
-											<div class="row pt-4">
-												<div class="col-12">
-													<input type="password" class="form-control" name="create-password" placeholder="Create Password">
-												</div>
-											</div>
-											<div class="row pt-4">
-												<div class="col-12">
-													<input type="password" class="form-control" name="confirm-password" placeholder="Confirm Password">
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="modal-footer">
-										<input type="submit" class="btn btn-primary" name="create-account">
-									</div>
-								</form>
-							</div>
-						</div>
-					</div>
-
-					<button type="button" class="btn btn-secondary btn-lg" data-toggle="modal" data-target="#login-modal">Login</button>
-
-					<!-- Login Modal -->
-					<div class="modal fade" id="login-modal" tabindex="-1" role="dialog">
-						<div class="modal-dialog modal-dialog-centered" role="document">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h5 class="modal-title">Access Your Account</h5>
+									<h5 class="modal-title">Create Account or Login</h5>
 									<button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
 								</div>
 								<div class="modal-body">
-									<form>
-										<div class="container-fluid">
-											<div class="row pt-4">
-												<div class="col-12">
-													<input type="text" class="form-control" name="username" placeholder="Username">
+									<div class="container-fluid">
+										<div class="row">
+											<form class="col-6" method="POST" action="./inc/scripts/create-account.php">
+												<div class="row pt-4">
+													<div class="col-6">
+														<input type="text" class="form-control <?php echo $_SESSION['error']['fname']; ?>" name="first-name" placeholder="First Name" value="<?php echo $_SESSION['form']['fname']; ?>" required>
+													</div>
+													<div class="col-6">
+														<input type="text" class="form-control <?php echo $_SESSION['error']['lname']; ?>" name="last-name" placeholder="Last Name" value="<?php echo $_SESSION['form']['lname']; ?>">
+													</div>
 												</div>
-											</div>
-											<div class="row pt-4">
-												<div class="col-12">
-													<input type="password" class="form-control" name="password" placeholder="Password">
+												<div class="row pt-4">
+													<div class="col-12">
+														<input type="text" class="form-control <?php echo $_SESSION['error']['uname']; ?>" name="username" placeholder="Userame" value="<?php echo $_SESSION['form']['uname']; ?>">
+													</div>
 												</div>
-											</div>
+												<div class="row pt-4">
+													<div class="col-12">
+														<input type="email" class="form-control <?php echo $_SESSION['error']['email']; ?>" name="email" placeholder="Email" value="<?php echo $_SESSION['form']['email']; ?>">
+													</div>
+												</div>
+												<div class="row pt-4">
+													<div class="col-12">
+														<input type="password" class="form-control" name="create-password" placeholder="Create Password">
+													</div>
+												</div>
+												<div class="row pt-4">
+													<div class="col-12">
+														<input type="password" class="form-control" name="confirm-password" placeholder="Confirm Password">
+													</div>
+												</div>
+												<div class="row pt-4">
+													<div class="col-12">
+														<input type="submit" class="btn btn-primary" name="create-account" value="Create Account">
+													</div>
+												</div>
+											</form>
+											<form class="col-6">
+												<div class="row pt-4">
+													<div class="col-12">
+														<input type="text" class="form-control <?php echo $_SESSION['error']['uname']; ?>" name="username" placeholder="Userame" value="<?php echo $_SESSION['form']['uname']; ?>">
+													</div>
+												</div>
+												<div class="row pt-4">
+													<div class="col-12">
+														<input type="password" class="form-control" name="password" placeholder="Password">
+													</div>
+												</div>
+												<div class="row pt-4">
+													<div class="col-12">
+														<input type="submit" class="btn btn-primary" name="login-account" value="Login">
+													</div>
+												</div>
+											</form>
 										</div>
-									</form>
+									</div>
 								</div>
 								<div class="modal-footer">
-									<button type="button" class="btn btn-primary">Login</button>
+									
 								</div>
 							</div>
 						</div>
 					</div>
+
 				</div>
 
 				<div class="welcome-restaurant pt-3">
@@ -133,6 +125,10 @@ if(!$_SESSION['active']):
 
 <?php
 endif;
+
+// Unset sticky form input and errors
+unset($_SESSION['error']);
+unset($_SESSION['form']);
 
 require_once('./inc/footer.php');
 ?>
