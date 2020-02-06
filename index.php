@@ -27,18 +27,28 @@ if(!$_SESSION['active']):
 				<div class="welcome-btn-group pt-3">
 					<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#create-account-modal">Create Account or Login</button>
 
-					<!-- Create Account Modal -->
+					<!-- Create Account/Login Modal -->
 					<div class="modal fade" id="create-account-modal" tabindex="-1" role="dialog">
+						<!-- Large Modal -->
 						<div class="modal-dialog modal-dialog-centered modal-lg">
 							<div class="modal-content">
+								<!-- Header -->
 								<div class="modal-header">
 									<h5 class="modal-title">Create Account or Login</h5>
 									<button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
 								</div>
+
+								<!-- Modal Body -->
 								<div class="modal-body">
+
+									<!-- Fit Content To Modal -->
+									<!-- Two Forms / Two Columns -->
 									<div class="container-fluid">
 										<div class="row">
+
+											<!-- Create Account Form -->
 											<form class="col-6" method="POST" action="./inc/scripts/create-account.php">
+												<!-- Name Fields -->
 												<div class="row pt-4">
 													<div class="col-6">
 														<input type="text" class="form-control <?php echo $_SESSION['error']['fname']; ?>" name="first-name" placeholder="First Name" value="<?php echo $_SESSION['create']['fname']; ?>" required>
@@ -47,43 +57,53 @@ if(!$_SESSION['active']):
 														<input type="text" class="form-control <?php echo $_SESSION['error']['lname']; ?>" name="last-name" placeholder="Last Name" value="<?php echo $_SESSION['create']['lname']; ?>">
 													</div>
 												</div>
+												<!-- Username -->
 												<div class="row pt-4">
 													<div class="col-12">
 														<input type="text" class="form-control <?php echo $_SESSION['error']['uname']; ?>" name="username" placeholder="Userame" value="<?php echo $_SESSION['create']['uname']; ?>">
 													</div>
 												</div>
+												<!-- Email -->
 												<div class="row pt-4">
 													<div class="col-12">
 														<input type="email" class="form-control <?php echo $_SESSION['error']['email']; ?>" name="email" placeholder="Email" value="<?php echo $_SESSION['create']['email']; ?>">
 													</div>
 												</div>
+												<!-- Create Password -->
 												<div class="row pt-4">
 													<div class="col-12">
 														<input type="password" class="form-control" name="create-password" placeholder="Create Password">
 													</div>
 												</div>
+												<!-- Confirm Password -->
 												<div class="row pt-4">
 													<div class="col-12">
 														<input type="password" class="form-control" name="confirm-password" placeholder="Confirm Password">
 													</div>
 												</div>
+												<!-- Submit Create Account Form -->
 												<div class="row pt-4">
 													<div class="col-12">
 														<input type="submit" class="btn btn-primary" name="create-account" value="Create Account">
 													</div>
 												</div>
 											</form>
+
+											<!-- Login Form -->
 											<form class="col-6">
+												<!-- Username -->
 												<div class="row pt-4">
 													<div class="col-12">
 														<input type="text" class="form-control <?php echo $_SESSION['error']['uname']; ?>" name="username" placeholder="Userame" value="<?php echo $_SESSION['form']['uname']; ?>">
 													</div>
 												</div>
+												<!-- Password -->
 												<div class="row pt-4">
 													<div class="col-12">
 														<input type="password" class="form-control" name="password" placeholder="Password">
 													</div>
 												</div>
+												<!-- Submit Login Form -->
 												<div class="row pt-4">
 													<div class="col-12">
 														<input type="submit" class="btn btn-primary" name="login-account" value="Login">
@@ -91,8 +111,14 @@ if(!$_SESSION['active']):
 												</div>
 											</form>
 										</div>
+										<!-- ./Row -->
 									</div>
+									<!-- ./Container Fluid -->
 								</div>
+								<!-- ./Modal Body -->
+
+								<!-- Modal Footer -->
+								<!-- TODO: Links for restaurant owners etc. -->
 								<div class="modal-footer">
 									
 								</div>
