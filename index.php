@@ -41,20 +41,20 @@ if(!$_SESSION['active']):
 											<form class="col-6" method="POST" action="./inc/scripts/create-account.php">
 												<div class="row pt-4">
 													<div class="col-6">
-														<input type="text" class="form-control <?php echo $_SESSION['error']['fname']; ?>" name="first-name" placeholder="First Name" value="<?php echo $_SESSION['form']['fname']; ?>" required>
+														<input type="text" class="form-control <?php echo $_SESSION['error']['fname']; ?>" name="first-name" placeholder="First Name" value="<?php echo $_SESSION['create']['fname']; ?>" required>
 													</div>
 													<div class="col-6">
-														<input type="text" class="form-control <?php echo $_SESSION['error']['lname']; ?>" name="last-name" placeholder="Last Name" value="<?php echo $_SESSION['form']['lname']; ?>">
+														<input type="text" class="form-control <?php echo $_SESSION['error']['lname']; ?>" name="last-name" placeholder="Last Name" value="<?php echo $_SESSION['create']['lname']; ?>">
 													</div>
 												</div>
 												<div class="row pt-4">
 													<div class="col-12">
-														<input type="text" class="form-control <?php echo $_SESSION['error']['uname']; ?>" name="username" placeholder="Userame" value="<?php echo $_SESSION['form']['uname']; ?>">
+														<input type="text" class="form-control <?php echo $_SESSION['error']['uname']; ?>" name="username" placeholder="Userame" value="<?php echo $_SESSION['create']['uname']; ?>">
 													</div>
 												</div>
 												<div class="row pt-4">
 													<div class="col-12">
-														<input type="email" class="form-control <?php echo $_SESSION['error']['email']; ?>" name="email" placeholder="Email" value="<?php echo $_SESSION['form']['email']; ?>">
+														<input type="email" class="form-control <?php echo $_SESSION['error']['email']; ?>" name="email" placeholder="Email" value="<?php echo $_SESSION['create']['email']; ?>">
 													</div>
 												</div>
 												<div class="row pt-4">
@@ -128,7 +128,7 @@ endif;
 
 // Unset sticky form input and errors
 unset($_SESSION['error']);
-unset($_SESSION['form']);
+unset($_SESSION['create']);
 
 require_once('./inc/footer.php');
 ?>

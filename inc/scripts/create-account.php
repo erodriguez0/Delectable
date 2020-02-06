@@ -12,8 +12,10 @@ if(isset($_POST['create-account'])) {
 	$pass2 = $_POST['confirm-password'];
 
 	if(has_special_char($fname) || has_special_char($lname)) {
-		$_SESSION['form']['fname'] = $fname;
+		$_SESSION['create']['fname'] = $fname;
 		$_SESSION['error']['fname'] = 'is-invalid';
+
+		// Testing
 		header('Location: ../../');
 	}
 
