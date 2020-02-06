@@ -4,30 +4,24 @@ M O D I F I E D  B O O T S T R A P  C L A S S E S
 ####################################################
 */
 
+/*
+####################################################
+B O O T S T R A P  B U T T O N S
+####################################################
+*/
 .btn {
 	border-radius: 0;
 	border: none;
 	text-transform: uppercase;
 	font-size: 1em;
 	padding: .85em 2em;
+	background-color: rgba(0,0,0,0);
 }
 
-/* B U T T O N S */
-.btn { background-color: rgba(0,0,0,0); }
 .btn-primary, .btn-primary:active, 
 .btn-primary:focus, .btn-primary:visited { background-color: #71100f !important; box-shadow: none; }
 .btn-primary:visited:active, .btn-primary:hover
 .btn-primary:visited:hover, .btn-primary:active:focus { background-color: #5a0d0c !important; }
-
-/*
-####################################################
-C L A S S E S
-####################################################
-*/
-
-.primary-text-color { color: #71100f; }
-
-.welcome-link:hover { text-decoration: underline; }
 
 /*
 ####################################################
@@ -44,6 +38,10 @@ Bootstrap 4 breakpoints
 Extra small devices (portrait phones, less than 576px) 
 No media query since this is the default in Bootstrap because it is "mobile first"
 */
+
+.primary-text-color { color: #71100f; }
+
+.welcome-link:hover { text-decoration: underline; }
 
 .fit-viewport {
 	height: 100vh;
