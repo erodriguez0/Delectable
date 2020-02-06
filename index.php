@@ -35,8 +35,8 @@ if(!$_SESSION['active']):
 									<h5 class="modal-title">Create New Account</h5>
 									<button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
 								</div>
+								<form method="POST" action="./inc/scripts/create-account.php">
 								<div class="modal-body">
-									<form>
 										<div class="container-fluid">
 											<div class="row pt-4">
 												<div class="col-6">
@@ -67,11 +67,11 @@ if(!$_SESSION['active']):
 												</div>
 											</div>
 										</div>
-									</form>
-								</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-primary">Create Account</button>
-								</div>
+									</div>
+									<div class="modal-footer">
+										<input type="submit" class="btn btn-primary" name="create-account">
+									</div>
+								</form>
 							</div>
 						</div>
 					</div>

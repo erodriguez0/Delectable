@@ -9,7 +9,8 @@ $db = array(
 	"host" => "127.0.0.1"
 );
 
-$conn = new mysqli($db['name'], $db['user'], $db['pass'], $db['host']);
+$dsn = 'mysql:host=' . $db['host'] . ';dbname=' . $db['name'];
+$conn = new PDO($dsn, $db['user'], $db['pass']);
 
 // intialize session
 if(session_status() == PHP_SESSION_NONE) { 
