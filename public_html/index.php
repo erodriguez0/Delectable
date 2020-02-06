@@ -1,8 +1,8 @@
 <?php
-require_once('./inc/config.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/delectable/resources/inc/config.php');
 
 $title = "Delectable | Reserved For You";
-require_once('./inc/header.php');
+require_once(INCLUDE_PATH . 'header.php');
 
 if(!$_SESSION['active']):
 ?>
@@ -47,7 +47,7 @@ if(!$_SESSION['active']):
 										<div class="row">
 
 											<!-- Create Account Form -->
-											<form class="col-6" method="POST" action="./inc/scripts/create-account.php">
+											<form class="col-6" method="POST" action="../resources/inc/scripts/create-account.php">
 												<!-- Name Fields -->
 												<div class="row pt-4">
 													<div class="col-6">
@@ -156,5 +156,5 @@ endif;
 unset($_SESSION['error']);
 unset($_SESSION['create']);
 
-require_once('./inc/footer.php');
+require_once(INCLUDE_PATH . 'footer.php');
 ?>

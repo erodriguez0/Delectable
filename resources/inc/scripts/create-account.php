@@ -1,7 +1,7 @@
 <?php
 
-require_once('../config.php');
-require_once('../functions.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/delectable/resources/inc/config.php');
+require_once(INCLUDE_PATH . 'functions.php');
 
 if(isset($_POST['create-account'])) {
 	$fname = $_POST['first-name'];
@@ -16,7 +16,7 @@ if(isset($_POST['create-account'])) {
 		$_SESSION['error']['fname'] = 'is-invalid';
 
 		// Testing
-		header('Location: ../../');
+		header('Location: ../../../public_html/');
 	}
 
 }
