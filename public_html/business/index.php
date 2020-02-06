@@ -1,7 +1,7 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'] . '/delectable/resources/inc/config.php');
 
-$title = "Delectable | Reserved For You";
+$title = "Delectable | For Restaurants";
 require_once(INCLUDE_PATH . 'header.php');
 
 if(!$_SESSION['active']):
@@ -21,11 +21,11 @@ if(!$_SESSION['active']):
 			<div class="w-100 h-100 d-flex flex-column justify-content-center align-items-center">
 
 				<!-- Company Name -->
-				<h1 class="welcome-title">Delectable</h1>
+				<h1 class="welcome-title text-center">Delectable For Business</h1>
 
 				<!-- Login/Sign In -->
 				<div class="welcome-btn-group pt-3">
-					<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#create-account-modal">Create Account or Login</button>
+					<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#create-account-modal">Register Your Restaurant or Login</button>
 
 					<!-- Create Account/Login Modal -->
 					<div class="modal fade" id="create-account-modal" tabindex="-1" role="dialog">
@@ -47,26 +47,26 @@ if(!$_SESSION['active']):
 										<div class="row">
 
 											<!-- Create Account Form -->
-											<form class="col-6" method="POST" action="../resources/inc/scripts/create-account.php">
+											<form class="col-6" method="POST" action="/delectable/resources/inc/scripts/restaurant-create-account.php">
 												<!-- Name Fields -->
 												<div class="row pt-4">
 													<div class="col-6">
-														<input type="text" class="form-control <?php echo $_SESSION['error']['fname']; ?>" name="first-name" placeholder="First Name" value="<?php echo $_SESSION['create']['fname']; ?>" required>
+														<input type="text" class="form-control <?php echo ($_SESSION['error']['fname']) ? 'is-invalid' : ''; ?>" name="first-name" placeholder="First Name" value="<?php echo $_SESSION['create']['fname']; ?>" required>
 													</div>
 													<div class="col-6">
-														<input type="text" class="form-control <?php echo $_SESSION['error']['lname']; ?>" name="last-name" placeholder="Last Name" value="<?php echo $_SESSION['create']['lname']; ?>">
+														<input type="text" class="form-control <?php echo ($_SESSION['error']['lname']) ? 'is-invalid' : ''; ?>" name="last-name" placeholder="Last Name" value="<?php echo $_SESSION['create']['lname']; ?>">
 													</div>
 												</div>
 												<!-- Username -->
 												<div class="row pt-4">
 													<div class="col-12">
-														<input type="text" class="form-control <?php echo $_SESSION['error']['uname']; ?>" name="username" placeholder="Userame" value="<?php echo $_SESSION['create']['uname']; ?>">
+														<input type="text" class="form-control <?php echo ($_SESSION['error']['uname']) ? 'is-invalid' : ''; ?>" name="username" placeholder="Userame" value="<?php echo $_SESSION['create']['uname']; ?>">
 													</div>
 												</div>
 												<!-- Email -->
 												<div class="row pt-4">
 													<div class="col-12">
-														<input type="email" class="form-control <?php echo $_SESSION['error']['email']; ?>" name="email" placeholder="Email" value="<?php echo $_SESSION['create']['email']; ?>">
+														<input type="email" class="form-control <?php echo ($_SESSION['error']['emailw']) ? 'is-invalid' : ''; ?>" name="email" placeholder="Email" value="<?php echo $_SESSION['create']['email']; ?>">
 													</div>
 												</div>
 												<!-- Create Password -->
@@ -119,19 +119,13 @@ if(!$_SESSION['active']):
 
 								<!-- Modal Footer -->
 								<!-- TODO: Links for restaurant owners etc. -->
-								<div class="modal-footer">
-									
+								<div class="modal-footer text-left">
+									<small><?php echo $_SESSION['error']['footer']; ?></small>
 								</div>
 							</div>
 						</div>
 					</div>
 
-				</div>
-
-				<div class="welcome-restaurant pt-3">
-					<a href="#" class="nav-link text-white welcome-link">
-						Own A Restaurant?
-					</a>
 				</div>
 
 				<!-- Company Statement -->
