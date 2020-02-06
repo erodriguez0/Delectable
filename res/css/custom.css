@@ -15,11 +15,9 @@ M O D I F I E D  B O O T S T R A P  C L A S S E S
 /* B U T T O N S */
 .btn { background-color: rgba(0,0,0,0); }
 .btn-primary, .btn-primary:active, 
-.btn-primary:focus, .btn-primary:visited:active,
-.btn-primary:visited:hover { background-color: #71100f; }
-.btn-primary:hover { background-color: #5a0d0c; }
-.btn-secondary { background-color: rgba(0, 0, 0, 0); }
-.btn-secondary:hover { background-color: rgba(0, 0, 0, 0); text-decoration: underline; }
+.btn-primary:focus, .btn-primary:visited { background-color: #71100f !important; box-shadow: none; }
+.btn-primary:visited:active, .btn-primary:hover
+.btn-primary:visited:hover, .btn-primary:active:focus { background-color: #5a0d0c !important; }
 
 /*
 ####################################################
