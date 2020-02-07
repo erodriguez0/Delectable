@@ -55,31 +55,31 @@ if(!$_SESSION['active']):
 														<input type="text" class="form-control <?php echo ($_SESSION['error']['fname']) ? 'is-invalid' : ''; ?>" name="first-name" placeholder="First Name" value="<?php echo $_SESSION['create']['fname']; ?>" required>
 													</div>
 													<div class="col-6 pl-1">
-														<input type="text" class="form-control <?php echo ($_SESSION['error']['lname']) ? 'is-invalid' : ''; ?>" name="last-name" placeholder="Last Name" value="<?php echo $_SESSION['create']['lname']; ?>">
+														<input type="text" class="form-control <?php echo ($_SESSION['error']['lname']) ? 'is-invalid' : ''; ?>" name="last-name" placeholder="Last Name" value="<?php echo $_SESSION['create']['lname']; ?>" required>
 													</div>
 												</div>
 												<!-- Username -->
 												<div class="row pt-4">
 													<div class="col-12">
-														<input type="text" class="form-control <?php echo ($_SESSION['error']['uname']) ? 'is-invalid' : ''; ?>" name="username" placeholder="Userame" value="<?php echo $_SESSION['create']['uname']; ?>">
+														<input type="text" class="form-control <?php echo ($_SESSION['error']['uname']) ? 'is-invalid' : ''; ?>" name="username" placeholder="Username" value="<?php echo $_SESSION['create']['uname']; ?>" required>
 													</div>
 												</div>
 												<!-- Email -->
 												<div class="row pt-4">
 													<div class="col-12">
-														<input type="email" class="form-control <?php echo ($_SESSION['error']['emailw']) ? 'is-invalid' : ''; ?>" name="email" placeholder="Email" value="<?php echo $_SESSION['create']['email']; ?>">
+														<input type="email" class="form-control <?php echo ($_SESSION['error']['email']) ? 'is-invalid' : ''; ?>" name="email" placeholder="Email" value="<?php echo $_SESSION['create']['email']; ?>" required>
 													</div>
 												</div>
 												<!-- Create Password -->
 												<div class="row pt-4">
 													<div class="col-12">
-														<input type="password" class="form-control" name="create-password" placeholder="Create Password">
+														<input type="password" class="form-control <?php echo ($_SESSION['error']['pass1']) ? 'is-invalid' : ''; ?>" name="create-password" placeholder="Create Password" required>
 													</div>
 												</div>
 												<!-- Confirm Password -->
 												<div class="row pt-4">
 													<div class="col-12">
-														<input type="password" class="form-control" name="confirm-password" placeholder="Confirm Password">
+														<input type="password" class="form-control <?php echo ($_SESSION['error']['pass2']) ? 'is-invalid' : ''; ?>" name="confirm-password" placeholder="Confirm Password" required>
 													</div>
 												</div>
 												<!-- Submit Create Account Form -->
@@ -95,7 +95,7 @@ if(!$_SESSION['active']):
 												<!-- Username -->
 												<div class="row pt-4">
 													<div class="col-12">
-														<input type="text" class="form-control <?php echo $_SESSION['error']['uname']; ?>" name="username" placeholder="Userame" value="<?php echo $_SESSION['form']['uname']; ?>">
+														<input type="text" class="form-control <?php echo $_SESSION['error']['uname']; ?>" name="username" placeholder="Username" value="<?php echo $_SESSION['login']['uname']; ?>">
 													</div>
 												</div>
 												<!-- Password -->
