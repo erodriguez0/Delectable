@@ -21,11 +21,12 @@ if(!$_SESSION['active']):
 			<div class="w-100 h-100 d-flex flex-column justify-content-center align-items-center">
 
 				<!-- Company Name -->
-				<h1 class="welcome-title text-center">Delectable For Business</h1>
+				<h1 class="welcome-title text-center">Delectable</h1>
+				<h4 class="text-center text-white">The Right Choice For Your Business</h4>
 
 				<!-- Login/Sign In -->
 				<div class="welcome-btn-group pt-3">
-					<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#create-account-modal">Register Your Restaurant or Login</button>
+					<button type="button" class="btn btn-primary btn-lg py-3 px-5" data-toggle="modal" data-target="#create-account-modal">Register Your Restaurant or Login</button>
 
 					<!-- Create Account/Login Modal -->
 					<div class="modal fade" id="create-account-modal" tabindex="-1" role="dialog">
@@ -131,7 +132,12 @@ if(!$_SESSION['active']):
 				<!-- Company Statement -->
 				<div class="welcome-about text-white pt-5 px-5 px-md-4 px-lg-2 px-xl-0">
 					<div class="paragraph-container mx-auto">
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In gravida elit metus, quis aliquet arcu blandit id. Duis eu diam gravida eros ornare imperdiet. Etiam in nisl sollicitudin, mollis nunc eget, condimentum elit. Vivamus a rutrum mauris. Nam ac ligula scelerisque, vestibulum lacus sed, rhoncus mi.</p>
+						<p>
+							Delectable is commited to providing you with the best tools that will help your business grow. Allow your customers to reserve and order from you restaurant with ease with the click of a few buttons, customize your menu to exhibit your best creations, and take control of work flow with business analytics and restaurant management tools. 
+						</p>
+						<p>
+							With Delectable you're capable of customizing just about every aspect of your restaurant from menus to business hours, table availability and layout, and assiging staff to reservations.
+						</p>
 					</div>
 				</div>
 			</div>

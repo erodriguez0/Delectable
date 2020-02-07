@@ -13,8 +13,8 @@ B O O T S T R A P  B U T T O N S
 	border-radius: 0;
 	border: none;
 	text-transform: uppercase;
-	font-size: 1em;
-	padding: .85em 2em;
+	/*font-size: 1em;*/
+	/*padding: .85em 2em;*/
 	background-color: rgba(0,0,0,0);
 }
 
