@@ -47,7 +47,7 @@ if(!$_SESSION['active']):
 										<div class="row">
 
 											<!-- Create Account Form -->
-											<form class="col-6" method="POST" action="/delectable/resources/inc/scripts/restaurant-create-account.php">
+											<form class="col-12 col-lg-6 order-2 order-lg-1" method="POST" action="/delectable/resources/inc/scripts/restaurant-create-account.php">
 												<!-- Name Fields -->
 												<div class="row pt-4">
 													<div class="col-6">
@@ -84,13 +84,13 @@ if(!$_SESSION['active']):
 												<!-- Submit Create Account Form -->
 												<div class="row pt-4">
 													<div class="col-12">
-														<input type="submit" class="btn btn-primary" name="create-account" value="Create Account">
+														<input type="submit" class="btn btn-primary btn-block" name="restaurant-create-account" value="Create Account">
 													</div>
 												</div>
 											</form>
 
 											<!-- Login Form -->
-											<form class="col-6">
+											<form class="col-12 col-lg-6 order-1 order-lg-2">
 												<!-- Username -->
 												<div class="row pt-4">
 													<div class="col-12">
@@ -106,7 +106,7 @@ if(!$_SESSION['active']):
 												<!-- Submit Login Form -->
 												<div class="row pt-4">
 													<div class="col-12">
-														<input type="submit" class="btn btn-primary" name="login-account" value="Login">
+														<input type="submit" class="btn btn-primary btn-block" name="restaurant-login-account" value="Login">
 													</div>
 												</div>
 											</form>
@@ -119,8 +119,8 @@ if(!$_SESSION['active']):
 
 								<!-- Modal Footer -->
 								<!-- TODO: Links for restaurant owners etc. -->
-								<div class="modal-footer text-left">
-									<small><?php echo $_SESSION['error']['footer']; ?></small>
+								<div class="modal-footer mr-auto">
+									<small class="text-danger"><?php echo $_SESSION['error']['footer']; ?></small>
 								</div>
 							</div>
 						</div>

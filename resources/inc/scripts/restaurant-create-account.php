@@ -3,7 +3,7 @@
 require_once($_SERVER['DOCUMENT_ROOT'] . '/delectable/resources/inc/config.php');
 require_once(INCLUDE_PATH . 'functions.php');
 
-if(isset($_POST['create-account'])) {
+if(isset($_POST['restaurant-create-account'])) {
 	$fname = $_POST['first-name'];
 	$lname = $_POST['last-name'];
 	$uname = $_POST['username'];
@@ -12,9 +12,19 @@ if(isset($_POST['create-account'])) {
 	$pass2 = $_POST['confirm-password'];
 
 	// Check if name or username is not alphanumeric
-	if(has_special_char($fname) || has_special_char($lname) || has_special_char($uname)) {
-		$_SESSION['error']['footer'] = "Name and username must be alphanumeric<br>";
-		$_SESSION['error']['fname'] = $_SESSION['error']['lname'] = $_SESSION['error']['uname'] = true;
+	if(has_special_char($fname)) {
+		$_SESSION['error']['footer'] = "First name must be alphanumeric<br>";
+		$_SESSION['error']['fname'] = true;
+	}
+
+	if(has_special_char($lname)) {
+		$_SESSION['error']['footer'] .= "Last name must be alphanumeric<br>";
+		$_SESSION['error']['lname'] = true;
+	}
+
+	if(has_special_char($uname)) {
+		$_SESSION['error']['footer'] .= "Username must be alphanumeric<br>";
+		$_SESSION['error']['uname'] = true;
 	}
 
 	if(!empty($_SESSION['error'])) {
