@@ -50,10 +50,10 @@ if(!$_SESSION['active']):
 											<form class="col-12 col-lg-6 order-2 order-lg-1" method="POST" action="/delectable/resources/inc/scripts/restaurant-create-account.php">
 												<!-- Name Fields -->
 												<div class="row pt-4">
-													<div class="col-6">
+													<div class="col-6 pr-1">
 														<input type="text" class="form-control <?php echo ($_SESSION['error']['fname']) ? 'is-invalid' : ''; ?>" name="first-name" placeholder="First Name" value="<?php echo $_SESSION['create']['fname']; ?>" required>
 													</div>
-													<div class="col-6">
+													<div class="col-6 pl-1">
 														<input type="text" class="form-control <?php echo ($_SESSION['error']['lname']) ? 'is-invalid' : ''; ?>" name="last-name" placeholder="Last Name" value="<?php echo $_SESSION['create']['lname']; ?>">
 													</div>
 												</div>
