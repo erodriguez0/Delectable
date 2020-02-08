@@ -13,15 +13,26 @@ B O O T S T R A P  B U T T O N S
 	border-radius: 0;
 	border: none;
 	text-transform: uppercase;
-	font-size: 1em;
-	padding: .85em 2em;
+	/*font-size: 1em;*/
+	/*padding: .85em 2em;*/
 	background-color: rgba(0,0,0,0);
 }
 
-.btn-primary, .btn-primary:active, 
-.btn-primary:focus, .btn-primary:visited { background-color: #71100f !important; box-shadow: none; }
-.btn-primary:visited:active, .btn-primary:hover
-.btn-primary:visited:hover, .btn-primary:active:focus { background-color: #5a0d0c !important; }
+.btn-primary,
+.btn-primary:focus,
+.btn-primary:active:focus
+.btn-primary:visited:active { 
+	background-color: #71100f !important; 
+	box-shadow: none; 
+	border: none;
+}
+
+.btn-primary:hover,
+.btn-primary:visited:hover { 
+	background-color: #5a0d0c !important; 
+	box-shadow: none; 
+	border: none;
+}
 
 /*
 ####################################################
@@ -38,6 +49,10 @@ Bootstrap 4 breakpoints
 Extra small devices (portrait phones, less than 576px) 
 No media query since this is the default in Bootstrap because it is "mobile first"
 */
+
+body {
+	font-family: 'Oswald', sans-serif;
+}
 
 .primary-text-color { color: #71100f; }
 
@@ -68,6 +83,10 @@ No media query since this is the default in Bootstrap because it is "mobile firs
 	letter-spacing: 0.1em;
 	font-family: 'Oswald', sans-serif;
 }
+
+.admin-form-wrap {
+	width: 100%;
+}
  
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {  
@@ -76,7 +95,9 @@ No media query since this is the default in Bootstrap because it is "mobile firs
  
 /* Medium devices (tablets, 768px and up) The navbar toggle appears at this breakpoint */
 @media (min-width: 768px) {  
- 
+	.admin-form-wrap {
+		width: 300px;
+	}
 }
  
 /* Large devices (desktops, 992px and up) */
@@ -88,7 +109,7 @@ No media query since this is the default in Bootstrap because it is "mobile firs
  
 /* Extra large devices (large desktops, 1200px and up) */
 @media (min-width: 1200px) {  
-    
+
 }
  
  
