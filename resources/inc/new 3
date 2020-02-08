@@ -1,0 +1,50 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Delectable.Models;
+using System.Data.SqlClient;
+using Microsoft.AspNetCore.Mvc;
+
+
+namespace Delectable.Controllers
+{
+    public class LoginController : Controller
+    {
+        SqlConnection con = new SqlConnection();
+        SqlCommand com = new SqlCommand();
+        SqlDataReader dr;
+
+        [HttpGet]
+        public IActionResult login()
+        {
+            return View(); 
+        }
+
+        void connectionString()
+        {
+            con.ConnectionString = "Data Source=DESKTOP-JDN8TPR;Initial Catalog=delactable;Integrated Security=True";
+        }
+        public ActionResult Verify(login acc)
+        {
+            connectionString();
+            con.Open();
+            com.Connection = con;
+            com.CommandText = "Select * from login where username='"+acc.Username+"' and password='"+acc.Password+"' ";
+            dr = com.ExecuteReader();
+            if(dr.Read())
+            {
+                con.Close();
+                return View();
+            }
+            else
+            {
+                con.Close();
+                return View();
+            }
+
+           
+           
+        }
+    }
+}
