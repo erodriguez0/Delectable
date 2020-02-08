@@ -11,20 +11,41 @@ if(isset($_POST['restaurant-create-account'])) {
 	$pass1 = $_POST['create-password'];
 	$pass2 = $_POST['confirm-password'];
 
-	// Check if name or username is not alphanumeric
+	// First name is not alphanumeric
 	if(has_special_char($fname)) {
 		$_SESSION['error']['footer'] = "First name must be alphanumeric<br>";
 		$_SESSION['error']['fname'] = true;
 	}
 
+	// Last name is not alphanumeric
 	if(has_special_char($lname)) {
 		$_SESSION['error']['footer'] .= "Last name must be alphanumeric<br>";
 		$_SESSION['error']['lname'] = true;
 	}
 
-	if(has_special_char($uname)) {
-		$_SESSION['error']['footer'] .= "Username must be alphanumeric<br>";
+	// Username is not alphanumeric or less than 8 characters long
+	if(has_special_char($uname) || strlen($uname) < 8) {
+		$_SESSION['error']['footer'] .= "Username must be alphanumeric and at least 8 characters long<br>";
 		$_SESSION['error']['uname'] = true;
+	}
+
+	// Username exists
+	$query = $conn->prepare("SELECT * FROM employee WHERE emp_username = :uname");
+	$query->bindParam(':uname', $uname, PDO::PARAM_STR);
+	if($query->execute()) {
+		if($query->rowCount() > 0) {
+			$_SESSION['error']['footer'] .= "Username taken";
+			$_SESSION['error']['uname'] = true;
+		}
+	} else {
+		$_SESSION['popup'] = "Cannot create account at this time. Please try again later";
+	}
+
+	// Invalid email
+	// TODO: Email verification
+	if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+		$_SESSION['error']['footer'] .= "Invalid email address<br>";
+		$_SESSION['error']['email'] = true;
 	}
 
 	// Confirm passwords match before validating password
@@ -42,6 +63,7 @@ if(isset($_POST['restaurant-create-account'])) {
 		}
 	}
 
+	// Redirect to business page if error found
 	if(!empty($_SESSION['error'])) {
 		$_SESSION['create']['fname'] = htmlspecialchars($fname);
 		$_SESSION['create']['lname'] = htmlspecialchars($lname);
@@ -49,6 +71,8 @@ if(isset($_POST['restaurant-create-account'])) {
 		$_SESSION['create']['email'] = htmlspecialchars($email);
 		header('Location: /delectable/public_html/business/');
 	}
+
+	$query = $conn->prepare("INSERT INTO employee (emp_) VALUES (:)");
 }
 
 ?>

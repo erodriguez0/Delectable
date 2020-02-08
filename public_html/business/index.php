@@ -1,10 +1,12 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'] . '/delectable/resources/inc/config.php');
 
+if($_SESSION['active']):
+	header('Location: /delectable/public_html');
+else:
+
 $title = "Delectable | For Restaurants";
 require_once(INCLUDE_PATH . 'header.php');
-
-if(!$_SESSION['active']):
 ?>
 
 <!-- Viewport Cover -->
@@ -45,6 +47,17 @@ if(!$_SESSION['active']):
 									<!-- Fit Content To Modal -->
 									<!-- Two Forms / Two Columns -->
 									<div class="container-fluid">
+										
+									<?php if(isset($_SESSION['popup'])): ?>
+										<div class="row">
+											<div class="col-12">
+												<div class="alert alert-danger">
+													<span><?php echo $_SESSION['popup']; ?></span>
+												</div>
+											</div>
+										</div>
+									<?php endif; ?>
+
 										<div class="row">
 
 											<!-- Create Account Form -->
@@ -150,11 +163,11 @@ if(!$_SESSION['active']):
 <!-- ./Row -->
 
 <?php
-endif;
-
 // Unset sticky form input and errors
 unset($_SESSION['error']);
 unset($_SESSION['create']);
+unset($_SESSION['popup']);
 
 require_once(INCLUDE_PATH . 'footer.php');
+endif;
 ?>

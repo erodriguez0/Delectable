@@ -50,6 +50,10 @@ Extra small devices (portrait phones, less than 576px)
 No media query since this is the default in Bootstrap because it is "mobile first"
 */
 
+body {
+	font-family: 'Oswald', sans-serif;
+}
+
 .primary-text-color { color: #71100f; }
 
 .welcome-link:hover { text-decoration: underline; }
@@ -79,6 +83,10 @@ No media query since this is the default in Bootstrap because it is "mobile firs
 	letter-spacing: 0.1em;
 	font-family: 'Oswald', sans-serif;
 }
+
+.admin-form-wrap {
+	width: 100%;
+}
  
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {  
@@ -87,7 +95,9 @@ No media query since this is the default in Bootstrap because it is "mobile firs
  
 /* Medium devices (tablets, 768px and up) The navbar toggle appears at this breakpoint */
 @media (min-width: 768px) {  
- 
+	.admin-form-wrap {
+		width: 300px;
+	}
 }
  
 /* Large devices (desktops, 992px and up) */
@@ -99,7 +109,7 @@ No media query since this is the default in Bootstrap because it is "mobile firs
  
 /* Extra large devices (large desktops, 1200px and up) */
 @media (min-width: 1200px) {  
-    
+
 }
  
  
