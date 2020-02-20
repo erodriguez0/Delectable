@@ -110,8 +110,7 @@ CREATE TABLE IF NOT EXISTS `delectable`.`employee` (
   `emp_username` VARCHAR(64) NOT NULL,
   `emp_password` VARCHAR(255) NOT NULL,
   `emp_email` VARCHAR(255) NOT NULL,
-  `emp_access` INT UNSIGNED NOT NULL,
-  `emp_status` INT UNSIGNED NOT NULL,
+  `emp_status` INT UNSIGNED NOT NULL DEFAULT 0,
   `emp_last_login` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `emp_gender` VARCHAR(32) NULL,
   `emp_birth_date` DATE NULL,
@@ -124,7 +123,7 @@ CREATE TABLE IF NOT EXISTS `delectable`.`employee` (
   `emp_pay_type` BIT(1) NULL,
   `emp_pay_rate` DECIMAL(15,2) NULL,
   `emp_job` VARCHAR(64) NULL,
-  `emp_manager` BIT(1) NOT NULL,
+  `emp_manager` BIT(1) NOT NULL DEFAULT 0,
   `emp_hire_date` DATE NULL,
   `emp_dismissed` TIMESTAMP NULL,
   `emp_created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -561,3 +560,9 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- TEST DATA
 INSERT INTO administrator VALUES 
 (1, 'Esteban', 'Rodriguez', 'esteban', '$2y$12$DdsqztkkSNYosEGqnhPxR.7WMgQTxHsjKT1ElFLZ3tZkD8o9wZ21y', 'esteban@esteban.com', 1, 1, CURRENT_TIMESTAMP, 'Male', '1994-07-05', '123 Street Ave', NULL, 'Bakersfield', 'California', '93307', '661-123-4567', '2020-02-04', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+
+INSERT INTO restaurant (res_name) VALUES ('BANGABURGER');
+
+INSERT INTO location (loc_address_1, loc_address_2, loc_city, loc_state, loc_postal_code, loc_phone, fk_res_id)
+VALUES ('2550 California Ave', 'Suite #200', 'Bakersfield', 'California' '93308', '(661)-844-7071', 1);
