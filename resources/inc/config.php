@@ -9,6 +9,7 @@ $db = array(
 
 $dsn = 'mysql:host=' . $db['host'] . ';dbname=' . $db['name'];
 $conn = new PDO($dsn, $db['user'], $db['pass']);
+$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 // intialize session
 if(session_status() == PHP_SESSION_NONE) { 
