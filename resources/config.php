@@ -19,7 +19,7 @@ if(session_status() == PHP_SESSION_NONE) {
 // define paths
 define(LAYOUT_IMG_PATH, $_SERVER['DOCUMENT_ROOT'] . '/delectable/respurces/img/');
 define(RESOURCE_PATH, $_SERVER['DOCUMENT_ROOT'] . '/delectable/resources/');
-define(INCLUDE_PATH, $_SERVER['DOCUMENT_ROOT'] . '/delectable/resources/inc/');
+define(INCLUDE_PATH, $_SERVER['DOCUMENT_ROOT'] . '/delectable/resources/');
 define(HOME, $_SERVER['DOCUMENT_ROOT'] . '/delectable/public_html/');
-define(SCRIPTS_PATH, $_SERVER['DOCUMENT_ROOT'] . '/delectable/resources/inc/scripts/');
+define(SCRIPTS_PATH, $_SERVER['DOCUMENT_ROOT'] . '/delectable/resources/scripts/');
 ?>

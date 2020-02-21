@@ -1,5 +1,5 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'] . '/delectable/resources/inc/config.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/delectable/resources/config.php');
 
 if(!$_SESSION['active']):
 	header('Location: /delectable/public_html');

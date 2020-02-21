@@ -1,5 +1,5 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'] . '/delectable/resources/inc/config.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/delectable/resources/config.php');
 
 if($_SESSION['active']):
 	header('Location: /delectable/public_html');
@@ -11,7 +11,7 @@ require_once(INCLUDE_PATH . 'header.php');
 <div class="row mx-0">
 	<div class="col-12">
 		<h1 class="text-center py-3">Admin Portal</h1>
-		<form method="POST" action="/delectable/resources/inc/scripts/admin-login.php">
+		<form method="POST" action="/delectable/resources/scripts/admin-login.php">
 			<div class="row">
 				<div class="col-12">
 					<div class="admin-form-wrap mx-auto">
