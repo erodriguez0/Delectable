@@ -4,7 +4,7 @@
     <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
             <form method="POST" action="/delectable/resources/scripts/logout.php">
-                <button type="submit" name="logout" class="text-white btn btn-link">Sign out</button>
+                <button type="submit" name="logout" class="text-white btn btn-link text-capitalize">Sign out</button>
             </form>
         </li>
     </ul>
@@ -15,25 +15,25 @@
     <div class="sidebar-sticky">
         <ul class="nav flex-column">
             <li class="nav-item">
-                <a class="nav-link" href="../dashboard">
+                <a class="nav-link" href="/delectable/public_html/admin/dashboard">
                 <span data-feather="home"></span>
                 Dashboard
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="../restaurants">
+                <a class="nav-link" href="/delectable/public_html/admin/restaurants/">
                 <span data-feather="file-plus"></span>
                 Restauraunts
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="../customers">
+                <a class="nav-link" href="/delectable/public_html/admin/customers">
                 <span data-feather="users"></span>
                 Customers
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="../reports">
+                <a class="nav-link" href="/delectable/public_html/admin/reports">
                 <span data-feather="bar-chart-2"></span>
                 Reports
                 </a>

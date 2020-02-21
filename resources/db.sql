@@ -562,7 +562,7 @@ INSERT INTO administrator VALUES
 (1, 'Esteban', 'Rodriguez', 'esteban', '$2y$10$t2QL6MJRS7R81F/Uh9xW1eEs9JIW10Z9aMW/tT6WIdwOo4E6CtPIG', 'esteban@esteban.com', 1, 1, CURRENT_TIMESTAMP, 'Male', '1994-07-05', '123 Street Ave', NULL, 'Bakersfield', 'California', '93307', '661-123-4567', '2020-02-04', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 
-INSERT INTO restaurant (res_name) VALUES ('BANGABURGER');
+INSERT INTO restaurant (res_name, res_slogan, res_description) VALUES ('BANGABURGER', 'Deliciousness with a BANG!', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ultricies urna sed rutrum lobortis. Nullam imperdiet libero et dignissim placerat. Etiam nunc massa, elementum id dui et, mattis iaculis tellus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Suspendisse volutpat ante lectus, quis varius nisi tempus ac.');
 
 INSERT INTO location (loc_address_1, loc_address_2, loc_city, loc_state, loc_postal_code, loc_phone, fk_res_id)
 VALUES ('2550 California Ave', 'Suite #200', 'Bakersfield', 'California', '93308', '(661)-844-7071', 1);
