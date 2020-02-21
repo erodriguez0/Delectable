@@ -72,17 +72,21 @@ if(isset($_POST['restaurant-create-account'])) {
 		header('Location: /delectable/public_html/business/');
 	}
 
-	$query = $conn->prepare("INSERT INTO employee (emp_first_name, emp_last_name, emp_username, emp_password, emp_email) VALUES (:fname, :lname, :uname, :pass, :email)");
+	$phash = password_hash($pass1, PASSWORD_DEFAULT);
+	$query = $conn->prepare("INSERT INTO employee (emp_first_name, emp_last_name, emp_username, emp_password, emp_email) VALUES (:fname, :lname, :uname, :passw, :email)");
 	$query->bindParam(':fname', $fname);
 	$query->bindParam(':lname', $lname);
 	$query->bindParam(':uname', $uname);
-	$query->bindParam(':pass', $pass1);
-	$query->bindParam(':email' $email);
+	$query->bindParam(':passw', $phash);
+	$query->bindParam(':email', $email);
 	
 	try {
 		$query->execute();
+		$_SESSION['active'] = true;
+		$_SESSION['emp_id'] = $conn->lastInsertId();
+		header('Location: /delectable/public_html/business/restaurant/');
 	} catch (PDOException $e) {
-		
+		// echo $e;
 	}
 }
 
