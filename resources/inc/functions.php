@@ -1,4 +1,7 @@
 <?php
+
+// GLOBAL FUNCTIONS
+
 // Does string contain letters
 function has_letter($string) {
     return preg_match( '/[a-zA-Z]/', $string );
@@ -20,6 +23,14 @@ function password_check($pass = '') {
 	if(!has_number($pass) || !has_letter($pass) || !has_special_char($pass) || strlen($pass) < 8) { return false; }
 
 	return true;
+}
+
+// ADMIN DASHBOARD FUNCTIONS
+
+function restaurant_list($conn) {
+	$query = $conn->prepare("SELECT * FROM restaurant, location WHERE res_id = loc_id");
+	$query->execute();
+	return $query->fetchAll();
 }
 
 ?>
