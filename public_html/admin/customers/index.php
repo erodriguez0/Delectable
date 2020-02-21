@@ -5,7 +5,7 @@ if(!$_SESSION['active']):
 	header('Location: /delectable/public_html');
 else:
 
-$title = "Delectable | Admin Dashboard";
+$title = "Delectable | Customers";
 require_once(INCLUDE_PATH . 'header.php');
 
 require_once(INCLUDE_PATH . '/admin/dashboard.php');

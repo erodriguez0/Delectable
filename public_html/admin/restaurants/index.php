@@ -5,10 +5,15 @@ if(!$_SESSION['active']):
 	header('Location: /delectable/public_html');
 else:
 
-$title = "Delectable | Admin Dashboard";
+$title = "Delectable | Restauraunts";
 require_once(INCLUDE_PATH . 'header.php');
 
 require_once(INCLUDE_PATH . '/admin/dashboard.php');
+
+require_once(INCLUDE_PATH . 'functions.php');
+
+$res = restaurant_list($conn);
+// var_dump($res);
 ?>
 
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
@@ -27,7 +32,30 @@ require_once(INCLUDE_PATH . '/admin/dashboard.php');
     </div>
 
     <div class="">
-        
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Restaurant</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach($res as $res): 
+                    $name = $res['res_name'];
+                    $address = $res['loc_address_1'] . ' ' . $res['loc_address_2'] . ', ' . $res['loc_city'] . ' ' . $res['loc_postal_code']; 
+                    $lid = $res['loc_id'];
+                ?>
+                <tr>
+                    <td><?php echo $name; ?></td>
+                    <td><?php echo $address; ?></td>
+                    <td>
+                        <a class="btn btn-sm btn-primary" href="./edit/index.php?lid=<?php echo $lid; ?>">Edit</a>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
     </div>
 </main>
 
