@@ -559,10 +559,10 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 -- TEST DATA
 INSERT INTO administrator VALUES 
-(1, 'Esteban', 'Rodriguez', 'esteban', '$2y$12$DdsqztkkSNYosEGqnhPxR.7WMgQTxHsjKT1ElFLZ3tZkD8o9wZ21y', 'esteban@esteban.com', 1, 1, CURRENT_TIMESTAMP, 'Male', '1994-07-05', '123 Street Ave', NULL, 'Bakersfield', 'California', '93307', '661-123-4567', '2020-02-04', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(1, 'Esteban', 'Rodriguez', 'esteban', '$2y$10$t2QL6MJRS7R81F/Uh9xW1eEs9JIW10Z9aMW/tT6WIdwOo4E6CtPIG', 'esteban@esteban.com', 1, 1, CURRENT_TIMESTAMP, 'Male', '1994-07-05', '123 Street Ave', NULL, 'Bakersfield', 'California', '93307', '661-123-4567', '2020-02-04', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 
 INSERT INTO restaurant (res_name) VALUES ('BANGABURGER');
 
 INSERT INTO location (loc_address_1, loc_address_2, loc_city, loc_state, loc_postal_code, loc_phone, fk_res_id)
-VALUES ('2550 California Ave', 'Suite #200', 'Bakersfield', 'California' '93308', '(661)-844-7071', 1);
+VALUES ('2550 California Ave', 'Suite #200', 'Bakersfield', 'California', '93308', '(661)-844-7071', 1);

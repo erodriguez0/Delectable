@@ -72,7 +72,18 @@ if(isset($_POST['restaurant-create-account'])) {
 		header('Location: /delectable/public_html/business/');
 	}
 
-	$query = $conn->prepare("INSERT INTO employee (emp_) VALUES (:)");
+	$query = $conn->prepare("INSERT INTO employee (emp_first_name, emp_last_name, emp_username, emp_password, emp_email) VALUES (:fname, :lname, :uname, :pass, :email)");
+	$query->bindParam(':fname', $fname);
+	$query->bindParam(':lname', $lname);
+	$query->bindParam(':uname', $uname);
+	$query->bindParam(':pass', $pass1);
+	$query->bindParam(':email' $email);
+	
+	try {
+		$query->execute();
+	} catch (PDOException $e) {
+		
+	}
 }
 
 ?>
