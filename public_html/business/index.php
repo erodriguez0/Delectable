@@ -1,5 +1,5 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'] . '/delectable/resources/inc/config.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/delectable/resources/config.php');
 
 if($_SESSION['active']):
 	header('Location: /delectable/public_html');
@@ -61,7 +61,7 @@ require_once(INCLUDE_PATH . 'header.php');
 										<div class="row">
 
 											<!-- Create Account Form -->
-											<form class="col-12 col-lg-6 order-2 order-lg-1" method="POST" action="/delectable/resources/inc/scripts/restaurant-create-account.php">
+											<form class="col-12 col-lg-6 order-2 order-lg-1" method="POST" action="/delectable/resources/scripts/restaurant-create-account.php">
 												<!-- Name Fields -->
 												<div class="row pt-4">
 													<div class="col-6 pr-1">
@@ -104,7 +104,7 @@ require_once(INCLUDE_PATH . 'header.php');
 											</form>
 
 											<!-- Login Form -->
-											<form class="col-12 col-lg-6 order-1 order-lg-2">
+											<form class="col-12 col-lg-6 order-1 order-lg-2" method="POST" action="">
 												<!-- Username -->
 												<div class="row pt-4">
 													<div class="col-12">

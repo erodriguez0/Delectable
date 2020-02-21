@@ -3,7 +3,7 @@
     <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
     <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
-            <form method="POST" action="/delectable/resources/inc/scripts/logout.php">
+            <form method="POST" action="/delectable/resources/scripts/logout.php">
                 <button type="submit" name="logout" class="text-white btn btn-link">Sign out</button>
             </form>
         </li>
