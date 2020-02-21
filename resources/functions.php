@@ -29,8 +29,24 @@ function password_check($pass = '') {
 
 function restaurant_list($conn) {
 	$query = $conn->prepare("SELECT * FROM restaurant, location WHERE res_id = loc_id");
-	$query->execute();
-	return $query->fetchAll();
+	try {
+		$query->execute();
+		return $query->fetchAll();
+	} catch (PDOException $e) {
+		
+	}
+}
+
+function restaurant_info($conn, $id) {
+	$query = $conn->prepare("SELECT * FROM restaurant, location WHERE res_id = loc_id AND loc_id = :id");
+	$query->bindParam(":id", $id);
+
+	try {
+		$query->execute();
+		return $query->fetch();
+	} catch(PDOException $e) {
+
+	}
 }
 
 ?>

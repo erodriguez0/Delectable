@@ -105,6 +105,10 @@ body {
 	.paragraph-container {
 		max-width: 50%;
 	}
+
+	.restaurant-edit-form {
+		max-width: 480px;
+	}
 }
  
 /* Extra large devices (large desktops, 1200px and up) */
