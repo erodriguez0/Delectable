@@ -23,8 +23,10 @@ $res = restaurant_info($conn, $id);
     </div>
 
     <div class="">
-        <div class="row restaurant-edit-form">
-            <div class="col-12">
+        <div class="row">
+
+            <!-- Restaurant Info & Location Form -->
+            <div class="col-12 col-lg-6 restaurant-edit-form-wrap">
                 <h1 class="h3">Info</h1>
                 <form>
                     <div class="row mt-3">
@@ -35,10 +37,14 @@ $res = restaurant_info($conn, $id);
                             <p><?php echo $res['res_slogan']; ?></p>
                             <h6>Description</h6>
                             <p><?php echo $res['res_description']; ?></p>
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <button type="button" class="btn btn-primary px-4">Storefront</button>
+                                <button type="button" class="btn btn-alt px-4">Edit</button>
+                            </div>
                         </div>
                     </div>
                 </form>
-                <h1 class="h3">Location</h1>
+                <h1 class="h3 mt-3">Location</h1>
                 <form>
                     <div class="row mt-3">
                         <div class="col-12">
@@ -74,11 +80,68 @@ $res = restaurant_info($conn, $id);
                         <div class="col-12">
                             <input class="btn btn-primary btn-block" type="submit" name="loc-info" value="Save">
                         </div>
+                    </div>
                 </form>
             </div>
-            <div class="col-6">
+            <!-- ./Left-Col -->
 
-            </div>
+            <!-- Restaurant Manager/Employee Forms -->
+            <div class="col-12 col-lg-6 restaurant-edit-form-wrap mt-3 mt-lg-0">
+                <h1 class="h3">Managing Staff</h1>
+                <form>
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <div class="mb-3">
+                                <button class="btn btn-primary btn-sm add-manager-btn">Add</button>
+                            </div>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Info</th>
+                                        <th scope="col">Remove</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><span>Esteban Rodriguez</span></td>
+                                        <td><a class="btn btn-primary btn-sm" href="#">Info</a></td>
+                                        <td><a class="btn btn-primary btn-sm" href="#">X</a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </form>
+
+                <h1 class="h3">Employees</h1>
+                <form>
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <div class="mb-3">
+                                <button class="btn btn-primary btn-sm add-manager-btn">Add</button>
+                            </div>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Info</th>
+                                        <th scope="col">Remove</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><span>Esteban Rodriguez</span></td>
+                                        <td><a class="btn btn-primary btn-sm" href="#">Info</a></td>
+                                        <td><a class="btn btn-primary btn-sm" href="#">X</a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </form>
+            </div> 
+            <!-- ./Right-Col -->
         </div>
     </div>
 </main>
