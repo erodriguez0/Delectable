@@ -87,7 +87,7 @@ $res = restaurant_info($conn, $id);
 
             <!-- Restaurant Manager/Employee Forms -->
             <div class="col-12 col-lg-6 restaurant-edit-form-wrap mt-3 mt-lg-0">
-                <h1 class="h3">Managing Staff</h1>
+                <h1 class="h3">Managers</h1>
                 <form>
                     <div class="row mt-3">
                         <div class="col-12">
@@ -130,6 +130,16 @@ $res = restaurant_info($conn, $id);
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <tr>
+                                        <td><span>Esteban Rodriguez</span></td>
+                                        <td><a class="btn btn-primary btn-sm" href="#">Info</a></td>
+                                        <td><a class="btn btn-primary btn-sm" href="#">X</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span>Esteban Rodriguez</span></td>
+                                        <td><a class="btn btn-primary btn-sm" href="#">Info</a></td>
+                                        <td><a class="btn btn-primary btn-sm" href="#">X</a></td>
+                                    </tr>
                                     <tr>
                                         <td><span>Esteban Rodriguez</span></td>
                                         <td><a class="btn btn-primary btn-sm" href="#">Info</a></td>
