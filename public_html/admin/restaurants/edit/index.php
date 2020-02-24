@@ -45,6 +45,11 @@ $res = restaurant_info($conn, $id);
                     </div>
                 </form>
                 <h1 class="h3 mt-3">Location</h1>
+                <div class="alert alert-success loc-update-alert d-none">
+                    <!-- <a href="#" class="close" data-dismiss="alert">&times;</a> -->
+                    Updated successfully!
+                </div>
+
                 <form>
                     <div class="row mt-3">
                         <div class="col-12">
@@ -78,7 +83,7 @@ $res = restaurant_info($conn, $id);
                     </div>
                     <div class="row mt-3">
                         <div class="col-12">
-                            <input class="btn btn-primary btn-block" type="submit" name="loc-info" value="Save">
+                            <button class="btn btn-primary btn-block loc-update-btn" name="loc-info">Update</button>
                         </div>
                     </div>
                 </form>
@@ -87,27 +92,96 @@ $res = restaurant_info($conn, $id);
 
             <!-- Restaurant Manager/Employee Forms -->
             <div class="col-12 col-lg-6 restaurant-edit-form-wrap mt-3 mt-lg-0">
-                <h1 class="h3">Managing Staff</h1>
+                <h1 class="h3">Managers</h1>
                 <form>
                     <div class="row mt-3">
                         <div class="col-12">
                             <div class="mb-3">
-                                <button class="btn btn-primary btn-sm add-manager-btn">Add</button>
+                                <button class="btn btn-primary btn-sm add-manager-btn" onclick="return false;" data-toggle="modal" data-target="#list-modal">Add</button>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="list-modal" tabindex="-1" role="dialog">
+                                  <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h5 class="modal-title" id="manager-modal">Add</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                      </div>
+                                      <div class="modal-body">
+                                        <!-- <form id="employee-list"> -->
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="form-row">
+                                                        <div class="col-10"> 
+                                                            <input id="emp-search" class="form-control" type="text">
+                                                        </div>
+                                                        <div class="col-2 pl-0">
+                                                            <button class="btn btn-primary btn-block emp-search-btn">
+                                                                Search
+                                                            </button>
+                                                            <!-- <input class="btn btn-primary btn-block" type="submit" name="emp-search-btn"> -->
+                                                        </div>
+                                                    </div>
+
+                                                    <form>
+                                                        <table id="emp-table" class="table">
+                                                            <thead>
+                                                                <th scope="col">Name</th>
+                                                                <th scope="col">Username</th>
+                                                                <th scope="col">Add</th>
+                                                            </thead>
+                                                            <tbody>
+
+                                                            </tbody>
+                                                        </table>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        <!-- </form> -->
+                                      </div>
+                                      <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button class="btn btn-primary save-manager-btn">Save</button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
                             </div>
-                            <table class="table">
+                            <table id="manager-table" class="table">
                                 <thead>
                                     <tr>
                                         <th scope="col">Name</th>
+                                        <th scope="col">Username</th>
                                         <th scope="col">Info</th>
                                         <th scope="col">Remove</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <?php
+                                    $managers = restaurant_managers($conn, $id);
+                                    if(!empty($managers)):
+                                        foreach($managers AS $man):
+                                            $name = $man['emp_first_name'] . ' ' . $man['emp_last_name'];
+                                            $user = $man['emp_username'];
+                                            $eid = $man['emp_id'];
+                                            $url = "/delectable/public_html/admin/employee/edit/index.php?eid=" . $eid;
+                                    ?>
                                     <tr>
-                                        <td><span>Esteban Rodriguez</span></td>
-                                        <td><a class="btn btn-primary btn-sm" href="#">Info</a></td>
-                                        <td><a class="btn btn-primary btn-sm" href="#">X</a></td>
+                                        <td><span><?php echo $name; ?></span></td>
+                                        <td><span><?php echo $user; ?></span></td>
+                                        <td><a class="btn btn-primary btn-sm" href="<?php echo $url; ?>">Info</a></td>
+                                        <td><button type="button" class="btn btn-primary btn-sm remove-manager-btn" value="<?php echo $eid; ?>">X</button></td>
                                     </tr>
+                                    <?php
+                                        endforeach;
+                                    else:
+                                    ?>
+
+                                    <?php
+                                    endif;
+                                    ?>
                                 </tbody>
                             </table>
                         </div>
@@ -121,20 +195,39 @@ $res = restaurant_info($conn, $id);
                             <div class="mb-3">
                                 <button class="btn btn-primary btn-sm add-manager-btn">Add</button>
                             </div>
-                            <table class="table">
+                            <table id="emp-list" class="table">
                                 <thead>
                                     <tr>
                                         <th scope="col">Name</th>
+                                        <th scope="col">Username</th>
                                         <th scope="col">Info</th>
                                         <th scope="col">Remove</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                <?php
+                                    $employees = restaurant_employees($conn, $id);
+                                    if(!empty($employees)):
+                                        foreach($employees AS $emp):
+                                            $name = $emp['emp_first_name'] . ' ' . $emp['emp_last_name'];
+                                            $user = $emp['emp_username'];
+                                            $eid = $emp['emp_id'];
+                                            $url = "/delectable/public_html/admin/employee/edit/index.php?eid=" . $eid;
+                                    ?>
                                     <tr>
-                                        <td><span>Esteban Rodriguez</span></td>
-                                        <td><a class="btn btn-primary btn-sm" href="#">Info</a></td>
-                                        <td><a class="btn btn-primary btn-sm" href="#">X</a></td>
+                                        <td><span><?php echo $name; ?></span></td>
+                                        <td><span><?php echo $user; ?></span></td>
+                                        <td><a class="btn btn-primary btn-sm" href="<?php echo $url; ?>">Info</a></td>
+                                        <td><button type="button" class="btn btn-primary btn-sm remove-manager-btn" value="<?php echo $eid; ?>">X</button></td>
                                     </tr>
+                                    <?php
+                                        endforeach;
+                                    else:
+                                    ?>
+
+                                    <?php
+                                    endif;
+                                    ?>
                                 </tbody>
                             </table>
                         </div>
@@ -146,6 +239,9 @@ $res = restaurant_info($conn, $id);
     </div>
 </main>
 
+<script type="text/javascript">
+    var lid = <?php echo $id; ?>;
+</script>
 <?php
 require_once(INCLUDE_PATH . 'footer.php');
 endif;
