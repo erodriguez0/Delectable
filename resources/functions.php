@@ -72,5 +72,4 @@ function restaurant_employees($conn, $id) {
 
 	}	
 }
-
 ?>

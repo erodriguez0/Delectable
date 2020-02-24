@@ -49,6 +49,7 @@ $res = restaurant_info($conn, $id);
                     <!-- <a href="#" class="close" data-dismiss="alert">&times;</a> -->
                     Updated successfully!
                 </div>
+
                 <form>
                     <div class="row mt-3">
                         <div class="col-12">
