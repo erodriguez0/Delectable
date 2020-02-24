@@ -49,4 +49,28 @@ function restaurant_info($conn, $id) {
 	}
 }
 
+function restaurant_managers($conn, $id) {
+	$query = $conn->prepare("SELECT * FROM employee WHERE fk_loc_id = :id AND emp_manager = 1");
+	$query->bindParam(":id", $id, PDO::PARAM_INT);
+
+	try {
+		$query->execute();
+		return $query->fetchAll();
+	} catch(PDOException $e) {
+
+	}
+}
+
+function restaurant_employees($conn, $id) {
+	$query = $conn->prepare("SELECT * FROM employee WHERE fk_loc_id = :id AND emp_manager = 0");
+	$query->bindParam(":id", $id, PDO::PARAM_INT);
+
+	try {
+		$query->execute();
+		return $query->fetchAll();
+	} catch(PDOException $e) {
+
+	}	
+}
+
 ?>
