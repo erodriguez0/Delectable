@@ -1,7 +1,28 @@
 $(document).ready(function() {
 	if(document.referrer != '') {
-		$("#create-account-modal").modal('show');
+		// $("#create-account-modal").modal('show');
 	}
+
+	$("#res-update-btn").click(function(e) {
+		e.preventDefault();
+		var name = $("#res-name").val();
+		var slogan = $("#res-slogan").val();
+		var desc = $("#res-desc").val();
+
+		$.ajax({
+			url: '/delectable/public_html/media/scripts/restaurant-edit.php',
+			type: 'POST',
+			data: {
+				'name': name,
+				'slogan': slogan,
+				'desc': desc,
+				'rid': rid,
+				'res_update': true
+			}
+		}).done(function() {
+			$(".res-update-alert").removeClass("d-none");
+		});
+	});
 
 	$(".loc-update-btn").click(function(e) {
 		e.preventDefault();
