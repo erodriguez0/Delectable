@@ -2,6 +2,25 @@
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/delectable/resources/config.php');
 
+if(isset($_POST['res_update'])) {
+	$name = $_POST['name'];
+	$slogan = $_POST['slogan'];
+	$description = $_POST['desc'];
+	$rid = $_POST['rid'];
+
+	$query = $conn->prepare("UPDATE restaurant SET res_name = :name, res_slogan = :slogan, res_description = :description WHERE res_id = :rid");
+	$query->bindParam(":name", $name, PDO::PARAM_STR);
+	$query->bindParam(":slogan", $slogan, PDO::PARAM_STR);
+	$query->bindParam(":description", $description, PDO::PARAM_STR);
+	$query->bindParam(":rid", $rid, PDO::PARAM_INT);
+
+	try {
+		$query->execute();
+	} catch(PDOException $e) {
+
+	}
+}
+
 if(isset($_POST['loc_update'])) {
 	$lid = $_POST['lid'];
 	$add1 = $_POST['add1'];

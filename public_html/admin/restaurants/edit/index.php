@@ -24,23 +24,23 @@ $res = restaurant_info($conn, $id);
 
     <div class="">
         <div class="row">
-
             <!-- Restaurant Info & Location Form -->
             <div class="col-12 col-lg-6 restaurant-edit-form-wrap">
                 <h1 class="h3">Info</h1>
+                <div class="alert alert-success res-update-alert d-none">
+                    <!-- <a href="#" class="close" data-dismiss="alert">&times;</a> -->
+                    Updated successfully!
+                </div>
                 <form>
                     <div class="row mt-3">
                         <div class="col-12">
                             <h6>Name</h6>
-                            <p><?php echo $res['res_name']; ?></p>
-                            <h6>Slogan</h6>
-                            <p><?php echo $res['res_slogan']; ?></p>
-                            <h6>Description</h6>
-                            <p><?php echo $res['res_description']; ?></p>
-                            <div class="btn-group" role="group" aria-label="Basic example">
-                                <button type="button" class="btn btn-primary px-4">Storefront</button>
-                                <button type="button" class="btn btn-alt px-4">Edit</button>
-                            </div>
+                            <input id="res-name" class="form-control" type="text" value="<?php echo $res['res_name']; ?>">
+                            <h6 class="mt-3 mt-md-0">Slogan</h6>
+                            <input id="res-slogan" class="form-control" type="text" value="<?php echo $res['res_slogan']; ?>">
+                            <h6 class="mt-3 mt-md-0">Description</h6>
+                            <textarea id="res-desc" class="form-control" rows="6"><?php echo $res['res_description']; ?></textarea>
+                            <button type="button" id="res-update-btn" class="btn btn-primary btn-block px-4 mt-3">Update Restaurant</button>
                         </div>
                     </div>
                 </form>
@@ -83,7 +83,7 @@ $res = restaurant_info($conn, $id);
                     </div>
                     <div class="row mt-3">
                         <div class="col-12">
-                            <button class="btn btn-primary btn-block loc-update-btn" name="loc-info">Update</button>
+                            <button class="btn btn-primary btn-block loc-update-btn" name="loc-info">Update Location</button>
                         </div>
                     </div>
                 </form>
@@ -241,6 +241,7 @@ $res = restaurant_info($conn, $id);
 
 <script type="text/javascript">
     var lid = <?php echo $id; ?>;
+    var rid = <?php echo $res['fk_res_id']; ?>
 </script>
 <?php
 require_once(INCLUDE_PATH . 'footer.php');
