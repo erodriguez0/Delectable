@@ -26,7 +26,7 @@ $res = restaurant_info($conn, $id);
         <div class="row">
             <!-- Restaurant Info & Location Form -->
             <div class="col-12 col-lg-6 restaurant-edit-form-wrap">
-                <h1 class="h3">Info</h1>
+                <h1 class="h3 subheader-border">Info</h1>
                 <div class="alert alert-success res-update-alert d-none">
                     <!-- <a href="#" class="close" data-dismiss="alert">&times;</a> -->
                     Updated successfully!
@@ -44,7 +44,7 @@ $res = restaurant_info($conn, $id);
                         </div>
                     </div>
                 </form>
-                <h1 class="h3 mt-3">Location</h1>
+                <h1 class="h3 mt-5 subheader-border">Location</h1>
                 <div class="alert alert-success loc-update-alert d-none">
                     <!-- <a href="#" class="close" data-dismiss="alert">&times;</a> -->
                     Updated successfully!
@@ -92,7 +92,7 @@ $res = restaurant_info($conn, $id);
 
             <!-- Restaurant Manager/Employee Forms -->
             <div class="col-12 col-lg-6 restaurant-edit-form-wrap mt-3 mt-lg-0">
-                <h1 class="h3">Managers</h1>
+                <h1 class="h3 subheader-border">Managers</h1>
                 <form>
                     <div class="row mt-3">
                         <div class="col-12">
@@ -188,7 +188,7 @@ $res = restaurant_info($conn, $id);
                     </div>
                 </form>
 
-                <h1 class="h3">Employees</h1>
+                <h1 class="h3 mt-5 subheader-border">Employees</h1>
                 <form>
                     <div class="row mt-3">
                         <div class="col-12">

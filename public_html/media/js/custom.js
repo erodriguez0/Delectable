@@ -1,6 +1,6 @@
 $(document).ready(function() {
 	if(document.referrer != '') {
-		$("#create-account-modal").modal('show');
+		// $("#create-account-modal").modal('show');
 	}
 
 	$("#res-update-btn").click(function(e) {
