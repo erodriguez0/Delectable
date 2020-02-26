@@ -36,9 +36,9 @@ $res = restaurant_info($conn, $id);
                         <div class="col-12">
                             <h6>Name</h6>
                             <input id="res-name" class="form-control" type="text" value="<?php echo $res['res_name']; ?>">
-                            <h6 class="mt-3 mt-md-0">Slogan</h6>
+                            <h6 class="mt-3">Slogan</h6>
                             <input id="res-slogan" class="form-control" type="text" value="<?php echo $res['res_slogan']; ?>">
-                            <h6 class="mt-3 mt-md-0">Description</h6>
+                            <h6 class="mt-3">Description</h6>
                             <textarea id="res-desc" class="form-control" rows="6"><?php echo $res['res_description']; ?></textarea>
                             <button type="button" id="res-update-btn" class="btn btn-primary btn-block px-4 mt-3">Update Restaurant</button>
                         </div>
