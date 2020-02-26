@@ -27,6 +27,12 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="/delectable/public_html/admin/employees/">
+                <span data-feather="users"></span>
+                Employees
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="/delectable/public_html/admin/customers">
                 <span data-feather="users"></span>
                 Customers
