@@ -131,8 +131,8 @@ body {
 
 .emp-profile-img {
 	display: block;
-	max-width:230px;
-	max-height:95px;
+	max-width: 150px;
+	max-height: 150px;
 	width: auto;
 	height: auto;
 }
