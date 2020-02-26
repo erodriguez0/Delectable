@@ -87,91 +87,99 @@ require_once(INCLUDE_PATH . 'functions.php');
                 </button>
               </div>
               <div class="modal-body">
+                    <div class="row mb-3">
+                        <div class="col-4 text-right">
+                            <label><b>Image:</b></label>
+                        </div>
+                        <div class="col-8">
+                            <img id="profile-img" class="emp-profile-img img-fluid" src="https://i.pinimg.com/originals/0d/36/e7/0d36e7a476b06333d9fe9960572b66b9.jpg">
+                        </div>
+                    </div>
                     <div class="row">
-                        <div class="col-3 text-right">
+                        <div class="col-4 text-right">
                         	<label><b>Name:</b></label>
                     	</div>
-                    	<div class="col-9">
+                    	<div class="col-8">
                         	<label id="profile-name"></label>
                     	</div>
                     </div>
                     <div class="row">
-                        <div class="col-3 text-right">
+                        <div class="col-4 text-right">
                         	<label><b>Username:</b></label>
                         </div>
-                        <div class="col-9">
+                        <div class="col-8">
                         	<label id="profile-username"></label>
                     	</div>
                     </div>
                     <div class="row">
-                        <div class="col-3 text-right">
+                        <div class="col-4 text-right">
                         	<label><b>Email:</b></label>
                         </div>
-                        <div class="col-9">
+                        <div class="col-8">
                         	<label id="profile-email"></label>
                     	</div>
                     </div>
                     <div class="row">
-                        <div class="col-3 text-right">
+                        <div class="col-4 text-right">
                         	<label><b>Phone:</b></label>
                         </div>
-                        <div class="col-9">
+                        <div class="col-8">
                         	<label id="profile-phone"></label>
                     	</div>
                     </div>
                     <div class="row">
-                        <div class="col-3 text-right">
+                        <div class="col-4 text-right">
                         	<label><b>Address:</b></label>
                         </div>
-                        <div class="col-9">
+                        <div class="col-8">
                         	<label id="profile-address"></label>
                     	</div>
                     </div>
                     <div class="row">
-                        <div class="col-3 text-right">
+                        <div class="col-4 text-right">
                         	<label><b>Status:</b></label>
                         </div>
-                        <div class="col-9">
+                        <div class="col-8">
                         	<label id="profile-status"></label>
                     	</div>
                     </div>
                     <div class="row">
-                        <div class="col-3 text-right">
+                        <div class="col-4 text-right">
                         	<label><b>Registered:</b></label>
                         </div>
-                        <div class="col-9">
+                        <div class="col-8">
                         	<label id="profile-registered"></label>
                     	</div>
                     </div>
                     <div class="row">
-                        <div class="col-3 text-right">
+                        <div class="col-4 text-right">
                         	<label><b>Last Login:</b><span></span></label>
                         </div>
-                        <div class="col-9">
+                        <div class="col-8">
                         	<label id="profile-login"></label>
                     	</div>
                     </div>
                     <div class="row">
-                        <div class="col-3 text-right">
+                        <div class="col-4 text-right">
                         	<label><b>Workplace: </b><span></span></label>
                         </div>
-                        <div class="col-9">
+                        <div class="col-8">
                         	<label id="profile-workplace"></label>
                     	</div>
                     </div>
                     <div class="row">
-                        <div class="col-3 text-right">
+                        <div class="col-4 text-right">
                         	<label><b>Work Phone: </b><span></span></label>
                         </div>
-                        <div class="col-9">
+                        <div class="col-8">
                         	<label id="profile-work-phone"></label>
                     	</div>
                     </div>
                     <div class="row">
-                        <div class="col-3 text-right">
+                        <div class="col-4 text-right">
                         	<label><b>Work Address: </b><span></span></label>
                         </div>
-                        <div class="col-9">
+                        <div class="col-8">
                         	<label id="profile-work-address"></label>
                     	</div>
                     </div>

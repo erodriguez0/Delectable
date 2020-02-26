@@ -11,8 +11,7 @@ $(document).ready(function() {
             var uname = $(this).find("td").first().next().text().toLowerCase().trim();
             var email = $(this).find("td").first().next().next().text().toLowerCase().trim();
             var status = $(this).find("td").first().next().next().next().text().toLowerCase().trim();
-            $(this).toggle(name.indexOf(value) !== -1 || uname.indexOf(value) !== -1
-            	|| email.indexOf(value) !== -1 || status.indexOf(value) !== -1);
+            $(this).toggle(name.indexOf(value) !== -1 || uname.indexOf(value) !== -1 || email.indexOf(value) !== -1 || status.indexOf(value) !== -1);
         });
     });
 
@@ -28,62 +27,31 @@ $(document).ready(function() {
 				}
     		}).done(function(res) {
     			var emp = JSON.parse(res);
-    			var address1 = "";
-    			var phone = "";
-    			var workplace = "";
+    			var emp_address = "";
     			var work_address = "";
-    			var work_phone = "";
-    			var status = "";
-    			
-    			if(emp['emp_phone'] == null) {
-    				phone = "N/A";
+    			var name = emp['emp_first_name'] + ' ' + emp['emp_last_name']
+    			var phone = (emp['emp_phone'] == null) ? "N/A" : emp['emp_phone'];
+    			var work_phone = (emp['loc_phone'] == null) ? "N/A" : emp['loc_phone'];
+    			var workplace = (emp['res_name'] == null) ? "N/A" : emp['res_name'];
+    			var status = (emp['emp_phone'] == 1) ? "Active" : "Suspended";
+
+    			if(emp['emp_address_1'] == null || emp['emp_address_2'] == null || emp['emp_city'] == null || emp['emp_state'] == null || emp['emp_postal_code'] == null) {
+    				emp_address = "N/A";
     			} else {
-    				phone = emp['emp_phone'];
+	    			emp_address = emp['emp_address_1'].concat(' ', emp['emp_address_2'], '<br>', emp['emp_city'], ' ', emp['emp_state'], ', ', emp['emp_postal_code']);
     			}
 
-    			if(emp['loc_phone'] == null) {
-    				work_phone = "N/A";
-    			} else {
-    				work_phone = emp['loc_phone'];
-    			}
-
-    			if(emp['res_name'] == null) {
-    				workplace = "N/A";
-    			} else {
-    				workplace = emp['res_name'];
-    			}
-
-    			if(emp['emp_status'] == 1) {
-    				status = "Active";
-    			} else {
-    				status = "Suspended";
-    			}
-
-    			if(emp['emp_address_1'] == null || emp['emp_address_2'] == null
-	    				|| emp['emp_city'] == null || emp['emp_state'] == null
-	    				|| emp['emp_postal_code'] == null) {
-    				address1 = "N/A";
-    			} else {
-	    			address1 = emp['emp_address_1'] + ' ' + emp['emp_address_2']
-	    				+ ' ' + emp['emp_city'] + ' ' + emp['emp_state'] + ' '
-	    				+ emp['emp_postal_code'];
-    			}
-
-    			if(emp['loc_address_1'] == null || emp['loc_address_2'] == null
-	    				|| emp['loc_city'] == null || emp['loc_state'] == null
-	    				|| emp['loc_postal_code'] == null) {
+    			if(emp['loc_address_1'] == null || emp['loc_address_2'] == null || emp['loc_city'] == null || emp['loc_state'] == null || emp['loc_postal_code'] == null) {
     				work_address = "N/A";
     			} else {
-	    			work_address = emp['loc_address_1'] + ' ' + emp['loc_address_2']
-	    				+ ' ' + emp['loc_city'] + ' ' + emp['loc_state'] + ' '
-	    				+ emp['loc_postal_code'];
+	    			work_address = emp['loc_address_1'].concat(' ', emp['loc_address_2'], '<br>', emp['loc_city'], ' ', emp['loc_state'], ', ', emp['loc_postal_code']);
     			}
 
-    			$("#profile-name").html(emp['emp_first_name'] + ' ' + emp['emp_last_name']);
+    			$("#profile-name").html(name);
     			$("#profile-username").html(emp['emp_username']);
     			$("#profile-email").html(emp['emp_email']);
     			$("#profile-phone").html(phone);
-    			$("#profile-address").html(address1);
+    			$("#profile-address").html(emp_address);
     			$("#profile-status").html(status);
     			$("#profile-registered").html(emp['emp_created']);
     			$("#profile-login").html(emp['emp_last_login']);
