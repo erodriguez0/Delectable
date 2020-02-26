@@ -4,7 +4,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/delectable/resources/inc/config.php')
 $title = "Delectable | For Restaurants";
 require_once(INCLUDE_PATH . 'header.php');
 
-if(!$_SESSION['active']):
+if(!$_SESSION['admin_id']):
 ?>
 
 <!-- Viewport Cover -->

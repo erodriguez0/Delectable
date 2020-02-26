@@ -1,7 +1,7 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'] . '/delectable/resources/config.php');
 
-if(!$_SESSION['active']):
+if(!$_SESSION['admin_id']):
 	header('Location: /delectable/public_html');
 else:
 
