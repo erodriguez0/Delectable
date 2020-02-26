@@ -114,6 +114,7 @@ body {
 	height: 100vh;
 	min-height: 500px;
 	/*background-image: url('https://source.unsplash.com/BtbjCFUvBXs/1920x1080');*/
+	background-image: url('/delectable/public_html/media/img/layout/welcome.jpg');
 	background-size: cover;
 	background-position: center;
 	background-repeat: no-repeat;
@@ -122,6 +123,10 @@ body {
 .navbar-brand {
 	background-color: transparent !important;
 	box-shadow: none !important;
+}
+
+.subheader-border {
+	border-bottom: 3px solid #71100F;
 }
  
 /* Small devices (landscape phones, 576px and up) */
