@@ -22,7 +22,12 @@ $res = restaurant_list($conn);
     </div>
 
     <div class="">
-        <table class="table">
+        <div class="row">
+            <div class="col-12 col-md-6 col-lg-5 col-xl-4">
+                <input type="text" name="res-table-search" class="form-control" placeholder="Search restaurants">
+            </div>
+        </div>
+        <table class="table mt-3">
             <thead>
                 <tr>
                     <th scope="col">Restaurant</th>
