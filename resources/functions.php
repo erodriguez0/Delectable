@@ -72,4 +72,15 @@ function restaurant_employees($conn, $id) {
 
 	}	
 }
+
+function employee_list($conn) {
+	$query = $conn->prepare("SELECT * FROM employee");
+
+	try {
+		$query->execute();
+		return $query->fetchAll();
+	} catch (PDOException $e) {
+		
+	}
+}
 ?>
