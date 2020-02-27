@@ -130,7 +130,6 @@ $res = restaurant_info($conn, $id);
                                                             <thead>
                                                                 <th scope="col">Name</th>
                                                                 <th scope="col">Username</th>
-                                                                <th scope="col">Add</th>
                                                             </thead>
                                                             <tbody>
 
@@ -142,7 +141,7 @@ $res = restaurant_info($conn, $id);
                                         <!-- </form> -->
                                       </div>
                                       <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-alt" data-dismiss="modal">Close</button>
                                         <button class="btn btn-primary save-manager-btn">Save</button>
                                       </div>
                                     </div>
