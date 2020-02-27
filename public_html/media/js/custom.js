@@ -33,7 +33,7 @@ $(document).ready(function() {
     			var phone = (emp['emp_phone'] == null) ? "N/A" : emp['emp_phone'];
     			var work_phone = (emp['loc_phone'] == null) ? "N/A" : emp['loc_phone'];
     			var workplace = (emp['res_name'] == null) ? "N/A" : emp['res_name'];
-    			var status = (emp['emp_phone'] == 1) ? "Active" : "Suspended";
+    			var status = (emp['emp_status'] == 1) ? "Active" : "Suspended";
 
     			if(emp['emp_address_1'] == null || emp['emp_address_2'] == null || emp['emp_city'] == null || emp['emp_state'] == null || emp['emp_postal_code'] == null) {
     				emp_address = "N/A";
