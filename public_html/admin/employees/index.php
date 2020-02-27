@@ -92,7 +92,7 @@ require_once(INCLUDE_PATH . 'functions.php');
                             <label><b>Image:</b></label>
                         </div>
                         <div class="col-8">
-                            <img id="profile-img" class="emp-profile-img img-fluid" src="https://i.pinimg.com/originals/0d/36/e7/0d36e7a476b06333d9fe9960572b66b9.jpg">
+                            <img id="profile-img" class="emp-profile-modal-img img-fluid" src="https://i.pinimg.com/originals/0d/36/e7/0d36e7a476b06333d9fe9960572b66b9.jpg">
                         </div>
                     </div>
                     <div class="row">
