@@ -8,6 +8,7 @@
 	<meta http-equiv="Expires" content="0" />
 	<link href="https://fonts.googleapis.com/css?family=Oswald:300,400,700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"> -->
 	<link rel="stylesheet" href="/delectable/public_html/media/css/custom.css">
 	<link rel="stylesheet" href="/delectable/public_html/media/css/manager-dashboard-nav.css">
 </head>

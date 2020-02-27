@@ -16,13 +16,18 @@ $res = restaurant_list($conn);
 // var_dump($res);
 ?>
 
-<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+<main role="main" class="col-md-10 ml-sm-auto col-lg-10 pt-3 px-4">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
         <h1 class="h2">Restaurants</h1>
     </div>
 
     <div class="">
-        <table class="table">
+        <div class="row">
+            <div class="col-12 col-md-6 col-lg-5 col-xl-4">
+                <input type="text" id="res-table-search" name="res-table-search" class="form-control" placeholder="Search restaurants">
+            </div>
+        </div>
+        <table class="table mt-3">
             <thead>
                 <tr>
                     <th scope="col">Restaurant</th>

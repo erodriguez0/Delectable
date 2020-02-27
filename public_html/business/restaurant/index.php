@@ -2,7 +2,7 @@
 require_once($_SERVER['DOCUMENT_ROOT'] . '/delectable/resources/config.php');
 
 // Redirect if not logged in
-if(!$_SESSION['active']):
+if(!$_SESSION['admin_id']):
 	header('Location: /delectable/public_html/');
 
 // Display message if no manager access granted

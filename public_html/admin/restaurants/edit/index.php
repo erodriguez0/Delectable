@@ -17,7 +17,7 @@ $res = restaurant_info($conn, $id);
 // var_dump($res);
 ?>
 
-<main role="main" class="col-md-9 ml-sm-auto col-lg-10 py-3 px-4">
+<main role="main" class="col-md-10 ml-sm-auto col-lg-10 py-3 px-4">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
         <h1 class="h2">Edit Restaurant</h1>
     </div>
@@ -36,9 +36,9 @@ $res = restaurant_info($conn, $id);
                         <div class="col-12">
                             <h6>Name</h6>
                             <input id="res-name" class="form-control" type="text" value="<?php echo $res['res_name']; ?>">
-                            <h6 class="mt-3 mt-md-0">Slogan</h6>
+                            <h6 class="mt-3">Slogan</h6>
                             <input id="res-slogan" class="form-control" type="text" value="<?php echo $res['res_slogan']; ?>">
-                            <h6 class="mt-3 mt-md-0">Description</h6>
+                            <h6 class="mt-3">Description</h6>
                             <textarea id="res-desc" class="form-control" rows="6"><?php echo $res['res_description']; ?></textarea>
                             <button type="button" id="res-update-btn" class="btn btn-primary btn-block px-4 mt-3">Update Restaurant</button>
                         </div>
@@ -130,7 +130,6 @@ $res = restaurant_info($conn, $id);
                                                             <thead>
                                                                 <th scope="col">Name</th>
                                                                 <th scope="col">Username</th>
-                                                                <th scope="col">Add</th>
                                                             </thead>
                                                             <tbody>
 
@@ -142,7 +141,7 @@ $res = restaurant_info($conn, $id);
                                         <!-- </form> -->
                                       </div>
                                       <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-alt" data-dismiss="modal">Close</button>
                                         <button class="btn btn-primary save-manager-btn">Save</button>
                                       </div>
                                     </div>

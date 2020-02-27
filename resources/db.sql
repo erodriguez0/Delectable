@@ -110,7 +110,7 @@ CREATE TABLE IF NOT EXISTS `delectable`.`employee` (
   `emp_username` VARCHAR(64) NOT NULL,
   `emp_password` VARCHAR(255) NOT NULL,
   `emp_email` VARCHAR(255) NOT NULL,
-  `emp_status` INT UNSIGNED NOT NULL DEFAULT 0,
+  `emp_status` INT UNSIGNED NOT NULL DEFAULT 1,
   `emp_last_login` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `emp_gender` VARCHAR(32) NULL,
   `emp_birth_date` DATE NULL,

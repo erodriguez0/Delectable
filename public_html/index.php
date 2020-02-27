@@ -1,9 +1,9 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'] . '/delectable/resources/config.php');
 
-if(isset($_SESSION['emp_id'])):
+if(isset($_SESSION['admin_id'])):
 	header('Location: /delectable/public_html/admin/dashboard/');
-elseif(isset($_SESSION['admin_id'])):
+elseif(isset($_SESSION['emp_id'])):
 	header('Location: /delectable/public_html/business/restaurant/');
 else:
 
