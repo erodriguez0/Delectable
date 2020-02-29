@@ -43,14 +43,7 @@ function initCanvas() {
       selectable: false,
       type: 'line'
     })
-    // const lineY = new fabric.Line([ i * grid, 0, i * grid, canvas.height], {
-    //   stroke: lineStroke,
-    //   selectable: false,
-    //   type: 'line'
-    // })
-    // sendLinesToBack()
     canvas.add(lineX)
-    // canvas.add(lineY)
   }
 
   for (let i = 0; i < (canvas.width / grid); i++) {
@@ -60,7 +53,6 @@ function initCanvas() {
       type: 'line'
     })
     sendLinesToBack()
-    // canvas.add(lineX)
     canvas.add(lineY)
   }
 
@@ -144,7 +136,7 @@ function addRect(left, top, width, height) {
     height: height,
     fill: tableFill,
     stroke: tableStroke,
-    strokeWidth: 2,
+    strokeWidth: 1,
     shadow: tableShadow,
     originX: 'center',
     originY: 'center',
@@ -443,7 +435,7 @@ document.querySelectorAll('.admin-mode')[0].addEventListener('click', function()
 })
 
 function formatTime(val) {
-  const hours =  Math.floor(val / 60)
+  const hours =  Math.round(val / 60)
   const minutes = val % 60
   const englishHours = hours > 12 ? hours - 12 : hours
   
@@ -500,36 +492,13 @@ function addDefaultObjects() {
   addChair(45, 315)
   addChair(15, 375)
   addChair(45, 375)
-  addChair(225, 315)
-  addChair(255, 315)
-  addChair(225, 375)
-  addChair(255, 375)
-  addChair(15, 435)
-  addChair(15, 495)
-  addChair(15, 555)
-  addChair(15, 615)
-  addChair(225, 615)
-  addChair(255, 615)
-  addChair(195, 495)
-  addChair(195, 525)
-  addChair(255, 495)
-  addChair(255, 525)
-  addChair(225, 675)
-  addChair(255, 675)
 
   addRect(30, 90, 60, 90)
   addRect(210, 90, 90, 60)
   addRect(210, 210, 90, 60)
   addRect(0, 210, 90, 60)
   addRect(0, 330, 90, 60)
-  addRect(210, 330, 90, 60)
-  addRect(0, 450, 60, 60)
-  addRect(0, 570, 60, 60)
-  addRect(210, 480, 60, 90)
-  addRect(210, 630, 90, 60)
 
   addBar(120, 0, 180, 60)
-
-  addWall(120, 510, 60, 60)
 }
 addDefaultObjects()
