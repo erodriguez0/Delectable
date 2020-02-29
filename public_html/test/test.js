@@ -1,6 +1,6 @@
 let canvas
 let number
-const grid = 30
+const grid = 10
 const backgroundColor = '#f8f8f8'
 const lineStroke = '#ebebeb'
 const tableFill = 'rgba(150, 111, 51, 0.7)'
@@ -34,22 +34,33 @@ function initCanvas() {
   canvas = new fabric.Canvas('canvas')
   number = 1
   canvas.backgroundColor = backgroundColor
-  canvas.setBackgroundImage('https://presspack.rte.ie/wp-content/blogs.dir/2/files/2015/04/AMC_TWD_Maggie_Portraits_4817_V1.jpg', canvas.renderAll.bind(canvas));
+  // canvas.setBackgroundImage('https://presspack.rte.ie/wp-content/blogs.dir/2/files/2015/04/AMC_TWD_Maggie_Portraits_4817_V1.jpg', canvas.renderAll.bind(canvas));
 
 
-  for (let i = 0; i < (canvas.height / grid); i++) {
-    const lineX = new fabric.Line([ 0, i * grid, canvas.height, i * grid], {
+  for (let i = 0; i < (canvas.width / grid); i++) {
+    const lineX = new fabric.Line([ 0, i * grid, canvas.width, i * grid], {
       stroke: lineStroke,
       selectable: false,
       type: 'line'
     })
+    // const lineY = new fabric.Line([ i * grid, 0, i * grid, canvas.height], {
+    //   stroke: lineStroke,
+    //   selectable: false,
+    //   type: 'line'
+    // })
+    // sendLinesToBack()
+    canvas.add(lineX)
+    // canvas.add(lineY)
+  }
+
+  for (let i = 0; i < (canvas.width / grid); i++) {
     const lineY = new fabric.Line([ i * grid, 0, i * grid, canvas.height], {
       stroke: lineStroke,
       selectable: false,
       type: 'line'
     })
     sendLinesToBack()
-    canvas.add(lineX)
+    // canvas.add(lineX)
     canvas.add(lineY)
   }
 
@@ -103,8 +114,8 @@ initCanvas()
 function resizeCanvas() {
   widthEl = document.getElementById('width')
   heightEl = document.getElementById('height')
-  canvasEl.width = widthEl.value ? widthEl.value : 302
-  canvasEl.height = heightEl.value ? heightEl.value : 812
+  canvasEl.width = widthEl.value ? widthEl.value : 640
+  canvasEl.height = heightEl.value ? heightEl.value : 480
   const canvasContainerEl = document.querySelectorAll('.canvas-container')[0]
   canvasContainerEl.style.width = canvasEl.width
   canvasContainerEl.style.height = canvasEl.height

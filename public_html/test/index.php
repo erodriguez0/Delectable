@@ -3,7 +3,7 @@
 <head>
 	<title>Test</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-	<link href="https://cdn.rawgit.com/leongersen/noUiSlider/master/distribute/nouislider.min.css" rel="stylesheet">
+	<link href="https://cdn.rawgit.com/leongersen/noUiSlider/master/distribute/nouislider.min.css" rel="stylesheet" />
 	<style type="text/css">
 		body {
 		  margin-top: 30px;
@@ -25,11 +25,11 @@
     <div class="row">
       <div class="col-sm-2 col-sm-offset-3 form-group">
         <label>Width (px)</label>
-        <input type="number" id="width" class="form-control" value="302" />
+        <input type="number" id="width" class="form-control" value="640" />
       </div>
       <div class="col-sm-2 form-group">
         <label>Height (px)</label>
-        <input type="number" id="height" class="form-control" value="812" />
+        <input type="number" id="height" class="form-control" value="480" />
       </div>
       <div class="col-sm-2 form-group">
         <label>&nbsp;</label>
@@ -60,7 +60,7 @@
     <div id="slider-value"></div>
   </div>
   
-  <canvas id="canvas" width="302" height="812"></canvas>
+  <canvas id="canvas" width="640" height="480"></canvas>
 </div>
 
 <div class="modal fade" id="modal" tabindex="-1" role="dialog">
