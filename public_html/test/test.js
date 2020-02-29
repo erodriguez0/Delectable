@@ -1,6 +1,6 @@
 let canvas
 let number
-const grid = 10
+const grid = 20
 const backgroundColor = '#f8f8f8'
 const lineStroke = '#ebebeb'
 const tableFill = 'rgba(150, 111, 51, 0.7)'
@@ -114,8 +114,8 @@ initCanvas()
 function resizeCanvas() {
   widthEl = document.getElementById('width')
   heightEl = document.getElementById('height')
-  canvasEl.width = widthEl.value ? widthEl.value : 640
-  canvasEl.height = heightEl.value ? heightEl.value : 480
+  canvasEl.width = widthEl.value ? widthEl.value : 720
+  canvasEl.height = heightEl.value ? heightEl.value : 540
   const canvasContainerEl = document.querySelectorAll('.canvas-container')[0]
   canvasContainerEl.style.width = canvasEl.width
   canvasContainerEl.style.height = canvasEl.height

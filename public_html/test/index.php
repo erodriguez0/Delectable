@@ -25,11 +25,11 @@
     <div class="row">
       <div class="col-sm-2 col-sm-offset-3 form-group">
         <label>Width (px)</label>
-        <input type="number" id="width" class="form-control" value="640" />
+        <input type="number" id="width" class="form-control" value="720" />
       </div>
       <div class="col-sm-2 form-group">
         <label>Height (px)</label>
-        <input type="number" id="height" class="form-control" value="480" />
+        <input type="number" id="height" class="form-control" value="540" />
       </div>
       <div class="col-sm-2 form-group">
         <label>&nbsp;</label>
@@ -60,7 +60,7 @@
     <div id="slider-value"></div>
   </div>
   
-  <canvas id="canvas" width="640" height="480"></canvas>
+  <canvas id="canvas" width="720" height="540"></canvas>
 </div>
 
 <div class="modal fade" id="modal" tabindex="-1" role="dialog">
