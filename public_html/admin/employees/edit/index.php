@@ -31,6 +31,7 @@ $zip = (isset($emp['emp_zip'])) ? $emp['emp_zip'] : '';
 <main role="main" class="col-md-10 ml-sm-auto col-lg-10 pt-3 px-4">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
         <h1 class="h2">Edit Employee</h1>
+        <a class="btn btn-alt" href="../">< Back</a>
     </div>
 
     <div class=" mb-3">
@@ -69,13 +70,13 @@ $zip = (isset($emp['emp_zip'])) ? $emp['emp_zip'] : '';
                 <div class="row mt-3">
                 	<div class="col-12">
 	                    <h6>Username</h6>
-	                    <input id="res-slogan" class="form-control" type="text" value="<?php echo $uname; ?>">
+	                    <input class="form-control" type="text" value="<?php echo $uname; ?>" name="emp-username">
                 	</div>
                 </div>
                 <div class="row mt-3">
                 	<div class="col-12">
                 		<h6>Email</h6>
-	                    <input id="res-slogan" class="form-control" type="text" value="<?php echo $email; ?>">
+	                    <input class="form-control" type="text" value="<?php echo $email; ?>" name="emp-email">
 	                </div>
 	            </div>
                 <div class="row mt-3">

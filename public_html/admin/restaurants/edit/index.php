@@ -20,6 +20,7 @@ $res = restaurant_info($conn, $id);
 <main role="main" class="col-md-10 ml-sm-auto col-lg-10 py-3 px-4">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
         <h1 class="h2">Edit Restaurant</h1>
+        <a class="btn btn-alt" href="../">< Back</a>
     </div>
 
     <div class="">
@@ -165,7 +166,7 @@ $res = restaurant_info($conn, $id);
                                             $name = $man['emp_first_name'] . ' ' . $man['emp_last_name'];
                                             $user = $man['emp_username'];
                                             $eid = $man['emp_id'];
-                                            $url = "/delectable/public_html/admin/employee/edit/index.php?eid=" . $eid;
+                                            $url = "/delectable/public_html/admin/employees/edit/index.php?eid=" . $eid;
                                     ?>
                                     <tr>
                                         <td><span><?php echo $name; ?></span></td>

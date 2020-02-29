@@ -19,7 +19,7 @@ $(document).ready(function() {
     	$(this).click(function() {
     		var eid = $(this).attr("name");
     		$.ajax({
-    			url: '/delectable/public_html/media/scripts/employee-edit.php',
+    			url: '/delectable/public_html/assets/scripts/employee-edit.php',
 				type: 'POST',
 				data: {
 					'eid': eid,
@@ -79,7 +79,7 @@ $(document).ready(function() {
 		var desc = $("#res-desc").val();
 
 		$.ajax({
-			url: '/delectable/public_html/media/scripts/restaurant-edit.php',
+			url: '/delectable/public_html/assets/scripts/restaurant-edit.php',
 			type: 'POST',
 			data: {
 				'name': name,
@@ -103,7 +103,7 @@ $(document).ready(function() {
 		var zip = $("[name='loc-postal-code']").val();
 		
 		$.ajax({
-			url: '/delectable/public_html/media/scripts/restaurant-edit.php',
+			url: '/delectable/public_html/assets/scripts/restaurant-edit.php',
 			type: 'POST',
 			data: {
 				'lid': lid,
@@ -126,7 +126,7 @@ $(document).ready(function() {
 		var input = $("#emp-search").val();
 
 		$.ajax({
-			url: '/delectable/public_html/media/scripts/restaurant-edit.php',
+			url: '/delectable/public_html/assets/scripts/restaurant-edit.php',
 			type: 'POST',
 			data: {'employee_search': input}
 		}).done(function(res) {
@@ -147,7 +147,7 @@ $(document).ready(function() {
 		e.preventDefault();
 		var eid = $(".emp-check").val();
 		$.ajax({
-			url: '/delectable/public_html/media/scripts/restaurant-edit.php',
+			url: '/delectable/public_html/assets/scripts/restaurant-edit.php',
 			type: 'POST',
 			data: {
 				'add_manager': true,
@@ -170,7 +170,7 @@ $(document).ready(function() {
 			var man_table = $("#emp-table tbody");
 			var table = $("#emp-list tbody");
 			$.ajax({
-				url: '/delectable/public_html/media/scripts/restaurant-edit.php',
+				url: '/delectable/public_html/assets/scripts/restaurant-edit.php',
 				type: 'POST',
 				data: {'remove_manager': eid}
 			}).done(function() {
