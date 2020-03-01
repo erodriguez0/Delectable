@@ -1,11 +1,13 @@
+
 let canvas
 let number
-const grid = 20
+const grid = 15
 const backgroundColor = '#f8f8f8'
 const lineStroke = '#ebebeb'
 const tableFill = 'rgba(150, 111, 51, 0.7)'
 const tableStroke = '#694d23'
-const tableShadow = 'rgba(0, 0, 0, 0.4) 3px 3px 7px'
+// const tableShadow = 'rgba(0, 0, 0, 0.4) 3px 3px 7px'
+const tableShadow = 'rgba(0, 0, 0, 0) 3px 3px 7px'
 const chairFill = 'rgba(67, 42, 4, 0.7)'
 const chairStroke = '#32230b'
 const chairShadow = 'rgba(0, 0, 0, 0.4) 3px 3px 7px'
@@ -316,8 +318,8 @@ function addWall(left, top, width, height) {
 
 function snapToGrid(target) {
   target.set({
-    left: Math.round(target.left / (grid / 2)) * grid / 2,
-    top: Math.round(target.top / (grid / 2)) * grid / 2
+    left: Math.floor(target.left / (grid / 2)) * grid / 2,
+    top: Math.floor(target.top / (grid / 2)) * grid / 2
   })
 }
 
