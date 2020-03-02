@@ -5,17 +5,21 @@ const backgroundColor = '#f8f8f8'
 const lineStroke = '#ebebeb'
 const tableFill = 'rgba(150, 111, 51, 0.7)'
 const tableStroke = '#694d23'
-const tableShadow = 'rgba(0, 0, 0, 0.4) 3px 3px 7px'
+// const tableShadow = 'rgba(0, 0, 0, 0.4) 3px 3px 7px'
+const tableShadow = 'rgba(0, 0, 0, 0) 3px 3px 7px'
 const chairFill = 'rgba(67, 42, 4, 0.7)'
 const chairStroke = '#32230b'
-const chairShadow = 'rgba(0, 0, 0, 0.4) 3px 3px 7px'
+// const chairShadow = 'rgba(0, 0, 0, 0.4) 3px 3px 7px'
+const chairShadow = 'rgba(0, 0, 0, 0) 3px 3px 7px'
 const barFill = 'rgba(0, 93, 127, 0.7)'
 const barStroke = '#003e54'
-const barShadow = 'rgba(0, 0, 0, 0.4) 3px 3px 7px'
+// const barShadow = 'rgba(0, 0, 0, 0.4) 3px 3px 7px'
+const barShadow = 'rgba(0, 0, 0, 0) 3px 3px 7px'
 const barText = 'Bar'
 const wallFill = 'rgba(136, 136, 136, 0.7)'
 const wallStroke = '#686868'
-const wallShadow = 'rgba(0, 0, 0, 0.4) 5px 5px 20px'
+// const wallShadow = 'rgba(0, 0, 0, 0.4) 5px 5px 20px'
+const wallShadow = 'rgba(0, 0, 0, 0) 5px 5px 20px'
 
         var  photoUrlLandscape = 'https://images8.alphacoders.com/292/292379.jpg',
             photoUrlPortrait = 'https://presspack.rte.ie/wp-content/blogs.dir/2/files/2015/04/AMC_TWD_Maggie_Portraits_4817_V1.jpg'
@@ -79,8 +83,8 @@ function initCanvas() {
   })
 
   canvas.on('object:modified', function(e) {
-    e.target.scaleX = e.target.scaleX >= 0.25 ? (Math.round(e.target.scaleX * 2) / 2) : 0.5
-    e.target.scaleY = e.target.scaleY >= 0.25 ? (Math.round(e.target.scaleY * 2) / 2) : 0.5
+    // e.target.scaleX = e.target.scaleX >= 0.25 ? (Math.round(e.target.scaleX * 2) / 2) : 0.5
+    // e.target.scaleY = e.target.scaleY >= 0.25 ? (Math.round(e.target.scaleY * 2) / 2) : 0.5
     snapToGrid(e.target)
     if (e.target.type === 'table') {
       canvas.bringToFront(e.target)
@@ -316,8 +320,8 @@ function addWall(left, top, width, height) {
 
 function snapToGrid(target) {
   target.set({
-    left: Math.round(target.left / (grid / 2)) * grid / 2,
-    top: Math.round(target.top / (grid / 2)) * grid / 2
+    left: Math.round(target.left / (grid)) * grid,
+    top: Math.round(target.top / (grid)) * grid
   })
 }
 
