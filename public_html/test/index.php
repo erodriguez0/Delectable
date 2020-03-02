@@ -75,11 +75,33 @@
     </div>
   </div>
 </div>
+<button class="btn btn-primary" id="save">Download</button>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.7.11/fabric.min.js"></script>
 <script src="https://cdn.rawgit.com/leongersen/noUiSlider/master/distribute/nouislider.min.js"></script>
 <script type="text/javascript" src="./test.js"></script>
+<script type="text/javascript">
+document.getElementById('save').addEventListener('click', function () {
+  // retrieve the canvas data
+  var canvasContents = canvas.toDataURL(); // a data URL of the current canvas image
+  var data = { image: canvasContents, date: Date.now() };
+  var string = JSON.stringify(data);
+
+  // create a blob object representing the data as a JSON string
+  var file = new Blob([string], {
+    type: 'application/json'
+  });
+  
+  // trigger a click event on an <a> tag to open the file explorer
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(file);
+  a.download = 'data.json';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+});
+</script>
 </body>
 </html>

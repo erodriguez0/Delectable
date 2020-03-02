@@ -1,6 +1,7 @@
+
 let canvas
 let number
-const grid = 20
+const grid = 15
 const backgroundColor = '#f8f8f8'
 const lineStroke = '#ebebeb'
 const tableFill = 'rgba(150, 111, 51, 0.7)'
