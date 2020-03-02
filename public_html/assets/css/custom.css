@@ -68,7 +68,7 @@ B O O T S T R A P  B U T T O N S
 }
 
 /* The slider */
-.slider {
+.status-slider {
 	position: absolute;
 	cursor: pointer;
 	top: 0;
@@ -80,7 +80,7 @@ B O O T S T R A P  B U T T O N S
 	transition: .4s;
 }
 
-.slider:before {
+.status-slider:before {
 	position: absolute;
 	content: "";
 	height: 18px;
@@ -92,15 +92,15 @@ B O O T S T R A P  B U T T O N S
 	transition: .3s;
 }
 
-input:checked + .slider {
+input:checked + .status-slider {
 	background-color: #2196F3;
 }
 
-input:focus + .slider {
+input:focus + .status-slider {
 	box-shadow: 0 0 1px #2196F3;
 }
 
-input:checked + .slider:before {
+input:checked + .status-slider:before {
 	-webkit-transform: translateX(26px);
 	-ms-transform: translateX(26px);
 	transform: translateX(26px);
@@ -168,7 +168,7 @@ body {
 	height: 100vh;
 	min-height: 500px;
 	/*background-image: url('https://source.unsplash.com/BtbjCFUvBXs/1920x1080');*/
-	background-image: url('/delectable/public_html/media/img/layout/welcome.jpg');
+	background-image: url('/delectable/public_html/assets/img/layout/welcome.jpg');
 	background-size: cover;
 	background-position: center;
 	background-repeat: no-repeat;

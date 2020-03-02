@@ -49,7 +49,7 @@ if(isset($_POST['loc_update'])) {
 if(isset($_POST['employee_search'])) {
 	$input = $_POST['employee_search'];
 
-	$query = $conn->prepare("SELECT * FROM employee WHERE emp_username = :input AND emp_manager = 0");
+	$query = $conn->prepare("SELECT * FROM employee WHERE emp_username = :input AND emp_manager = 0 AND emp_status = 1");
 	$query->bindParam(":input", $input, PDO::PARAM_STR);
 	try {
 		$query->execute();
