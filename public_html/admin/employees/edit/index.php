@@ -1,8 +1,8 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'] . '/delectable/resources/config.php');
 
-if(!$_SESSION['active']):
-	header('Location: /delectable/public_html');
+if(!$_SESSION['admin_id']):
+	header('location: /delectable/public_html');
 else:
 
 $title = "Delectable | Edit Employee";
@@ -25,7 +25,7 @@ $addr2 = (isset($emp['emp_address_2'])) ? $emp['emp_address_2'] : '';
 $phone = (isset($emp['emp_phone'])) ? $emp['emp_phone'] : '';
 $city = (isset($emp['emp_city'])) ? $emp['emp_city'] : '';
 $state = (isset($emp['emp_state'])) ? $emp['emp_state'] : '';
-$zip = (isset($emp['emp_zip'])) ? $emp['emp_zip'] : '';
+$zip = (isset($emp['emp_postal_code'])) ? $emp['emp_postal_code'] : '';
 ?>
 
 <main role="main" class="col-md-10 ml-sm-auto col-lg-10 pt-3 px-4">
@@ -38,9 +38,8 @@ $zip = (isset($emp['emp_zip'])) ? $emp['emp_zip'] : '';
     	<div class="row">
     		<div class="col-12 col-lg-6 restaurant-edit-form-wrap">
     			<h1 class="h3 subheader-border">Info</h1>
-                <div class="alert alert-success res-update-alert d-none">
-                    <!-- <a href="#" class="close" data-dismiss="alert">&times;</a> -->
-                    Updated successfully!
+                <div class="alert emp-update-alert d-none">
+                    
                 </div>
                 <div class="row mt-3">
                 	<div class="col-12">
@@ -51,67 +50,67 @@ $zip = (isset($emp['emp_zip'])) ? $emp['emp_zip'] : '';
                 	<div class="col-12">
                 		<h6>Status</h6>
                 		<label class="switch">
-							<input type="checkbox" <?php echo $check; ?>>
-							<span class="slider"></span>
+							<input id="edit-emp-status" type="checkbox" <?php echo $check; ?>>
+							<span class="status-slider"></span>
 						</label>
-						<label><?php echo $status; ?></label>
+						<label id="emp-status-label"><?php echo $status; ?></label>
                 	</div>
                 </div>
                 <div class="row mt-3">
 	                <div class="col-12 col-md-6">
 	                    <h6>First Name</h6>
-	                    <input class="form-control" type="text" name="emp-first-name" value="<?php echo $fname; ?>">
+	                    <input id="edit-emp-fname" class="form-control" type="text" name="emp-first-name" value="<?php echo $fname; ?>">
 	                </div>
 	                <div class="col-12 col-md-6 mt-3 mt-md-0">
 	                    <h6>Last Name</h6>
-	                    <input class="form-control" type="text" name="emp-last-name" value="<?php echo $lname; ?>">
+	                    <input id="edit-emp-lname" class="form-control" type="text" name="emp-last-name" value="<?php echo $lname; ?>">
 	                </div>
 	            </div>
                 <div class="row mt-3">
                 	<div class="col-12">
 	                    <h6>Username</h6>
-	                    <input class="form-control" type="text" value="<?php echo $uname; ?>" name="emp-username">
+	                    <input id="edit-emp-uname" class="form-control" type="text" value="<?php echo $uname; ?>" name="emp-username">
                 	</div>
                 </div>
                 <div class="row mt-3">
                 	<div class="col-12">
                 		<h6>Email</h6>
-	                    <input class="form-control" type="text" value="<?php echo $email; ?>" name="emp-email">
+	                    <input id="edit-emp-email" class="form-control" type="text" value="<?php echo $email; ?>" name="emp-email">
 	                </div>
 	            </div>
                 <div class="row mt-3">
                 	<div class="col-12">
 	                    <h6>Address 1</h6>
-	                    <input class="form-control" type="text" name="loc-address-1" value="<?php echo $addr1; ?>">
+	                    <input id="edit-emp-add1" class="form-control" type="text" name="emp-address-1" value="<?php echo $addr1; ?>">
 	                </div>
                 </div>
                 <div class="row mt-3">
 	                <div class="col-12 col-md-6">
 	                    <h6>Address 2</h6>
-	                    <input class="form-control" type="text" name="loc-address-2" value="<?php echo $addr2; ?>">
+	                    <input id="edit-emp-add2" class="form-control" type="text" name="emp-address-2" value="<?php echo $addr2; ?>">
 	                </div>
 	                <div class="col-12 col-md-6 mt-3 mt-md-0">
 	                    <h6>Phone</h6>
-	                    <input class="form-control" type="text" name="loc-phone" value="<?php echo $phone; ?>">
+	                    <input id="edit-emp-phone" class="form-control" type="text" name="emp-phone" value="<?php echo $phone; ?>">
 	                </div>
                 </div>
                 <div class="row mt-3">
                     <div class="col-12 col-md-5">
                         <h6>City</h6>
-                        <input class="form-control" type="text" name="loc-city" value="<?php echo $city; ?>">
+                        <input id="edit-emp-city" class="form-control" type="text" name="emp-city" value="<?php echo $city; ?>">
                     </div>
                     <div class="col-12 col-md-4 mt-3 mt-md-0">
                         <h6>State</h6>
-                        <input class="form-control" type="text" name="loc-state" value="<?php echo $state; ?>">
+                        <input id="edit-emp-state" class="form-control" type="text" name="emp-state" value="<?php echo $state; ?>">
                     </div>
                     <div class="col-12 col-md-3 mt-3 mt-md-0">
                         <h6>Zip</h6>
-                        <input class="form-control" type="text" name="loc-postal-code" value="<?php echo $zip; ?>">
+                        <input id="edit-emp-postal-code" class="form-control" type="text" name="emp-postal-code" value="<?php echo $zip; ?>">
                     </div>
                 </div>
                 <div class="row mt-3">
                     <div class="col-12">
-                        <button class="btn btn-primary btn-block loc-update-btn" name="loc-info">Update Profile</button>
+                        <button id="emp-update-btn" class="btn btn-primary btn-block" name="emp-update-btn">Update Profile</button>
                     </div>
                 </div>
     		</div>
@@ -127,6 +126,11 @@ $zip = (isset($emp['emp_zip'])) ? $emp['emp_zip'] : '';
     </div>
 </main>
 
+<script type="text/javascript">
+    var eid = <?php echo $id; ?>;
+</script>
+
 <?php
+require_once(INCLUDE_PATH . 'footer.php');
 endif;
 ?>

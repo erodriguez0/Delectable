@@ -62,6 +62,63 @@ $(document).ready(function() {
     	});
     });
 
+    // Employee Edit
+    $("#emp-update-btn").click(function(e) {
+    	var fname = $("#edit-emp-fname").val();
+    	var lname = $("#edit-emp-lname").val();
+    	var uname = $("#edit-emp-uname").val();
+    	var email = $("#edit-emp-email").val();
+    	var address1 = $("#edit-emp-add1").val();
+    	var address2 = $("#edit-emp-add2").val();
+    	var phone = $("#edit-emp-phone").val();
+    	var city = $("#edit-emp-city").val();
+    	var state = $("#edit-emp-state").val();
+    	var zip = $("#edit-emp-postal-code").val();
+    	var status = ($("#edit-emp-status").is(":checked")) ? 1 : 0;
+
+    	$.ajax({
+    		url: '/delectable/public_html/assets/scripts/employee-edit.php',
+			type: 'POST',
+			data: {
+				'eid': eid,
+				'fname': fname,
+				'lname': lname,
+				'uname': uname,
+				'email': email,
+				'address1': address1,
+				'address2': address2,
+				'phone': phone,
+				'city': city,
+				'state': state,
+				'zip': zip,
+				'status': status,
+				'employee_update': true
+			}
+    	}).done(function(res) {
+    		var res = JSON.parse(res);
+    		if(!res.error) {
+    			$(".emp-update-alert").html("Successfully updated");
+    			$(".emp-update-alert").removeClass("alert-danger");
+    			$(".emp-update-alert").addClass("alert-success");
+    			$(".emp-update-alert").removeClass("d-none");
+    		} else {
+    			$(".emp-update-alert").html(res.error_msg);
+    			$(".emp-update-alert").removeClass("alert-success");
+    			$(".emp-update-alert").addClass("alert-danger");
+    			$(".emp-update-alert").removeClass("d-none");
+    		}
+    	});
+    });
+
+    $("#edit-emp-status").click(function() {
+    	var check = ($("#edit-emp-status").is(":checked")) ? 1 : 0;
+    	if(check) {
+    		$("#emp-status-label").html("Active");
+    	} else {
+    		$("#emp-status-label").html("Suspended");
+    	}
+    });
+
     $("#res-table-search").keyup(function() {
         var value = $(this).val().toLowerCase().trim();
 
