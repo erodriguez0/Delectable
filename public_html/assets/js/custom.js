@@ -119,6 +119,10 @@ $(document).ready(function() {
     	}
     });
 
+    $("#toggle-res-search").click(function() {
+    	$("#show-res-search-form").slideToggle();
+    });
+
     $("#res-table-search").keyup(function() {
         var value = $(this).val().toLowerCase().trim();
 

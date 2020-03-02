@@ -26,6 +26,11 @@ $phone = (isset($emp['emp_phone'])) ? $emp['emp_phone'] : '';
 $city = (isset($emp['emp_city'])) ? $emp['emp_city'] : '';
 $state = (isset($emp['emp_state'])) ? $emp['emp_state'] : '';
 $zip = (isset($emp['emp_postal_code'])) ? $emp['emp_postal_code'] : '';
+$res = $emp['res_name'];
+$add1 = $emp['loc_address_1'] . ' ' . $emp['loc_address_2'];
+$add2 = $emp['loc_city'] . ', ' . $emp['loc_state'] . ' ' . $emp['loc_postal_code'];
+$add3 = $emp['loc_phone'];
+$res_url = '/delectable/public_html/admin/restaurants/edit/index.php?lid=' . $emp['loc_id'];
 ?>
 
 <main role="main" class="col-md-10 ml-sm-auto col-lg-10 pt-3 px-4">
@@ -117,9 +122,49 @@ $zip = (isset($emp['emp_postal_code'])) ? $emp['emp_postal_code'] : '';
 
     		<div class="col-12 col-lg-6 restaurant-edit-form-wrap mt-3 mt-lg-0">
     			<h1 class="h3 subheader-border">Workplace</h1>
-                <div class="alert alert-success res-update-alert d-none">
-                    <!-- <a href="#" class="close" data-dismiss="alert">&times;</a> -->
-                    Updated successfully!
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <address>
+                            <strong><?php echo $res; ?></strong><br>
+                            <?php echo $add1; ?><br>
+                            <?php echo $add2; ?><br>
+                            <?php echo $add3; ?>
+                        </address>
+                        <div class="btn-group">
+                            <button id="toggle-res-search" class="btn btn-primary">Edit</button>
+                            <a class="btn btn-alt" href="<?php echo $res_url; ?>">View Location</a>
+                        </div>
+                        <div id="show-res-search-form" style="display: none;">
+                            <div class="row mt-3">
+                                <div class="col-12">
+                                    <input type="text" class="form-control" name="res-search" placeholder="Search restaurants">
+
+                                    <table class="table mt-3">
+                                        <thead>
+                                            <th scope="col">Restaurant</th>
+                                            <th scope="col">Address</th>
+                                            <th scope="col">View</th>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="align-middle">
+                                                    BANGABURGER
+                                                </td>
+                                                <td class="align-middle">
+                                                    2550 California Ave<br>
+                                                    Suite #201<br>
+                                                    Bakersfield, California
+                                                </td>
+                                                <td class="align-middle">
+                                                    <a class="btn btn-primary text-white btn-sm">View</a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
     		</div>
     	</div>
