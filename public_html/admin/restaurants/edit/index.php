@@ -105,7 +105,7 @@ $res = restaurant_info($conn, $id);
                                   <div class="modal-dialog modal-dialog-centered" role="document">
                                     <div class="modal-content">
                                       <div class="modal-header">
-                                        <h5 class="modal-title" id="manager-modal">Add</h5>
+                                        <h5 class="modal-title" id="manager-modal">Add Manager</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
@@ -131,6 +131,7 @@ $res = restaurant_info($conn, $id);
                                                             <thead>
                                                                 <th scope="col">Name</th>
                                                                 <th scope="col">Username</th>
+                                                                <th scope="col">Action</th>
                                                             </thead>
                                                             <tbody>
 
@@ -193,7 +194,57 @@ $res = restaurant_info($conn, $id);
                     <div class="row mt-3">
                         <div class="col-12">
                             <div class="mb-3">
-                                <button class="btn btn-primary btn-sm add-manager-btn">Add</button>
+                                <button class="btn btn-primary btn-sm add-employee-btn" onclick="return false;" data-toggle="modal" data-target="#emp-list-modal">Add</button>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="emp-list-modal" tabindex="-1" role="dialog">
+                                  <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h5 class="modal-title" id="manager-modal">Add Employee</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                      </div>
+                                      <div class="modal-body">
+                                        <!-- <form id="employee-list"> -->
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="form-row">
+                                                        <div class="col-10"> 
+                                                            <input id="emp-search-input" class="form-control" type="text">
+                                                        </div>
+                                                        <div class="col-2 pl-0">
+                                                            <button class="btn btn-primary btn-block emp-search-add-btn">
+                                                                Search
+                                                            </button>
+                                                            <!-- <input class="btn btn-primary btn-block" type="submit" name="emp-search-btn"> -->
+                                                        </div>
+                                                    </div>
+
+                                                    <form>
+                                                        <table id="emp-list-table" class="table">
+                                                            <thead>
+                                                                <th scope="col">Name</th>
+                                                                <th scope="col">Username</th>
+                                                                <th scope="col">Action</th>
+                                                            </thead>
+                                                            <tbody>
+
+                                                            </tbody>
+                                                        </table>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        <!-- </form> -->
+                                      </div>
+                                      <div class="modal-footer">
+                                        <button type="button" class="btn btn-alt" data-dismiss="modal">Close</button>
+                                        <button class="btn btn-primary save-employee-btn">Save</button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
                             </div>
                             <table id="emp-list" class="table">
                                 <thead>
@@ -212,7 +263,7 @@ $res = restaurant_info($conn, $id);
                                             $name = $emp['emp_first_name'] . ' ' . $emp['emp_last_name'];
                                             $user = $emp['emp_username'];
                                             $eid = $emp['emp_id'];
-                                            $url = "/delectable/public_html/admin/employee/edit/index.php?eid=" . $eid;
+                                            $url = "/delectable/public_html/admin/employees/edit/index.php?eid=" . $eid;
                                     ?>
                                     <tr>
                                         <td><span><?php echo $name; ?></span></td>
