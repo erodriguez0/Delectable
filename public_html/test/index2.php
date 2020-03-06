@@ -27,6 +27,7 @@ require_once(INCLUDE_PATH . '/admin/dashboard.php');
                 <label>&nbsp;</label>
                 <br />
                 <button class="btn btn-primary">Save</button>
+                <button class="btn btn-alt" id="save-canvas">Export</button>
             </div>
         </div>
     	<div class="row">

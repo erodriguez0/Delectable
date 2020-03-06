@@ -46,6 +46,7 @@ function initCanvas() {
     const lineX = new fabric.Line([ 0, i * grid, canvas.width, i * grid], {
       stroke: lineStroke,
       selectable: false,
+      excludeFromExport: true,
       type: 'line'
     })
     canvas.add(lineX)
@@ -55,6 +56,7 @@ function initCanvas() {
     const lineY = new fabric.Line([ i * grid, 0, i * grid, canvas.height], {
       stroke: lineStroke,
       selectable: false,
+      excludeFromExport: true,
       type: 'line'
     })
     sendLinesToBack()
@@ -165,9 +167,47 @@ function addRect(left, top, width, height) {
     centeredRotation: true,
     snapAngle: 45,
     selectable: true,
-    type: 'table',
+    type: 'rect',
     id: id,
     number: number
+  })
+  canvas.add(g)
+  number++
+  return g
+}
+
+function addRect2(left = 0, top = 0, width = 60, height = 90, tid, tnum) {
+  const id = generateId()
+  const o = new fabric.Rect({
+    width: width,
+    height: height,
+    fill: tableFill,
+    stroke: tableStroke,
+    strokeWidth: 1,
+    shadow: tableShadow,
+    originX: 'center',
+    originY: 'center',
+    centeredRotation: true,
+    snapAngle: 45,
+    selectable: true
+  })
+  const t = new fabric.IText(number.toString(), {
+    fontFamily: 'Calibri',
+    fontSize: 14,
+    fill: '#fff',
+    textAlign: 'center',
+    originX: 'center',
+    originY: 'center'
+  })
+  const g = new fabric.Group([o, t], {
+    left: left,
+    top: top,
+    centeredRotation: true,
+    snapAngle: 45,
+    selectable: true,
+    type: 'table',
+    id: tid,
+    number: tnum
   })
   canvas.add(g)
   number++
@@ -479,33 +519,85 @@ slider.noUiSlider.on('update', function(values, handle) {
 })
 
 function addDefaultObjects() {
-  addChair(15, 105)
-  addChair(15, 135)
-  addChair(75, 105)
-  addChair(75, 135)
-  addChair(225, 75)
-  addChair(255, 75)
-  addChair(225, 135)
-  addChair(255, 135)
-  addChair(225, 195)
-  addChair(255, 195)
-  addChair(225, 255)
-  addChair(255, 255)
-  addChair(15, 195)
-  addChair(45, 195)
-  addChair(15, 255)
-  addChair(45, 255)
-  addChair(15, 315)
-  addChair(45, 315)
-  addChair(15, 375)
-  addChair(45, 375)
+  // addChair(15, 105)
+  // addChair(15, 135)
+  // addChair(75, 105)
+  // addChair(75, 135)
+  // addChair(225, 75)
+  // addChair(255, 75)
+  // addChair(225, 135)
+  // addChair(255, 135)
+  // addChair(225, 195)
+  // addChair(255, 195)
+  // addChair(225, 255)
+  // addChair(255, 255)
+  // addChair(15, 195)
+  // addChair(45, 195)
+  // addChair(15, 255)
+  // addChair(45, 255)
+  // addChair(15, 315)
+  // addChair(45, 315)
+  // addChair(15, 375)
+  // addChair(45, 375)
 
-  addRect(30, 90, 60, 90)
-  addRect(210, 90, 90, 60)
-  addRect(210, 210, 90, 60)
-  addRect(0, 210, 90, 60)
-  addRect(0, 330, 90, 60)
-
-  addBar(120, 0, 180, 60)
+  // addRect(30, 90, 60, 90)
+  // addRect(210, 90, 90, 60)
+  // addRect(210, 210, 90, 60)
+  // addRect(0, 210, 90, 60)
+  // addRect(0, 330, 90, 60)
+  $.ajax({
+    url: "./test.php",
+    type: "POST",
+    data: {
+      import_canvas: true
+    }
+  }).done(function(res) {
+    // console.log(JSON.parse(res));
+    var json = JSON.parse(res);
+    // console.log(json.objects[0]);
+    var o = json.objects[0].objects[0];
+    // console.log(o);
+    var t = json.objects[0].objects[1];
+    // console.log(t);
+    // var g = new fabric.Group([o, t], {
+    //   left: json.objects[0].left,
+    //   top: json.objects[0].top,
+    //   centeredRotation: true,
+    //   snapAngle: 45,
+    //   selectable: true,
+    //   type: json.objects[0].type,
+    //   id: json.objects[0].id,
+    //   number: json.objects[0].number
+    // });
+    // canvas.add(g);
+    for(var i = 0; i < json.objects.length; i++) {
+      addRect2(json.objects[i].left, json.objects[i].top, json.objects[i].objects[0].width, json.objects[i].objects[0].height, json.objects[i].id, json.objects[i].number)
+      // console.log(json.objects[i].objects[0].width);
+    }
+    // fabric.Group.fromObject(json, function(obj) {
+    //   $.each(obj._objects, function(o) {
+    //     console.log(o)
+    //   })
+    //   addRect2(0, 0, 60, 90, obj.id, obj.number)
+    // })
+    canvas.renderAll();
+  });
 }
 addDefaultObjects()
+
+$(document).ready(function() {
+  $("#save-canvas").click(function() {
+    var canvasJSON = JSON.stringify(canvas.toJSON(['id', 'number', 'left', 'top', 'centeredRotation', 'snapAngle', 'selectable']));
+    // console.log(canvasJSON);
+    $.ajax({
+      url: "./test.php",
+      type: "POST",
+      data: {
+        export_canvas: true,
+        canvasJSON: canvasJSON
+      }
+    }).done(function(res) {
+
+    })
+  });
+});
