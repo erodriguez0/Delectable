@@ -462,24 +462,24 @@ document.querySelectorAll('.customer-mode')[0].addEventListener('click', functio
   document.querySelectorAll('.customer-menu')[0].style.display = 'block'
 })
 
-// document.querySelectorAll('.admin-mode')[0].addEventListener('click', function() {
-//   canvas.getObjects().map(o => {
-//     o.hasControls = true
-//     o.lockMovementX = false
-//     o.lockMovementY = false
-//     if (o.type === 'chair' || o.type === 'bar' || o.type === 'wall') {
-//       o.selectable = true
-//     }
-//     o.borderColor = 'rgba(102, 153, 255, 0.75)'
-//     o.borderScaleFactor = 1
-//   })
-//   canvas.selection = true
-//   canvas.hoverCursor = 'move'
-//   canvas.discardActiveObject()
-//   canvas.renderAll()
-//   document.querySelectorAll('.admin-menu')[0].style.display = 'block'
-//   document.querySelectorAll('.customer-menu')[0].style.display = 'none'
-// })
+document.querySelectorAll('.admin-mode')[0].addEventListener('click', function() {
+  canvas.getObjects().map(o => {
+    o.hasControls = true
+    o.lockMovementX = false
+    o.lockMovementY = false
+    if (o.type === 'chair' || o.type === 'bar' || o.type === 'wall') {
+      o.selectable = true
+    }
+    o.borderColor = 'rgba(102, 153, 255, 0.75)'
+    o.borderScaleFactor = 1
+  })
+  canvas.selection = true
+  canvas.hoverCursor = 'move'
+  canvas.discardActiveObject()
+  canvas.renderAll()
+  document.querySelectorAll('.admin-menu')[0].style.display = 'block'
+  document.querySelectorAll('.customer-menu')[0].style.display = 'none'
+})
 
 function formatTime(val) {
   const hours =  Math.round(val / 60)
@@ -492,15 +492,15 @@ function formatTime(val) {
   return normal + ' (' + english + ')'
 }
 
-// document.querySelectorAll('.submit')[0].addEventListener('click', function() {
-//   const obj = canvas.getActiveObject()
-//   $('#modal').modal('show')
-//   let modalText = 'You have not selected anything'
-//   if (obj) {
-//     modalText = 'You have selected table ' + obj.number + ', time: ' + formatTime(slider.noUiSlider.get())
-//   }
-//   document.querySelectorAll('#modal-table-id')[0].innerHTML = modalText
-// })
+document.querySelectorAll('.submit')[0].addEventListener('click', function() {
+  const obj = canvas.getActiveObject()
+  $('#modal').modal('show')
+  let modalText = 'You have not selected anything'
+  if (obj) {
+    modalText = 'You have selected table ' + obj.number + ', time: ' + formatTime(slider.noUiSlider.get()) + ', id: ' + obj.id
+  }
+  document.querySelectorAll('#modal-table-id')[0].innerHTML = modalText
+})
 
 const slider = document.getElementById('slider')
 noUiSlider.create(slider, {
@@ -515,7 +515,7 @@ noUiSlider.create(slider, {
 
 const sliderValue = document.getElementById('slider-value')
 slider.noUiSlider.on('update', function(values, handle) {
-	sliderValue.innerHTML = formatTime(values[handle])
+  sliderValue.innerHTML = formatTime(values[handle])
 })
 
 function addDefaultObjects() {

@@ -30,19 +30,9 @@ require_once(INCLUDE_PATH . '/admin/dashboard.php');
                 <button class="btn btn-alt" id="save-canvas">Export</button>
             </div>
         </div>
-    	<div class="row">
-    		<div class="col-12">
-	            <div class="form-group customer-menu" style="display: none;">
-	                <div class="btn-group">
-	                    <button class="btn btn-success submit">Submit reservation</button>
-	                    <button class="btn btn-warning admin-mode">Admin mode</button>
-	                </div>
-	                <br />
-	                <br />
-	                <div id="slider"></div>
-	                <div id="slider-value"></div>
-	            </div>
-    			<div class="btn-toolbar" role="toolbar">
+        <div class="row">
+        	<div class="col-12">
+        		<div class="btn-toolbar" role="toolbar">
     				<!-- Center: d-flex justify-content-center align-items-center -->
     				<div class="btn-group mr-2" role="group">
     					<button type="button" class="btn btn-alt btn-sm btn-sm-text square">Square</button>
@@ -59,6 +49,22 @@ require_once(INCLUDE_PATH . '/admin/dashboard.php');
     					<button type="button" class="btn btn-alt btn-sm btn-sm-text customer-mode">Mode</button>
     				</div>
     			</div>
+    		</div>
+    	</div>
+    </div>
+    	<div class="row">
+    		<div class="col-12">
+			  	<div class="form-group customer-menu" style="display: none;">
+				    <div class="btn-group">
+				      	<button class="btn btn-primary submit">Submit reservation</button>
+				      	<button class="btn btn-alt admin-mode">Admin mode</button>
+				    </div>
+				    <br />
+				    <br />
+				    <div id="slider"></div>
+				    <div id="slider-value"></div>
+			  	</div>
+
     			<!-- <div class="mt-3" style="overflow-x: scroll;"> -->
     			<div class="mt-3 overflow-x">
     				<canvas id="canvas" width="720" height="540"></canvas>
@@ -66,12 +72,23 @@ require_once(INCLUDE_PATH . '/admin/dashboard.php');
     		</div>
     	</div>
     </div>
-    </div>
+	<div class="modal fade" id="modal" tabindex="-1" role="dialog">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-body text-center">
+	        <p id="modal-table-id"></p>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
 </main>
 
 <?php
 require_once(INCLUDE_PATH . 'footer.php');
 ?>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.7.11/fabric.min.js"></script>
-<script src="https://cdn.rawgit.com/leongersen/noUiSlider/master/distribute/nouislider.min.js"></script>
+<script src="//cdn.bootcss.com/noUiSlider/8.5.1/nouislider.js"></script>
 <script type="text/javascript" src="./test.js"></script>
