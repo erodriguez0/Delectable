@@ -85,4 +85,23 @@ if(isset($_POST['remove_manager'])) {
 	}
 }
 
+
+if(isset($_POST['employee_add_search'])) {
+	$input = $_POST['search_input'];
+
+	$query = $conn->prepare("SELECT * FROM employee WHERE emp_username = :input AND emp_manager = 0 AND emp_status = 1");
+	$query->bindParam(":input", $input, PDO::PARAM_STR);
+	try {
+		$query->execute();
+		$rows = $query->fetchAll();
+		// $data = array(
+		// 	'error' => false,
+		// 	'data' => $rows
+		// );
+		echo json_encode($rows);
+	} catch(PDOException $e) {
+		return $input;
+	}
+}
+
 ?>

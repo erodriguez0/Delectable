@@ -18,6 +18,10 @@ B O O T S T R A P  B U T T O N S
 	background-color: rgba(0,0,0,0);
 }
 
+.btn-sm-text {
+	font-size: .9em;
+}
+
 .btn-primary,
 .btn-primary:focus,
 .btn-primary:active:focus
@@ -198,6 +202,10 @@ body {
 	width: auto;
 	height: auto;
 }
+
+.overflow-x {
+	overflow-x: scroll;
+}
  
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {  
@@ -219,6 +227,10 @@ body {
 
 	.restaurant-edit-form-wrap {
 		max-width: 480px;
+	}
+
+	.overflow-x {
+		overflow-x: hidden;
 	}
 }
  

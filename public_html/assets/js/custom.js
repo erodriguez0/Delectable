@@ -195,10 +195,35 @@ $(document).ready(function() {
 			var par = JSON.parse(res);
 			$.each(par, function(k, v) {
 				var row = '<tr><td>' + v.emp_first_name + ' ' + v.emp_last_name + '</td>'
-					+ '<td>' + v.emp_username + '</td>'
-					+ '<td><input type="checkbox" class="form-check-input mx-auto emp-check" value="' 
-					+ v.emp_id + '"></td></tr>';
+				+ '<td>' + v.emp_username + '</td>'
+				+ '<td><button class="btn btn-primary btn-sm" value="' 
+				+ v.emp_id + '">Add</button></td></tr>';
 				$("#emp-table tbody").append(row);
+			});
+		});
+	});
+
+	$(".emp-search-add-btn").click(function(e) {
+		e.preventDefault();
+		var input = $("#emp-search-input").val();
+
+		$.ajax({
+			url: '/delectable/public_html/assets/scripts/restaurant-edit.php',
+			type: 'POST',
+			data: {
+				'employee_add_search': true,
+				'search_input': input
+			}
+		}).done(function(res) {
+			var data = JSON.parse(res);
+			$("#emp-list-table tbody").empty();
+			$.each(data, function(k, v) {
+				var row = '<tr><td>' + v.emp_first_name + ' ' + v.emp_last_name + '</td>'
+				+ '<td>' + v.emp_username + '</td>'
+				+ '<td><button class="btn btn-primary btn-sm" value="' 
+				+ v.emp_id + '">Add</button></td></tr>';
+
+				$("#emp-list-table tbody").append(row);
 			});
 		});
 	});

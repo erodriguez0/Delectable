@@ -22,12 +22,12 @@ const wallStroke = '#686868'
 // const wallShadow = 'rgba(0, 0, 0, 0.4) 5px 5px 20px'
 const wallShadow = 'rgba(0, 0, 0, 0) 5px 5px 20px'
 
-        var  photoUrlLandscape = 'https://images8.alphacoders.com/292/292379.jpg',
-            photoUrlPortrait = 'https://presspack.rte.ie/wp-content/blogs.dir/2/files/2015/04/AMC_TWD_Maggie_Portraits_4817_V1.jpg'
+var  photoUrlLandscape = 'https://images8.alphacoders.com/292/292379.jpg',
+     photoUrlPortrait = 'https://presspack.rte.ie/wp-content/blogs.dir/2/files/2015/04/AMC_TWD_Maggie_Portraits_4817_V1.jpg'
 
 
-let widthEl = document.getElementById('width')
-let heightEl = document.getElementById('height')
+// let widthEl = document.getElementById('width')
+// let heightEl = document.getElementById('height')
 let canvasEl = document.getElementById('canvas')
 
 function initCanvas() {
@@ -46,6 +46,7 @@ function initCanvas() {
     const lineX = new fabric.Line([ 0, i * grid, canvas.width, i * grid], {
       stroke: lineStroke,
       selectable: false,
+      excludeFromExport: true,
       type: 'line'
     })
     canvas.add(lineX)
@@ -55,6 +56,7 @@ function initCanvas() {
     const lineY = new fabric.Line([ i * grid, 0, i * grid, canvas.height], {
       stroke: lineStroke,
       selectable: false,
+      excludeFromExport: true,
       type: 'line'
     })
     sendLinesToBack()
@@ -109,26 +111,28 @@ function initCanvas() {
 initCanvas()
 
 function resizeCanvas() {
-  widthEl = document.getElementById('width')
-  heightEl = document.getElementById('height')
-  canvasEl.width = widthEl.value ? widthEl.value : 720
-  canvasEl.height = heightEl.value ? heightEl.value : 540
+  // widthEl = document.getElementById('width')
+  // heightEl = document.getElementById('height')
+  // canvasEl.width = widthEl.value ? widthEl.value : 720
+  // canvasEl.height = heightEl.value ? heightEl.value : 540
+  canvasEl.width = 720;
+  canvasEl.height = 540;
   const canvasContainerEl = document.querySelectorAll('.canvas-container')[0]
   canvasContainerEl.style.width = canvasEl.width
   canvasContainerEl.style.height = canvasEl.height
 }
 resizeCanvas()
 
-widthEl.addEventListener('change', () => {
-  resizeCanvas()
-  initCanvas()
-  addDefaultObjects()
-})
-heightEl.addEventListener('change', () => {
-  resizeCanvas()
-  initCanvas()
-  addDefaultObjects()
-})
+// widthEl.addEventListener('change', () => {
+//   resizeCanvas()
+//   initCanvas()
+//   addDefaultObjects()
+// })
+// heightEl.addEventListener('change', () => {
+//   resizeCanvas()
+//   initCanvas()
+//   addDefaultObjects()
+// })
 
 function generateId() {
   return Math.random().toString(36).substr(2, 8)
@@ -163,9 +167,47 @@ function addRect(left, top, width, height) {
     centeredRotation: true,
     snapAngle: 45,
     selectable: true,
-    type: 'table',
+    type: 'rect',
     id: id,
     number: number
+  })
+  canvas.add(g)
+  number++
+  return g
+}
+
+function addRect2(left = 0, top = 0, width = 60, height = 90, tid, tnum) {
+  const id = generateId()
+  const o = new fabric.Rect({
+    width: width,
+    height: height,
+    fill: tableFill,
+    stroke: tableStroke,
+    strokeWidth: 1,
+    shadow: tableShadow,
+    originX: 'center',
+    originY: 'center',
+    centeredRotation: true,
+    snapAngle: 45,
+    selectable: true
+  })
+  const t = new fabric.IText(number.toString(), {
+    fontFamily: 'Calibri',
+    fontSize: 14,
+    fill: '#fff',
+    textAlign: 'center',
+    originX: 'center',
+    originY: 'center'
+  })
+  const g = new fabric.Group([o, t], {
+    left: left,
+    top: top,
+    centeredRotation: true,
+    snapAngle: 45,
+    selectable: true,
+    type: 'table',
+    id: tid,
+    number: tnum
   })
   canvas.add(g)
   number++
@@ -371,10 +413,10 @@ document.querySelectorAll('.circle')[0].addEventListener('click', function() {
   canvas.setActiveObject(o)
 })
 
-document.querySelectorAll('.triangle')[0].addEventListener('click', function() {
-  const o = addTriangle(0, 0, 30)
-  canvas.setActiveObject(o)
-})
+// document.querySelectorAll('.triangle')[0].addEventListener('click', function() {
+//   const o = addTriangle(0, 0, 30)
+//   canvas.setActiveObject(o)
+// })
 
 document.querySelectorAll('.chair')[0].addEventListener('click', function() {
   const o = addChair(0, 0)
@@ -455,7 +497,7 @@ document.querySelectorAll('.submit')[0].addEventListener('click', function() {
   $('#modal').modal('show')
   let modalText = 'You have not selected anything'
   if (obj) {
-    modalText = 'You have selected table ' + obj.number + ', time: ' + formatTime(slider.noUiSlider.get())
+    modalText = 'You have selected table ' + obj.number + ', time: ' + formatTime(slider.noUiSlider.get()) + ', id: ' + obj.id
   }
   document.querySelectorAll('#modal-table-id')[0].innerHTML = modalText
 })
@@ -473,37 +515,89 @@ noUiSlider.create(slider, {
 
 const sliderValue = document.getElementById('slider-value')
 slider.noUiSlider.on('update', function(values, handle) {
-	sliderValue.innerHTML = formatTime(values[handle])
+  sliderValue.innerHTML = formatTime(values[handle])
 })
 
 function addDefaultObjects() {
-  addChair(15, 105)
-  addChair(15, 135)
-  addChair(75, 105)
-  addChair(75, 135)
-  addChair(225, 75)
-  addChair(255, 75)
-  addChair(225, 135)
-  addChair(255, 135)
-  addChair(225, 195)
-  addChair(255, 195)
-  addChair(225, 255)
-  addChair(255, 255)
-  addChair(15, 195)
-  addChair(45, 195)
-  addChair(15, 255)
-  addChair(45, 255)
-  addChair(15, 315)
-  addChair(45, 315)
-  addChair(15, 375)
-  addChair(45, 375)
+  // addChair(15, 105)
+  // addChair(15, 135)
+  // addChair(75, 105)
+  // addChair(75, 135)
+  // addChair(225, 75)
+  // addChair(255, 75)
+  // addChair(225, 135)
+  // addChair(255, 135)
+  // addChair(225, 195)
+  // addChair(255, 195)
+  // addChair(225, 255)
+  // addChair(255, 255)
+  // addChair(15, 195)
+  // addChair(45, 195)
+  // addChair(15, 255)
+  // addChair(45, 255)
+  // addChair(15, 315)
+  // addChair(45, 315)
+  // addChair(15, 375)
+  // addChair(45, 375)
 
-  addRect(30, 90, 60, 90)
-  addRect(210, 90, 90, 60)
-  addRect(210, 210, 90, 60)
-  addRect(0, 210, 90, 60)
-  addRect(0, 330, 90, 60)
-
-  addBar(120, 0, 180, 60)
+  // addRect(30, 90, 60, 90)
+  // addRect(210, 90, 90, 60)
+  // addRect(210, 210, 90, 60)
+  // addRect(0, 210, 90, 60)
+  // addRect(0, 330, 90, 60)
+  $.ajax({
+    url: "./test.php",
+    type: "POST",
+    data: {
+      import_canvas: true
+    }
+  }).done(function(res) {
+    // console.log(JSON.parse(res));
+    var json = JSON.parse(res);
+    // console.log(json.objects[0]);
+    var o = json.objects[0].objects[0];
+    // console.log(o);
+    var t = json.objects[0].objects[1];
+    // console.log(t);
+    // var g = new fabric.Group([o, t], {
+    //   left: json.objects[0].left,
+    //   top: json.objects[0].top,
+    //   centeredRotation: true,
+    //   snapAngle: 45,
+    //   selectable: true,
+    //   type: json.objects[0].type,
+    //   id: json.objects[0].id,
+    //   number: json.objects[0].number
+    // });
+    // canvas.add(g);
+    for(var i = 0; i < json.objects.length; i++) {
+      addRect2(json.objects[i].left, json.objects[i].top, json.objects[i].objects[0].width, json.objects[i].objects[0].height, json.objects[i].id, json.objects[i].number)
+      // console.log(json.objects[i].objects[0].width);
+    }
+    // fabric.Group.fromObject(json, function(obj) {
+    //   $.each(obj._objects, function(o) {
+    //     console.log(o)
+    //   })
+    //   addRect2(0, 0, 60, 90, obj.id, obj.number)
+    // })
+    canvas.renderAll();
+  });
 }
 addDefaultObjects()
+
+$(document).ready(function() {
+  $("#save-canvas").click(function() {
+    var canvasJSON = JSON.stringify(canvas.toJSON(['id', 'number', 'left', 'top', 'centeredRotation', 'snapAngle', 'selectable']));
+    // console.log(canvasJSON);
+    $.ajax({
+      url: "./test.php",
+      type: "POST",
+      data: {
+        export_canvas: true,
+        canvasJSON: canvasJSON
+      }
+    }).done(function(res) {
+
+    })
+  });
+});
