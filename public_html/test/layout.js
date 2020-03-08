@@ -12,10 +12,11 @@ const lineStroke = 		'#ebebeb';
 const tableFill = 		'rgba(150, 111, 51, 0.7)';
 const tableStroke = 	'#694d23';
 const tableShadow = 	'rgba(0, 0, 0, 0) 3px 3px 7px';
-const minScaleX =		0.75;
-const maxScaleX = 		3;
-const minScaleY =		0.75;
-const maxScaleY = 		2;
+const squareMinScale = 	0.75;
+const squareMaxScale = 	2;
+const squareMinSize =   60;
+const squareMaxSize = 	150;
+
 
 // Chairs
 const chairFill = 		'rgba(67, 42, 4, 0.7)';
@@ -76,14 +77,24 @@ function checkBoundingBox(e) {
 	// Check if out of bounds
 	// Top
 	if (objBoundingBox.top < 0) {
-		obj.set('top', 0);
-		obj.setCoords();
+		if(obj.angle == 45) {
+			obj.set('top', 15);
+			obj.setCoords();
+		} else {
+			obj.set('top', 0);
+			obj.setCoords();
+		}
 	}
 
 	// Width
 	if (objBoundingBox.left > canvas.width - objBoundingBox.width) {
-		obj.set('left', canvas.width - objBoundingBox.width);
-		obj.setCoords();
+		if(obj.angle == 45) {
+			obj.set('left', canvas.width - (obj.width - obj.width / 5));
+			obj.setCoords();
+		} else {
+			obj.set('left', canvas.width - objBoundingBox.width);
+			obj.setCoords();
+		}
 	}
 
 	// Height
@@ -94,22 +105,37 @@ function checkBoundingBox(e) {
 
 	// Left
 	if (objBoundingBox.left < 0) {
-		obj.set('left', 0);
-		obj.setCoords();
+
+		// Check if object is rotated
+		// Apply scaling
+		// TODO: check object type
+		if(obj.angle == 45) {
+			obj.set('left', obj.width - (obj.width / 5));
+			obj.setCoords();
+		} else {
+			obj.set('left', 0);
+			obj.setCoords();
+		}
 	}
 }
 
 // CREATE FABRIC OBJECTS
 
-// New Rectangle Table
-function addRect() {
+function addSquareTable(deg = 0) {
   	const id = generateId();
+  	let gleft = 315;
+  	let gtop = 215;
+
+  	if(deg > 0) {
+  		gleft = 352;
+  		gtop = 200;
+  	}
 
 	const o = new fabric.Rect({
 		width: 75,
 		height: 75,
 		fill: tableFill,
-		stroke: tableStroke,
+		stroke: tableFill,
 		strokeWidth: 1,
 		originX: 'center',
 		originY: 'center',
@@ -124,18 +150,34 @@ function addRect() {
 		fill: '#fff',
 		textAlign: 'center',
 		originX: 'center',
-		originY: 'center'
+		originY: 'center',
+		lockUniScaling: true,
+		angle: -deg
 	});
 
 	const g = new fabric.Group([o, t], {
-		left: 0,
-		top: 0,
+		left: gleft,
+		top: gtop,
 		centeredRotation: true,
+		hasRotatingPoint: false,
+		snapThreshold: 45,
 		snapAngle: 45,
+		angle: deg,
 		selectable: true,
-		type: 'rect',
+		type: 'squareTable',
 		id: id,
 		number: number
+	});
+
+	// Set resizing controls
+	// Bottom right only for square
+	g.setControlsVisibility({
+		bl: false,
+		ml: false,
+		tl: false,
+		tr: false,
+		mt: false,
+		mb: false
 	});
 
 	canvas.add(g);
@@ -143,8 +185,12 @@ function addRect() {
 	return g;
 }
 
+function roundSize(num) {
+    return Math.round(num / grid) * grid;
+}
+
 function initCanvas() {
-	if (canvas) {
+	if(canvas) {
     	canvas.clear()
     	canvas.dispose()
   	}
@@ -183,45 +229,54 @@ function initCanvas() {
 	});
 
 	canvas.on('object:scaling', function(e) {
-		if(e.target.scaleX > maxScaleX) {
-		  	e.target.scaleX = maxScaleX;
-		  	e.left = e.lastGoodLeft;
-    		e.top = e.lastGoodTop;
+		// o = group, obj = object
+		// roundSize() rounds to nearest grid size (15)
+		// type is type of table, chair, etc.
+		fabric.Object.prototype.objectCaching = false;
+		let o = e.target;
+		let obj = e.target._objects[0];
+		let l = roundSize(o.left);
+		let t = roundSize(o.top);
+		let w = roundSize(o.getWidth());
+		let h = roundSize(o.getHeight());
+		let a = o.angle;
+		let type = o.type;
+
+		// Check min and max size for squared objects
+		// Round tables are considered square objects
+		if(type == "squareTable" || type == "circleTable") {
+			if(h < squareMinSize) { w = h = squareMinSize; }
+			if(h > squareMaxSize) { w = h = squareMaxSize; }
 		}
 
-		if(e.target.scaleY > maxScaleY) {
-		  	e.target.scaleY = maxScaleY;
-		  	e.left = e.lastGoodLeft;
-    		e.top = e.lastGoodTop;
-		}
+		// Set left, top, width, and height
+		// Resets scaleX and scaleY for incrementing size by grid
+		o.set({
+			left: 	l,
+			top: 	t,
+			width: 	w,
+			height: h,
+			scaleX: 1,
+			scaleY: 1
+		});
 
-		if(e.target.scaleX < minScaleX) {
-		  	e.target.scaleX = minScaleX;
-		  	e.left = e.lastGoodLeft;
-    		e.top = e.lastGoodTop;
-		}
+		// Sets the rect object's width and height
+		// to fill in the group object
+		obj.set({
+			width: 	w,
+			height: h
+		});
 
-		if(e.target.scaleY < minScaleY) {
-		  	e.target.scaleY = minScaleY;
-		  	e.left = e.lastGoodLeft;
-    		e.top = e.lastGoodTop;
-		}
-
-		if(!e.target.strokeWidthUnscaled && e.target.strokeWidth) {
-		  	e.target.strokeWidthUnscaled = e.target.strokeWidth;
-		}
-
-		if(e.target.strokeWidthUnscaled) {
-		  	e.target.strokeWidth = e.target.strokeWidthUnscaled / e.target.scaleX;
-
-			if(e.target.strokeWidth === e.target.strokeWidthUnscaled) {
-			  	e.target.strokeWidth = e.target.strokeWidthUnscaled / e.target.scaleY;
-			}
+		// Prevent object flipping
+		if(e.target.flipX == true || e.target.flipY == true) {
+			e.target.flipX = false;
+			e.target.flipY = false;
 		}
 	});
 
 	// 
 	canvas.on('object:modified', function(e) {
+
 		snapToGrid(e.target);
 
 		// Tables moved to top of other objects
@@ -246,7 +301,9 @@ function initCanvas() {
 		checkBoundingBox(e);
 	});
 
-	addRect();
+	// Examples
+	addSquareTable(0);
+	addSquareTable(45);
 
 } // initCanvas() Close
 
