@@ -91,4 +91,4 @@ require_once(INCLUDE_PATH . 'footer.php');
 ?>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.7.11/fabric.min.js"></script>
 <script src="//cdn.bootcss.com/noUiSlider/8.5.1/nouislider.js"></script>
-<script type="text/javascript" src="./test.js"></script>
+<script type="text/javascript" src="./layout.js"></script>

@@ -68,6 +68,45 @@ function initCanvas() {
   })
 
   canvas.on('object:scaling', function(e) {
+
+    // LEFT HERE JUST IN CASE
+    
+    // Squares and circles are both squares
+    // for the purposes of scaling
+    // if(e.target.type == "squareTable" 
+    //  || e.target.type == "circleTable") {
+    //  minScaleX = minScaleY = squareMinScale;
+    //  maxScaleX = maxScaleY = squareMaxScale;
+    // }
+
+    // // Min width
+    // if(e.target.scaleX < minScaleX) {
+    //    e.target.scaleX = minScaleX;
+    //    e.left = e.lastGoodLeft;
+  //      e.top = e.lastGoodTop;
+    // }
+
+    // // Max width
+    // if(e.target.scaleX > maxScaleX) {
+    //    e.target.scaleX = maxScaleX;
+    //    e.left = e.lastGoodLeft;
+  //      e.top = e.lastGoodTop;
+    // }
+
+    // // Min height
+    // if(e.target.scaleY < minScaleY) {
+    //    e.target.scaleY = minScaleY;
+    //    e.left = e.lastGoodLeft;
+  //      e.top = e.lastGoodTop;
+    // }
+
+    // // Max height
+    // if(e.target.scaleY > maxScaleY) {
+    //    e.target.scaleY = maxScaleY;
+    //    e.left = e.lastGoodLeft;
+  //      e.top = e.lastGoodTop;
+    // }
+
     if (e.target.scaleX > 5) {
       e.target.scaleX = 5
     }
@@ -97,6 +136,24 @@ function initCanvas() {
     }
     sendLinesToBack()
   })
+
+    canvas.on('object:rotating', function(e) {
+
+      // Max rotation = (+/-) 45 degrees
+      // Rotate textbox after rotating
+    if(e.target.angle >= 45) {
+      if(e.target.angle >= 315) {
+        e.target.angle = 315;
+        e.target._objects[1].angle = 45;
+      } else {
+        e.target.angle = 45;
+        e.target._objects[1].angle = -45;
+      }
+    } else {
+      e.target._objects[1].angle = 0;
+    }
+
+  });
 
   canvas.observe('object:moving', function (e) {
     checkBoudningBox(e)
