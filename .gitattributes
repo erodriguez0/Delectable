@@ -5,3 +5,6 @@
 *.css linguist-detectable=true
 *.hh linguist-detectable=false
 *.hack linguist-detectable=false
+* linguist-vendored
+*.hh linguist-vendored=false
+*.hack linguist-vendored=false
