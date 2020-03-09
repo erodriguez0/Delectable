@@ -1,5 +1,5 @@
-// Global vars
-var canvasEl = $("#canvas");
+// GLOBAL VARS
+var canvasObj = $("#canvas");
 var canvas;
 var number;
 
@@ -12,11 +12,8 @@ const lineStroke = 		'#ebebeb';
 const tableFill = 		'rgba(150, 111, 51, 0.7)';
 const tableStroke = 	'#694d23';
 const tableShadow = 	'rgba(0, 0, 0, 0) 3px 3px 7px';
-const squareMinScale = 	0.75;
-const squareMaxScale = 	2;
 const squareMinSize =   60;
 const squareMaxSize = 	150;
-
 
 // Chairs
 const chairFill = 		'rgba(67, 42, 4, 0.7)';
@@ -34,15 +31,13 @@ const wallFill = 		'rgba(136, 136, 136, 0.7)';
 const wallStroke = 		'#686868';
 const wallShadow = 		'rgba(0, 0, 0, 0) 5px 5px 20px';
 
-// Generate a UUIDv4
-function uuidv4() {
-	return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
-		(c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16));
-}
+// FUNCTIONS FOR FABRIC OBJECTS
 
 // Generate an ID for tables
+// Format: xxxxxxxxx-xxxxxxxxx
 function generateId() {
-	return uuidv4();
+	return Math.random().toString(36).substr(2, 9) 
+		+ '-' + Math.random().toString(36).substr(2, 9);
 }
 
 function roundSize(num) {
@@ -128,7 +123,7 @@ function checkBoundingBox(e) {
 	}
 }
 
-// CREATE FABRIC OBJECTS
+// CREATE NEW FABRIC OBJECTS
 
 function addSquareTable(deg = 0) {
   	const id = generateId();
@@ -191,6 +186,63 @@ function addSquareTable(deg = 0) {
 	});
 
 	canvas.add(g);
+	console.log(g.type + ': ' + id);
+	number++;
+	return g;
+}
+
+function addCircleTable() {
+  	const id = generateId();
+  	let gleft = 315;
+  	let gtop = 215;
+
+	const o = new fabric.Circle({
+		radius: 37.5,
+	    fill: tableFill,
+	    stroke: tableFill,
+	    strokeWidth: 1,
+	    originX: 'center',
+	    originY: 'center',
+	    centeredRotation: true
+	});
+
+	const t = new fabric.IText(number.toString(), {
+		fontFamily: 'Calibri',
+		fontSize: 14,
+		fill: '#fff',
+		textAlign: 'center',
+		originX: 'center',
+		originY: 'center',
+		lockUniScaling: true
+	});
+
+	const g = new fabric.Group([o, t], {
+		left: gleft,
+		top: gtop,
+		centeredRotation: true,
+		hasRotatingPoint: false,
+		snapThreshold: 45,
+		snapAngle: 45,
+		selectable: true,
+		type: 'circle',
+		table: true,
+		id: id,
+		number: number
+	});
+
+	// Set resizing controls
+	// Bottom right only for square
+	g.setControlsVisibility({
+		bl: false,
+		ml: false,
+		tl: false,
+		tr: false,
+		mt: false,
+		mb: false
+	});
+
+	canvas.add(g);
+	console.log(g.type + ': ' + id);
 	number++;
 	return g;
 }
@@ -208,7 +260,7 @@ function initCanvas() {
   	number = 1;
 
   	// Create horizonal grid lines
-  	for (let i = 0; i < (canvas.width / grid); i++) {
+  	for(let i = 0; i < (canvas.width / grid); i++) {
 	    const lineX = new fabric.Line([ 0, i * grid, canvas.width, i * grid], {
 			stroke: lineStroke,
 			selectable: false,
@@ -219,7 +271,7 @@ function initCanvas() {
   	}
 
   	// Create vertical grid lines
-  	for (let i = 0; i < (canvas.width / grid); i++) {
+  	for(let i = 0; i < (canvas.width / grid); i++) {
 	    const lineY = new fabric.Line([ i * grid, 0, i * grid, canvas.height], {
 			stroke: lineStroke,
 			selectable: false,
@@ -276,11 +328,15 @@ function initCanvas() {
 			height: h
 		});
 
+		// For circle objects the radius is width or height * 0.5
+		if(type == "circle") { obj.set({ radius: w * 0.5 }); }
+
 		// Prevent object flipping
 		if(e.target.flipX == true || e.target.flipY == true) {
 			e.target.flipX = false;
 			e.target.flipY = false;
 		}
+
 	});
 
 	// 
@@ -290,7 +346,7 @@ function initCanvas() {
 
 		// Tables moved to top of other objects
 		// e.target.table return t/f
-		if (e.target.table) {
+		if(e.target.table) {
 		  	canvas.bringToFront(e.target);
 		}
 		else {
@@ -301,20 +357,28 @@ function initCanvas() {
 	});
 
 	// Check if objects were moved or resized and are out of bounds
-	canvas.observe('object:moving', function (e) {
+	canvas.observe('object:moving', function(e) {
 		checkBoundingBox(e);
 	});
-	canvas.observe('object:rotating', function (e) {
+	canvas.observe('object:rotating', function(e) {
 		checkBoundingBox(e);
 	});
-	canvas.observe('object:scaling', function (e) {
+	canvas.observe('object:scaling', function(e) {
 		checkBoundingBox(e);
 	});
+}
 
+function addObjects() {
 	// Examples
 	addSquareTable(0);
 	addSquareTable(45);
+	addCircleTable();
+}
 
-} // initCanvas() Close
+// CREATE EXISTING FABRIC OBJECTS
+
+// INITIALIZE CANVAS AND OBJECTS
 
 initCanvas();
+
+addObjects();
