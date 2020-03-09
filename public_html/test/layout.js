@@ -45,6 +45,10 @@ function generateId() {
 	return uuidv4();
 }
 
+function roundSize(num) {
+    return Math.round(num / grid) * grid;
+}
+
 // Moves canvas lines to background
 function sendLinesToBack() {
 	canvas.getObjects().map(o => {
@@ -57,8 +61,8 @@ function sendLinesToBack() {
 // Snap object to grid
 function snapToGrid(target) {
 	target.set({
-		left: Math.round(target.left / (grid)) * grid,
-		top: Math.round(target.top / (grid)) * grid
+		left: roundSize(target.left),
+		top: roundSize(target.top)
 	});
 }
 
@@ -76,7 +80,7 @@ function checkBoundingBox(e) {
 
 	// Check if out of bounds
 	// Top
-	if (objBoundingBox.top < 0) {
+	if(objBoundingBox.top < 0) {
 		if(obj.angle == 45) {
 			obj.set('top', 15);
 			obj.setCoords();
@@ -87,9 +91,9 @@ function checkBoundingBox(e) {
 	}
 
 	// Width
-	if (objBoundingBox.left > canvas.width - objBoundingBox.width) {
+	if(objBoundingBox.left > canvas.width - objBoundingBox.width) {
 		if(obj.angle == 45) {
-			obj.set('left', canvas.width - (obj.width - obj.width / 5));
+			obj.set('left', canvas.width - (obj.width - roundSize(obj.width / 15)));
 			obj.setCoords();
 		} else {
 			obj.set('left', canvas.width - objBoundingBox.width);
@@ -98,19 +102,24 @@ function checkBoundingBox(e) {
 	}
 
 	// Height
-	if (objBoundingBox.top > canvas.height - objBoundingBox.height) {
-		obj.set('top', canvas.height - objBoundingBox.height);
-		obj.setCoords();
+	if(objBoundingBox.top > canvas.height - objBoundingBox.height) {
+		if(obj.angle == 45) {
+			obj.set('top', canvas.height - objBoundingBox.height - 15);
+			obj.setCoords();
+		} else {
+			obj.set('top', canvas.height - objBoundingBox.height);
+			obj.setCoords();
+		}
 	}
 
 	// Left
-	if (objBoundingBox.left < 0) {
+	if(objBoundingBox.left < 0) {
 
 		// Check if object is rotated
 		// Apply scaling
 		// TODO: check object type
 		if(obj.angle == 45) {
-			obj.set('left', obj.width - (obj.width / 5));
+			obj.set('left', obj.width - roundSize((obj.width / 15)));
 			obj.setCoords();
 		} else {
 			obj.set('left', 0);
@@ -164,7 +173,8 @@ function addSquareTable(deg = 0) {
 		snapAngle: 45,
 		angle: deg,
 		selectable: true,
-		type: 'squareTable',
+		type: 'square',
+		table: true,
 		id: id,
 		number: number
 	});
@@ -183,10 +193,6 @@ function addSquareTable(deg = 0) {
 	canvas.add(g);
 	number++;
 	return g;
-}
-
-function roundSize(num) {
-    return Math.round(num / grid) * grid;
 }
 
 function initCanvas() {
@@ -224,10 +230,12 @@ function initCanvas() {
 	    canvas.add(lineY);
   	}
 
+  	// Snap objects to grid when moving
 	canvas.on('object:moving', function(e) {
 		snapToGrid(e.target);
 	});
 
+	// Fixed increments on resizing objects
 	canvas.on('object:scaling', function(e) {
 		// o = group, obj = object
 		// roundSize() rounds to nearest grid size (15)
@@ -240,11 +248,12 @@ function initCanvas() {
 		let w = roundSize(o.getWidth());
 		let h = roundSize(o.getHeight());
 		let a = o.angle;
+		let table = o.table;
 		let type = o.type;
 
 		// Check min and max size for squared objects
 		// Round tables are considered square objects
-		if(type == "squareTable" || type == "circleTable") {
+		if(type == "square" || type == "circle") {
 			if(h < squareMinSize) { w = h = squareMinSize; }
 			if(h > squareMaxSize) { w = h = squareMaxSize; }
 		}
@@ -280,7 +289,8 @@ function initCanvas() {
 		snapToGrid(e.target);
 
 		// Tables moved to top of other objects
-		if (e.target.type === 'table') {
+		// e.target.table return t/f
+		if (e.target.table) {
 		  	canvas.bringToFront(e.target);
 		}
 		else {
