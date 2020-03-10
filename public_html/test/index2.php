@@ -7,7 +7,7 @@ require_once(INCLUDE_PATH . '/admin/dashboard.php');
 ?>
 
 <main role="main" class="col-md-10 ml-sm-auto col-lg-10 py-3 px-4">
-    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center border-bottom pb-2 mb-3">
         <h1 class="h2">Edit Table Layout</h1>
         <a class="btn btn-alt" href="../">< Back</a>
     </div>
@@ -27,38 +27,53 @@ require_once(INCLUDE_PATH . '/admin/dashboard.php');
                 <label>&nbsp;</label>
                 <br />
                 <button class="btn btn-primary">Save</button>
-                <button class="btn btn-alt" id="save-canvas">Export</button>
             </div>
         </div>
         <div class="row">
         	<div class="col-12">
         		<div class="btn-toolbar" role="toolbar">
-    				<!-- Center: d-flex justify-content-center align-items-center -->
     				<div class="btn-group mr-2" role="group">
-    					<button type="button" class="btn btn-alt btn-sm btn-sm-text square">Square</button>
-    					<button type="button" class="btn btn-alt btn-sm btn-sm-text rectangle">Rectangle</button>
-    					<button type="button" class="btn btn-alt btn-sm btn-sm-text circle">Circle</button>
+                        <a href="#" role="button" class="btn btn-alt btn-sm btn-sm-text label-btn">Rectangle</a>
+    					<button type="button" class="btn btn-alt btn-sm btn-sm-text rectangle-0">0&#xb0;</button>
+    					<button type="button" class="btn btn-alt btn-sm btn-sm-text rectangle-45">45&#xb0;</button>
+    					<button type="button" class="btn btn-alt btn-sm btn-sm-text rectangle-315">-45&#xb0;</button>
+                    </div>
+                    <div class="btn-group mr-2" role="group">
+                        <a href="#" role="button" class="btn btn-alt btn-sm btn-sm-text label-btn w-100">Square</a>
+                        <button type="button" class="btn btn-alt btn-sm btn-sm-text square-0 w-100">0&#xb0;</button>
+                        <button type="button" class="btn btn-alt btn-sm btn-sm-text square-45 w-100">45&#xb0;</button>
+                    </div>
+                    <div class="btn-group" role="group">
+                        <a href="#" role="button" class="btn btn-alt btn-sm btn-sm-text label-btn">Round</a>
+                        <button type="button" class="btn btn-alt btn-sm btn-sm-text round-0 w-100">0&#xb0;</button>
     				</div>
-    				<div class="btn-group mr-2" role="group">
-    					<button type="button" class="btn btn-alt btn-sm btn-sm-text chair">Chair</button>
-    					<button type="button" class="btn btn-alt btn-sm btn-sm-text bar">Object</button>
-    					<button type="button" class="btn btn-alt btn-sm btn-sm-text wall">Wall</button>
-    				</div>
-    				<div class="btn-group mr-2" role="group">
-    					<button type="button" class="btn btn-alt btn-sm btn-sm-text remove">Remove</button>
-    					<button type="button" class="btn btn-alt btn-sm btn-sm-text customer-mode">Mode</button>
-    				</div>
-    			</div>
-    		</div>
+                </div>
+                <div class="btn-toolbar mt-3">
+                    <div class="btn-group mr-2" role="group">
+                        <a href="#" role="button" class="btn btn-alt btn-sm btn-sm-text label-btn w-100">Objects</a>
+                        <button type="button" class="btn btn-alt btn-sm btn-sm-text object-0 w-100">0&#xb0;</button>
+                        <button type="button" class="btn btn-alt btn-sm btn-sm-text object-45 w-100">45&#xb0;</button>
+                    </div>
+                    <div class="btn-group" role="group">
+                        <a href="#" role="button" class="btn btn-alt btn-sm btn-sm-text label-btn w-100">Actions</a>
+                        <button type="button" class="btn btn-alt btn-sm btn-sm-text remove w-100">Remove</button>
+                        <button type="button" class="btn btn-alt btn-sm btn-sm-text export w-100">Export</button>
+                        <button type="button" class="btn btn-alt btn-sm btn-sm-text mode w-100">Mode</button>
+                    </div>
+                </div>
+            </div>
     	</div>
     </div>
     	<div class="row">
     		<div class="col-12">
 			  	<div class="form-group customer-menu" style="display: none;">
-				    <div class="btn-group">
-				      	<button class="btn btn-primary submit">Submit reservation</button>
-				      	<button class="btn btn-alt admin-mode">Admin mode</button>
-				    </div>
+                    <div class="btn-toolbar" role="toolbar">
+                        <div class="btn-group mr-2" role="group">
+                            <a href="#" role="button" class="btn btn-alt btn-sm btn-sm-text label-btn">Actions</a>
+                            <button type="button" class="btn btn-alt btn-sm btn-sm-text submit w-100">Submit</button>
+                            <button type="button" class="btn btn-alt btn-sm btn-sm-text mode w-100">Mode</button>
+                        </div>
+                    </div>
 				    <br />
 				    <br />
 				    <div id="slider"></div>

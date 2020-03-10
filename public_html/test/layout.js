@@ -14,6 +14,10 @@ const tableStroke = 	'#694d23';
 const tableShadow = 	'rgba(0, 0, 0, 0) 3px 3px 7px';
 const squareMinSize =   60;
 const squareMaxSize = 	150;
+const rectMinWidth =	90;
+const rectMaxWidth = 	210;
+const rectMinHeight = 	60;
+const rectMaxHeight = 	210;
 
 // Chairs
 const chairFill = 		'rgba(67, 42, 4, 0.7)';
@@ -73,57 +77,115 @@ function checkBoundingBox(e) {
 
 	const objBoundingBox = obj.getBoundingRect();
 
-	// Check if out of bounds
-	// Top
-	if(objBoundingBox.top < 0) {
-		if(obj.angle == 45) {
-			obj.set('top', 15);
-			obj.setCoords();
-		} else {
-			obj.set('top', 0);
-			obj.setCoords();
+	if(obj.type == "square" || obj.type == "circle") {
+		// Check if out of bounds
+		// Top
+		if(objBoundingBox.top < 0) {
+			if(obj.angle == 45) {
+				obj.set('top', 15);
+				obj.setCoords();
+			} else {
+				obj.set('top', 0);
+				obj.setCoords();
+			}
+		}
+
+		// Width
+		if(objBoundingBox.left > canvas.width - objBoundingBox.width) {
+			if(obj.angle == 45) {
+				obj.set('left', canvas.width - (obj.width - roundSize(obj.width / 15)));
+				obj.setCoords();
+			} else {
+				obj.set('left', canvas.width - objBoundingBox.width);
+				obj.setCoords();
+			}
+		}
+
+		// Height
+		if(objBoundingBox.top > canvas.height - objBoundingBox.height) {
+			if(obj.angle == 45) {
+				obj.set('top', canvas.height - objBoundingBox.height - 15);
+				obj.setCoords();
+			} else {
+				obj.set('top', canvas.height - objBoundingBox.height);
+				obj.setCoords();
+			}
+		}
+
+		// Left
+		if(objBoundingBox.left < 0) {
+
+			// Check if object is rotated
+			// Apply scaling
+			// TODO: check object type
+			if(obj.angle == 45) {
+				obj.set('left', obj.width - roundSize((obj.width / 15)));
+				obj.setCoords();
+			} else {
+				obj.set('left', 0);
+				obj.setCoords();
+			}
 		}
 	}
 
-	// Width
-	if(objBoundingBox.left > canvas.width - objBoundingBox.width) {
-		if(obj.angle == 45) {
-			obj.set('left', canvas.width - (obj.width - roundSize(obj.width / 15)));
-			obj.setCoords();
-		} else {
-			obj.set('left', canvas.width - objBoundingBox.width);
-			obj.setCoords();
+	if(obj.type == "rectangle") {
+		// Check if out of bounds
+		// Top
+		if(objBoundingBox.top < 0) {
+			if(obj.angle == 45) {
+				obj.set('top', 15);
+				obj.setCoords();
+			} else if(obj.angle == -45) {
+				obj.set('top', roundSize(obj.height * 1.1));
+				obj.setCoords();
+			} else {
+				obj.set('top', 0);
+				obj.setCoords();
+			}
 		}
-	}
 
-	// Height
-	if(objBoundingBox.top > canvas.height - objBoundingBox.height) {
-		if(obj.angle == 45) {
-			obj.set('top', canvas.height - objBoundingBox.height - 15);
-			obj.setCoords();
-		} else {
-			obj.set('top', canvas.height - objBoundingBox.height);
-			obj.setCoords();
+		// Width
+		if(objBoundingBox.left > canvas.width - objBoundingBox.width) {
+			if(obj.angle == 45) {
+				obj.set('left', canvas.width - obj.width + 15);
+				obj.setCoords();
+			} else if(obj.angle == -45) {
+				obj.set('left', canvas.width - obj.width - 45);
+				obj.setCoords();
+			} else {
+				obj.set('left', canvas.width - objBoundingBox.width);
+				obj.setCoords();
+			}
 		}
-	}
 
-	// Left
-	if(objBoundingBox.left < 0) {
+		// Height
+		if(objBoundingBox.top > canvas.height - objBoundingBox.height) {
+			if(obj.angle == 45) {
+				obj.set('top', canvas.height - objBoundingBox.height - 15);
+				obj.setCoords();
+			} else if(obj.angle == -45) {
+				obj.set('top', canvas.height - obj.height + 15);
+				obj.setCoords();
+			}else {
+				obj.set('top', canvas.height - objBoundingBox.height);
+				obj.setCoords();
+			}
+		}
 
-		// Check if object is rotated
-		// Apply scaling
-		// TODO: check object type
-		if(obj.angle == 45) {
-			obj.set('left', obj.width - roundSize((obj.width / 15)));
-			obj.setCoords();
-		} else {
-			obj.set('left', 0);
-			obj.setCoords();
+		// Left
+		if(objBoundingBox.left < 0) {
+			if(obj.angle == 45) {
+				obj.set('left', roundSize(obj.width * 0.5));
+				obj.setCoords();
+			} else {
+				obj.set('left', 0);
+				obj.setCoords();
+			}
 		}
 	}
 }
 
-// CREATE NEW FABRIC OBJECTS
+// CREATE NEW FABRIC TABLES
 
 function addSquareTable(deg = 0) {
   	const id = generateId();
@@ -247,6 +309,81 @@ function addCircleTable() {
 	return g;
 }
 
+function addRectangleTable(deg = 0) {
+  	const id = generateId();
+  	let gleft = 315;
+  	let gtop = 215;
+
+  	if(deg > 0) {
+  		gleft = 352;
+  		gtop = 200;
+  	}
+
+	const o = new fabric.Rect({
+		width: 105,
+		height: 75,
+		fill: tableFill,
+		stroke: tableFill,
+		strokeWidth: 1,
+		originX: 'center',
+		originY: 'center',
+		centeredRotation: true,
+		snapAngle: 45,
+		selectable: true
+	});
+
+	const t = new fabric.IText(number.toString(), {
+		fontFamily: 'Calibri',
+		fontSize: 14,
+		fill: '#fff',
+		textAlign: 'center',
+		originX: 'center',
+		originY: 'center',
+		angle: -deg
+	});
+
+	const g = new fabric.Group([o, t], {
+		left: gleft,
+		top: gtop,
+		centeredRotation: true,
+		hasRotatingPoint: false,
+		snapThreshold: 45,
+		snapAngle: 45,
+		angle: deg,
+		selectable: true,
+		type: 'rectangle',
+		table: true,
+		id: id,
+		number: number
+	});
+
+	// Set resizing controls
+	// Depending on angle controls
+	// are displayed at the bottom
+	if(deg == 0 || deg == 45) {
+		g.setControlsVisibility({
+			bl: false,
+			ml: false,
+			tl: false,
+			tr: false,
+			mt: false
+		});
+	} else {
+		g.setControlsVisibility({
+			tl: false,
+			tr: false,
+			mt: false,
+			mr: false,
+			br: false
+		});
+	}
+
+	canvas.add(g);
+	console.log(g.type + ': ' + id);
+	number++;
+	return g;
+}
+
 function initCanvas() {
 	if(canvas) {
     	canvas.clear()
@@ -303,11 +440,18 @@ function initCanvas() {
 		let table = o.table;
 		let type = o.type;
 
-		// Check min and max size for squared objects
-		// Round tables are considered square objects
+		// Check min and max size for objects
+		// Round and square tables are considered square objects
 		if(type == "square" || type == "circle") {
 			if(h < squareMinSize) { w = h = squareMinSize; }
 			if(h > squareMaxSize) { w = h = squareMaxSize; }
+		}
+
+		if(type == "rectangle") {
+			if(h < rectMinHeight) { h = rectMinHeight; }
+			if(h > rectMaxHeight) { h = rectMaxHeight; }
+			if(w < rectMinWidth)  { w = rectMinWidth;  }
+			if(w > rectMaxWidth)  { w = rectMaxWidth;  }
 		}
 
 		// Set left, top, width, and height
@@ -370,12 +514,109 @@ function initCanvas() {
 
 function addObjects() {
 	// Examples
-	addSquareTable(0);
-	addSquareTable(45);
-	addCircleTable();
+	// addSquareTable(0);
+	// addSquareTable(45);
+	// addCircleTable();
+	// addRectangleTable();
+	// addRectangleTable(-45);
+	// addRectangleTable(45);
 }
 
 // CREATE EXISTING FABRIC OBJECTS
+
+// EVENT LISTENERS FOR OBJECT BUTTONS
+
+$(".rectangle-0").click(function() {
+	const o = addRectangleTable();
+	canvas.setActiveObject(o);
+});
+
+$(".rectangle-45").click(function() {
+	const o = addRectangleTable(45);
+	canvas.setActiveObject(o);
+});
+
+$(".rectangle-315").click(function() {
+	const o = addRectangleTable(-45);
+	canvas.setActiveObject(o);
+});
+
+$(".square-0").click(function() {
+	const o = addSquareTable(0);
+	canvas.setActiveObject(o);
+});
+
+$(".square-45").click(function() {
+	const o = addSquareTable(45);
+	canvas.setActiveObject(o);
+});
+
+$(".round-0").click(function() {
+	const o = addCircleTable();
+	canvas.setActiveObject(o);
+});
+
+$(".remove").click(function() {
+	const o = canvas.getActiveObject();
+	if(o) {
+		let num = o.number;
+		let hi = num;
+		const obj = canvas.getObjects();
+
+		// Change number and render new
+		// text numbers for shifting
+		// after object removal
+		$.each(obj, function(k, v) {
+			if('number' in obj[k]) {
+				if(obj[k].number > num) {
+					obj[k].number -= 1;
+					obj[k]._objects[1].setText(obj[k].number.toString());
+
+					// Keep track of the highest number
+					// for new objects
+					if(obj[k].number > hi) {
+						hi = obj[k].number;
+					}
+				}
+			}
+		});
+		number = hi + 1;
+		o.remove();
+		canvas.remove(o);
+		canvas.discardActiveObject();
+		canvas.renderAll();
+	}
+});
+
+var toggle = 0;
+$(".mode").click(function() {
+	if(toggle % 2 == 0) {
+		canvas.getObjects().map(o => {
+			o.hasControls = false;
+			o.lockMovementX = true;
+			o.lockMovementY = true;
+			o.borderColor = "#38A62E";
+		});
+		canvas.selection = false;
+		canvas.hoverCursor = "pointer";
+		canvas.discardActiveObject();
+		canvas.renderAll();
+	} else {
+		canvas.getObjects().map(o => {
+			o.hasControls = true;
+			o.lockMovementX = false;
+			o.lockMovementY = false;
+			o.borderColor = tableFill;
+		});
+		canvas.selection = true;
+		canvas.hoverCursor = "move";
+		canvas.discardActiveObject();
+		canvas.renderAll();
+	}
+	$(".admin-menu").toggleClass("d-none");
+	$(".customer-menu").toggleClass("d-block");
+	toggle++;
+});
 
 // INITIALIZE CANVAS AND OBJECTS
 
