@@ -26,16 +26,17 @@ const objMaxAngHeight = 540;
 const objMinWidth = 	15;
 const objMaxWidth = 	gridX;
 const objMaxAngWidth = 	270;
+const chairMinWidth = 	30;
+const chairMaxWidth = 	90;
 
 // Chairs
 const chairFill = 		'rgba(67, 42, 4, 0.7)';
 const chairStroke = 	'#32230b';
 const chairShadow = 	'rgba(0, 0, 0, 0) 3px 3px 7px';
 
-// Bar
+// Other objects
 const objectFill = 		'rgba(0, 93, 127, 0.7)';
 const objectStroke = 	'#003e54';
-const objectText = 		'Bar';
 
 // Wall
 const wallFill = 		'rgba(136, 136, 136, 0.7)';
@@ -84,7 +85,7 @@ function checkBoundingBox(e) {
 
 	const objBoundingBox = obj.getBoundingRect();
 
-	if(obj.type == "square" || obj.type == "circle") {
+	if(obj.type == "square" || obj.type == "circle" || obj.type == "chair") {
 		// Check if out of bounds
 		// Top
 		if(objBoundingBox.top < 0) {
@@ -215,15 +216,15 @@ function checkBoundingBox(e) {
 				obj.setCoords();
 			}
 			if (objBoundingBox.left > canvas.width - objBoundingBox.width) {
-				obj.set('left', canvas.width - objBoundingBox.width)
+				obj.set('left', canvas.width - objBoundingBox.width * 0.5)
 				obj.setCoords()
 			}
 			if (objBoundingBox.top > canvas.height - objBoundingBox.height) {
-				obj.set('top', canvas.height - objBoundingBox.height - 15)
+				obj.set('top', canvas.height - objBoundingBox.height)
 				obj.setCoords()
 			}
 			if (objBoundingBox.left < 0) {
-				obj.set('left', objBoundingBox.width * 0.5)
+				obj.set('left', objBoundingBox.width)
 				obj.setCoords()
 			}
 		}
@@ -472,13 +473,62 @@ function addObject(text, deg = 0) {
 		angle: deg,
 		selectable: true,
 		type: 'other',
-		table: true,
+		table: false,
 		id: id
 	});
 
 	canvas.add(g);
 	console.log(g.type + ': ' + id);
 	return g;
+}
+
+function addChair(deg = 0) {
+  	const id = generateId();
+  	let gleft = 315;
+  	let gtop = 215;
+
+  	if(deg > 0) {
+  		gleft = 352;
+  		gtop = 200;
+  	}
+
+	const o = new fabric.Rect({
+		width: 45,
+		height: 45,
+		left: gleft,
+		top: gtop,
+		hasRotatingPoint: false,
+		fill: chairFill,
+		stroke: tableFill,
+		strokeWidth: 1,
+		originX: 'center',
+		originY: 'center',
+		centeredRotation: true,
+		snapThreshold: 45,
+		snapAngle: 45,
+		angle: deg,
+		selectable: true,
+		type: 'chair',
+		table: false,
+		id: id
+	});
+
+	// Set resizing controls
+	// Bottom right only for square
+	o.setControlsVisibility({
+		bl: false,
+		ml: false,
+		tl: false,
+		tr: false,
+		mt: false,
+		mb: false,
+		mr: false
+	});
+
+	canvas.add(o);
+	console.log(o.type + ': ' + id);
+	number++;
+	return o;
 }
 
 function initCanvas() {
@@ -489,32 +539,41 @@ function initCanvas() {
 
   	// Create new canvas
   	// Set initial table number
+  	number = 1;
   	canvas = new fabric.Canvas('canvas');
   	canvas.backgroundColor = canvasBg;
-  	number = 1;
+  	var bgImg = '/delectable/public_html/assets/img/graphics/canvas.png';
+  	var image = new Image();
+  	image.src = bgImg;
+  	// Checking if image was loaded else draw grid lines
+  	if(image.width != 0) {
+	  	// Load grid as image for faster loading times
+	  	canvas.setBackgroundImage(bgImg, 
+	  		canvas.renderAll.bind(canvas));
+	} else {
+	  	// Create horizonal grid lines
+	  	for(let i = 0; i < (canvas.width / grid); i++) {
+		    const lineX = new fabric.Line([ 0, i * grid, canvas.width, i * grid], {
+				stroke: lineStroke,
+				selectable: false,
+				excludeFromExport: true,
+				type: 'line'
+		    });
+		    canvas.add(lineX);
+	  	}
 
-  	// Create horizonal grid lines
-  	for(let i = 0; i < (canvas.width / grid); i++) {
-	    const lineX = new fabric.Line([ 0, i * grid, canvas.width, i * grid], {
-			stroke: lineStroke,
-			selectable: false,
-			excludeFromExport: true,
-			type: 'line'
-	    });
-	    canvas.add(lineX);
-  	}
-
-  	// Create vertical grid lines
-  	for(let i = 0; i < (canvas.width / grid); i++) {
-	    const lineY = new fabric.Line([ i * grid, 0, i * grid, canvas.height], {
-			stroke: lineStroke,
-			selectable: false,
-			excludeFromExport: true,
-			type: 'line'
-	    });
-	    sendLinesToBack();
-	    canvas.add(lineY);
-  	}
+	  	// Create vertical grid lines
+	  	for(let i = 0; i < (canvas.width / grid); i++) {
+		    const lineY = new fabric.Line([ i * grid, 0, i * grid, canvas.height], {
+				stroke: lineStroke,
+				selectable: false,
+				excludeFromExport: true,
+				type: 'line'
+		    });
+		    sendLinesToBack();
+		    canvas.add(lineY);
+	  	}
+	}
 
   	// Snap objects to grid when moving
 	canvas.on('object:moving', function(e) {
@@ -528,8 +587,13 @@ function initCanvas() {
 		// type is type of table, chair, etc.
 		fabric.Object.prototype.objectCaching = false;
 		let o = e.target;
-		let obj = e.target._objects[0];
-		let text = o._objects[1];
+		let edit = (o.table || o.type == "other") ? true : false;
+		let obj;
+		let text;
+		if(edit) {
+			obj = e.target._objects[0];
+			text = o._objects[1];
+		}
 		let l = roundSize(o.left);
 		let t = roundSize(o.top);
 		let w = roundSize(o.getWidth());
@@ -575,6 +639,11 @@ function initCanvas() {
 			}
 		}
 
+		if(type == "chair") {
+			if(w < chairMinWidth) { w = h = chairMinWidth; }
+			if(w > chairMaxWidth) { w = h = chairMaxWidth; }
+		}
+
 		// Set left, top, width, and height
 		// Resets scaleX and scaleY for incrementing size by grid
 		o.set({
@@ -586,12 +655,14 @@ function initCanvas() {
 			scaleY: 1
 		});
 
-		// Sets the rect object's width and height
-		// to fill in the group object
-		obj.set({
-			width: 	w,
-			height: h
-		});
+		if(edit) {
+			// Sets the rect object's width and height
+			// to fill in the group object
+			obj.set({
+				width: 	w,
+				height: h
+			});
+		}
 
 		// For circle objects the radius is width or height * 0.5
 		if(type == "circle") { obj.set({ radius: w * 0.5 }); }
@@ -641,7 +712,7 @@ function addObjects() {
 	// addRectangleTable();
 	// addRectangleTable(-45);
 	// addRectangleTable(45);
-	addObject("text", 45);
+	// addObject("text", 45);
 }
 
 // CREATE EXISTING FABRIC OBJECTS
@@ -690,6 +761,16 @@ $(".object-45").click(function() {
 	canvas.setActiveObject(o);
 });
 
+$(".chair-0").click(function() {
+	const o = addChair();
+	canvas.setActiveObject(o);
+});
+
+$(".chair-45").click(function() {
+	const o = addChair(45);
+	canvas.setActiveObject(o);
+});
+
 $(".remove").click(function() {
 	const o = canvas.getActiveObject();
 	if(o) {
@@ -701,7 +782,7 @@ $(".remove").click(function() {
 		// text numbers for shifting
 		// after object removal
 		$.each(obj, function(k, v) {
-			if('number' in obj[k]) {
+			if(obj[k].table) {
 				if(obj[k].number > num) {
 					obj[k].number -= 1;
 					obj[k]._objects[1].setText(obj[k].number.toString());
@@ -722,6 +803,12 @@ $(".remove").click(function() {
 	}
 });
 
+$(".clear").click(function() {
+	canvas.remove(...canvas.getObjects());
+	number = 1;
+	canvas.renderAll();
+});
+
 var toggle = 0;
 $(".mode").click(function() {
 	if(toggle % 2 == 0) {
@@ -730,6 +817,9 @@ $(".mode").click(function() {
 			o.lockMovementX = true;
 			o.lockMovementY = true;
 			o.borderColor = "#38A62E";
+			if(o.type == "chair" || o.type == "other") {
+				o.selectable = false;
+			}
 		});
 		canvas.selection = false;
 		canvas.hoverCursor = "pointer";
@@ -741,6 +831,9 @@ $(".mode").click(function() {
 			o.lockMovementX = false;
 			o.lockMovementY = false;
 			o.borderColor = tableFill;
+			if(o.type == "chair" || o.type == "other") {
+				o.selectable = true;
+			}
 		});
 		canvas.selection = true;
 		canvas.hoverCursor = "move";

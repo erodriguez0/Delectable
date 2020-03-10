@@ -14,21 +14,6 @@ require_once(INCLUDE_PATH . '/admin/dashboard.php');
 
     <div class="">
     <div class="form-group admin-menu">
-    	<div class="row">
- <!--            <div class="col-sm-2 col-sm-offset-3 form-group">
-                <label>Width (px)</label>
-                <input type="number" id="width" class="form-control" value="720" />
-            </div>
-            <div class="col-sm-2 form-group">
-                <label>Height (px)</label>
-                <input type="number" id="height" class="form-control" value="540" />
-            </div> -->
-<!--             <div class="col-sm-2 form-group">
-                <label>&nbsp;</label>
-                <br />
-                <button class="btn btn-primary">Save</button>
-            </div> -->
-        </div>
         <div class="row">
         	<div class="col-12">
         		<div class="btn-toolbar" role="toolbar">
@@ -54,10 +39,16 @@ require_once(INCLUDE_PATH . '/admin/dashboard.php');
                         <button type="button" class="btn btn-alt btn-sm btn-sm-text object-0 w-100">0&#xb0;</button>
                         <button type="button" class="btn btn-alt btn-sm btn-sm-text object-45 w-100">45&#xb0;</button>
                     </div>
+                    <div class="btn-group mr-2" role="group">
+                        <a href="#" role="button" class="btn btn-alt btn-sm btn-sm-text label-btn w-100">Chair</a>
+                        <button type="button" class="btn btn-alt btn-sm btn-sm-text chair-0 w-100">0&#xb0;</button>
+                        <button type="button" class="btn btn-alt btn-sm btn-sm-text chair-45 w-100">45&#xb0;</button>
+                    </div>
                     <div class="btn-group" role="group">
                         <a href="#" role="button" class="btn btn-alt btn-sm btn-sm-text label-btn w-100">Actions</a>
                         <button type="button" class="btn btn-alt btn-sm btn-sm-text remove w-100">Remove</button>
-                        <button type="button" class="btn btn-alt btn-sm btn-sm-text export w-100">Export</button>
+                        <button type="button" class="btn btn-alt btn-sm btn-sm-text clear w-100">Clear</button>
+                        <!-- <button type="button" class="btn btn-alt btn-sm btn-sm-text export w-100">Export</button> -->
                         <button type="button" class="btn btn-alt btn-sm btn-sm-text mode w-100">Mode</button>
                     </div>
                 </div>
@@ -79,8 +70,6 @@ require_once(INCLUDE_PATH . '/admin/dashboard.php');
 				    <div id="slider"></div>
 				    <div id="slider-value"></div>
 			  	</div>
-
-    			<!-- <div class="mt-3" style="overflow-x: scroll;"> -->
     			<div class="mt-3 overflow-x">
     				<canvas id="canvas" width="720" height="540"></canvas>
     			</div>
@@ -104,6 +93,3 @@ require_once(INCLUDE_PATH . '/admin/dashboard.php');
 <?php
 require_once(INCLUDE_PATH . 'footer.php');
 ?>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.7.11/fabric.min.js"></script>
-<script src="//cdn.bootcss.com/noUiSlider/8.5.1/nouislider.js"></script>
-<script type="text/javascript" src="./layout.js"></script>
