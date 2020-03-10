@@ -97,6 +97,28 @@ ENGINE = InnoDB;
 
 CREATE INDEX `fk_res_id_idx` ON `delectable`.`location` (`fk_res_id` ASC) VISIBLE;
 
+-- -----------------------------------------------------
+-- Table `delectable`.`location_hours`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `delectable`.`location_hours` ;
+
+CREATE TABLE IF NOT EXISTS `delectable`.`location_hours` (
+  `hours_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `hours_day` INT UNSIGNED NOT NULL,
+  `hours_open` TIME NOT NULL,
+  `hours_close` TIME NOT NULL,
+  `hours_valid_from` DATE DEFAULT NULL,
+  `hours_valid_thru` DATE DEFAULT NULL,
+  `fk_loc_id` INT UNSIGNED NOT NULL,
+  PRIMARY KEY (`hours_id`),
+  CONSTRAINT `fk_location_hours_res_id`
+    FOREIGN KEY (`fk_loc_id`)
+    REFERENCES `delectable`.`location` (`loc_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+CREATE INDEX `fk_loc_id_idx` ON `delectable`.`location_hours` (`fk_loc_id` ASC) VISIBLE;
 
 -- -----------------------------------------------------
 -- Table `delectable`.`employee`

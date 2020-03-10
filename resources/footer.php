@@ -5,6 +5,9 @@
 <script>
 	feather.replace();
 </script>
-<script src="/delectable/public_html/assets/js/custom.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.7.11/fabric.min.js"></script>
+<script src="//cdn.bootcss.com/noUiSlider/8.5.1/nouislider.js"></script>
+<script type="text/javascript" src="./layout.js?v=<?php echo uniqid();?>"></script>
+<script src="/delectable/public_html/assets/js/custom.js?random=<?php echo uniqid(); ?>" type="text/javascript"></script>
 </body>
 </html>
