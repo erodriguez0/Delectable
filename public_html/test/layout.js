@@ -231,7 +231,7 @@ function checkBoundingBox(e) {
 	}
 }
 
-// CREATE NEW FABRIC TABLES
+// CREATE NEW FABRIC OBEJCTS
 
 function addSquareTable(deg = 0) {
   	const id = generateId();
