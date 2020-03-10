@@ -522,7 +522,6 @@ function addChair(deg = 0) {
 	});
 
 	canvas.add(o);
-	console.log(o.type + ': ' + id);
 	number++;
 	return o;
 }
@@ -711,7 +710,56 @@ function addObjects() {
 	// addObject("text", 45);
 }
 
-// CREATE EXISTING FABRIC OBJECTS
+// CREATE/SAVE EXISTING FABRIC OBJECTS
+
+function saveObjects() {
+	let o = canvas.getObjects();
+	let rows = [];
+	$.each(o, function(k, v) {
+		let row;
+		if(o[k].table) {
+			row = {
+				id: o[k].id,
+				number: o[k].number,
+				type: o[k].type,
+				table: true,
+				left:  o[k].left,
+				top:  o[k].top,
+				width:  o[k].width,
+				height:  o[k].height,
+				deg:  o[k].angle
+			};
+			rows.push(row);
+		} else if(o[k].type == "other") {
+			row = {
+				id: o[k].id,
+				text: o[k]._objects[1].text,
+				type: o[k].type,
+				table: false,
+				left:  o[k].left,
+				top:  o[k].top,
+				width:  o[k].width,
+				height:  o[k].height,
+				deg:  o[k].angle
+			};
+			rows.push(row);
+		} else {
+			row = {
+				id: o[k].id,
+				type: o[k].type,
+				table: false,
+				left:  o[k].left,
+				top:  o[k].top,
+				width:  o[k].width,
+				height:  o[k].height,
+				deg:  o[k].angle
+			};
+			rows.push(row);
+		}
+	});
+	
+	// TODO: Save rows to database
+}
 
 // EVENT LISTENERS FOR OBJECT BUTTONS
 
@@ -839,6 +887,8 @@ $(".mode").click(function() {
 	$(".admin-mode").toggleClass("d-none");
 	$(".customer-mode").toggleClass("d-block");
 	toggle++;
+
+	saveObjects();
 });
 
 // INITIALIZE CANVAS AND OBJECTS
