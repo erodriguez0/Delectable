@@ -840,8 +840,8 @@ $(".mode").click(function() {
 		canvas.discardActiveObject();
 		canvas.renderAll();
 	}
-	$(".admin-menu").toggleClass("d-none");
-	$(".customer-menu").toggleClass("d-block");
+	$(".admin-mode").toggleClass("d-none");
+	$(".customer-mode").toggleClass("d-block");
 	toggle++;
 });
 

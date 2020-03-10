@@ -13,37 +13,52 @@ require_once(INCLUDE_PATH . '/admin/dashboard.php');
     </div>
 
     <div class="">
-    <div class="form-group admin-menu">
+
+    <!-- Admin/Restaurant Mode -->
+    <div class="form-group admin-mode">
         <div class="row">
         	<div class="col-12">
         		<div class="btn-toolbar" role="toolbar">
+
+                    <!-- Rectangles -->
     				<div class="btn-group mr-2" role="group">
                         <a href="#" role="button" class="btn btn-alt btn-sm btn-sm-text label-btn">Rectangle</a>
     					<button type="button" class="btn btn-alt btn-sm btn-sm-text rectangle-0">0&#xb0;</button>
     					<button type="button" class="btn btn-alt btn-sm btn-sm-text rectangle-45">45&#xb0;</button>
     					<button type="button" class="btn btn-alt btn-sm btn-sm-text rectangle-315">-45&#xb0;</button>
                     </div>
+
+                    <!-- Squares -->
                     <div class="btn-group mr-2" role="group">
                         <a href="#" role="button" class="btn btn-alt btn-sm btn-sm-text label-btn w-100">Square</a>
                         <button type="button" class="btn btn-alt btn-sm btn-sm-text square-0 w-100">0&#xb0;</button>
                         <button type="button" class="btn btn-alt btn-sm btn-sm-text square-45 w-100">45&#xb0;</button>
                     </div>
+
+                    <!-- Circle -->
                     <div class="btn-group" role="group">
                         <a href="#" role="button" class="btn btn-alt btn-sm btn-sm-text label-btn">Round</a>
                         <button type="button" class="btn btn-alt btn-sm btn-sm-text round-0 w-100">0&#xb0;</button>
     				</div>
                 </div>
+
                 <div class="btn-toolbar mt-3">
+
+                    <!-- Objects -->
                     <div class="btn-group mr-2" role="group">
                         <a href="#" role="button" class="btn btn-alt btn-sm btn-sm-text label-btn w-100">Objects</a>
                         <button type="button" class="btn btn-alt btn-sm btn-sm-text object-0 w-100">0&#xb0;</button>
                         <button type="button" class="btn btn-alt btn-sm btn-sm-text object-45 w-100">45&#xb0;</button>
                     </div>
+
+                    <!-- Chairs -->
                     <div class="btn-group mr-2" role="group">
                         <a href="#" role="button" class="btn btn-alt btn-sm btn-sm-text label-btn w-100">Chair</a>
                         <button type="button" class="btn btn-alt btn-sm btn-sm-text chair-0 w-100">0&#xb0;</button>
                         <button type="button" class="btn btn-alt btn-sm btn-sm-text chair-45 w-100">45&#xb0;</button>
                     </div>
+
+                    <!-- Actions -->
                     <div class="btn-group" role="group">
                         <a href="#" role="button" class="btn btn-alt btn-sm btn-sm-text label-btn w-100">Actions</a>
                         <button type="button" class="btn btn-alt btn-sm btn-sm-text remove w-100">Remove</button>
@@ -55,39 +70,33 @@ require_once(INCLUDE_PATH . '/admin/dashboard.php');
             </div>
     	</div>
     </div>
-    	<div class="row">
-    		<div class="col-12">
-			  	<div class="form-group customer-menu" style="display: none;">
-                    <div class="btn-toolbar" role="toolbar">
-                        <div class="btn-group mr-2" role="group">
-                            <a href="#" role="button" class="btn btn-alt btn-sm btn-sm-text label-btn">Actions</a>
-                            <button type="button" class="btn btn-alt btn-sm btn-sm-text submit w-100">Submit</button>
-                            <button type="button" class="btn btn-alt btn-sm btn-sm-text mode w-100">Mode</button>
-                        </div>
+    <!-- ./Admin/Restaurant Mode -->
+
+    <!-- Customer Mode -->
+    <div class="form-group customer-mode" style="display: none;">
+        <div class="row">
+            <div class="col-12">
+                <div class="btn-toolbar" role="toolbar">
+                    <div class="btn-group mr-2" role="group">
+                        <a href="#" role="button" class="btn btn-alt btn-sm btn-sm-text label-btn">Actions</a>
+                        <button type="button" class="btn btn-alt btn-sm btn-sm-text mode w-100">Mode</button>
                     </div>
-				    <br />
-				    <br />
-				    <div id="slider"></div>
-				    <div id="slider-value"></div>
-			  	</div>
-    			<div class="mt-3 overflow-x">
-    				<canvas id="canvas" width="720" height="540"></canvas>
-    			</div>
-    		</div>
-    	</div>
+                </div>
+            </div>
+        </div>
     </div>
-	<div class="modal fade" id="modal" tabindex="-1" role="dialog">
-	  <div class="modal-dialog" role="document">
-	    <div class="modal-content">
-	      <div class="modal-body text-center">
-	        <p id="modal-table-id"></p>
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
-	      </div>
-	    </div>
-	  </div>
+    <!-- ./Customer Mode -->
+
+    <!-- Layout Canvas -->
+	<div class="row">
+		<div class="col-12">
+			<div class="mt-3 overflow-x">
+				<canvas id="canvas" width="720" height="540"></canvas>
+			</div>
+		</div>
 	</div>
+    <!-- ./Layout Canvas -->
+    </div>
 </main>
 
 <?php
