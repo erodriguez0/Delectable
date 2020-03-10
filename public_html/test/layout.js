@@ -4,7 +4,9 @@ var canvas;
 var number;
 
 // Grid
-const grid = 15
+const grid = 15;
+const gridX = 720;
+const gridY = 540;
 const canvasBg = 		'#f8f8f8';
 const lineStroke = 		'#ebebeb';
 
@@ -18,6 +20,12 @@ const rectMinWidth =	90;
 const rectMaxWidth = 	210;
 const rectMinHeight = 	60;
 const rectMaxHeight = 	210;
+const objMinHeight = 	15;
+const objMaxHeight = 	gridY;
+const objMaxAngHeight = 540;
+const objMinWidth = 	15;
+const objMaxWidth = 	gridX;
+const objMaxAngWidth = 	270;
 
 // Chairs
 const chairFill = 		'rgba(67, 42, 4, 0.7)';
@@ -25,10 +33,9 @@ const chairStroke = 	'#32230b';
 const chairShadow = 	'rgba(0, 0, 0, 0) 3px 3px 7px';
 
 // Bar
-const barFill = 		'rgba(0, 93, 127, 0.7)';
-const barStroke = 		'#003e54';
-const barShadow = 		'rgba(0, 0, 0, 0) 3px 3px 7px';
-const barText = 		'Bar';
+const objectFill = 		'rgba(0, 93, 127, 0.7)';
+const objectStroke = 	'#003e54';
+const objectText = 		'Bar';
 
 // Wall
 const wallFill = 		'rgba(136, 136, 136, 0.7)';
@@ -180,6 +187,44 @@ function checkBoundingBox(e) {
 			} else {
 				obj.set('left', 0);
 				obj.setCoords();
+			}
+		}
+	}
+
+	if(obj.type == "other") {
+		if(obj.angle == 0) {
+			if(objBoundingBox.top < 0) {
+				obj.set('top', 0);
+				obj.setCoords();
+			}
+			if (objBoundingBox.left > canvas.width - objBoundingBox.width) {
+				obj.set('left', canvas.width - objBoundingBox.width)
+				obj.setCoords()
+			}
+			if (objBoundingBox.top > canvas.height - objBoundingBox.height) {
+				obj.set('top', canvas.height - objBoundingBox.height)
+				obj.setCoords()
+			}
+			if (objBoundingBox.left < 0) {
+				obj.set('left', 0)
+				obj.setCoords()
+			}
+		} else {
+			if(objBoundingBox.top < 0) {
+				obj.set('top', 0);
+				obj.setCoords();
+			}
+			if (objBoundingBox.left > canvas.width - objBoundingBox.width) {
+				obj.set('left', canvas.width - objBoundingBox.width)
+				obj.setCoords()
+			}
+			if (objBoundingBox.top > canvas.height - objBoundingBox.height) {
+				obj.set('top', canvas.height - objBoundingBox.height - 15)
+				obj.setCoords()
+			}
+			if (objBoundingBox.left < 0) {
+				obj.set('left', objBoundingBox.width * 0.5)
+				obj.setCoords()
 			}
 		}
 	}
@@ -384,6 +429,58 @@ function addRectangleTable(deg = 0) {
 	return g;
 }
 
+function addObject(text, deg = 0) {
+	const id = generateId();
+	let gleft = 315;
+  	let gtop = 215;
+
+  	if(deg > 0) {
+  		gleft = 352;
+  		gtop = 200;
+  	}
+
+  	const o = new fabric.Rect({
+		width: 75,
+		height: 75,
+		fill: objectFill,
+		stroke: objectFill,
+		strokeWidth: 1,
+		originX: 'center',
+		originY: 'center',
+		centeredRotation: true,
+		snapAngle: 45,
+		selectable: true
+	});
+
+	const t = new fabric.IText(text, {
+		fontFamily: 'Calibri',
+		fontSize: 14,
+		fill: '#fff',
+		textAlign: 'center',
+		originX: 'center',
+		originY: 'center',
+		angle: -deg
+	});
+
+	const g = new fabric.Group([o, t], {
+		left: gleft,
+		top: gtop,
+		centeredRotation: true,
+		hasRotatingPoint: false,
+		snapThreshold: 45,
+		snapAngle: 45,
+		angle: deg,
+		selectable: true,
+		type: 'other',
+		table: true,
+		id: id
+	});
+
+	canvas.add(g);
+	console.log(g.type + ': ' + id);
+	return g;
+}
+
 function initCanvas() {
 	if(canvas) {
     	canvas.clear()
@@ -432,6 +529,7 @@ function initCanvas() {
 		fabric.Object.prototype.objectCaching = false;
 		let o = e.target;
 		let obj = e.target._objects[0];
+		let text = o._objects[1];
 		let l = roundSize(o.left);
 		let t = roundSize(o.top);
 		let w = roundSize(o.getWidth());
@@ -452,6 +550,29 @@ function initCanvas() {
 			if(h > rectMaxHeight) { h = rectMaxHeight; }
 			if(w < rectMinWidth)  { w = rectMinWidth;  }
 			if(w > rectMaxWidth)  { w = rectMaxWidth;  }
+		}
+
+		if(type == "other") {
+			if(a == 0) {
+				if(h < objMinHeight) { h = objMinHeight; }
+				if(h > objMaxHeight) { h = objMaxHeight; }
+				if(w < objMinWidth)  { w = objMinWidth;  }
+				if(w > objMaxWidth)  { w = objMaxWidth;  }
+				if(w < 60) { 
+					if(o.left < 270) {
+						text.angle = 270;
+					} else {
+						text.angle = 90;
+					}
+				} else if(w > 60 && text.angle > 90) {
+					text.angle = 0;
+				}
+			} else {
+				if(h < objMinHeight) 	{ h = objMinHeight; 	}
+				if(h > objMaxAngWidth)  { h = objMaxAngWidth; 	}
+				if(w < objMinWidth)  	{ w = objAngWidth;  	}
+				if(w > objMaxAngWidth)  { w = objMaxAngWidth;  	}
+			}
 		}
 
 		// Set left, top, width, and height
@@ -520,6 +641,7 @@ function addObjects() {
 	// addRectangleTable();
 	// addRectangleTable(-45);
 	// addRectangleTable(45);
+	addObject("text", 45);
 }
 
 // CREATE EXISTING FABRIC OBJECTS
@@ -553,6 +675,18 @@ $(".square-45").click(function() {
 
 $(".round-0").click(function() {
 	const o = addCircleTable();
+	canvas.setActiveObject(o);
+});
+
+$(".object-0").click(function() {
+	var text = prompt("Enter text to display", "Text...");
+	const o = addObject(text.toString());
+	canvas.setActiveObject(o);
+});
+
+$(".object-45").click(function() {
+	var text = prompt("Enter text to display", "Text...");
+	const o = addObject(text.toString(), 45);
 	canvas.setActiveObject(o);
 });
 

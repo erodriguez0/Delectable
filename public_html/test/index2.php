@@ -23,11 +23,11 @@ require_once(INCLUDE_PATH . '/admin/dashboard.php');
                 <label>Height (px)</label>
                 <input type="number" id="height" class="form-control" value="540" />
             </div> -->
-            <div class="col-sm-2 form-group">
+<!--             <div class="col-sm-2 form-group">
                 <label>&nbsp;</label>
                 <br />
                 <button class="btn btn-primary">Save</button>
-            </div>
+            </div> -->
         </div>
         <div class="row">
         	<div class="col-12">
