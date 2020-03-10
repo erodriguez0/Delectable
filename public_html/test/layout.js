@@ -294,7 +294,6 @@ function addSquareTable(deg = 0) {
 	});
 
 	canvas.add(g);
-	console.log(g.type + ': ' + id);
 	number++;
 	return g;
 }
@@ -350,7 +349,6 @@ function addCircleTable() {
 	});
 
 	canvas.add(g);
-	console.log(g.type + ': ' + id);
 	number++;
 	return g;
 }
@@ -425,7 +423,6 @@ function addRectangleTable(deg = 0) {
 	}
 
 	canvas.add(g);
-	console.log(g.type + ': ' + id);
 	number++;
 	return g;
 }
@@ -478,7 +475,6 @@ function addObject(text, deg = 0) {
 	});
 
 	canvas.add(g);
-	console.log(g.type + ': ' + id);
 	return g;
 }
 
