@@ -111,7 +111,7 @@ CREATE TABLE IF NOT EXISTS `delectable`.`location_hours` (
   `hours_valid_thru` DATE DEFAULT NULL,
   `fk_loc_id` INT UNSIGNED NOT NULL,
   PRIMARY KEY (`hours_id`),
-  CONSTRAINT `fk_location_hours_res_id`
+  CONSTRAINT `fk_location_hours_loc_id`
     FOREIGN KEY (`fk_loc_id`)
     REFERENCES `delectable`.`location` (`loc_id`)
     ON DELETE NO ACTION
