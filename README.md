@@ -1,2 +1,2 @@
 # Delectable
-Web app for restaurant management with an interactive reservation system
+Web application for restaurant management with an interactive restaurant table layout to make reservations.
