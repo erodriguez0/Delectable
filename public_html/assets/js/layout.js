@@ -4,6 +4,7 @@ var canvas;
 var number;
 var bgImg = '/delectable/public_html/assets/img/graphics/canvas.png';
 var image = new Image();
+image.src = bgImg;
 
 // Grid
 const grid = 15;
@@ -538,7 +539,6 @@ function initCanvas() {
   	number = 1;
   	canvas = new fabric.Canvas('canvas');
   	canvas.backgroundColor = canvasBg;
-  	image.src = bgImg;
   	// Checking if image was loaded else draw grid lines
   	if(image.width != 0) {
 	  	// Load grid as image for faster loading times
@@ -711,6 +711,18 @@ function addObjects() {
 
 // CREATE/SAVE EXISTING FABRIC OBJECTS
 
+function sortRowsByObjectNum(a, b) {
+	const num1 = a.number;
+	const num2 = b.number;
+	let comparison = 0;
+	if(num1 > num2) {
+		comparison = 1;
+	} else if(num1 < num2) {
+		comparison = -1;
+	}
+	return comparison;
+}
+
 function saveObjects() {
 	let o = canvas.getObjects();
 	let rows = [];
@@ -743,22 +755,26 @@ function saveObjects() {
 			};
 			rows.push(row);
 		} else {
-			row = {
-				id: o[k].id,
-				type: o[k].type,
-				table: false,
-				left:  o[k].left,
-				top:  o[k].top,
-				width:  o[k].width,
-				height:  o[k].height,
-				deg:  o[k].angle
-			};
-			rows.push(row);
+			// Exclude lines from being saved
+			if(o[k].type != "line") {
+				row = {
+					id: o[k].id,
+					type: o[k].type,
+					table: false,
+					left:  o[k].left,
+					top:  o[k].top,
+					width:  o[k].width,
+					height:  o[k].height,
+					deg:  o[k].angle
+				};
+				rows.push(row);
+			}
 		}
 	});
-	
+
 	// TODO: Save rows to database
-	
+	rows.sort(sortRowsByObjectNum);
+	console.log(rows);
 }
 
 // EVENT LISTENERS FOR OBJECT BUTTONS
@@ -818,6 +834,9 @@ $(".chair-45").click(function() {
 $(".remove").click(function() {
 	const o = canvas.getActiveObject();
 	if(o) {
+		// If object is  a table then
+		// it iterates through objects
+		// to renumber each table
 		if(o.table) {
 			let num = o.number;
 			let hi = num;
@@ -829,18 +848,17 @@ $(".remove").click(function() {
 			$.each(obj, function(k, v) {
 				if(obj[k].table) {
 					if(obj[k].number > num) {
-						obj[k].number -= 1;
-						obj[k]._objects[1].setText(obj[k].number.toString());
-
 						// Keep track of the highest number
 						// for new objects
 						if(obj[k].number > hi) {
 							hi = obj[k].number;
 						}
+						obj[k].number -= 1;
+						obj[k]._objects[1].setText(obj[k].number.toString());
 					}
 				}
 			});
-			number = hi + 1;
+			number = hi;
 		}
 		o.remove();
 		canvas.remove(o);
