@@ -2,16 +2,42 @@
 require_once($_SERVER['DOCUMENT_ROOT'] . '/delectable/resources/config.php');
 
 // Redirect if not logged in
-if(!$_SESSION['admin_id']):
+if(isset($_SESSION['admin_id']) || !isset($_SESSION['emp_id'])):
 	header('Location: /delectable/public_html/');
 
 // Display message if no manager access granted
-elseif(!$_SESSION['manager'] || !isset($_SESSION['manager'])):
+elseif(isset($_SESSION['emp_id']) && !isset($_SESSION['manager'])):
 	$title = "Delectable | For Restaurants";
 	require_once(INCLUDE_PATH . 'header.php');
 ?>
-	<h1 class="text-center">Contact Support To Finalize Registration</h1>
-	<h3 class="text-center">(###) ###-####</h3>
+	<!-- Navigation -->
+	<nav id="home-nav" class="navbar navbar-expand-lg navbar-dark shadow fixed-top">
+	    <div class="container">
+	        <a class="navbar-brand text-uppercase" href="#">Delectable</a>
+	        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+	        <span class="navbar-toggler-icon"></span>
+	        </button>
+	        <div class="collapse navbar-collapse" id="navbarResponsive">
+	            <ul class="navbar-nav ml-auto">
+	                <li class="nav-item">
+	                    <a class="nav-link" href="/delectable/public_html/">Home</a>
+	                </li>
+	                <li class="nav-item">
+	                    <a class="nav-link" href="/delectable/public_html/business/">Business</a>
+	                </li>
+	                <li class="nav-item">
+	                    <a class="nav-link" href="/delectable/public_html/admin/">Admin</a>
+	                </li>
+	            </ul>
+	        </div>
+	    </div>
+	</nav>
+	<section class="mt-5 pt-5">
+    	<div class="container">
+			<h1 class="text-center">Contact Support To Finalize Registration</h1>
+			<h3 class="text-center">(###) ###-####</h3>
+		</div>
+	</section>
 
 <?php
 	require_once(INCLUDE_PATH . 'header.php');
@@ -33,6 +59,6 @@ require_once(INCLUDE_PATH . 'business/manager/dashboard-nav.php');
 </main>
 
 <?php
-require_once(INCLUDE_PATH . 'header.php');
 endif;
+require_once(INCLUDE_PATH . 'header.php');
 ?>

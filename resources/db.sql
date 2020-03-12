@@ -415,52 +415,31 @@ CREATE INDEX `fk_menu_item_id_idx` ON `delectable`.`order_item` (`fk_menu_item_i
 
 
 -- -----------------------------------------------------
--- Table `delectable`.`layout`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `delectable`.`layout` ;
-
-CREATE TABLE IF NOT EXISTS `delectable`.`layout` (
-  `layout_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `layout_width` INT UNSIGNED NOT NULL,
-  `layout_length` INT UNSIGNED NOT NULL,
-  `fk_loc_id` INT UNSIGNED NOT NULL,
-  PRIMARY KEY (`layout_id`),
-  CONSTRAINT `fk_layout_loc_id`
-    FOREIGN KEY (`fk_loc_id`)
-    REFERENCES `delectable`.`location` (`loc_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-CREATE INDEX `fk_loc_id_idx` ON `delectable`.`layout` (`fk_loc_id` ASC) VISIBLE;
-
-
--- -----------------------------------------------------
 -- Table `delectable`.`table`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `delectable`.`table` ;
 
 CREATE TABLE IF NOT EXISTS `delectable`.`table` (
   `table_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `table_name` VARCHAR(64) NULL,
+  `table_uuid` VARCHAR(64) NOT NULL,
+  `table_number` VARCHAR(64) NOT NULL,
   `table_seats` INT NOT NULL,
-  `table_start_time` TIMESTAMP NOT NULL,
-  `table_end_time` TIMESTAMP NOT NULL,
+  `table_type` ENUM('round', 'rectangle', 'square') NOT NULL,
   `table_height` INT NOT NULL,
   `table_width` INT NOT NULL,
-  `table_pos_x` INT NOT NULL,
-  `table_pos_y` INT NOT NULL,
-  `table_shape` ENUM('Round', 'Rectangle') NOT NULL,
-  `fk_layout_id` INT UNSIGNED NOT NULL,
+  `table_left` INT NOT NULL,
+  `table_top` INT NOT NULL,
+  `table_angle` INT NOT NULL,
+  `fk_loc_id` INT UNSIGNED NOT NULL,
   PRIMARY KEY (`table_id`),
-  CONSTRAINT `fk_table_layout_id`
-    FOREIGN KEY (`fk_layout_id`)
-    REFERENCES `delectable`.`layout` (`layout_id`)
+  CONSTRAINT `fk_table_loc_id`
+    FOREIGN KEY (`fk_loc_id`)
+    REFERENCES `delectable`.`location` (`loc_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_layout_id_idx` ON `delectable`.`table` (`fk_layout_id` ASC) VISIBLE;
+CREATE INDEX `fk_loc_id_idx` ON `delectable`.`table` (`fk_loc_id` ASC) VISIBLE;
 
 
 -- -----------------------------------------------------
@@ -551,6 +530,52 @@ CREATE INDEX `fk_order_id_idx` ON `delectable`.`payment` (`fk_order_id` ASC) VIS
 
 CREATE UNIQUE INDEX `pay_token_UNIQUE` ON `delectable`.`payment` (`pay_token` ASC) VISIBLE;
 
+-- -----------------------------------------------------
+-- Table `delectable`.`location_hours`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `delectable`.`location_hours` ;
+
+CREATE TABLE IF NOT EXISTS `delectable`.`location_hours` (
+  `hours_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `hours_day` INT UNSIGNED NOT NULL,
+  `hours_open` TIME NOT NULL DEFAULT "8:00",
+  `hours_close` TIME NOT NULL DEFAULT "20:00",
+  `hours_valid_from` DATE NOT NULL,
+  `hours_valid_thru` DATE DEFAULT NULL,
+  `fk_loc_id` INT UNSIGNED NOT NULL,
+  PRIMARY KEY (`hours_id`),
+  CONSTRAINT `fk_location_hours_loc_id`
+    FOREIGN KEY (`fk_loc_id`)
+    REFERENCES `delectable`.`location` (`loc_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+CREATE INDEX `fk_loc_id_idx` ON `delectable`.`location_hours` (`fk_loc_id` ASC) VISIBLE;
+
+
+-- -----------------------------------------------------
+-- Table `delectable`.`object`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `delectable`.`object` ;
+
+CREATE TABLE IF NOT EXISTS `delectable`.`object` (
+  `object_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `object_type` ENUM('other', 'chair') NOT NULL,
+  `object_height` INT NOT NULL,
+  `object_width` INT NOT NULL,
+  `object_left` INT NOT NULL,
+  `object_top` INT NOT NULL,
+  `object_angle` INT NOT NULL,
+  `fk_loc_id` INT UNSIGNED NOT NULL,
+  PRIMARY KEY (`object_id`),
+  CONSTRAINT `fk_object_loc_id`
+    FOREIGN KEY (`fk_loc_id`)
+    REFERENCES `delectable`.`location` (`loc_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
 USE `delectable`;
 
 DELIMITER $$
@@ -570,6 +595,22 @@ USE `delectable`$$
 CREATE DEFINER = CURRENT_USER TRIGGER `delectable`.`order_item_BEFORE_INSERT` BEFORE INSERT ON `order_item` FOR EACH ROW
 BEGIN
 SET NEW.order_price = (SELECT item_price FROM menu_item WHERE item_id = NEW.fk_menu_item_id);
+END$$
+
+USE `delectable`$$
+DROP TRIGGER IF EXISTS `delectable`.`hours_AFTER_INSERT` $$
+USE `delectable`$$
+CREATE DEFINER = CURRENT_USER TRIGGER `delectable`.`hours_AFTER_INSERT` AFTER INSERT ON `location` FOR EACH ROW
+BEGIN
+  DECLARE x INT;
+  DECLARE d INT;
+  SET x = 7;
+  SET d = 1;
+  WHILE x > 0 DO
+    INSERT INTO location_hours(hours_day, hours_valid_from, fk_loc_id) VALUES (d, CURRENT_DATE, NEW.loc_id);
+    SET x = x - 1;
+    SET d = d + 1;
+  END WHILE;
 END$$
 
 

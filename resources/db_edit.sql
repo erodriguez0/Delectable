@@ -8,16 +8,13 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
--- Schema mydb
--- -----------------------------------------------------
--- -----------------------------------------------------
 -- Schema delectable
 -- -----------------------------------------------------
 
 -- -----------------------------------------------------
 -- Schema delectable
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `delectable` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ;
+CREATE SCHEMA IF NOT EXISTS `delectable` DEFAULT CHARACTER SET utf8 ;
 USE `delectable` ;
 
 -- -----------------------------------------------------
@@ -511,12 +508,12 @@ CREATE INDEX `fk_rsvn_id_idx` ON `delectable`.`table_reservation` (`fk_rsvn_id` 
 DROP TABLE IF EXISTS `delectable`.`location_hours` ;
 
 CREATE TABLE IF NOT EXISTS `delectable`.`location_hours` (
-  `hours_id` INT UNSIGNED NOT NULL,
+  `hours_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `hours_day` INT UNSIGNED NOT NULL,
-  `hours_open` TIME NOT NULL,
-  `hours_close` TIME NOT NULL,
+  `hours_open` TIME NOT NULL DEFAULT "8:00",
+  `hours_close` TIME NOT NULL DEFAULT "20:00",
   `hours_valid_from` DATE NOT NULL,
-  `hours_valid_thru` DATE NULL,
+  `hours_valid_thru` DATE DEFAULT NULL,
   `fk_loc_id` INT UNSIGNED NOT NULL,
   PRIMARY KEY (`hours_id`),
   CONSTRAINT `fk_location_hours_loc_id`
@@ -526,7 +523,7 @@ CREATE TABLE IF NOT EXISTS `delectable`.`location_hours` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_location_hours_loc_id_idx` ON `delectable`.`location_hours` (`fk_loc_id` ASC) VISIBLE;
+CREATE INDEX `fk_loc_id_idx` ON `delectable`.`location_hours` (`fk_loc_id` ASC) VISIBLE;
 
 
 -- -----------------------------------------------------
@@ -535,7 +532,7 @@ CREATE INDEX `fk_location_hours_loc_id_idx` ON `delectable`.`location_hours` (`f
 DROP TABLE IF EXISTS `delectable`.`object` ;
 
 CREATE TABLE IF NOT EXISTS `delectable`.`object` (
-  `object_id` INT UNSIGNED NOT NULL,
+  `object_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `object_type` ENUM('other', 'chair') NOT NULL,
   `object_height` INT(11) NOT NULL,
   `object_width` INT(11) NOT NULL,
@@ -562,28 +559,36 @@ USE `delectable`;
 DELIMITER $$
 
 USE `delectable`$$
-DROP TRIGGER IF EXISTS `delectable`.`order_item_BEFORE_INSERT` $$
+DROP TRIGGER IF EXISTS `delectable`.`salary_BEFORE_INSERT` $$
 USE `delectable`$$
-CREATE
-DEFINER=`root`@`127.0.0.1`
-TRIGGER `delectable`.`order_item_BEFORE_INSERT`
-BEFORE INSERT ON `delectable`.`order_item`
-FOR EACH ROW
+CREATE DEFINER = CURRENT_USER TRIGGER `delectable`.`salary_BEFORE_INSERT` BEFORE INSERT ON `salary` FOR EACH ROW
 BEGIN
-SET NEW.order_price = (SELECT item_price FROM menu_item WHERE item_id = NEW.fk_menu_item_id);
+SET NEW.salary_pay_rate = (SELECT emp_pay_rate FROM employee WHERE emp_id = NEW.fk_emp_id);
 END$$
 
 
 USE `delectable`$$
-DROP TRIGGER IF EXISTS `delectable`.`salary_BEFORE_INSERT` $$
+DROP TRIGGER IF EXISTS `delectable`.`order_item_BEFORE_INSERT` $$
 USE `delectable`$$
-CREATE
-DEFINER=`root`@`127.0.0.1`
-TRIGGER `delectable`.`salary_BEFORE_INSERT`
-BEFORE INSERT ON `delectable`.`salary`
-FOR EACH ROW
+CREATE DEFINER = CURRENT_USER TRIGGER `delectable`.`order_item_BEFORE_INSERT` BEFORE INSERT ON `order_item` FOR EACH ROW
 BEGIN
-SET NEW.salary_pay_rate = (SELECT emp_pay_rate FROM employee WHERE emp_id = NEW.fk_emp_id);
+SET NEW.order_price = (SELECT item_price FROM menu_item WHERE item_id = NEW.fk_menu_item_id);
+END$$
+
+USE `delectable`$$
+DROP TRIGGER IF EXISTS `delectable`.`hours_AFTER_INSERT` $$
+USE `delectable`$$
+CREATE DEFINER = CURRENT_USER TRIGGER `delectable`.`hours_AFTER_INSERT` AFTER INSERT ON `location` FOR EACH ROW
+BEGIN
+  DECLARE x INT;
+  DECLARE d INT;
+  SET x = 7;
+  SET d = 1;
+  WHILE x > 0
+    INSERT INTO location_hours(hours_day, hours_valid_from, fk_loc_id) VALUES (d, CURRENT_DATE, NEW.loc_id);
+    x = x - 1;
+    d = d + 1;
+  END WHILE;
 END$$
 
 
@@ -598,3 +603,4 @@ INSERT INTO restaurant (res_name, res_slogan, res_description) VALUES ('BANGABUR
 
 INSERT INTO location (loc_address_1, loc_address_2, loc_city, loc_state, loc_postal_code, loc_phone, fk_res_id)
 VALUES ('2550 California Ave', 'Suite #200', 'Bakersfield', 'California', '93308', '(661)-844-7071', 1);
+

@@ -64,14 +64,14 @@ if(isset($_POST['restaurant-create-account'])) {
 	}
 
 	// Redirect to business page if error found
-	if(!empty($_SESSION['error'])) {
+	if(isset($_SESSION['error'])) {
 		$_SESSION['create']['fname'] = htmlspecialchars($fname);
 		$_SESSION['create']['lname'] = htmlspecialchars($lname);
 		$_SESSION['create']['uname'] = htmlspecialchars($uname);
 		$_SESSION['create']['email'] = htmlspecialchars($email);
-		header('Location: /delectable/public_html/business/');
+		header('Location: /delectable/public_html/business/'); exit();
 	}
-
+	
 	$phash = password_hash($pass1, PASSWORD_DEFAULT);
 	$query = $conn->prepare("INSERT INTO employee (emp_first_name, emp_last_name, emp_username, emp_password, emp_email) VALUES (:fname, :lname, :uname, :passw, :email)");
 	$query->bindParam(':fname', $fname);
