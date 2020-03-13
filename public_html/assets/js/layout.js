@@ -1,6 +1,6 @@
 // GLOBAL VARS
-var canvasObj = $("#canvas");
 var canvas;
+var canvasObj = $("#canvas");
 var number;
 var bgImg = '/delectable/public_html/assets/img/graphics/canvas.png';
 var image = new Image();

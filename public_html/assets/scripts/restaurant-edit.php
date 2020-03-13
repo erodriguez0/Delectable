@@ -62,14 +62,28 @@ if(isset($_POST['employee_search'])) {
 if(isset($_POST['add_manager']) && isset($_POST['emp_id']) && isset($_POST['loc_id'])) {
 	$eid = $_POST['emp_id'];
 	$lid = $_POST['loc_id'];
+	$data = array("error" => false, "error_msg" => "", "data" => array());
 
 	$query = $conn->prepare("UPDATE employee SET emp_manager = 1, fk_loc_id = :lid WHERE emp_id = :eid");
 	$query->bindParam(":lid", $lid, PDO::PARAM_INT);
 	$query->bindParam(":eid", $eid, PDO::PARAM_INT);
 	try {
-		$query->execute();
+		if($query->execute()) {
+			$query = $conn->prepare("SELECT * FROM employee WHERE emp_id = :eid");
+			$query->bindParam(":eid", $eid, PDO::PARAM_INT);
+			$query->execute();
+			$row = $query->fetch();
+			$data["data"] = $row;
+			echo json_encode($data);
+		} else {
+			$data['error'] = true;
+			$data["error_msg"] = "Error updating database";
+			echo json_encode($data);
+		}
 	} catch(PDOException $e) {
-		
+		$data["error"] = true;
+		$data["error_msg"] = "Error connecting to database";
+		echo json_encode($data);
 	}
 }
 
@@ -82,6 +96,27 @@ if(isset($_POST['remove_manager'])) {
 		$query->execute();
 	} catch(PDOException $e) {
 		
+	}
+}
+
+if(isset($_POST['remove_employee'])) {
+	$eid = $_POST['emp_id'];
+	$data = array("error" => false, "error_msg" => "", "data" => array());
+
+	$query = $conn->prepare("UPDATE employee SET emp_manager = 0, fk_loc_id = NULL WHERE emp_id = :eid");
+	$query->bindParam(":eid", $eid, PDO::PARAM_INT);
+	try {
+		if($query->execute()) {
+			echo json_encode($data);
+		} else {
+			$data['error'] = true;
+			$data["error_msg"] = "Error updating database";
+			echo json_encode($data);
+		}
+	} catch(PDOException $e) {
+		$data["error"] = true;
+		$data["error_msg"] = "Error connecting to database";
+		echo json_encode($data);
 	}
 }
 
@@ -101,6 +136,34 @@ if(isset($_POST['employee_add_search'])) {
 		echo json_encode($rows);
 	} catch(PDOException $e) {
 		return $input;
+	}
+}
+
+if(isset($_POST['restaurant_add_employee'])) {
+	$eid = $_POST['emp_id'];
+	$lid = $_POST['loc_id'];
+	$data = array("error" => false, "error_msg" => "", "data" => array());
+
+	$query = $conn->prepare("UPDATE employee SET fk_loc_id = :lid WHERE emp_id = :eid");
+	$query->bindParam(":lid", $lid, PDO::PARAM_INT);
+	$query->bindParam(":eid", $eid, PDO::PARAM_INT);
+	try {
+		if($query->execute()){
+			$query = $conn->prepare("SELECT * FROM employee WHERE emp_id = :eid");
+			$query->bindParam(":eid", $eid, PDO::PARAM_INT);
+			$query->execute();
+			$row = $query->fetch();
+			$data["data"] = $row;
+			echo json_encode($data);
+		} else {
+			$data["error"] = true;
+			$data["error_msg"] = "Error updating database";
+			echo json_encode($data);
+		}
+	} catch(PDOException $e) {
+		$data["error"] = true;
+		$data["error_msg"] = "Error connecting to database";
+		echo json_encode($data);
 	}
 }
 

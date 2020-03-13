@@ -32,6 +32,17 @@ $scripts[] = '<script src="https://unpkg.com/feather-icons/dist/feather.min.js">
 $scripts[] = '<script> feather.replace(); </script>';
 $scripts[] = '<script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.7.11/fabric.min.js"></script>';
 $scripts[] = '<script src="//cdn.bootcss.com/noUiSlider/8.5.1/nouislider.js"></script>';
-$scripts[] = '<script type="text/javascript" src="' . JS_PATH . '/layout.js?v=' . uniqid() . '"></script>';
-$scripts[] = '<script src="' . JS_PATH . 'custom.js?v=' . uniqid() . '" type="text/javascript"></script>';
+if(isset($_SESSION['admin_id'])):
+	$scripts[] = '<script type="text/javascript" src="' . JS_PATH . 'layout.js"></script>';
+	$scripts[] = '<script type="text/javascript" src="' . JS_PATH . 'admin.js"></script>';
+elseif(isset($_SESSION['manager'])):
+	$scripts[] = '<script type="text/javascript" src="' . JS_PATH . 'layout.js"></script>';
+	$scripts[] = '<script type="text/javascript" src="' . JS_PATH . 'manager.js"></script>';
+elseif(isset($_SESSION['emp_id']) && !isset($_SESSION['manager'])):
+	$scripts[] = '<script type="text/javascript" src="' . JS_PATH . 'tables.js"></script>';
+	$scripts[] = '<script type="text/javascript" src="' . JS_PATH . 'employee.js"></script>';
+else:
+	$scripts[] = '<script type="text/javascript" src="' . JS_PATH . 'reserve.js"></script>';
+	$scripts[] = '<script type="text/javascript" src="' . JS_PATH . 'customer.js"></script>';
+endif;
 ?>
