@@ -55,6 +55,7 @@ $(document).ready(function() {
     			$("#profile-status").html(status);
     			$("#profile-registered").html(emp['emp_created']);
     			$("#profile-login").html(emp['emp_last_login']);
+    			$("#profile-updated").html(emp['emp_updated']);
     			$("#profile-workplace").html(workplace);
     			$("#profile-work-phone").html(work_phone);
     			$("#profile-work-address").html(work_address);
