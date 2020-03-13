@@ -1,6 +1,6 @@
 // GLOBAL VARS
-var canvasObj = $("#canvas");
 var canvas;
+var canvasObj = $("#canvas");
 var number;
 var bgImg = '/delectable/public_html/assets/img/graphics/canvas.png';
 var image = new Image();
@@ -810,13 +810,15 @@ $(".round-0").click(function() {
 });
 
 $(".object-0").click(function() {
-	var text = prompt("Enter text to display", "Text...");
+	// var text = prompt("Enter text to display", "Text...");
+	let text = "";
 	const o = addObject(text.toString());
 	canvas.setActiveObject(o);
 });
 
 $(".object-45").click(function() {
-	var text = prompt("Enter text to display", "Text...");
+	// var text = prompt("Enter text to display", "Text...");
+	let text = "";
 	const o = addObject(text.toString(), 45);
 	canvas.setActiveObject(o);
 });
@@ -936,7 +938,6 @@ $(".mode").click(function() {
 	$(".admin-mode").toggleClass("d-none");
 	$(".customer-mode").toggleClass("d-block");
 	toggle++;
-
 	saveObjects();
 });
 

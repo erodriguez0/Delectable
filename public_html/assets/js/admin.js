@@ -16,7 +16,7 @@ $(document).ready(function() {
     });
 
     $(".emp-profile-modal-btn").each(function() {
-    	$(this).click(function() {
+    	$(this).on('click', function() {
     		var eid = $(this).attr("name");
     		$.ajax({
     			url: '/delectable/public_html/assets/scripts/employee-edit.php',
@@ -63,7 +63,7 @@ $(document).ready(function() {
     });
 
     // Employee Edit
-    $("#emp-update-btn").click(function(e) {
+    $("#emp-update-btn").on('click', function(e) {
     	var fname = $("#edit-emp-fname").val();
     	var lname = $("#edit-emp-lname").val();
     	var uname = $("#edit-emp-uname").val();
@@ -110,7 +110,7 @@ $(document).ready(function() {
     	});
     });
 
-    $("#edit-emp-status").click(function() {
+    $("#edit-emp-status").on('click', function() {
     	var check = ($("#edit-emp-status").is(":checked")) ? 1 : 0;
     	if(check) {
     		$("#emp-status-label").html("Active");
@@ -119,7 +119,7 @@ $(document).ready(function() {
     	}
     });
 
-    $("#toggle-res-search").click(function() {
+    $("#toggle-res-search").on('click', function() {
     	$("#show-res-search-form").slideToggle();
     });
 
@@ -133,7 +133,7 @@ $(document).ready(function() {
         });
     });
 
-	$("#res-update-btn").click(function(e) {
+	$("#res-update-btn").on('click', function(e) {
 		e.preventDefault();
 		var name = $("#res-name").val();
 		var slogan = $("#res-slogan").val();
@@ -154,7 +154,7 @@ $(document).ready(function() {
 		});
 	});
 
-	$(".loc-update-btn").click(function(e) {
+	$(".loc-update-btn").on('click', function(e) {
 		e.preventDefault();
 		var add1 = $("[name='loc-address-1']").val();
 		var add2 = $("[name='loc-address-2']").val();
@@ -182,7 +182,7 @@ $(document).ready(function() {
 	});
 
 	// Search for employees by username
-	$(".emp-search-btn").click(function(e) {
+	$(".emp-search-btn").on('click', function(e) {
 		e.preventDefault();
 		var input = $("#emp-search").val();
 
@@ -196,14 +196,14 @@ $(document).ready(function() {
 			$.each(par, function(k, v) {
 				var row = '<tr><td>' + v.emp_first_name + ' ' + v.emp_last_name + '</td>'
 				+ '<td>' + v.emp_username + '</td>'
-				+ '<td><button class="btn btn-primary btn-sm" value="' 
+				+ '<td><button class="btn btn-primary btn-sm add-man-btn" value="' 
 				+ v.emp_id + '">Add</button></td></tr>';
 				$("#emp-table tbody").append(row);
 			});
 		});
 	});
 
-	$(".emp-search-add-btn").click(function(e) {
+	$(".emp-search-add-btn").on('click', function(e) {
 		e.preventDefault();
 		var input = $("#emp-search-input").val();
 
@@ -220,7 +220,7 @@ $(document).ready(function() {
 			$.each(data, function(k, v) {
 				var row = '<tr><td>' + v.emp_first_name + ' ' + v.emp_last_name + '</td>'
 				+ '<td>' + v.emp_username + '</td>'
-				+ '<td><button class="btn btn-primary btn-sm" value="' 
+				+ '<td><button class="btn btn-primary btn-sm add-emp-btn" value="' 
 				+ v.emp_id + '">Add</button></td></tr>';
 
 				$("#emp-list-table tbody").append(row);
@@ -228,10 +228,43 @@ $(document).ready(function() {
 		});
 	});
 
-	// Update selected employee to have manager access
-	$(".save-manager-btn").click(function(e) {
+	$(".save-employee-btn").on('click', function(e) {
 		e.preventDefault();
-		var eid = $(".emp-check").val();
+		var id = $(".add-emp-btn").val();
+		$.ajax({
+			url: '/delectable/public_html/assets/scripts/restaurant-edit.php',
+			type: 'POST',
+			data: {
+				'restaurant_add_employee': true,
+				'emp_id': id,
+				'loc_id': rid
+			}
+		}).done(function(res) {
+			var data = JSON.parse(res);
+			if(!data.error) {
+				let emp = data.data;
+				let name = emp.emp_first_name + ' ' + emp.emp_last_name;
+				let uname = emp.emp_username;
+				let emp_id = emp.emp_id;
+				let url = '/delectable/public_html/admin/employees/edit/index.php?eid=' + emp_id;
+				let link = '<a class="btn btn-primary btn-sm" href="' + url + '">Info</a>';
+				let remBtn = '<button type="button" class="btn btn-primary btn-sm remove-employee-btn" value="' + emp_id + '">X</button>';
+				var row = '<tr id="row-' + emp_id + '"><td><span>' + name + '</span></td><td><span>' + uname + '</span></td><td>' + link + '</td><td>' + remBtn + '</td></tr>';
+				$("#emp-list-table tbody").empty();
+				$("#emp-list tbody").append(row);
+				$("#emp-list-modal").modal('toggle');
+				let alert = $(".employee-update-alert");
+				alert.html("");
+				alert.html("Employee added");
+				alert.removeClass("d-none");
+			}
+		});
+	})
+
+	// Update selected employee to have manager access
+	$(".save-manager-btn").on('click', function(e) {
+		e.preventDefault();
+		var eid = $(".add-man-btn").val();
 		$.ajax({
 			url: '/delectable/public_html/assets/scripts/restaurant-edit.php',
 			type: 'POST',
@@ -240,19 +273,37 @@ $(document).ready(function() {
 				'emp_id': eid, 
 				'loc_id': lid
 			}
-		}).done(function() {
-			$("#emp-table tbody").empty();
-			// $("#list-modal").modal('hide');
-			location.reload();
+		}).done(function(res) {
+			var data = JSON.parse(res);
+			var emp = data.data;
+			if(!data.error) {
+				let name = emp.emp_first_name + ' ' + emp.emp_last_name;
+				let uname = emp.emp_username;
+				let emp_id = emp.emp_id;
+				let url = '/delectable/public_html/admin/employees/edit/index.php?eid=' + emp_id;
+				let link = '<a class="btn btn-primary btn-sm" href="' + url + '">Info</a>';
+				let remBtn = '<button type="button" class="btn btn-primary btn-sm remove-manager-btn" value="' + emp_id + '">X</button>';
+				var row = '<tr id="row-' + emp_id + '"><td><span>' + name + '</span></td><td><span>' + uname + '</span></td><td>' + link + '</td><td>' + remBtn + '</td></tr>';
+				$("#row-" + emp_id).remove();
+				$("#emp-table tbody").empty();
+				$("#manager-table tbody").append(row);
+				$("#list-modal").modal('toggle');
+				let alert = $(".manager-update-alert");
+				alert.html("");
+				alert.html("Manager added");
+				alert.removeClass("d-none");
+			}
 		});
 	});
 
 
-	$(".remove-manager-btn").each(function() {
-		$(this).click(function(e) {
+	$("#manager-table").each(function() {
+		$(this).on('click', '.remove-manager-btn', function(e) {
 			e.preventDefault();
 			var eid = $(this).val();
 			var row = $(this).parent().parent();
+			$(this).removeClass("remove-manager-btn");
+			$(this).addClass("remove-employee-btn");
 			var man_table = $("#emp-table tbody");
 			var table = $("#emp-list tbody");
 			$.ajax({
@@ -262,6 +313,36 @@ $(document).ready(function() {
 			}).done(function() {
 				table.append(row);
 				man_table.remove(row);
+				let alert = $(".manager-update-alert");
+				alert.html("");
+				alert.html("Manager removed");
+				alert.removeClass("d-none");
+			});
+		});
+	});
+
+	$("#emp-list").each(function() {
+		$(this).on('click', '.remove-employee-btn', function(e) {
+			e.preventDefault();
+			var eid = $(this).val();
+			var row = $(this).parent().parent();
+			var table = $("#emp-list tbody");
+			row.remove();
+			$.ajax({
+				url: '/delectable/public_html/assets/scripts/restaurant-edit.php',
+				type: 'POST',
+				data: {
+					'remove_employee': true,
+					'emp_id': eid
+				}
+			}).done(function(res) {
+				let data = JSON.parse(res);
+				if(!data.error) {
+					table.remove(row);
+					let alert = $(".employee-update-alert");
+					alert.html("Employee removed");
+					alert.removeClass("d-none");
+				}
 			});
 		});
 	});
