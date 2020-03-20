@@ -56,6 +56,27 @@ B O O T S T R A P  B U T T O N S
 	color: #fff;
 }
 
+.btn-group.special {
+	display: flex;
+}
+
+.text-link,
+.text-link:focus,
+.text-link:active:focus
+.text-link:visited:active {
+	color: #71100F;
+}
+
+.text-link:hover,
+.text-link:visited:hover {
+	color: #5a0d0c;
+	text-decoration: none;
+}
+
+.special .btn {
+	flex: 1
+}
+
 /* The switch - the box around the slider */
 .switch {
 	position: relative;
@@ -210,6 +231,10 @@ body {
 .label-btn {
 	pointer-events: none;
 	background-color: #333;
+}
+
+.invoice-details {
+	font-family: 'Helvetica', sans-serif;
 }
  
 /* Small devices (landscape phones, 576px and up) */

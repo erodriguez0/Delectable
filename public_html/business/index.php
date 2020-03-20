@@ -104,11 +104,11 @@ require_once(INCLUDE_PATH . 'header.php');
 											</form>
 
 											<!-- Login Form -->
-											<form class="col-12 col-lg-6 order-1 order-lg-2" method="POST" action="">
+											<form class="col-12 col-lg-6 order-1 order-lg-2" method="POST" action="/delectable/resources/scripts/restaurant-login.php">
 												<!-- Username -->
 												<div class="row pt-4">
 													<div class="col-12">
-														<input type="text" class="form-control <?php echo $_SESSION['error']['uname']; ?>" name="username" placeholder="Username" value="<?php echo $_SESSION['login']['uname']; ?>">
+														<input type="text" class="form-control <?php echo ($_SESSION['error']['username']) ? 'is-invalid' : ''; ?>" name="username" placeholder="Username" value="<?php echo $_SESSION['login']['username']; ?>">
 													</div>
 												</div>
 												<!-- Password -->
@@ -120,7 +120,7 @@ require_once(INCLUDE_PATH . 'header.php');
 												<!-- Submit Login Form -->
 												<div class="row pt-4">
 													<div class="col-12">
-														<input type="submit" class="btn btn-primary btn-block" name="restaurant-login-account" value="Login">
+														<input type="submit" class="btn btn-primary btn-block" name="restaurant-login" value="Login">
 													</div>
 												</div>
 											</form>
@@ -161,7 +161,6 @@ require_once(INCLUDE_PATH . 'header.php');
 	<!-- ./Col -->
 </div>
 <!-- ./Row -->
-
 <?php
 // Unset sticky form input and errors
 unset($_SESSION['error']);

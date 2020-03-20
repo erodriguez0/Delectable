@@ -69,6 +69,7 @@ if(isset($_POST['restaurant-create-account'])) {
 		$_SESSION['create']['lname'] = htmlspecialchars($lname);
 		$_SESSION['create']['uname'] = htmlspecialchars($uname);
 		$_SESSION['create']['email'] = htmlspecialchars($email);
+		$_SESSION['modal'] = true;
 		header('Location: /delectable/public_html/business/'); exit();
 	}
 	
@@ -84,7 +85,7 @@ if(isset($_POST['restaurant-create-account'])) {
 		$query->execute();
 		$_SESSION['active'] = true;
 		$_SESSION['emp_id'] = $conn->lastInsertId();
-		header('Location: /delectable/public_html/business/restaurant/');
+		header('Location: /delectable/public_html/business/dashboard/');
 	} catch (PDOException $e) {
 		// echo $e;
 	}
