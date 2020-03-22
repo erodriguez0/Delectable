@@ -161,6 +161,14 @@ require_once(INCLUDE_PATH . 'functions.php');
                     </div>
                     <div class="row">
                         <div class="col-4 text-right">
+                            <label><b>Last Updated:</b><span></span></label>
+                        </div>
+                        <div class="col-8">
+                            <label id="profile-updated"></label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4 text-right">
                         	<label><b>Workplace: </b><span></span></label>
                         </div>
                         <div class="col-8">
