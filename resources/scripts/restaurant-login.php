@@ -47,6 +47,10 @@ if(isset($_POST['restaurant-login'])) {
 					$_SESSION['error']['footer'] = "Can't login at this time. Please try again later.";
 					header('Location: /delectable/public_html/business/'); exit();
 				}
+			} else {
+				$_SESSION['login']['username'] = $uname;
+				$_SESSION['error']['footer'] = "Wrong username/password";
+				header('Location: /delectable/public_html/business/'); exit();
 			}
 		} else {
 			// No one found

@@ -4,7 +4,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/delectable/resources/config.php');
 if(isset($_SESSION['admin_id'])):
 	header('Location: /delectable/public_html/admin/dashboard/');
 elseif(isset($_SESSION['emp_id'])):
-	header('Location: /delectable/public_html/business/restaurant/');
+	header('Location: /delectable/public_html/business/dashboard/');
 else:
 
 $title = "Delectable | ";

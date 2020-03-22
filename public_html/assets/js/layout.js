@@ -2,6 +2,7 @@
 var canvas;
 var canvasObj = $("#canvas");
 var number;
+var deletedObjects = [];
 var bgImg = '/delectable/public_html/assets/img/graphics/canvas.png';
 var image = new Image();
 image.src = bgImg;
@@ -236,7 +237,7 @@ function checkBoundingBox(e) {
 
 // CREATE NEW FABRIC OBEJCTS
 
-function addSquareTable(deg = 0) {
+function addNewSquareTable(deg = 0) {
   	const id = generateId();
   	let gleft = 315;
   	let gtop = 215;
@@ -282,7 +283,8 @@ function addSquareTable(deg = 0) {
 		type: 'square',
 		table: true,
 		id: id,
-		number: number
+		number: number,
+		new: true
 	});
 
 	// Set resizing controls
@@ -301,7 +303,7 @@ function addSquareTable(deg = 0) {
 	return g;
 }
 
-function addCircleTable() {
+function addNewCircleTable() {
   	const id = generateId();
   	let gleft = 315;
   	let gtop = 215;
@@ -337,7 +339,8 @@ function addCircleTable() {
 		type: 'circle',
 		table: true,
 		id: id,
-		number: number
+		number: number,
+		new: true
 	});
 
 	// Set resizing controls
@@ -356,7 +359,7 @@ function addCircleTable() {
 	return g;
 }
 
-function addRectangleTable(deg = 0) {
+function addNewRectangleTable(deg = 0) {
   	const id = generateId();
   	let gleft = 315;
   	let gtop = 215;
@@ -401,7 +404,8 @@ function addRectangleTable(deg = 0) {
 		type: 'rectangle',
 		table: true,
 		id: id,
-		number: number
+		number: number,
+		new: true
 	});
 
 	// Set resizing controls
@@ -430,7 +434,7 @@ function addRectangleTable(deg = 0) {
 	return g;
 }
 
-function addObject(text, deg = 0) {
+function addNewObject(text = "", deg = 0) {
 	const id = generateId();
 	let gleft = 315;
   	let gtop = 215;
@@ -474,14 +478,15 @@ function addObject(text, deg = 0) {
 		selectable: true,
 		type: 'other',
 		table: false,
-		id: id
+		id: id,
+		new: true
 	});
 
 	canvas.add(g);
 	return g;
 }
 
-function addChair(deg = 0) {
+function addNewChair(deg = 0) {
   	const id = generateId();
   	let gleft = 315;
   	let gtop = 215;
@@ -509,7 +514,272 @@ function addChair(deg = 0) {
 		selectable: true,
 		type: 'chair',
 		table: false,
-		id: id
+		id: id,
+		new: true
+	});
+
+	// Set resizing controls
+	// Bottom right only for square
+	o.setControlsVisibility({
+		bl: false,
+		ml: false,
+		tl: false,
+		tr: false,
+		mt: false,
+		mb: false,
+		mr: false
+	});
+
+	canvas.add(o);
+	return o;
+}
+
+// CREATE EXISTING FABRIC OBEJCTS
+
+function addSquareTable(id, num, left, top, deg, width, height) {
+
+	const o = new fabric.Rect({
+		width: width,
+		height: height,
+		fill: tableFill,
+		stroke: tableFill,
+		strokeWidth: 1,
+		originX: 'center',
+		originY: 'center',
+		centeredRotation: true,
+		snapAngle: 45,
+		selectable: true
+	});
+
+	const t = new fabric.IText(number.toString(), {
+		fontFamily: 'Calibri',
+		fontSize: 14,
+		fill: '#fff',
+		textAlign: 'center',
+		originX: 'center',
+		originY: 'center',
+		lockUniScaling: true,
+		angle: -deg
+	});
+
+	const g = new fabric.Group([o, t], {
+		left: left,
+		top: top,
+		centeredRotation: true,
+		hasRotatingPoint: false,
+		snapThreshold: 45,
+		snapAngle: 45,
+		angle: deg,
+		selectable: true,
+		type: 'square',
+		table: true,
+		id: id,
+		number: num,
+		new: false
+	});
+
+	// Set resizing controls
+	// Bottom right only for square
+	g.setControlsVisibility({
+		bl: false,
+		ml: false,
+		tl: false,
+		tr: false,
+		mt: false,
+		mb: false
+	});
+
+	canvas.add(g);
+	number++;
+	return g;
+}
+
+function addCircleTable(id, num, left, top, deg, rad) {
+
+	const o = new fabric.Circle({
+		radius: rad / 2,
+	    fill: tableFill,
+	    stroke: tableFill,
+	    strokeWidth: 1,
+	    originX: 'center',
+	    originY: 'center',
+	    centeredRotation: true
+	});
+
+	const t = new fabric.IText(number.toString(), {
+		fontFamily: 'Calibri',
+		fontSize: 14,
+		fill: '#fff',
+		textAlign: 'center',
+		originX: 'center',
+		originY: 'center',
+		lockUniScaling: true
+	});
+
+	const g = new fabric.Group([o, t], {
+		left: left,
+		top: top,
+		centeredRotation: true,
+		hasRotatingPoint: false,
+		snapThreshold: 45,
+		snapAngle: 45,
+		selectable: true,
+		type: 'circle',
+		table: true,
+		id: id,
+		number: num,
+		new: false
+	});
+
+	// Set resizing controls
+	// Bottom right only for square
+	g.setControlsVisibility({
+		bl: false,
+		ml: false,
+		tl: false,
+		tr: false,
+		mt: false,
+		mb: false
+	});
+
+	canvas.add(g);
+	number++;
+	return g;
+}
+
+function addRectangleTable(id, num, left, top, deg, width, height) {
+
+	const o = new fabric.Rect({
+		width: width,
+		height: height,
+		fill: tableFill,
+		stroke: tableFill,
+		strokeWidth: 1,
+		originX: 'center',
+		originY: 'center',
+		centeredRotation: true,
+		snapAngle: 45,
+		selectable: true
+	});
+
+	const t = new fabric.IText(number.toString(), {
+		fontFamily: 'Calibri',
+		fontSize: 14,
+		fill: '#fff',
+		textAlign: 'center',
+		originX: 'center',
+		originY: 'center',
+		angle: -deg
+	});
+
+	const g = new fabric.Group([o, t], {
+		left: left,
+		top: top,
+		centeredRotation: true,
+		hasRotatingPoint: false,
+		snapThreshold: 45,
+		snapAngle: 45,
+		angle: deg,
+		selectable: true,
+		type: 'rectangle',
+		table: true,
+		id: id,
+		number: num,
+		new: false
+	});
+
+	// Set resizing controls
+	// Depending on angle controls
+	// are displayed at the bottom
+	if(deg == 0 || deg == 45) {
+		g.setControlsVisibility({
+			bl: false,
+			ml: false,
+			tl: false,
+			tr: false,
+			mt: false
+		});
+	} else {
+		g.setControlsVisibility({
+			tl: false,
+			tr: false,
+			mt: false,
+			mr: false,
+			br: false
+		});
+	}
+
+	canvas.add(g);
+	number++;
+	return g;
+}
+
+function addObject(text = "", id, left, top, deg, width, height) {
+
+  	const o = new fabric.Rect({
+		width: width,
+		height: height,
+		fill: objectFill,
+		stroke: objectFill,
+		strokeWidth: 1,
+		originX: 'center',
+		originY: 'center',
+		centeredRotation: true,
+		snapAngle: 45,
+		selectable: true
+	});
+
+	const t = new fabric.IText(text, {
+		fontFamily: 'Calibri',
+		fontSize: 14,
+		fill: '#fff',
+		textAlign: 'center',
+		originX: 'center',
+		originY: 'center',
+		angle: -deg
+	});
+
+	const g = new fabric.Group([o, t], {
+		left: left,
+		top: top,
+		centeredRotation: true,
+		hasRotatingPoint: false,
+		snapThreshold: 45,
+		snapAngle: 45,
+		angle: deg,
+		selectable: true,
+		type: 'other',
+		table: false,
+		id: id,
+		new: false
+	});
+
+	canvas.add(g);
+	return g;
+}
+
+function addChair(id, left, top, deg, width, height) {
+
+	const o = new fabric.Rect({
+		width: width,
+		height: height,
+		left: left,
+		top: top,
+		hasRotatingPoint: false,
+		fill: chairFill,
+		stroke: tableFill,
+		strokeWidth: 1,
+		originX: 'center',
+		originY: 'center',
+		centeredRotation: true,
+		snapThreshold: 45,
+		snapAngle: 45,
+		angle: deg,
+		selectable: true,
+		type: 'chair',
+		table: false,
+		id: id,
+		new: false
 	});
 
 	// Set resizing controls
@@ -696,17 +966,39 @@ function initCanvas() {
 	canvas.observe('object:scaling', function(e) {
 		checkBoundingBox(e);
 	});
+
 }
 
 function addObjects() {
-	// Examples
-	// addSquareTable(0);
-	// addSquareTable(45);
-	// addCircleTable();
-	// addRectangleTable();
-	// addRectangleTable(-45);
-	// addRectangleTable(45);
-	// addObject("text", 45);
+	$.ajax({
+		url: '/delectable/public_html/assets/scripts/restaurant-layout.php',
+		type: 'POST',
+		data: {
+			'loc_id': lid,
+			'load_layout': true
+		}
+	}).done(function(res) {
+		var objects = JSON.parse(res);
+		$.each(objects, function(k, v) {
+			switch(v.type) {
+				case "square":
+					addSquareTable(v.uuid, parseInt(v.num), parseInt(v.left), parseInt(v.top), parseInt(v.deg), parseInt(v.width), parseInt(v.height));
+					break;
+				case "rectangle":
+					addRectangleTable(v.uuid, parseInt(v.num), parseInt(v.left), parseInt(v.top), parseInt(v.deg), parseInt(v.width), parseInt(v.height));
+					break;
+				case "circle":
+					addCircleTable(v.uuid, parseInt(v.num), parseInt(v.left), parseInt(v.top), parseInt(v.deg), parseInt(v.width));
+					break;
+				case "chair":
+					addChair(v.uuid, parseInt(v.left), parseInt(v.top), parseInt(v.deg), parseInt(v.width), parseInt(v.height));
+					break;
+				case "other":
+					addObject("", v.uuid, parseInt(v.left), parseInt(v.top), parseInt(v.deg), parseInt(v.width), parseInt(v.height));
+					break;
+			}
+		});
+	});
 }
 
 // CREATE/SAVE EXISTING FABRIC OBJECTS
@@ -738,7 +1030,8 @@ function saveObjects() {
 				top:  o[k].top,
 				width:  o[k].width,
 				height:  o[k].height,
-				deg:  o[k].angle
+				deg:  o[k].angle,
+				new: o[k].new
 			};
 			rows.push(row);
 		} else if(o[k].type == "other") {
@@ -751,7 +1044,8 @@ function saveObjects() {
 				top:  o[k].top,
 				width:  o[k].width,
 				height:  o[k].height,
-				deg:  o[k].angle
+				deg:  o[k].angle,
+				new: o[k].new
 			};
 			rows.push(row);
 		} else {
@@ -765,7 +1059,8 @@ function saveObjects() {
 					top:  o[k].top,
 					width:  o[k].width,
 					height:  o[k].height,
-					deg:  o[k].angle
+					deg:  o[k].angle,
+					new: o[k].new
 				};
 				rows.push(row);
 			}
@@ -774,62 +1069,73 @@ function saveObjects() {
 
 	// TODO: Save rows to database
 	rows.sort(sortRowsByObjectNum);
-	console.log(rows);
+	
+	$.ajax({
+		url: '/delectable/public_html/assets/scripts/restaurant-layout.php',
+		type: 'POST',
+		data: {
+			'loc_id': lid,
+			'objects': rows,
+			'deletedObjects': deletedObjects,
+			'save_layout': true
+		}
+	}).done(function(res) {
+		// console.log(res);
+		location.reload();
+	});
 }
 
 // EVENT LISTENERS FOR OBJECT BUTTONS
 
 $(".rectangle-0").click(function() {
-	const o = addRectangleTable();
+	const o = addNewRectangleTable();
 	canvas.setActiveObject(o);
 });
 
 $(".rectangle-45").click(function() {
-	const o = addRectangleTable(45);
+	const o = addNewRectangleTable(45);
 	canvas.setActiveObject(o);
 });
 
 $(".rectangle-315").click(function() {
-	const o = addRectangleTable(-45);
+	const o = addNewRectangleTable(-45);
 	canvas.setActiveObject(o);
 });
 
 $(".square-0").click(function() {
-	const o = addSquareTable(0);
+	const o = addNewSquareTable(0);
 	canvas.setActiveObject(o);
 });
 
 $(".square-45").click(function() {
-	const o = addSquareTable(45);
+	const o = addNewSquareTable(45);
 	canvas.setActiveObject(o);
 });
 
 $(".round-0").click(function() {
-	const o = addCircleTable();
+	const o = addNewCircleTable();
 	canvas.setActiveObject(o);
 });
 
 $(".object-0").click(function() {
 	// var text = prompt("Enter text to display", "Text...");
-	let text = "";
-	const o = addObject(text.toString());
+	const o = addNewObject();
 	canvas.setActiveObject(o);
 });
 
 $(".object-45").click(function() {
 	// var text = prompt("Enter text to display", "Text...");
-	let text = "";
-	const o = addObject(text.toString(), 45);
+	const o = addNewObject("", 45);
 	canvas.setActiveObject(o);
 });
 
 $(".chair-0").click(function() {
-	const o = addChair();
+	const o = addNewChair();
 	canvas.setActiveObject(o);
 });
 
 $(".chair-45").click(function() {
-	const o = addChair(45);
+	const o = addNewChair(45);
 	canvas.setActiveObject(o);
 });
 
@@ -862,6 +1168,10 @@ $(".remove").click(function() {
 			});
 			number = hi;
 		}
+		if(!o.new) {
+			let obj = {"id": o.id, "table": o.table};
+			deletedObjects.push(obj);
+		}
 		o.remove();
 		canvas.remove(o);
 		canvas.discardActiveObject();
@@ -870,12 +1180,19 @@ $(".remove").click(function() {
 });
 
 $(".clear").click(function() {
+	let objs = canvas.getObjects();
+	$.each(objs, function(o) {
+		if(!objs[o].new) {
+			let obj = {"id": objs[o].id, "table": objs[o].table};
+			deletedObjects.push(obj);
+		}
+	});
 	canvas.remove(...canvas.getObjects());
 	// Checking if image was loaded else draw grid lines
   	if(image.width != 0) {
 	  	// Load grid as image for faster loading times
 	  	canvas.setBackgroundImage(bgImg, 
-	  		canvas.renderAll.bind(canvas));
+  		canvas.renderAll.bind(canvas));
 	} else {
 	  	// Create horizonal grid lines
 	  	for(let i = 0; i < (canvas.width / grid); i++) {
@@ -905,39 +1222,39 @@ $(".clear").click(function() {
 });
 
 var toggle = 0;
-$(".mode").click(function() {
-	if(toggle % 2 == 0) {
-		canvas.getObjects().map(o => {
-			o.hasControls = false;
-			o.lockMovementX = true;
-			o.lockMovementY = true;
-			o.borderColor = "#38A62E";
-			if(o.type == "chair" || o.type == "other") {
-				o.selectable = false;
-			}
-		});
-		canvas.selection = false;
-		canvas.hoverCursor = "pointer";
-		canvas.discardActiveObject();
-		canvas.renderAll();
-	} else {
-		canvas.getObjects().map(o => {
-			o.hasControls = true;
-			o.lockMovementX = false;
-			o.lockMovementY = false;
-			o.borderColor = tableFill;
-			if(o.type == "chair" || o.type == "other") {
-				o.selectable = true;
-			}
-		});
-		canvas.selection = true;
-		canvas.hoverCursor = "move";
-		canvas.discardActiveObject();
-		canvas.renderAll();
-	}
-	$(".admin-mode").toggleClass("d-none");
-	$(".customer-mode").toggleClass("d-block");
-	toggle++;
+$(".save-layout").click(function() {
+	// if(toggle % 2 == 0) {
+	// 	canvas.getObjects().map(o => {
+	// 		o.hasControls = false;
+	// 		o.lockMovementX = true;
+	// 		o.lockMovementY = true;
+	// 		o.borderColor = "#38A62E";
+	// 		if(o.type == "chair" || o.type == "other") {
+	// 			o.selectable = false;
+	// 		}
+	// 	});
+	// 	canvas.selection = false;
+	// 	canvas.hoverCursor = "pointer";
+	// 	canvas.discardActiveObject();
+	// 	canvas.renderAll();
+	// } else {
+	// 	canvas.getObjects().map(o => {
+	// 		o.hasControls = true;
+	// 		o.lockMovementX = false;
+	// 		o.lockMovementY = false;
+	// 		o.borderColor = tableFill;
+	// 		if(o.type == "chair" || o.type == "other") {
+	// 			o.selectable = true;
+	// 		}
+	// 	});
+	// 	canvas.selection = true;
+	// 	canvas.hoverCursor = "move";
+	// 	canvas.discardActiveObject();
+	// 	canvas.renderAll();
+	// }
+	// $(".admin-mode").toggleClass("d-none");
+	// $(".customer-mode").toggleClass("d-block");
+	// toggle++;
 	saveObjects();
 });
 

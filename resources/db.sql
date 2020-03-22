@@ -423,8 +423,8 @@ CREATE TABLE IF NOT EXISTS `delectable`.`table` (
   `table_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `table_uuid` VARCHAR(64) NOT NULL,
   `table_number` VARCHAR(64) NOT NULL,
-  `table_seats` INT NOT NULL,
-  `table_type` ENUM('round', 'rectangle', 'square') NOT NULL,
+  `table_seats` INT NOT NULL DEFAULT 1,
+  `table_type` ENUM('circle', 'rectangle', 'square') NOT NULL,
   `table_height` INT NOT NULL,
   `table_width` INT NOT NULL,
   `table_left` INT NOT NULL,
@@ -561,6 +561,7 @@ DROP TABLE IF EXISTS `delectable`.`object` ;
 
 CREATE TABLE IF NOT EXISTS `delectable`.`object` (
   `object_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `object_uuid` VARCHAR(64) NOT NULL,
   `object_type` ENUM('other', 'chair') NOT NULL,
   `object_height` INT NOT NULL,
   `object_width` INT NOT NULL,
