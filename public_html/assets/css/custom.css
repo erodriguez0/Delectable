@@ -73,6 +73,10 @@ B O O T S T R A P  B U T T O N S
 	text-decoration: none;
 }
 
+.table-link:hover {
+	text-decoration: underline !important;
+}
+
 .special .btn {
 	flex: 1
 }
@@ -234,7 +238,7 @@ body {
 }
 
 .invoice-details {
-	font-family: 'Helvetica', sans-serif;
+	/*font-family: 'Helvetica', sans-serif;*/
 }
  
 /* Small devices (landscape phones, 576px and up) */
