@@ -25,6 +25,19 @@ function password_check($pass = '') {
 	return true;
 }
 
+// Iterate through array of keys/fields
+// and return an array using the field names
+// as keys
+function post_fields_to_array_keys($arr) {
+	$tmp = array();
+	foreach ($required as $field) {
+		if(isset($_POST[$field]) && !empty($_POST[$field])) {
+			$tmp[$field] = $_POST[$field];
+		}
+	}
+	return $tmp;
+}
+
 // ADMIN DASHBOARD FUNCTIONS
 
 function restaurant_list($conn) {

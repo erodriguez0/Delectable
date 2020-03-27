@@ -55,8 +55,17 @@ require_once(INCLUDE_PATH . 'business/manager/dashboard.php');
 						<input type="password" name="emp-password-2" class="form-control" placeholder="Confirm Password">
 					</div>
 				</div>
-
 				<div class="row mt-3">
+					<div class="col-12">
+						<label class="switch">
+							<input id="emp-access" type="checkbox" name="emp-manager-access">
+							<span class="status-slider"></span>
+						</label>
+						<label class="ml-3">Grant Manager Access</label>
+					</div>
+				</div>
+
+				<div class="row">
 					<div class="col-2 d-flex align-items-center justify-content-left">
 						<small class="">Optional</small>
 					</div>
@@ -87,15 +96,6 @@ require_once(INCLUDE_PATH . 'business/manager/dashboard.php');
 					</div>
 					<div class="col-12 col-lg-4">
 						<input type="text" name="emp-state" class="form-control mt-3 mt-lg-0" placeholder="State">
-					</div>
-				</div>
-				<div class="row mt-3">
-					<div class="col-12">
-						<label class="switch">
-							<input id="edit-emp-status" type="checkbox">
-							<span class="status-slider"></span>
-						</label>
-						<label class="ml-3">Grant Manager Access</label>
 					</div>
 				</div>
 				<div class="row mt-3">
