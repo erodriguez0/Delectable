@@ -28,6 +28,11 @@ elseif(isset($_SESSION['emp_id']) && !isset($_SESSION['manager'])):
 	                <li class="nav-item">
 	                    <a class="nav-link" href="/delectable/public_html/admin/">Admin</a>
 	                </li>
+	                <li class="nav-item">
+			            <form method="POST" action="/delectable/resources/scripts/logout.php">
+			                <button type="submit" name="logout" class="nav-link text-capitalize btn-link-alt">Sign out</button>
+			            </form>
+			        </li>
 	            </ul>
 	        </div>
 	    </div>

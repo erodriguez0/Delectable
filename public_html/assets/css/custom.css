@@ -62,7 +62,7 @@ B O O T S T R A P  B U T T O N S
 
 .text-link,
 .text-link:focus,
-.text-link:active:focus
+.text-link:active:focus,
 .text-link:visited:active {
 	color: #71100F;
 }
@@ -79,6 +79,20 @@ B O O T S T R A P  B U T T O N S
 
 .special .btn {
 	flex: 1
+}
+
+.btn-link-alt,
+.btn-link-alt:focus,
+.btn-link-alt:active:focus,
+.btn-link-alt:visited:active {
+	background-color: transparent;
+	border: none;
+	outline: none;
+}
+
+.btn-link-alt:hover {
+	cursor: pointer;
+	border: none;
 }
 
 /* The switch - the box around the slider */
