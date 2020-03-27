@@ -25,40 +25,40 @@ require_once(INCLUDE_PATH . 'business/manager/dashboard.php');
 	<div class="manager-main row">
 		<div class="col-12 col-lg-6 restaurant-edit-form-wrap">
 			<h1 class="h3 subheader-border">Create Employee Account</h1>
-
+			<div class="alert create-emp-alert d-none"></div>
 			<div class="add-employee-form mt-3">
 				<div class="row">
 					<div class="col-12 col-lg-6">
-						<input type="text" name="emp-first-name" class="form-control" placeholder="First Name">
+						<input type="text" name="emp-first-name" class="form-control" placeholder="First Name" id="create-emp-first-name">
 					</div>
 					<div class="col-12 col-lg-6">
-						<input type="text" name="emp-last-name" class="form-control mt-3 mt-lg-0" placeholder="Last Name">
+						<input type="text" name="emp-last-name" class="form-control mt-3 mt-lg-0" placeholder="Last Name" id="create-emp-last-name">
 					</div>
 				</div>
 				<div class="row mt-3">
 					<div class="col-12">
-						<input type="email" name="emp-email" class="form-control" placeholder="Enter Email">
+						<input type="email" name="emp-email" class="form-control" placeholder="Enter Email" id="create-emp-email">
 					</div>
 				</div>
 				<div class="row mt-3">
 					<div class="col-12">
-						<input type="text" name="emp-username" class="form-control" placeholder="Create Username">
+						<input type="text" name="emp-username" class="form-control" placeholder="Create Username" id="create-emp-username">
 					</div>
 				</div>
 				<div class="row mt-3">
 					<div class="col-12">
-						<input type="password" name="emp-password-1" class="form-control" placeholder="Create Password">
+						<input type="password" name="emp-password-1" class="form-control" placeholder="Create Password" id="create-emp-password-1">
 					</div>
 				</div>
 				<div class="row mt-3">
 					<div class="col-12">
-						<input type="password" name="emp-password-2" class="form-control" placeholder="Confirm Password">
+						<input type="password" name="emp-password-2" class="form-control" placeholder="Confirm Password" id="create-emp-password-2">
 					</div>
 				</div>
 				<div class="row mt-3">
 					<div class="col-12">
 						<label class="switch">
-							<input id="emp-access" type="checkbox" name="emp-manager-access">
+							<input id="create-emp-manager" type="checkbox" name="emp-manager-access">
 							<span class="status-slider"></span>
 						</label>
 						<label class="ml-3">Grant Manager Access</label>
