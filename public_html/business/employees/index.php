@@ -108,7 +108,7 @@ require_once(INCLUDE_PATH . 'business/manager/dashboard.php');
 
 		<div class="col-12 col-lg-6 restaurant-edit-form-wrap mt-3 mt-lg-0">
 			<h1 class="h3 subheader-border">Managers</h1>
-			<div class="manager-list mt-3">
+			<div class="manager-list mt-3 overflow-x-fit" id="manager-list">
 				<table class="table">
 					<thead class="text-center">
 						<th scope="col">Name</th>
@@ -136,7 +136,7 @@ require_once(INCLUDE_PATH . 'business/manager/dashboard.php');
 
 			<h1 class="h3 subheader-border mt-3">Employees</h1>
 
-			<div class="employee-list mt-3">
+			<div class="employee-list mt-3 overflow-x-fit" id="employee-list">
 				<table class="table">
 					<thead class="text-center">
 						<th scope="col">Name</th>
@@ -150,8 +150,8 @@ require_once(INCLUDE_PATH . 'business/manager/dashboard.php');
 							<td>Esteban Rodriguez</td>
 							<td>erodriguez</td>
 							<td><a class="text-link table-link" href="">Profile</a></td>
-							<td><input type="checkbox" name=""></td>
-							<td><input type="checkbox" name=""></td>
+							<td><input type="checkbox" name="grant-access"></td>
+							<td><input type="checkbox" name="suspend-account"></td>
 						</tr>
 					</tbody>
 				</table>
@@ -164,7 +164,9 @@ require_once(INCLUDE_PATH . 'business/manager/dashboard.php');
 		</div>
 	</div>
 </main>
-
+<script type="text/javascript">
+	var lid = <?php echo $_SESSION['loc_id']; ?>;
+</script>
 <?php
 endif;
 require_once(INCLUDE_PATH . 'footer.php');

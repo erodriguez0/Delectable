@@ -14,6 +14,7 @@ $(document).ready(function() {
 		let alert = $(".create-emp-alert");
 		let error = false;
 		let errMsg = "";
+		let fields = ["#create-emp-first-name", "#create-emp-last-name", "#create-emp-username", "#create-emp-email", "#create-emp-password-1", "#create-emp-password-2"];
 
 		// Fields cannot be left empty
 		if(fname.length < 1 || lname.length < 1) {
@@ -75,9 +76,48 @@ $(document).ready(function() {
 
 		if(error == false) {
 			$.ajax({
-				
+				url: '/delectable/public_html/assets/scripts/restaurant-employee.php',
+				type: 'POST',
+				data: {
+					'create-emp-first-name': fname,
+					'create-emp-last-name': lname,
+					'create-emp-email': email,
+					'create-emp-username': uname,
+					'create-emp-password-1': pass1,
+					'create-emp-password-2': pass2
+				}
 			}).done(function(res) {
-				
+				response = JSON.parse(res);
+				resError = response.error;
+				if(resError == false) {
+					data = response.data;
+					empId = data.emp_id;
+					// Build row to append to employee/manager table
+					let row = "<tr>";
+					row += "<td>" + fname + " " + lname + "</td>";
+					row += "<td>" + uname + "</td>";
+					row += "<td><a href='./edit/index.php?eid=" + empId + "' class='text-link table-link'>Profile</a></td>";
+					row += "<td><input type='checkbox' name='grant-access'></td>";
+					row += "<td><input type='checkbox' name='suspend-account'></td>";
+					row += "</tr>";
+					if(access == 0) {
+						$("#employee-list tbody").append(row);
+					} else {
+						$("#manager-list tbody").append(row);
+					}
+					alert.addClass("alert-success");
+					alert.html("Employee account created");
+					alert.removeClass("d-none");
+					// Clear input fields
+					for(let f of fields) {
+						$(f).val("");
+					}
+				} else {
+					resErrorMsg = response.error_msg;
+					alert.addClass("alert-danger");
+					alert.html(resErrorMsg);
+					alert.removeClass("d-none");
+				}
 			});
 		}
 	});

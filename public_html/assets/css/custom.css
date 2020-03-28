@@ -149,6 +149,13 @@ input:checked + .status-slider:before {
 	transform: translateX(26px);
 }
 
+#manager-list .table td,
+#employee-list .table td {
+	word-break: break-word;
+	vertical-align: middle;
+	max-width: 148px;
+}
+
 /*
 ####################################################
 M E D I A  Q U E R I E S
@@ -245,6 +252,10 @@ body {
 .overflow-x {
 	overflow-x: scroll;
 }
+
+/*.overflow-x-fit {
+	overflow-x: scroll;
+}*/
 
 .label-btn {
 	pointer-events: none;

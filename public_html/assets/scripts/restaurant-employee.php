@@ -41,6 +41,7 @@ if(isset($_POST['create-employee-account'])) {
 	$pass1 =  trim($_POST['emp-password-1']);
 	$pass2 =  trim($_POST['emp-password-2']);
 	$access = $_POST['emp-manager-access'];
+	$lid = $_POST['loc_id'];
 
 	// First and last name are alphanumeric
 	if(has_special_char($fname) || has_special_char($lname)) {
@@ -102,8 +103,8 @@ if(isset($_POST['create-employee-account'])) {
 		echo json_encode($response); exit();
 	}
 
-	$sql  = "INSERT INTO employee (emp_first_name, emp_last_name, emp_username, emp_email, emp_password, emp_manager) ";
-	$sql .= "VALUES (:fname, :lname, :uname, :email, :hash, :access)";
+	$sql  = "INSERT INTO employee (emp_first_name, emp_last_name, emp_username, emp_email, emp_password, emp_manager, fk_loc_id) ";
+	$sql .= "VALUES (:fname, :lname, :uname, :email, :hash, :access, :lid)";
 	$hash = password_hash($pass1, PASSWORD_DEFAULT);
 	$query = $conn->prepare($sql);
 	$query->bindParam(":fname", $fname, PDO::PARAM_STR);
@@ -112,10 +113,12 @@ if(isset($_POST['create-employee-account'])) {
 	$query->bindParam(":email", $email, PDO::PARAM_STR);
 	$query->bindParam(":hash", $hash, PDO::PARAM_STR);
 	$query->bindParam(":access", $access, PDO::PARAM_INT);
+	$query->bindParam(":lid", $lid, PDO::PARAM_INT);
 
 	if($query->execute()) {
 		$id = $conn->lastInsertId();
 		$response["data"] = post_fields_to_array_keys($required);
+		$response["data"]["emp_id"] = $id;
 		echo json_encode($response); exit();
 	} else {
 		$response["error"] = true;
