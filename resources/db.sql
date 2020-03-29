@@ -209,7 +209,14 @@ CREATE TABLE IF NOT EXISTS `delectable`.`menu_item_category` (
   `item_cat_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `item_cat_name` VARCHAR(64) NOT NULL,
   `item_cat_description` VARCHAR(255) NULL,
-  PRIMARY KEY (`item_cat_id`))
+  `item_status` BIT(1) NOT NULL DEFAULT 1,
+  `fk_loc_id` INT UNSIGNED NOT NULL,
+  PRIMARY KEY (`item_cat_id`),
+  CONSTRAINT `fk_menu_item_loc_id`
+    FOREIGN KEY (`fk_loc_id`)
+    REFERENCES `delectable`.`location` (`loc_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 CREATE UNIQUE INDEX `item_cat_name_UNIQUE` ON `delectable`.`menu_item_category` (`item_cat_name` ASC) VISIBLE;
@@ -226,16 +233,10 @@ CREATE TABLE IF NOT EXISTS `delectable`.`menu_item` (
   `item_description` VARCHAR(255) NULL,
   `item_price` DECIMAL(4,2) NOT NULL,
   `fk_item_cat_id` INT UNSIGNED NOT NULL,
-  `fk_loc_id` INT UNSIGNED NOT NULL,
   PRIMARY KEY (`item_id`),
   CONSTRAINT `fk_menu_item_item_cat_id`
     FOREIGN KEY (`fk_item_cat_id`)
     REFERENCES `delectable`.`menu_item_category` (`item_cat_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_menu_item_loc_id`
-    FOREIGN KEY (`fk_loc_id`)
-    REFERENCES `delectable`.`location` (`loc_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

@@ -12,10 +12,16 @@ elseif(isset($_SESSION['emp_id']) && !isset($_SESSION['manager'])):
 // Display dashboard if they have manager access
 else:
 
+require_once(INCLUDE_PATH . 'functions.php');
+
 $title = "Delectable | For Restaurants";
 require_once(INCLUDE_PATH . 'header.php');
 
 require_once(INCLUDE_PATH . 'business/manager/dashboard.php');
+
+$managers = restaurant_managers($conn, $_SESSION['loc_id']);
+
+$employees = restaurant_employees($conn, $_SESSION['loc_id']);
 ?>
 
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4 mb-3">
@@ -118,13 +124,24 @@ require_once(INCLUDE_PATH . 'business/manager/dashboard.php');
 						<th scope="col">Suspend</th>
 					</thead>
 					<tbody class="text-center">
+					<?php
+					foreach ($managers as $k):
+						if($k["emp_id"] != $_SESSION["emp_id"]):
+							$name = $k["emp_first_name"] . " " . $k["emp_last_name"];
+							$uname = $k["emp_username"];
+							$eid = $k["emp_id"];
+					?>
 						<tr>
-							<td>Esteban Rodriguez</td>
-							<td>erodriguez</td>
-							<td><a class="text-link table-link" href="">Profile</a></td>
+							<td><?php echo $name; ?></td>
+							<td><?php echo $uname; ?></td>
+							<td><a class="text-link table-link" href="./edit/index.php?eid=<?php echo $eid; ?>">Profile</a></td>
 							<td><input type="checkbox" name=""></td>
 							<td><input type="checkbox" name=""></td>
 						</tr>
+					<?php
+						endif;
+					endforeach;
+					?>
 					</tbody>
 				</table>
 			</div>
@@ -146,13 +163,24 @@ require_once(INCLUDE_PATH . 'business/manager/dashboard.php');
 						<th scope="col">Suspend</th>
 					</thead>
 					<tbody class="text-center">
+					<?php
+					foreach ($employees as $k):
+						if($k["emp_id"] != $_SESSION["emp_id"]):
+							$name = $k["emp_first_name"] . " " . $k["emp_last_name"];
+							$uname = $k["emp_username"];
+							$eid = $k["emp_id"];
+					?>
 						<tr>
-							<td>Esteban Rodriguez</td>
-							<td>erodriguez</td>
-							<td><a class="text-link table-link" href="">Profile</a></td>
-							<td><input type="checkbox" name="grant-access"></td>
-							<td><input type="checkbox" name="suspend-account"></td>
+							<td><?php echo $name; ?></td>
+							<td><?php echo $uname; ?></td>
+							<td><a class="text-link table-link" href="./edit/index.php?eid=<?php echo $eid; ?>">Profile</a></td>
+							<td><input type="checkbox" name=""></td>
+							<td><input type="checkbox" name=""></td>
 						</tr>
+					<?php
+						endif;
+					endforeach;
+					?>
 					</tbody>
 				</table>
 			</div>

@@ -79,16 +79,20 @@ $(document).ready(function() {
 				url: '/delectable/public_html/assets/scripts/restaurant-employee.php',
 				type: 'POST',
 				data: {
-					'create-emp-first-name': fname,
-					'create-emp-last-name': lname,
-					'create-emp-email': email,
-					'create-emp-username': uname,
-					'create-emp-password-1': pass1,
-					'create-emp-password-2': pass2
+					'emp-first-name': fname,
+					'emp-last-name': lname,
+					'emp-email': email,
+					'emp-username': uname,
+					'emp-password-1': pass1,
+					'emp-password-2': pass2,
+					'emp-manager': access,
+					'loc_id': lid,
+					'create-employee-account': true
 				}
 			}).done(function(res) {
 				response = JSON.parse(res);
 				resError = response.error;
+				console.log(response);
 				if(resError == false) {
 					data = response.data;
 					empId = data.emp_id;
@@ -105,6 +109,9 @@ $(document).ready(function() {
 					} else {
 						$("#manager-list tbody").append(row);
 					}
+					if(alert.hasClass("alert-danger")) {
+						alert.removeClass("alert-danger");
+					}
 					alert.addClass("alert-success");
 					alert.html("Employee account created");
 					alert.removeClass("d-none");
@@ -114,6 +121,9 @@ $(document).ready(function() {
 					}
 				} else {
 					resErrorMsg = response.error_msg;
+					if(alert.hasClass("alert-success")) {
+						alert.removeClass("alert-success");
+					}
 					alert.addClass("alert-danger");
 					alert.html(resErrorMsg);
 					alert.removeClass("d-none");
