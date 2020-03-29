@@ -120,8 +120,7 @@ $employees = restaurant_employees($conn, $_SESSION['loc_id']);
 						<th scope="col">Name</th>
 						<th scope="col">Username</th>
 						<th scope="col">Info</th>
-						<th scope="col">Revoke</th>
-						<th scope="col">Suspend</th>
+						<th scope="col">Suspended</th>
 					</thead>
 					<tbody class="text-center">
 					<?php
@@ -130,13 +129,13 @@ $employees = restaurant_employees($conn, $_SESSION['loc_id']);
 							$name = $k["emp_first_name"] . " " . $k["emp_last_name"];
 							$uname = $k["emp_username"];
 							$eid = $k["emp_id"];
+							$status = ($k["emp_status"] == 0) ? "checked" : "";
 					?>
 						<tr>
 							<td><?php echo $name; ?></td>
 							<td><?php echo $uname; ?></td>
-							<td><a class="text-link table-link" href="./edit/index.php?eid=<?php echo $eid; ?>">Profile</a></td>
-							<td><input type="checkbox" name=""></td>
-							<td><input type="checkbox" name=""></td>
+							<td><button class="btn-link-alt border-0 text-link table-link" value="<?php echo $eid; ?>" data-toggle="modal" data-target="#profile-modal">Profile</button></td>
+							<td><input type="checkbox" name="" disabled="true" <?php echo $status; ?>></td>
 						</tr>
 					<?php
 						endif;
@@ -144,11 +143,6 @@ $employees = restaurant_employees($conn, $_SESSION['loc_id']);
 					?>
 					</tbody>
 				</table>
-			</div>
-			<div class="row mt-3">
-				<div class="col-12">
-					<button type="button" class="btn btn-block btn-primary">Update Managers</button>
-				</div>
 			</div>
 
 			<h1 class="h3 subheader-border mt-3">Employees</h1>
@@ -159,8 +153,7 @@ $employees = restaurant_employees($conn, $_SESSION['loc_id']);
 						<th scope="col">Name</th>
 						<th scope="col">Username</th>
 						<th scope="col">Info</th>
-						<th scope="col">Grant</th>
-						<th scope="col">Suspend</th>
+						<th scope="col">Suspended</th>
 					</thead>
 					<tbody class="text-center">
 					<?php
@@ -169,13 +162,13 @@ $employees = restaurant_employees($conn, $_SESSION['loc_id']);
 							$name = $k["emp_first_name"] . " " . $k["emp_last_name"];
 							$uname = $k["emp_username"];
 							$eid = $k["emp_id"];
+							$status = ($k["emp_status"] == 0) ? "checked" : "";
 					?>
 						<tr>
 							<td><?php echo $name; ?></td>
 							<td><?php echo $uname; ?></td>
-							<td><a class="text-link table-link" href="./edit/index.php?eid=<?php echo $eid; ?>">Profile</a></td>
-							<td><input type="checkbox" name=""></td>
-							<td><input type="checkbox" name=""></td>
+							<td><button class="btn-link-alt border-0 text-link table-link" value="<?php echo $eid; ?>">Profile</button></td>
+							<td><input type="checkbox" name="" disabled="true" <?php echo $status; ?>></td>
 						</tr>
 					<?php
 						endif;
@@ -184,14 +177,150 @@ $employees = restaurant_employees($conn, $_SESSION['loc_id']);
 					</tbody>
 				</table>
 			</div>
-			<div class="row mt-3">
-				<div class="col-12">
-					<button type="button" class="btn btn-block btn-primary">Update Employees</button>
-				</div>
-			</div>
 		</div>
 	</div>
 </main>
+
+<!-- Profile Modal -->
+<div class="modal fade" id="profile-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="profile-modal-title">Employee Profile</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row py-1 bg-light">
+                	<div class="col-3 text-right border-right my-auto">
+                		<span><b>First Name</b></span>
+                	</div>
+                	<div class="col-9 my-auto">
+                		<span class="break-word">Esteban</span>
+                	</div>
+                </div>
+                <div class="row py-1">
+                	<div class="col-3 text-right border-right my-auto">
+                		<span><b>Last Name</b></span>
+                	</div>
+                	<div class="col-9 my-auto">
+                		<span class="break-word">Rodriguez</span>
+                	</div>
+                </div>
+                <div class="row py-1 bg-light">
+                	<div class="col-3 text-right border-right my-auto">
+                		<span><b>Username</b></span>
+                	</div>
+                	<div class="col-9 my-auto">
+                		<span class="break-word">erodriguez</span>
+                	</div>
+                </div>
+                <div class="row py-1">
+                	<div class="col-3 text-right border-right my-auto">
+                		<span><b>Email</b></span>
+                	</div>
+                	<div class="col-9 my-auto">
+                		<span class="break-word">example1@example.com</span>
+                	</div>
+                </div>
+                <div class="row py-1 bg-light">
+                	<div class="col-3 text-right border-right my-auto">
+                		<span><b>Phone</b></span>
+                	</div>
+                	<div class="col-9 my-auto">
+                		<span class="break-word">6611234567</span>
+                	</div>
+                </div>
+                <div class="row py-1">
+                	<div class="col-3 text-right border-right my-auto">
+                		<span><b>Position</b></span>
+                	</div>
+                	<div class="col-9 my-auto">
+                		<span class="break-word">General Manager</span>
+                	</div>
+                </div>
+                <div class="row py-1 bg-light">
+                	<div class="col-3 text-right border-right my-auto">
+                		<span><b>Salary</b></span>
+                	</div>
+                	<div class="col-9 my-auto">
+                		<span class="break-word">$42,000</span>
+                	</div>
+                </div>
+                <div class="row py-1">
+                	<div class="col-3 text-right border-right my-auto">
+                		<span><b>Address</b></span>
+                	</div>
+                	<div class="col-9 my-auto">
+                		<span class="break-word">123 California Ave.</span>
+                	</div>
+                </div>
+                <div class="row py-1 bg-light">
+                	<div class="col-3 text-right border-right my-auto">
+                		<span><b>Apt/Ste</b></span>
+                	</div>
+                	<div class="col-9 my-auto">
+                		<span class="break-word">N/A</span>
+                	</div>
+                </div>
+                <div class="row py-1">
+                	<div class="col-3 text-right border-right my-auto">
+                		<span><b>City</b></span>
+                	</div>
+                	<div class="col-9 my-auto">
+                		<span class="break-word">Bakersfield</span>
+                	</div>
+                </div>
+                <div class="row py-1 bg-light">
+                	<div class="col-3 text-right border-right my-auto">
+                		<span><b>State</b></span>
+                	</div>
+                	<div class="col-9 my-auto">
+                		<span class="break-word">CA</span>
+                	</div>
+                </div>
+                <div class="row py-1">
+                	<div class="col-3 text-right border-right my-auto">
+                		<span><b>Zip</b></span>
+                	</div>
+                	<div class="col-9 my-auto">
+                		<span class="break-word">93305</span>
+                	</div>
+                </div>
+                <div class="row py-1 bg-light">
+                	<div class="col-3 text-right border-right my-auto">
+                		<span><b>Birth Date</b></span>
+                	</div>
+                	<div class="col-9 my-auto">
+                		<span class="break-word">01/01/1901</span>
+                	</div>
+                </div>
+                <div class="row py-1">
+                	<div class="col-3 text-right border-right my-auto">
+                		<span><b>Hired</b></span>
+                	</div>
+                	<div class="col-9 my-auto">
+                		<span class="break-word">01/01/1901</span>
+                	</div>
+                </div>
+                <div class="row py-1 bg-light">
+                	<div class="col-3 text-right border-right my-auto">
+                		<span><b>Dismissed</b></span>
+                	</div>
+                	<div class="col-9 my-auto">
+                		<span class="break-word">N/A</span>
+                	</div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-alt" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Update</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script type="text/javascript">
 	var lid = <?php echo $_SESSION['loc_id']; ?>;
 </script>

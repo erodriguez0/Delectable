@@ -156,6 +156,10 @@ input:checked + .status-slider:before {
 	max-width: 148px;
 }
 
+.break-word {
+	word-break: break-word;
+}
+
 /*
 ####################################################
 M E D I A  Q U E R I E S

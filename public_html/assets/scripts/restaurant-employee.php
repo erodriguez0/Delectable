@@ -10,7 +10,7 @@ if(isset($_POST['create-employee-account'])) {
 	// $postal = trim($_POST['emp-postal-code']);
 	// $city  =  trim($_POST['emp-city']);
 	// $state =  trim($_POST['emp-state']);
-	$required = array('emp-first-name', 'emp-last-name', 'emp-username', 'emp-email', 'emp-password-1', 'emp-password-2', 'loc_id', 'emp-manager');
+	$required = array('emp-first-name', 'emp-last-name', 'emp-username', 'emp-email', 'emp-password-1', 'emp-password-2');
 	$response = array("error" => false, "error_msg" => "", "data" => array());
 	$error = false;
 
@@ -20,6 +20,14 @@ if(isset($_POST['create-employee-account'])) {
 			$error = true;
 			break;
 		}
+	}
+
+	if(!isset($_POST['loc_id'])) {
+		$error = true;
+	}
+
+	if(!isset($_POST['emp-manager'])) {
+		$error = true;
 	}
 
 	// Fields are empty or not set

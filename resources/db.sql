@@ -221,6 +221,7 @@ ENGINE = InnoDB;
 
 CREATE UNIQUE INDEX `item_cat_name_UNIQUE` ON `delectable`.`menu_item_category` (`item_cat_name` ASC) VISIBLE;
 
+CREATE INDEX `fk_loc_id_idx` ON `delectable`.`menu_item` (`fk_loc_id` ASC) VISIBLE;
 
 -- -----------------------------------------------------
 -- Table `delectable`.`menu_item`
@@ -242,9 +243,6 @@ CREATE TABLE IF NOT EXISTS `delectable`.`menu_item` (
 ENGINE = InnoDB;
 
 CREATE INDEX `fk_item_cat_id_idx` ON `delectable`.`menu_item` (`fk_item_cat_id` ASC) VISIBLE;
-
-CREATE INDEX `fk_loc_id_idx` ON `delectable`.`menu_item` (`fk_loc_id` ASC) VISIBLE;
-
 
 -- -----------------------------------------------------
 -- Table `delectable`.`menu_category`
