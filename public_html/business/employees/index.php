@@ -43,12 +43,12 @@ $employees = restaurant_employees($conn, $_SESSION['loc_id']);
 				</div>
 				<div class="row mt-3">
 					<div class="col-12">
-						<input type="email" name="emp-email" class="form-control" placeholder="Enter Email" id="create-emp-email">
+						<input type="text" name="emp-username" class="form-control" placeholder="Create Username" id="create-emp-username">
 					</div>
 				</div>
 				<div class="row mt-3">
 					<div class="col-12">
-						<input type="text" name="emp-username" class="form-control" placeholder="Create Username" id="create-emp-username">
+						<input type="email" name="emp-email" class="form-control" placeholder="Enter Email" id="create-emp-email">
 					</div>
 				</div>
 				<div class="row mt-3">
@@ -63,6 +63,32 @@ $employees = restaurant_employees($conn, $_SESSION['loc_id']);
 				</div>
 				<div class="row mt-3">
 					<div class="col-12">
+						<input type="text" name="emp-job" class="form-control" placeholder="Job Title" id="create-emp-job">
+					</div>
+				</div>
+				<div class="row mt-3">
+					<div class="col-6">
+						<input type="number" name="emp-pay-rate" class="form-control" placeholder="$0.00" id="create-emp-pay" min="0.00" step="0.01" max="10000000">
+					</div>
+					<div class="col-6">
+						<select name="emp-pay-rate-unit" class="form-control" id="create-emp-pay-rate">
+							<option value="none">Choose Pay Rate</option>
+							<optgroup label="Wage">
+								<option value="hourly">Hourly</option>
+							</optgroup>
+							<optgroup label="Salary">
+								<option value="weekly">Weekly</option>
+								<option value="biweekly">Bi-weekly</option>
+								<option value="semimonthly">Semi-monthly</option>
+								<option value="monthly">Monthly</option>
+								<option value="semiannual">Semi-Annual</option>
+								<option value="annual">Annual</option>
+							</optgroup>
+						</select>
+					</div>
+				</div>
+				<div class="row mt-3">
+					<div class="col-12">
 						<label class="switch">
 							<input id="create-emp-manager" type="checkbox" name="emp-manager-access">
 							<span class="status-slider"></span>
@@ -71,7 +97,7 @@ $employees = restaurant_employees($conn, $_SESSION['loc_id']);
 					</div>
 				</div>
 
-				<div class="row">
+<!-- 				<div class="row">
 					<div class="col-2 d-flex align-items-center justify-content-left">
 						<small class="">Optional</small>
 					</div>
@@ -103,7 +129,7 @@ $employees = restaurant_employees($conn, $_SESSION['loc_id']);
 					<div class="col-12 col-lg-4">
 						<input type="text" name="emp-state" class="form-control mt-3 mt-lg-0" placeholder="State">
 					</div>
-				</div>
+				</div> -->
 				<div class="row mt-3">
 					<div class="col-12">
 						<button type="button" name="emp-create-account" class="btn btn-primary btn-block" id="create-employee-account">Create Account</button>

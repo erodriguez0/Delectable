@@ -4,12 +4,6 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/delectable/resources/config.php');
 require_once(INCLUDE_PATH . 'functions.php');
 
 if(isset($_POST['create-employee-account'])) {
-	// $addr1 =  trim($_POST['emp-address-1']);
-	// $addr2 =  trim($_POST['emp_address-2']);
-	// $phone =  trim($_POST['emp-phone']);
-	// $postal = trim($_POST['emp-postal-code']);
-	// $city  =  trim($_POST['emp-city']);
-	// $state =  trim($_POST['emp-state']);
 	$required = array('emp-first-name', 'emp-last-name', 'emp-username', 'emp-email', 'emp-password-1', 'emp-password-2');
 	$response = array("error" => false, "error_msg" => "", "data" => array());
 	$error = false;
@@ -22,11 +16,8 @@ if(isset($_POST['create-employee-account'])) {
 		}
 	}
 
-	if(!isset($_POST['loc_id'])) {
-		$error = true;
-	}
-
-	if(!isset($_POST['emp-manager'])) {
+	if(!isset($_POST['loc_id']) || !isset($_POST['emp-manager']) 
+		|| !isset($_POST['emp-pay'])) {
 		$error = true;
 	}
 
@@ -52,7 +43,10 @@ if(isset($_POST['create-employee-account'])) {
 	$email =  trim($_POST['emp-email']);
 	$pass1 =  trim($_POST['emp-password-1']);
 	$pass2 =  trim($_POST['emp-password-2']);
+	$pay = $_POST['emp-pay'];
+	$pay_rate = $_POST['emp-pay-rate'];
 	$access = $_POST['emp-manager'];
+	$job = trim($_POST['emp-job']);
 	$lid = $_POST['loc_id'];
 
 	// First and last name are alphanumeric
@@ -108,8 +102,23 @@ if(isset($_POST['create-employee-account'])) {
 		echo json_encode($response); exit();
 	}
 
-	$sql  = "INSERT INTO employee (emp_first_name, emp_last_name, emp_username, emp_email, emp_password, emp_manager, fk_loc_id) ";
-	$sql .= "VALUES (:fname, :lname, :uname, :email, :hash, :access, :lid)";
+	if(has_special_char($emp_job)) {
+		$emp_job = "";
+	}
+
+	// Wage/Salary isn't formatted or negative
+	if(!is_currency($pay) || $pay < 0 || $pay < "0") {
+		$pay = "0.00";
+	}
+
+	$pay_rate_options = array("hourly", "weekly", "biweekly", "semimonthly", "monthly", "semiannual", "annual");
+
+	if(!in_array($pay_rate, $pay_rate_options) || $pay_rate == "none") {
+		$pay_rate = "";
+	}
+
+	$sql  = "INSERT INTO employee (emp_first_name, emp_last_name, emp_username, emp_email, emp_password, emp_manager, emp_job, emp_pay, emp_pay_rate, fk_loc_id) ";
+	$sql .= "VALUES (:fname, :lname, :uname, :email, :hash, :access, :job, :rate, :type, :lid)";
 	$hash = password_hash($pass1, PASSWORD_DEFAULT);
 	$query = $conn->prepare($sql);
 	$query->bindParam(":fname", $fname, PDO::PARAM_STR);
@@ -118,6 +127,9 @@ if(isset($_POST['create-employee-account'])) {
 	$query->bindParam(":email", $email, PDO::PARAM_STR);
 	$query->bindParam(":hash", $hash, PDO::PARAM_STR);
 	$query->bindParam(":access", $access, PDO::PARAM_INT);
+	$query->bindParam(":job", $job, PDO::PARAM_STR);
+	$query->bindParam(":rate", $pay, PDO::PARAM_STR);
+	$query->bindParam(":type", $pay_rate, PDO::PARAM_STR);
 	$query->bindParam(":lid", $lid, PDO::PARAM_INT);
 
 	if($query->execute()) {

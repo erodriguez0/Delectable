@@ -3,16 +3,23 @@ $(document).ready(function() {
 		$(this).val(parseFloat($(this).val()).toFixed(2));
 	});
 
+	$('#create-emp-pay').on('change', function(){
+    	$(this).val(parseFloat($(this).val()).toFixed(2));
+	});
+
 	$("#create-employee-account").on("click", function() {
-		let fname = $("#create-emp-first-name").val();
-		let lname = $("#create-emp-last-name").val();
-		let uname = $("#create-emp-username").val();
-		let email = $("#create-emp-email").val();
-		let pass1 = $("#create-emp-password-1").val();
-		let pass2 = $("#create-emp-password-2").val();
+		let fname  = $("#create-emp-first-name").val();
+		let lname  = $("#create-emp-last-name").val();
+		let uname  = $("#create-emp-username").val();
+		let email  = $("#create-emp-email").val();
+		let pass1  = $("#create-emp-password-1").val();
+		let pass2  = $("#create-emp-password-2").val();
+		let job    = $("#create-emp-job").val();
+		let pay   = $("#create-emp-pay").val();
+		let rate   = $("#create-emp-pay-rate").val();
 		let access = ($("#create-emp-manager").prop("checked")) ? 1 : 0;
-		let alert = $(".create-emp-alert");
-		let error = false;
+		let alert  = $(".create-emp-alert");
+		let error  = false;
 		let errMsg = "";
 		let fields = ["#create-emp-first-name", "#create-emp-last-name", "#create-emp-username", "#create-emp-email", "#create-emp-password-1", "#create-emp-password-2"];
 
@@ -38,6 +45,15 @@ $(document).ready(function() {
 		if(uname.length < 1) {
 			error = true;
 			errMsg = "Username cannot be empty";
+			alert.addClass("alert-danger");
+			alert.html(errMsg);
+			alert.removeClass("d-none");
+			return;
+		}
+
+		if(job.length < 1) {
+			error = true;
+			errMsg = "Job title cannot be empty";
 			alert.addClass("alert-danger");
 			alert.html(errMsg);
 			alert.removeClass("d-none");
@@ -74,6 +90,26 @@ $(document).ready(function() {
 			return;
 		}
 
+		if(pay < 0) {
+			error = true;
+			errMsg = "Invalid wage/salary";
+			alert.addClass("alert-danger");
+			alert.html(errMsg);
+			alert.removeClass("d-none");
+			return;
+		}
+
+		let options = ["none", "hourly", "weekly", "biweekly", "semimonthly", "monthly", "semiannual", "annual"];
+
+		if(jQuery.inArray(rate, options) == -1) {
+			error = true;
+			errMsg = "Invalid pay rate";
+			alert.addClass("alert-danger");
+			alert.html(errMsg);
+			alert.removeClass("d-none");
+			return;
+		}
+
 		if(error == false) {
 			$.ajax({
 				url: '/delectable/public_html/assets/scripts/restaurant-employee.php',
@@ -86,6 +122,9 @@ $(document).ready(function() {
 					'emp-password-1': pass1,
 					'emp-password-2': pass2,
 					'emp-manager': access,
+					'emp-job': job,
+					'emp-pay': pay,
+					'emp-pay-rate': rate,
 					'loc_id': lid,
 					'create-employee-account': true
 				}
@@ -101,8 +140,7 @@ $(document).ready(function() {
 					row += "<td>" + fname + " " + lname + "</td>";
 					row += "<td>" + uname + "</td>";
 					row += "<td><a href='./edit/index.php?eid=" + empId + "' class='text-link table-link'>Profile</a></td>";
-					row += "<td><input type='checkbox' name='grant-access'></td>";
-					row += "<td><input type='checkbox' name='suspend-account'></td>";
+					row += "<td><input type='checkbox' name='' disabled='true'></td>";
 					row += "</tr>";
 					if(access == 0) {
 						$("#employee-list tbody").append(row);

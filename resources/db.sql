@@ -142,8 +142,8 @@ CREATE TABLE IF NOT EXISTS `delectable`.`employee` (
   `emp_state` VARCHAR(64) NULL,
   `emp_postal_code` VARCHAR(64) NULL,
   `emp_phone` VARCHAR(64) NULL,
-  `emp_pay_type` BIT(1) NULL,
-  `emp_pay_rate` DECIMAL(15,2) NULL,
+  `emp_pay_rate` VARCHAR(64) NULL,
+  `emp_pay` DECIMAL(15,2) NULL,
   `emp_job` VARCHAR(64) NULL,
   `emp_manager` BIT(1) NOT NULL DEFAULT 0,
   `emp_hire_date` DATE NULL,
@@ -221,7 +221,7 @@ ENGINE = InnoDB;
 
 CREATE UNIQUE INDEX `item_cat_name_UNIQUE` ON `delectable`.`menu_item_category` (`item_cat_name` ASC) VISIBLE;
 
-CREATE INDEX `fk_loc_id_idx` ON `delectable`.`menu_item` (`fk_loc_id` ASC) VISIBLE;
+CREATE INDEX `fk_loc_id_idx` ON `delectable`.`menu_item_category` (`fk_loc_id` ASC) VISIBLE;
 
 -- -----------------------------------------------------
 -- Table `delectable`.`menu_item`
