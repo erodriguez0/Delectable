@@ -163,7 +163,10 @@ $employees = restaurant_employees($conn, $_SESSION['loc_id']);
 							<td><?php echo $name; ?></td>
 							<td><?php echo $uname; ?></td>
 							<td><button class="btn-link-alt border-0 text-link table-link" value="<?php echo $eid; ?>" data-toggle="modal" data-target="#profile-modal">Profile</button></td>
-							<td><input type="checkbox" name="" disabled="true" <?php echo $status; ?>></td>
+							<td class="d-flex justify-content-center"><div class="custom-control custom-checkbox">
+								<input class="custom-control-input" type="checkbox" name="" disabled="true" <?php echo $status; ?>>
+								<label class="custom-control-label"></label>
+							</div></td>
 							<td><button class="btn-link-alt border-0 text-link table-link emp-revoke-manager" value="<?php echo $eid; ?>">Revoke</button></td>
 						</tr>
 					<?php
@@ -198,7 +201,10 @@ $employees = restaurant_employees($conn, $_SESSION['loc_id']);
 							<td><?php echo $name; ?></td>
 							<td><?php echo $uname; ?></td>
 							<td><button class="btn-link-alt border-0 text-link table-link profile-link" value="<?php echo $eid; ?>">Profile</button></td>
-							<td><input type="checkbox" name="" disabled="true" <?php echo $status; ?>></td>
+							<td class="d-flex justify-content-center"><div class="custom-control custom-checkbox">
+								<input class="custom-control-input" type="checkbox" name="" disabled="true" <?php echo $status; ?>>
+								<label class="custom-control-label"></label>
+							</div></td>
 							<td><button class="btn-link-alt border-0 text-link table-link emp-add-manager" value="<?php echo $eid; ?>">Grant</button></td>
 						</tr>
 					<?php
