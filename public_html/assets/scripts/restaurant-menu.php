@@ -3,9 +3,9 @@
 require_once($_SERVER['DOCUMENT_ROOT'] . '/delectable/resources/config.php');
 require_once(INCLUDE_PATH . 'functions.php');
 
-if(isset($_POST['add_category'])) {
-	$cat = $_POST['category_name'];
-	$desc = (isset($_POST['category_description'])) ? $_POST['category_description'] : "";
+if(isset($_POST['add_menu_item_category'])) {
+	$cat = $_POST['cat_name'];
+	$desc = (isset($_POST['cat_desc'])) ? $_POST['cat_desc'] : "";
 	$lid = $_POST['loc_id'];
 	$res = array("error" => false, "error_msg" => "", "cat_id" => 0);
 	

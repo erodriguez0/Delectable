@@ -121,4 +121,24 @@ function employee_info($conn, $id) {
 		
 	}
 }
+
+function menu_item_categories($conn, $id) {
+	$lid = $id;
+	$sql = "SELECT item_cat_id, item_cat_name, item_cat_description FROM menu_item_category WHERE fk_loc_id = :lid";
+	$query = $conn->prepare($sql);
+	$query->bindParam(":lid", $lid, PDO::PARAM_INT);
+	if($query->execute()) {
+		return $query->fetchAll();
+	}
+}
+
+function menu_items($conn, $id) {
+	$cid = $id;
+	$sql = "SELECT item_id, item_name, item_description, item_price FROM menu_item WHERE fk_item_cat_id = :cid";
+	$query = $conn->prepare($sql);
+	$query->bindParam(":cid", $cid, PDO::PARAM_INT);
+	if($query->execute()) {
+		return $query->fetchAll();
+	}
+}
 ?>

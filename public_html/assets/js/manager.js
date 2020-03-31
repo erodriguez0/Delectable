@@ -29,14 +29,49 @@ $(document).ready(function() {
 		let menu = $(".res-menu").html();
 		let cat = $("#add-category-name").val();
 		let desc = $("#add-category-desc").val();
-		let cat_row = '<h1 class="h5 subheader-border mt-3 row mx-0">';
-		cat_row += '<div class="col-9 pl-0">' + cat + '</div>';
-		cat_row += '<div class="col-3 pr-0 text-right">';
-		cat_row += '<small class="">';
-		cat_row += '<button class="border-0 btn-link-alt table-link text-link px-0" value="' + 1 + '">Edit</button> | ';
-		cat_row += '<button class="border-0 btn-link-alt table-link text-link px-0" value="' + 1 + '">Remove</a>';
-		cat_row += '</small></div></h1>';
-		$(".res-menu").html(menu + cat_row);
+		let sel = $("#add-item-category");
+		
+		$.ajax({
+			url: '/delectable/public_html/assets/scripts/restaurant-menu.php',
+			type: 'POST',
+			data: {
+				'add_menu_item_category': true,
+				'cat_name': cat,
+				'cat_desc': desc,
+				'loc_id': lid
+			}
+		}).done(function(response) {
+			let res = JSON.parse(response);
+			if(!res.error) {
+				cid = res.cat_id;
+				let opt = "<option value='" + cid + "'>" + cat + "</option>";
+				let cat_row = '<h1 class="h5 subheader-border mt-3 row mx-0">';
+				cat_row += '<div class="col-9 pl-0">' + cat + '</div>';
+				cat_row += '<div class="col-3 pr-0 text-right">';
+				cat_row += '<small class="">';
+				cat_row += '<button class="border-0 btn-link-alt table-link text-link px-0" value="' + cid + '">Edit</button> | ';
+				cat_row += '<button class="border-0 btn-link-alt table-link text-link px-0" value="' + cid + '">Remove</a>';
+				cat_row += '</small></div></h1>';
+				cat_row += '<div class="word-break"><small><i>';
+		        cat_row += desc;
+		        cat_row += '</i></small></div>';
+				$(".res-menu").append(cat_row);
+				sel.append(opt);
+				$(".add-item-alert").addClass("d-none");
+				$(".add-cat-alert").removeClass("alert-danger");
+				$(".add-cat-alert").addClass("alert-success");
+				$(".add-cat-alert").html("Successfully added!");
+				$(".add-cat-alert").removeClass("d-none");
+				$("add-category-name").val("");
+				$("add-category-desc").val("");
+			} else {
+				$(".add-item-alert").addClass("d-none");
+				$(".add-cat-alert").removeClass("alert-success");
+				$(".add-cat-alert").addClass("alert-danger");
+				$(".add-cat-alert").html(res.error_msg);
+				$(".add-cat-alert").removeClass("d-none");
+			}
+		});
 	});
 
 	$('#create-emp-pay').on('change', function(){

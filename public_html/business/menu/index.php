@@ -14,8 +14,9 @@ else:
 
 $title = "Delectable | For Restaurants";
 require_once(INCLUDE_PATH . 'header.php');
-
+require_once(INCLUDE_PATH . 'functions.php');
 require_once(INCLUDE_PATH . 'business/manager/dashboard.php');
+$cats = menu_item_categories($conn, $_SESSION['loc_id']);
 ?>
 
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
@@ -30,6 +31,7 @@ require_once(INCLUDE_PATH . 'business/manager/dashboard.php');
 
                 	<div class="add-category-wrapper">
                 		<h1 class="h3 subheader-border">Add Category</h1>
+                		<div class="alert add-cat-alert d-none"></div>
                 		<div class="menu-add-form mt-3">
                 			<input id="add-category-name" class="form-control rounded-0 mt-3" type="text" name="add-category-name" placeholder="Category name...">
                 			<span id="cat-name-counter">32</span><span> characters remaining</span>
@@ -42,10 +44,21 @@ require_once(INCLUDE_PATH . 'business/manager/dashboard.php');
                 	<!-- Add Category Form -->
                 	<div class="add-item-wrapper mt-3">
 	                	<h1 class="h3 subheader-border">Add Item</h1>
+	                	<div class="alert add-item-alert d-none"></div>
 	                	<div class="menu-add-form mt-3">
 	                		<select id="add-item-category" class="w-100 custom-select rounded-0" name="add-item-category">
 	                			<option value="0">Choose category...</option>
-	                			<!-- Grab list from DB -->
+	                		<?php
+	                		if(!empty($cats)):
+	                			foreach($cats as $k):
+	                				$cid = $k["item_cat_id"];
+	                				$name = htmlspecialchars($k["item_cat_name"]);
+	                		?>
+	                			<option value="<?php echo $cid; ?>"><?php echo $name; ?></option>
+	                		<?php
+                				endforeach;
+	                		endif;
+	                		?>
 	                		</select>
 	                		<div class="row">
 		                		<div class="col-12 col-lg-8">
@@ -69,22 +82,41 @@ require_once(INCLUDE_PATH . 'business/manager/dashboard.php');
                 <div class="col-12 res-menu">
                 	<h1 class="h3 subheader-border">Menu Preview</h1>
 
+                	<?php
+                	if(!empty($cats)):
+	                	foreach($cats as $k):
+	                		$name = htmlspecialchars($k["item_cat_name"]);
+	                		$desc = htmlspecialchars($k["item_cat_desc"]);
+	                		$cat_id = $k["item_cat_id"];
+                	?>
+
                 	<!-- Menu Category -->
             		<h1 class="h5 subheader-border mt-3 row mx-0 menu-cat">
             			<div class="col-9 pl-0">
-            				Burgers
+            				<?php echo $name; ?>
             			</div>
             			<div class="col-3 pr-0 text-right">
             				<small class="">
-            					<button class="border-0 btn-link-alt table-link text-link px-0 edit-cat" value="">Edit</button>
+            					<button class="border-0 btn-link-alt table-link text-link px-0 edit-cat" value="<?php echo $cat_id; ?>">Edit</button>
             					|
-            					<button class="border-0 btn-link-alt table-link text-link px-0 remove-cat" value="">Remove</button>
+            					<button class="border-0 btn-link-alt table-link text-link px-0 remove-cat" value="<?php echo $cat_id; ?>">Remove</button>
             				</small>
             			</div>
             		</h1>
+            		<div class="word-break"><small><i>
+            			<?php echo $desc; ?>
+            		</i></small></div>
 
-                	<div class="menu-list">
-
+                	<div class="menu-cat-item-list">
+                		<?php
+                		$items = menu_items($conn, $cat_id);
+                		if(!empty($items)):
+	                		foreach($items as $i):
+	                			$item_name = htmlspecialchars($i["item_name"]);
+	                			$item_price = htmlspecialchars($i["item_price"]);
+	                			$item_desc = htmlspecialchars($i["item_description"]);
+	                			$item_id = $i["item_id"];
+                		?>
                 		<!-- Menu Item -->
                 		<div class="menu-item row mt-3">
 	                		<div class="col-2 d-flex justify-content-center align-items-center pr-0">
@@ -92,54 +124,39 @@ require_once(INCLUDE_PATH . 'business/manager/dashboard.php');
 	                		</div>
 
 	                		<div class="col-8 d-flex justify-content-left align-items-center">
-	                			Super Banger Burger
+	                			<?php echo $item_name; ?>
 	                		</div>
 
 	                		<div class="col-2 d-flex justify-content-center align-items-center pl-0">
-                				<span class="text-success">$4.99</span>
+                				<span class="text-success">
+                					<?php echo $item_price; ?>	
+            					</span>
                 			</div>
 
-	                		<div class="col-12 d-flex justify-content-center align-items-center text-muted mt-3">
-	                			<small><i>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas dapibus arcu porttitor convallis sagittis. Quisque volutpat nisl commodo lacus pulvinar ullamcorper.</i></small>
-	                		</div>
+	                		<div class="col-12 d-flex justify-content-center align-items-center text-muted mt-3"><small><i>
+	                			<?php echo $item_desc; ?>
+                			</i></small></div>
 
 	                		<div class="col-12 mt-3">
 								<div class="btn-group special" role="group">
-									<button type="button" class="btn btn-primary btn-sm">Edit Item</button>
-									<button type="button" class="btn btn-primary btn-sm">Remove</button>
+									<button type="button" class="btn btn-primary btn-sm" value="<?php echo $item_id; ?>">Edit Item</button>
+									<button type="button" class="btn btn-primary btn-sm" value="<?php echo $item_id; ?>">Remove</button>
 								</div>
 	                		</div>
 	                	</div>
 	                	<!-- ./Menu Item -->
-
-	                	<!-- Menu Item -->
-	                	<div class="menu-item row mt-3">
-	                		<div class="col-2 d-flex justify-content-center align-items-center pr-0">
-	                			<img src="https://via.placeholder.com/50" class="img-thumbnail rounded-0">
-	                		</div>
-
-	                		<div class="col-8 d-flex justify-content-left align-items-center">
-	                			Banger Burger Jr
-	                		</div>
-
-	                		<div class="col-2 d-flex justify-content-center align-items-center pl-0">
-                				<span class="text-success">$3.99</span>
-                			</div>
-
-	                		<div class="col-12 d-flex justify-content-center align-items-center text-muted mt-3">
-	                			<small><i>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas dapibus arcu porttitor convallis sagittis. Quisque volutpat nisl commodo lacus pulvinar ullamcorper.</i></small>
-	                		</div>
-
-	                		<div class="col-12 mt-3">
-								<div class="btn-group special" role="group">
-									<button type="button" class="btn btn-primary btn-sm">Edit Item</button>
-									<button type="button" class="btn btn-primary btn-sm">Remove</button>
-								</div>
-	                		</div>
-	                	</div>
-	                	<!-- ./Menu Item -->
+		                <?php
+			            	endforeach;
+			            endif;
+			            ?>
 	                	
                 	</div>
+                	<!-- ./Menu Item List -->
+                	<?php
+                		endforeach;
+                	endif;
+                	?>
+
                 	<div class="mt-2"></div>
                 	<!-- ./Menu Category -->
                 </div>
@@ -148,6 +165,9 @@ require_once(INCLUDE_PATH . 'business/manager/dashboard.php');
 	</div>
 </main>
 
+<script type="text/javascript">
+	var lid = <?php echo $_SESSION['loc_id']; ?>;
+</script>
 <?php
 endif;
 require_once(INCLUDE_PATH . 'footer.php');
