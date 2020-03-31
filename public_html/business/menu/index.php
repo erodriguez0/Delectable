@@ -69,6 +69,10 @@ $cats = menu_item_categories($conn, $_SESSION['loc_id']);
 		                		</div>
 		                	</div>
 	                		<textarea id="add-item-description" class="form-control rounded-0 mt-3" name="add-item-description" placeholder="Item description..." rows="6"></textarea>
+	                		<div class="custom-file mt-3">
+								<input type="file" id="add-item-image" class="custom-file-input" id="customFile" accept=".png, .jpg, .jpeg">
+								<label id="add-item-image-label" class="custom-file-label" for="customFile">Choose image file</label>
+							</div>
 	                		<button id="add-item-btn" class="btn btn-primary btn-block mt-3" role="button">Add Item</button>
 	                	</div>
 	                </div>
@@ -91,7 +95,7 @@ $cats = menu_item_categories($conn, $_SESSION['loc_id']);
                 	?>
 
                 	<!-- Menu Category -->
-            		<h1 class="h5 subheader-border mt-3 row mx-0 menu-cat">
+            		<h1 class="h5 subheader-border mt-3 row mx-0 menu-cat cat-<?php echo $cat_id; ?>">
             			<div class="col-9 pl-0">
             				<?php echo $name; ?>
             			</div>

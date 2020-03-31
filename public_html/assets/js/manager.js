@@ -74,6 +74,16 @@ $(document).ready(function() {
 		});
 	});
 
+	$("#add-item-image").change(function() {
+		let file = $(this).val();
+		let name = this.files[0].name;
+		if(name.length > 0) {
+			$("#add-item-image-label").html(name);
+		} else {
+			$("#add-item-image-label").html("Choose image file");
+		}
+	});
+
 	$('#create-emp-pay').on('change', function(){
     	$(this).val(parseFloat($(this).val()).toFixed(2));
 	});
