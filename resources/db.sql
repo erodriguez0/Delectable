@@ -209,10 +209,10 @@ CREATE TABLE IF NOT EXISTS `delectable`.`menu_item_category` (
   `item_cat_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `item_cat_name` VARCHAR(64) NOT NULL,
   `item_cat_description` VARCHAR(255) NULL,
-  `item_status` BIT(1) NOT NULL DEFAULT 1,
+  `item_cat_status` BIT(1) NOT NULL DEFAULT 1,
   `fk_loc_id` INT UNSIGNED NOT NULL,
   PRIMARY KEY (`item_cat_id`),
-  CONSTRAINT `fk_menu_item_loc_id`
+  CONSTRAINT `fk_menu_item_cat_loc_id`
     FOREIGN KEY (`fk_loc_id`)
     REFERENCES `delectable`.`location` (`loc_id`)
     ON DELETE NO ACTION
@@ -233,6 +233,7 @@ CREATE TABLE IF NOT EXISTS `delectable`.`menu_item` (
   `item_name` VARCHAR(64) NOT NULL,
   `item_description` VARCHAR(255) NULL,
   `item_price` DECIMAL(4,2) NOT NULL,
+  `item_status` BIT(1) NOT NULL DEFAULT 1,
   `fk_item_cat_id` INT UNSIGNED NOT NULL,
   PRIMARY KEY (`item_id`),
   CONSTRAINT `fk_menu_item_item_cat_id`
@@ -629,3 +630,5 @@ INSERT INTO restaurant (res_name, res_slogan, res_description) VALUES ('BANGABUR
 
 INSERT INTO location (loc_address_1, loc_address_2, loc_city, loc_state, loc_postal_code, loc_phone, fk_res_id)
 VALUES ('2550 California Ave', 'Suite #200', 'Bakersfield', 'California', '93308', '(661)-844-7071', 1);
+
+INSERT INTO employee (emp_first_name, emp_last_name, emp_username, emp_password, emp_email, emp_job, emp_manager, fk_loc_id) VALUES ('Esteban', 'Rodriguez', 'erodriguez', '$2y$10$t2QL6MJRS7R81F/Uh9xW1eEs9JIW10Z9aMW/tT6WIdwOo4E6CtPIG', 'esteban@example.com', 'Owner/General Manager', 1, 1);

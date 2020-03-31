@@ -140,6 +140,7 @@ $employees = restaurant_employees($conn, $_SESSION['loc_id']);
 
 		<div class="col-12 col-lg-6 restaurant-edit-form-wrap mt-3 mt-lg-0">
 			<h1 class="h3 subheader-border">Managers</h1>
+			<div id="manager-list-alert" class="alert d-none"></div>
 			<div class="manager-list mt-3 overflow-x-fit" id="manager-list">
 				<table class="table">
 					<thead class="text-center">
@@ -147,6 +148,7 @@ $employees = restaurant_employees($conn, $_SESSION['loc_id']);
 						<th scope="col">Username</th>
 						<th scope="col">Info</th>
 						<th scope="col">Suspended</th>
+						<th scope="col">Manager</th>
 					</thead>
 					<tbody class="text-center">
 					<?php
@@ -162,6 +164,7 @@ $employees = restaurant_employees($conn, $_SESSION['loc_id']);
 							<td><?php echo $uname; ?></td>
 							<td><button class="btn-link-alt border-0 text-link table-link" value="<?php echo $eid; ?>" data-toggle="modal" data-target="#profile-modal">Profile</button></td>
 							<td><input type="checkbox" name="" disabled="true" <?php echo $status; ?>></td>
+							<td><button class="btn-link-alt border-0 text-link table-link emp-revoke-manager" value="<?php echo $eid; ?>">Revoke</button></td>
 						</tr>
 					<?php
 						endif;
@@ -172,7 +175,7 @@ $employees = restaurant_employees($conn, $_SESSION['loc_id']);
 			</div>
 
 			<h1 class="h3 subheader-border mt-3">Employees</h1>
-
+			<div id="employee-list-alert" class="alert d-none"></div>
 			<div class="employee-list mt-3 overflow-x-fit" id="employee-list">
 				<table class="table">
 					<thead class="text-center">
@@ -180,6 +183,7 @@ $employees = restaurant_employees($conn, $_SESSION['loc_id']);
 						<th scope="col">Username</th>
 						<th scope="col">Info</th>
 						<th scope="col">Suspended</th>
+						<th scope="col">Manager</th>
 					</thead>
 					<tbody class="text-center">
 					<?php
@@ -193,8 +197,9 @@ $employees = restaurant_employees($conn, $_SESSION['loc_id']);
 						<tr>
 							<td><?php echo $name; ?></td>
 							<td><?php echo $uname; ?></td>
-							<td><button class="btn-link-alt border-0 text-link table-link" value="<?php echo $eid; ?>">Profile</button></td>
+							<td><button class="btn-link-alt border-0 text-link table-link profile-link" value="<?php echo $eid; ?>">Profile</button></td>
 							<td><input type="checkbox" name="" disabled="true" <?php echo $status; ?>></td>
+							<td><button class="btn-link-alt border-0 text-link table-link emp-add-manager" value="<?php echo $eid; ?>">Grant</button></td>
 						</tr>
 					<?php
 						endif;

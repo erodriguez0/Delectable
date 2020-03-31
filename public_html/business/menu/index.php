@@ -32,6 +32,9 @@ require_once(INCLUDE_PATH . 'business/manager/dashboard.php');
                 		<h1 class="h3 subheader-border">Add Category</h1>
                 		<div class="menu-add-form mt-3">
                 			<input id="add-category-name" class="form-control rounded-0 mt-3" type="text" name="add-category-name" placeholder="Category name...">
+                			<span id="cat-name-counter">32</span><span> characters remaining</span>
+                			<textarea id="add-category-desc" class="form-control rounded-0 mt-3" name="add-category-desc" placeholder="Category description..." rows="5" style="resize: none;"></textarea>
+                			<span id="cat-text-counter">255</span><span> characters remaining</span>
                 			<button id="add-category-btn" class="btn btn-primary btn-block mt-3" role="button">Add Category</button>
                 		</div>
                 	</div>
@@ -63,19 +66,19 @@ require_once(INCLUDE_PATH . 'business/manager/dashboard.php');
 
 		<div class="col-12 col-lg-6 restaurant-edit-form-wrap mt-3 mt-lg-0">
 			<div class="row">
-                <div class="col-12">
+                <div class="col-12 res-menu">
                 	<h1 class="h3 subheader-border">Menu Preview</h1>
 
                 	<!-- Menu Category -->
-            		<h1 class="h5 subheader-border mt-3 row mx-0">
+            		<h1 class="h5 subheader-border mt-3 row mx-0 menu-cat">
             			<div class="col-9 pl-0">
             				Burgers
             			</div>
             			<div class="col-3 pr-0 text-right">
             				<small class="">
-            					<a href="#" class="text-link">Edit</a>
+            					<button class="border-0 btn-link-alt table-link text-link px-0 edit-cat" value="">Edit</button>
             					|
-            					<a href="#" class="text-link">Remove</a>
+            					<button class="border-0 btn-link-alt table-link text-link px-0 remove-cat" value="">Remove</button>
             				</small>
             			</div>
             		</h1>

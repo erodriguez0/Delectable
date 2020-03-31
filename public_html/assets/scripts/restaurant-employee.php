@@ -143,4 +143,58 @@ if(isset($_POST['create-employee-account'])) {
 	}
 }
 
+if(isset($_POST['revoke_manager_access'])) {
+	$eid = $_POST['emp_id'];
+	$lid = $_POST['loc_id'];
+	$success = false;
+
+		// Check if username exists
+	$query = $conn->prepare("SELECT * FROM employee WHERE fk_loc_id = :lid AND emp_id = :eid");
+	$query->bindParam(':lid', $lid, PDO::PARAM_INT);
+	$query->bindParam(':eid', $eid, PDO::PARAM_INT);
+	if($query->execute()) {
+		if($query->rowCount() > 0) {
+			$query = $conn->prepare("UPDATE employee SET emp_manager = 0 WHERE emp_id = :eid");
+			$query->bindParam(':eid', $eid, PDO::PARAM_INT);
+			if($query->execute()) {
+				$success = true;
+				echo json_encode($success);
+			} else {
+				echo json_encode($success);
+			}
+		} else {
+			echo json_encode($success);
+		}
+	} else {
+		echo json_encode($success);
+	}
+}
+
+if(isset($_POST['grant_manager_access'])) {
+	$eid = $_POST['emp_id'];
+	$lid = $_POST['loc_id'];
+	$success = false;
+
+		// Check if username exists
+	$query = $conn->prepare("SELECT * FROM employee WHERE fk_loc_id = :lid AND emp_id = :eid");
+	$query->bindParam(':lid', $lid, PDO::PARAM_INT);
+	$query->bindParam(':eid', $eid, PDO::PARAM_INT);
+	if($query->execute()) {
+		if($query->rowCount() > 0) {
+			$query = $conn->prepare("UPDATE employee SET emp_manager = 1 WHERE emp_id = :eid");
+			$query->bindParam(':eid', $eid, PDO::PARAM_INT);
+			if($query->execute()) {
+				$success = true;
+				echo json_encode($success);
+			} else {
+				echo json_encode($success);
+			}
+		} else {
+			echo json_encode($success);
+		}
+	} else {
+		echo json_encode($success);
+	}
+}
+
 ?>

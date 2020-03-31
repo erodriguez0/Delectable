@@ -3,6 +3,42 @@ $(document).ready(function() {
 		$(this).val(parseFloat($(this).val()).toFixed(2));
 	});
 
+	$("#add-category-desc").keyup(function() {
+		let v = $(this).val();
+		let l = $(this).val().length;
+		$(this).val($(this).val().substring(0, 255));
+		if(l > 255) {
+			$("#cat-text-counter").html(0);
+		} else {
+			$("#cat-text-counter").html(255 - l);
+		}
+	});
+
+	$("#add-category-name").keyup(function() {
+		let v = $(this).val();
+		let l = $(this).val().length;
+		$(this).val($(this).val().substring(0, 32));
+		if(l > 255) {
+			$("#cat-name-counter").html(0);
+		} else {
+			$("#cat-name-counter").html(32 - l);
+		}
+	});
+
+	$("#add-category-btn").click(function() {
+		let menu = $(".res-menu").html();
+		let cat = $("#add-category-name").val();
+		let desc = $("#add-category-desc").val();
+		let cat_row = '<h1 class="h5 subheader-border mt-3 row mx-0">';
+		cat_row += '<div class="col-9 pl-0">' + cat + '</div>';
+		cat_row += '<div class="col-3 pr-0 text-right">';
+		cat_row += '<small class="">';
+		cat_row += '<button class="border-0 btn-link-alt table-link text-link px-0" value="' + 1 + '">Edit</button> | ';
+		cat_row += '<button class="border-0 btn-link-alt table-link text-link px-0" value="' + 1 + '">Remove</a>';
+		cat_row += '</small></div></h1>';
+		$(".res-menu").html(menu + cat_row);
+	});
+
 	$('#create-emp-pay').on('change', function(){
     	$(this).val(parseFloat($(this).val()).toFixed(2));
 	});
@@ -133,6 +169,12 @@ $(document).ready(function() {
 				resError = response.error;
 				console.log(response);
 				if(resError == false) {
+					if(!$("#manager-list-alert").hasClass("d-none")) {
+						$("#manager-list-alert").addClass("d-none");
+					}
+					if(!$("#employee-list-alert").hasClass("d-none")) {
+						$("#employee-list-alert").addClass("d-none");
+					}
 					data = response.data;
 					empId = data.emp_id;
 					// Build row to append to employee/manager table
@@ -141,6 +183,11 @@ $(document).ready(function() {
 					row += "<td>" + uname + "</td>";
 					row += "<td><a href='./edit/index.php?eid=" + empId + "' class='text-link table-link'>Profile</a></td>";
 					row += "<td><input type='checkbox' name='' disabled='true'></td>";
+					if(access == 1) {
+						row += "<td><button class='btn-link-alt border-0 text-link table-link emp-revoke-manager' value='" + empId + "'>Revoke</button></td>";
+					} else {
+						row += "<td><button class='btn-link-alt border-0 text-link table-link emp-add-manager' value='" + empId + "'>Grant</button></td>";
+					}
 					row += "</tr>";
 					if(access == 0) {
 						$("#employee-list tbody").append(row);
@@ -168,5 +215,90 @@ $(document).ready(function() {
 				}
 			});
 		}
+	});
+	// Create Employee END
+
+	// Revoke manager access
+	$("#manager-list").each(function() {
+		$(this).on('click', '.emp-revoke-manager', function(e) {
+			let eid = $(this).val();
+			let button = $(this);
+			let row = $(this).parent().parent();
+			$.ajax({
+				url: '/delectable/public_html/assets/scripts/restaurant-employee.php',
+				type: 'POST',
+				data: {
+					'emp_id': eid,
+					'loc_id': lid,
+					'revoke_manager_access': true
+				}
+			}).done(function(res) {
+				let success = JSON.parse(res);
+				if(success) {
+					if(!$("#manager-list-alert").hasClass("d-none")) {
+						$("#manager-list-alert").addClass("d-none");
+					}
+					button.html("Grant");
+					button.removeClass("emp-revoke-manager");
+					button.addClass("emp-add-manager");
+					$("#employee-list tbody").append(row);
+					if($("#employee-list-alert").hasClass("alert-danger")) {
+						"#employee-list-alert".removeClass("alert-danger");
+					}
+					$("#employee-list-alert").html("Employee updated");
+					$("#employee-list-alert").addClass("alert-success");
+					$("#employee-list-alert").removeClass("d-none");
+				} else {
+					if($("#employee-list-alert").hasClass("alert-success")) {
+						$("#employee-list-alert").removeClass("alert-success");
+					}
+					$("#employee-list-alert").html("Error updating employee");
+					$("#employee-list-alert").addClass("alert-danger");
+					$("#employee-list-alert").removeClass("d-none");
+				}
+			});
+		});
+	});
+
+		// Revoke manager access
+	$("#employee-list").each(function() {
+		$(this).on('click', '.emp-add-manager', function(e) {
+			let eid = $(this).val();
+			let button = $(this);
+			let row = $(this).parent().parent();
+			$.ajax({
+				url: '/delectable/public_html/assets/scripts/restaurant-employee.php',
+				type: 'POST',
+				data: {
+					'emp_id': eid,
+					'loc_id': lid,
+					'grant_manager_access': true
+				}
+			}).done(function(res) {
+				let success = JSON.parse(res);
+				if(success) {
+					if(!$("#employee-list-alert").hasClass("d-none")) {
+						$("#employee-list-alert").addClass("d-none");
+					}
+					button.html("Revoke");
+					button.removeClass("emp-add-manager");
+					button.addClass("emp-revoke-manager");
+					$("#manager-list tbody").append(row);
+					if($("#manager-list-alert").hasClass("alert-danger")) {
+						"#manager-list-alert".removeClass("alert-danger");
+					}
+					$("#manager-list-alert").html("Employee updated");
+					$("#manager-list-alert").addClass("alert-success");
+					$("#manager-list-alert").removeClass("d-none");
+				} else {
+					if($("#manager-list-alert").hasClass("alert-success")) {
+						$("#manager-list-alert").removeClass("alert-success");
+					}
+					$("#manager-list-alert").html("Error updating employee");
+					$("#manager-list-alert").addClass("alert-danger");
+					$("#manager-list-alert").removeClass("d-none");
+				}
+			});
+		});
 	});
 });
