@@ -25,6 +25,11 @@ function password_check($pass = '') {
 	return true;
 }
 
+// Checks if number is formatted as N,2
+function is_currency($number) {
+  return preg_match("/^-?[0-9]+(?:\.[0-9]{2})?$/", $number);
+}
+
 // Iterate through array of keys/fields
 // and return an array using the field names
 // as keys
@@ -114,6 +119,26 @@ function employee_info($conn, $id) {
 		return $query->fetch();
 	} catch (PDOException $e) {
 		
+	}
+}
+
+function menu_item_categories($conn, $id) {
+	$lid = $id;
+	$sql = "SELECT item_cat_id, item_cat_name, item_cat_description FROM menu_item_category WHERE fk_loc_id = :lid";
+	$query = $conn->prepare($sql);
+	$query->bindParam(":lid", $lid, PDO::PARAM_INT);
+	if($query->execute()) {
+		return $query->fetchAll();
+	}
+}
+
+function menu_items($conn, $id) {
+	$cid = $id;
+	$sql = "SELECT item_id, item_name, item_description, item_price FROM menu_item WHERE fk_item_cat_id = :cid";
+	$query = $conn->prepare($sql);
+	$query->bindParam(":cid", $cid, PDO::PARAM_INT);
+	if($query->execute()) {
+		return $query->fetchAll();
 	}
 }
 ?>
