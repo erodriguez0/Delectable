@@ -122,7 +122,7 @@ $cats = menu_item_categories($conn, $_SESSION['loc_id']);
 	                			$item_id = $i["item_id"];
                 		?>
                 		<!-- Menu Item -->
-                		<div class="menu-item row mt-3">
+                		<div class="menu-item row mt-3 item-<?php echo $item_id; ?>">
 	                		<div class="col-2 d-flex justify-content-center align-items-center pr-0">
 	                			<img src="https://via.placeholder.com/50" class="img-thumbnail rounded-0">
 	                		</div>
@@ -137,7 +137,7 @@ $cats = menu_item_categories($conn, $_SESSION['loc_id']);
             					</span>
                 			</div>
 
-	                		<div class="col-12 d-flex justify-content-center align-items-center text-muted mt-3"><small><i>
+	                		<div class="col-12 d-flex justify-content-left align-items-center text-muted mt-3"><small><i>
 	                			<?php echo $item_desc; ?>
                 			</i></small></div>
 

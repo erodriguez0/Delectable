@@ -84,6 +84,84 @@ $(document).ready(function() {
 		}
 	});
 
+	$("#add-item-btn").click(function() {
+		let cid = +$("#add-item-category").val();
+		let name = $("#add-item-name").val();
+		let desc = $("#add-item-description").val();
+		let img = $("#add-item-image").prop('files')[0];
+		let price = +$("#add-item-price").val();
+
+		// Is category a valid integer (ID)
+		if(!Number.isInteger(+cid)) {
+			
+		}
+
+		// Is category number positive
+		if(cid < 0) {
+
+		}
+
+		// Empty item name
+		if(name.length < 1) {
+
+		}
+
+		// No special characters in name
+		if(is_invalid_name(name)) {
+
+		}
+
+		// Price is a number and valid format
+		if(!jQuery.isNumeric(+price) || is_invalid_price(+price) 
+			|| !is_valid_price_format(+price)) {
+
+		}
+
+		// Valid pricing
+		if(+price < 0) {
+
+		}
+
+		$.ajax({
+			url: '/delectable/public_html/assets/scripts/restaurant-menu.php',
+			type: 'POST',
+			data: {
+				'add_menu_item': true,
+				'item_cat': cid,
+				'loc_id': lid,
+				'item_name': name,
+				'item_desc': desc,
+				'item_price': price
+			}
+		}).done(function(res) {
+
+		});
+
+		// let item = "";
+		// item += "<div class='menu-item row mt-3 item-" + 1 + "'>";
+		// item += '<div class="col-2 d-flex justify-content-center align-items-center pr-0">';
+		// item += '<img src="https://via.placeholder.com/50" class="img-thumbnail rounded-0">';
+		// item += '</div>';
+		// item += '<div class="col-8 d-flex justify-content-left align-items-center">'
+		// item += name;
+		// item += '</div>';
+		// item += '<div class="col-2 d-flex justify-content-center align-items-center pl-0">';
+		// item += '<span class="text-success">';
+		// item += price;
+		// item += '</span>';
+		// item += '</div>';
+		// item += '<div class="col-12 d-flex justify-content-left align-items-center text-muted mt-3"><small><i>';
+		// item += desc;
+		// item += '</i></small></div>';
+		// item += '<div class="col-12 mt-3">';
+		// item += '<div class="btn-group special" role="group">';
+		// item += '<button type="button" class="btn btn-primary btn-sm" value="' + 1 + '">Edit Item</button>';
+		// item += '<button type="button" class="btn btn-primary btn-sm" value="' + 1 + '">Remove</button>';
+		// item += '</div>';
+		// item += '</div>';
+		// item += '</div>';
+	});
+
 	$('#create-emp-pay').on('change', function(){
     	$(this).val(parseFloat($(this).val()).toFixed(2));
 	});
