@@ -157,7 +157,7 @@ input:checked + .status-slider:before {
 }
 
 .break-word {
-	word-break: break-word;
+	word-break: break-word !important;
 }
 
 /*

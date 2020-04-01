@@ -25,6 +25,28 @@ $(document).ready(function() {
 		}
 	});
 
+	$("#add-item-description").keyup(function() {
+		let v = $(this).val();
+		let l = $(this).val().length;
+		$(this).val($(this).val().substring(0, 255));
+		if(l > 255) {
+			$("#item-desc-counter").html(0);
+		} else {
+			$("#item-desc-counter").html(255 - l);
+		}
+	});
+
+	$("#add-item-name").keyup(function() {
+		let v = $(this).val();
+		let l = $(this).val().length;
+		$(this).val($(this).val().substring(0, 32));
+		if(l > 255) {
+			$("#add-item-name-counter").html(0);
+		} else {
+			$("#add-item-name-counter").html(32 - l);
+		}
+	});
+
 	$("#add-category-btn").click(function() {
 		let menu = $(".res-menu").html();
 		let cat = $("#add-category-name").val();
