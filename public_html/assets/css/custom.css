@@ -269,6 +269,10 @@ body {
 .invoice-details {
 	/*font-family: 'Helvetica', sans-serif;*/
 }
+
+.mh-textarea {
+	max-height: 300px;
+}
  
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {  

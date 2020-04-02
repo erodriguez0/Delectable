@@ -1,6 +1,11 @@
 <?php
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/delectable/resources/config.php');
+require_once(INCLUDE_PATH . 'functions.php');
+
+if(isset($_POST['add_new_restaurant'])) {
+	
+}
 
 if(isset($_POST['res_update'])) {
 	$name = $_POST['name'];
