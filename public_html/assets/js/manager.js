@@ -112,37 +112,80 @@ $(document).ready(function() {
 		let desc = $("#add-item-description").val();
 		let img = $("#add-item-image").prop('files')[0];
 		let price = +$("#add-item-price").val();
+		let alert = $(".add-item-alert");
 
 		// Is category a valid integer (ID)
-		if(!Number.isInteger(+cid)) {
-			
+		if(!Number.isInteger(+cid) || +cid == 0) {
+			alert.html("Invalid category");
+			alert.removeClass("alert-success");
+			alert.addClass("alert-danger");
+			alert.removeClass("d-none");
+			return;
 		}
 
 		// Is category number positive
 		if(cid < 0) {
-
+			alert.html("Invalid category");
+			alert.removeClass("alert-success");
+			alert.addClass("alert-danger");
+			alert.removeClass("d-none");
+			return;
 		}
 
 		// Empty item name
-		if(name.length < 1) {
+		if(name.length < 1 || name.length > 32) {
+			alert.html("Item name must be 1-32 characters");
+			alert.removeClass("alert-success");
+			alert.addClass("alert-danger");
+			alert.removeClass("d-none");
+			return;
+		}
 
+		if(desc.length > 255) {
+			alert.html("Item description must not be more than 255 characters");
+			alert.removeClass("alert-success");
+			alert.addClass("alert-danger");
+			alert.removeClass("d-none");
+		}
+
+		if(!has_letter(name)) {
+			alert.html("Name must contain letters");
+			alert.removeClass("alert-success");
+			alert.addClass("alert-danger");
+			alert.removeClass("d-none");
+			return;
 		}
 
 		// No special characters in name
 		if(is_invalid_name(name)) {
-
+			alert.html("Name can only contain letters, numbers, and dashes only");
+			alert.removeClass("alert-success");
+			alert.addClass("alert-danger");
+			alert.removeClass("d-none");
+			return;
 		}
 
 		// Price is a number and valid format
 		if(!jQuery.isNumeric(+price) || is_invalid_price(+price) 
 			|| !is_valid_price_format(+price)) {
-
+			alert.html("Invalid price");
+			alert.removeClass("alert-success");
+			alert.addClass("alert-danger");
+			alert.removeClass("d-none");
+			return;
 		}
 
 		// Valid pricing
 		if(+price < 0) {
-
+			alert.html("Price can only be positive numbers");
+			alert.removeClass("alert-success");
+			alert.addClass("alert-danger");
+			alert.removeClass("d-none");
+			return;
 		}
+
+		// TODO:
+		// Clear/empty form
 
 		$.ajax({
 			url: '/delectable/public_html/assets/scripts/restaurant-menu.php',
@@ -155,33 +198,54 @@ $(document).ready(function() {
 				'item_desc': desc,
 				'item_price': price
 			}
-		}).done(function(res) {
+		}).done(function(response) {
+			res = JSON.parse(response);
+			error = res.error;
+			if(!error) {
+				item_id = res.id;
+				let item = "";
+				item += "<div class='menu-item row mt-3 item-" + item_id + "'>";
+				item += '<div class="col-2 d-flex justify-content-center align-items-center pr-0">';
+				item += '<img src="https://via.placeholder.com/50" class="img-thumbnail rounded-0">';
+				item += '</div>';
+				item += '<div class="col-8 d-flex justify-content-left align-items-center">'
+				item += name;
+				item += '</div>';
+				item += '<div class="col-2 d-flex justify-content-center align-items-center pl-0">';
+				item += '<span class="text-success">';
+				item += price;
+				item += '</span>';
+				item += '</div>';
+				item += '<div class="col-12 d-flex justify-content-left align-items-center text-muted mt-3"><small><i>';
+				item += desc;
+				item += '</i></small></div>';
+				item += '<div class="col-12 mt-3">';
+				item += '<div class="btn-group special" role="group">';
+				item += '<button type="button" class="btn btn-primary btn-sm" value="' + item_id + '">Edit Item</button>';
+				item += '<button type="button" class="btn btn-primary btn-sm" value="' + item_id + '">Remove</button>';
+				item += '</div>';
+				item += '</div>';
+				item += '</div>';
 
+				$(".cat-" + cid).next().next().append(item);
+
+				$("add-item-category").val("0");
+				$("#add-item-name").val("");
+				$("#add-item-desc").html("");
+				$("#add-item-image-label").html("Choose image file");
+				$("#add-item-price").val("");
+
+				alert.html("Item added successfully");
+				alert.removeClass("alert-danger");
+				alert.addClass("alert-success");
+				alert.removeClass("d-none");
+			} else {
+				alert.html(res.error_msg);
+				alert.removeClass("alert-success");
+				alert.addClass("alert-danger");
+				alert.removeClass("d-none");
+			}
 		});
-
-		// let item = "";
-		// item += "<div class='menu-item row mt-3 item-" + 1 + "'>";
-		// item += '<div class="col-2 d-flex justify-content-center align-items-center pr-0">';
-		// item += '<img src="https://via.placeholder.com/50" class="img-thumbnail rounded-0">';
-		// item += '</div>';
-		// item += '<div class="col-8 d-flex justify-content-left align-items-center">'
-		// item += name;
-		// item += '</div>';
-		// item += '<div class="col-2 d-flex justify-content-center align-items-center pl-0">';
-		// item += '<span class="text-success">';
-		// item += price;
-		// item += '</span>';
-		// item += '</div>';
-		// item += '<div class="col-12 d-flex justify-content-left align-items-center text-muted mt-3"><small><i>';
-		// item += desc;
-		// item += '</i></small></div>';
-		// item += '<div class="col-12 mt-3">';
-		// item += '<div class="btn-group special" role="group">';
-		// item += '<button type="button" class="btn btn-primary btn-sm" value="' + 1 + '">Edit Item</button>';
-		// item += '<button type="button" class="btn btn-primary btn-sm" value="' + 1 + '">Remove</button>';
-		// item += '</div>';
-		// item += '</div>';
-		// item += '</div>';
 	});
 
 	$('#create-emp-pay').on('change', function(){

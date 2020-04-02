@@ -1,5 +1,5 @@
 function is_invalid_name(str) {
-	return /[^a-zA-Z\-\d]/.test(str);
+	return /[^a-zA-Z\-\d ]/.test(str);
 }
 
 function is_invalid_price(num) {

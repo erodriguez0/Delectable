@@ -30,6 +30,18 @@ function is_currency($number) {
   return preg_match("/^-?[0-9]+(?:\.[0-9]{2})?$/", $number);
 }
 
+function is_invalid_name($string) {
+	return preg_match('/[^a-zA-Z\-\d ]/', $string);
+}
+
+function is_invalid_price($number) {
+	return preg_match('/[^\d\.]/', $number);
+}
+
+function is_valid_price_format($number) {
+	return preg_match('/^(0|[1-9]\d*)(\.\d{1,2})?$/', $number);
+}
+
 // Iterate through array of keys/fields
 // and return an array using the field names
 // as keys

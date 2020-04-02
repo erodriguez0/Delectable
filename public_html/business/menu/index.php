@@ -89,13 +89,16 @@ $cats = menu_item_categories($conn, $_SESSION['loc_id']);
                 	<h1 class="h3 subheader-border">Menu Preview</h1>
 
                 	<?php
+                	$count = 0;
                 	if(!empty($cats)):
 	                	foreach($cats as $k):
 	                		$name = htmlspecialchars($k["item_cat_name"]);
 	                		$desc = htmlspecialchars($k["item_cat_desc"]);
 	                		$cat_id = $k["item_cat_id"];
+	                		$bg_color = ($count % 2 == 0) ? "" : "";
+	                		$count += 1;
                 	?>
-
+                	<div class="cat-wrap <?php echo $bg_color; ?>">
                 	<!-- Menu Category -->
             		<h1 class="h5 subheader-border mt-3 row mx-0 menu-cat cat-<?php echo $cat_id; ?>">
             			<div class="col-9 pl-0">
@@ -121,6 +124,9 @@ $cats = menu_item_categories($conn, $_SESSION['loc_id']);
 	                			$item_name = htmlspecialchars($i["item_name"]);
 	                			$item_price = htmlspecialchars($i["item_price"]);
 	                			$item_desc = htmlspecialchars($i["item_description"]);
+	                			if(strlen($item_desc) < 1) {
+	                				$item_desc = "N/A";
+	                			}
 	                			$item_id = $i["item_id"];
                 		?>
                 		<!-- Menu Item -->
@@ -158,6 +164,7 @@ $cats = menu_item_categories($conn, $_SESSION['loc_id']);
 	                	
                 	</div>
                 	<!-- ./Menu Item List -->
+                	</div>
                 	<?php
                 		endforeach;
                 	endif;
