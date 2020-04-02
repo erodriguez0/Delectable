@@ -1,3 +1,15 @@
+function is_invalid_name(str) {
+	return /[^a-zA-Z\-\d ]/.test(str);
+}
+
+function is_invalid_price(num) {
+	return /[^\d\.]/.test(num);
+}
+
+function is_valid_price_format(num) {
+	return /^\d{0,8}(\.\d{0,2})?$/.test(num);
+}
+
 function has_special_char(str) {
 	return /[^a-zA-Z\d]/.test(str);
 }
