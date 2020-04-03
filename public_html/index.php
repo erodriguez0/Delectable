@@ -98,7 +98,7 @@ else :
                         //echo "SeachTerm: " . $searchTerm . "<br> \n";
                     echo "<br><br>";
                      
-                    $name = $r["res_name"];
+                    //$name = $r["res_name"];
                 }
 
                 ?>                
