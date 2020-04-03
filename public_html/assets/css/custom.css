@@ -135,6 +135,13 @@ B O O T S T R A P  B U T T O N S
 	transition: .3s;
 }
 
+.vh-100 {
+	min-height: 100vh !important;
+	height: 100vh !important;
+	max-height: 100vh !important;
+	overflow: hidden;
+}
+
 input:checked + .status-slider {
 	background-color: #2196F3;
 }
@@ -157,7 +164,7 @@ input:checked + .status-slider:before {
 }
 
 .break-word {
-	word-break: break-word;
+	word-break: break-word !important;
 }
 
 /*
@@ -268,6 +275,10 @@ body {
 
 .invoice-details {
 	/*font-family: 'Helvetica', sans-serif;*/
+}
+
+.mh-textarea {
+	max-height: 300px;
 }
  
 /* Small devices (landscape phones, 576px and up) */

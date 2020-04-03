@@ -30,6 +30,34 @@ function is_currency($number) {
   return preg_match("/^-?[0-9]+(?:\.[0-9]{2})?$/", $number);
 }
 
+function is_invalid_name($string) {
+	return preg_match('/[^a-zA-Z\-\d ]/', $string);
+}
+
+function is_invalid_address($string) {
+	return preg_match('/[^a-zA-Z\-\d #,.]/', $string);
+}
+
+function is_invalid_zip($string) {
+	return preg_match('/[^\d\-]/', $string);
+}
+
+function is_invalid_phone($string) {
+	return preg_match('/[^\d\- ()]/', $string);
+}
+
+function is_invalid_text($string) {
+	return preg_match('/[^a-zA-Z\-\d .!]/', $string);
+}
+
+function is_invalid_price($number) {
+	return preg_match('/[^\d\.]/', $number);
+}
+
+function is_valid_price_format($number) {
+	return preg_match('/^(0|[1-9]\d*)(\.\d{1,2})?$/', $number);
+}
+
 // Iterate through array of keys/fields
 // and return an array using the field names
 // as keys
@@ -46,7 +74,7 @@ function post_fields_to_array_keys($arr) {
 // ADMIN DASHBOARD FUNCTIONS
 
 function restaurant_list($conn) {
-	$query = $conn->prepare("SELECT * FROM restaurant, location WHERE res_id = loc_id");
+	$query = $conn->prepare("SELECT * FROM restaurant, location WHERE res_id = fk_res_id");
 	try {
 		$query->execute();
 		return $query->fetchAll();
@@ -56,7 +84,7 @@ function restaurant_list($conn) {
 }
 
 function restaurant_info($conn, $id) {
-	$query = $conn->prepare("SELECT * FROM restaurant, location WHERE res_id = loc_id AND loc_id = :id");
+	$query = $conn->prepare("SELECT * FROM restaurant, location WHERE res_id = fk_res_id AND loc_id = :id");
 	$query->bindParam(":id", $id);
 
 	try {

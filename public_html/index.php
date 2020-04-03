@@ -1,6 +1,7 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'] . '/delectable/resources/config.php');
 
+
 if (isset($_SESSION['admin_id'])) :
     header('Location: /delectable/public_html/admin/dashboard/');
 elseif (isset($_SESSION['emp_id'])) :
@@ -29,6 +30,7 @@ else :
                         <a class="nav-link" href="/delectable/public_html/admin/">Admin</a>
                     </li>
                 </ul>
+
             </div>
         </div>
     </nav>
