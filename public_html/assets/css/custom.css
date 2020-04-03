@@ -135,6 +135,13 @@ B O O T S T R A P  B U T T O N S
 	transition: .3s;
 }
 
+.vh-100 {
+	min-height: 100vh !important;
+	height: 100vh !important;
+	max-height: 100vh !important;
+	overflow: hidden;
+}
+
 input:checked + .status-slider {
 	background-color: #2196F3;
 }

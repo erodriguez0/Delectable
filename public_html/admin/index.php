@@ -10,7 +10,7 @@ require_once(INCLUDE_PATH . 'header.php');
 ?>
 <nav id="home-nav" class="navbar navbar-expand-lg navbar-dark shadow fixed-top">
     <div class="container">
-        <a class="navbar-brand text-uppercase" href="#">Delectable</a>
+        <a class="navbar-brand text-uppercase" href="/delectable/public_html/">Delectable</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
         </button>
@@ -24,6 +24,9 @@ require_once(INCLUDE_PATH . 'header.php');
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/delectable/public_html/admin/">Admin</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/delectable/public_html/account/">Login | Sign Up</a>
                 </li>
             </ul>
         </div>

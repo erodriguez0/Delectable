@@ -132,7 +132,7 @@ $cats = menu_item_categories($conn, $_SESSION['loc_id']);
                 		<!-- Menu Item -->
                 		<div class="menu-item row mt-3 item-<?php echo $item_id; ?>">
 	                		<div class="col-2 d-flex justify-content-center align-items-center pr-0">
-	                			<img src="https://via.placeholder.com/50" class="img-thumbnail rounded-0">
+	                			<img src="https://placekitten.com/50/50" class="img-thumbnail rounded-0">
 	                		</div>
 
 	                		<div class="col-8 d-flex justify-content-left align-items-center">
