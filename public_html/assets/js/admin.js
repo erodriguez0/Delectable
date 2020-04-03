@@ -3,6 +3,205 @@ $(document).ready(function() {
 		// $("#create-account-modal").modal('show');
 	}
 
+	$('#new-loc-phone').keyup(function(){
+	    $(this).val($(this).val().replace(/(\d{3})\-?(\d{3})\-?(\d{4})/,'$1-$2-$3'));
+	});
+
+
+	$("#new-restaurant-btn").click(function() {
+		let name = $("#new-res-name").val();
+		let slogan = $("#new-res-slogan").val();
+		let description = $("#new-res-description").val();
+		let address_1 = $("#new-loc-address-1").val();
+		let address_2 = $("#new-loc-address-2").val();
+		let phone = $("#new-loc-phone").val();
+		let postal = $("#new-loc-zip").val();
+		let city = $("#new-loc-city").val();
+		let state = $("#new-loc-state").val();
+		let alert = $(".new-res-alert");
+
+		// CHECK LENGTH OF STRINGS
+
+		if(name.length == 0 || name.length > 128) {
+			alert.html("Name must be between 1-128 characters");
+			alert.addClass("alert-danger");
+			alert.removeClass("alert-success");
+			alert.removeClass("d-none");
+			return;
+		}
+
+		if(slogan.length > 128) {
+			alert.html("Slogan must be between 0-128 characters");
+			alert.addClass("alert-danger");
+			alert.removeClass("alert-success");
+			alert.removeClass("d-none");
+			return;
+		}
+
+		if(description.length > 255) {
+			alert.html("Name must be between 0-255 characters");
+			alert.addClass("alert-danger");
+			alert.removeClass("alert-success");
+			alert.removeClass("d-none");
+			return;
+		}
+
+		if(address_1.length == 0 || address_1.length > 64) {
+			alert.html("Name must be between 0-255 characters");
+			alert.addClass("alert-danger");
+			alert.removeClass("alert-success");
+			alert.removeClass("d-none");
+			return;
+		}
+
+		if(address_2.length == 0 || address_2.length > 64) {
+			alert.html("Name must be between 0-255 characters");
+			alert.addClass("alert-danger");
+			alert.removeClass("alert-success");
+			alert.removeClass("d-none");
+			return;
+		}
+
+		if(phone.length == 0 || phone.length > 64) {
+			alert.html("Name must be between 0-255 characters");
+			alert.addClass("alert-danger");
+			alert.removeClass("alert-success");
+			alert.removeClass("d-none");
+			return;
+		}
+
+		if(city.length == 0 || city.length > 64) {
+			alert.html("Name must be between 0-255 characters");
+			alert.addClass("alert-danger");
+			alert.removeClass("alert-success");
+			alert.removeClass("d-none");
+			return;
+		}
+
+		if(state.length == 0 || state.length > 64) {
+			alert.html("Name must be between 0-255 characters");
+			alert.addClass("alert-danger");
+			alert.removeClass("alert-success");
+			alert.removeClass("d-none");
+			return;
+		}
+
+		if(postal.length == 0 || postal.length > 64) {
+			alert.html("Name must be between 0-255 characters");
+			alert.addClass("alert-danger");
+			alert.removeClass("alert-success");
+			alert.removeClass("d-none");
+			return;
+		}
+
+		// USE VALIDATION FUNCTIONS FROM GLOBAL.JS
+		
+		if(is_invalid_name(name)) {
+			alert.html("Name can only contain letters, numbers, and dashes");
+			alert.addClass("alert-danger");
+			alert.removeClass("alert-success");
+			alert.removeClass("d-none");
+			return;
+		}
+
+		if(is_invalid_text(slogan)) {
+			alert.html("Slogan can only contain letters, numbers, and dashes");
+			alert.addClass("alert-danger");
+			alert.removeClass("alert-success");
+			alert.removeClass("d-none");
+			return;
+		}
+
+		if(is_invalid_text(description)) {
+			alert.html("Description contains invalid characters");
+			alert.addClass("alert-danger");
+			alert.removeClass("alert-success");
+			alert.removeClass("d-none");
+			return;
+		}
+
+		if(is_invalid_address(address_1)) {
+			alert.html("Address contains invalid characters");
+			alert.addClass("alert-danger");
+			alert.removeClass("alert-success");
+			alert.removeClass("d-none");
+			return;
+		}
+
+		if(address_2.length > 0) {
+			if(is_invalid_address(address_2)) {
+				alert.html("Apt/Ste contains invalid characters");
+				alert.addClass("alert-danger");
+				alert.removeClass("alert-success");
+				alert.removeClass("d-none");
+				return;
+			}
+		}
+
+		if(is_invalid_name(city)) {
+			alert.html("City contains invalid characters");
+			alert.addClass("alert-danger");
+			alert.removeClass("alert-success");
+			alert.removeClass("d-none");
+			return;
+		}
+
+		if(is_invalid_name(state)) {
+			alert.html("State contains invalid characters");
+			alert.addClass("alert-danger");
+			alert.removeClass("alert-success");
+			alert.removeClass("d-none");
+			return;
+		}
+
+		if(is_invalid_zip(postal)) {
+			alert.html("Zip code contains invalid characters");
+			alert.addClass("alert-danger");
+			alert.removeClass("alert-success");
+			alert.removeClass("d-none");
+			return;
+		}
+
+		$.ajax({
+			url: '/delectable/public_html/assets/scripts/restaurant-edit.php',
+			type: 'POST',
+			data: {
+				'res_name': name,
+				'res_slogan': slogan,
+				'res_description': description,
+				'loc_address_1': address_1,
+				'loc_address_2': address_2,
+				'loc_phone': phone,
+				'loc_city': city,
+				'loc_state': state,
+				'loc_postal_code': postal,
+				'add_new_restaurant': true
+			}
+		}).done(function(response) {
+			res = JSON.parse(response);
+			if(!res.error) {
+				data = res.data;
+				let row = '<tr>';
+	            row += '<td>' + data.name + '</td>';
+	            row += '<td>' + data.address_1 + ' ' + data.address_2 + ' ';
+	            row += data.city + ' ' + data.state + ' ' + data.postal + '</td>';
+	            row += '<td>';
+	            row += '<a class="btn btn-sm btn-primary"';
+	            row += ' href="./edit/index.php?lid=' + data.loc_id + '">Edit</a>';
+	            row += '</td>';
+	            row += '</tr>';
+
+		        $("#new-restaurant-modal").modal('hide');
+		        $(".res-list tbody").append(row);
+			} else {
+				alert.html(res.error_msg);
+				alert.addClass("alert-danger");
+				alert.removeClass("alert-success");
+				alert.removeClass("d-none");
+			}
+		});
+	});
+
 	$("#emp-table-search").keyup(function() {
         var value = $(this).val().toLowerCase().trim();
 
