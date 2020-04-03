@@ -1,6 +1,7 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'] . '/delectable/resources/config.php');
 
+
 if (isset($_SESSION['admin_id'])) :
     header('Location: /delectable/public_html/admin/dashboard/');
 elseif (isset($_SESSION['emp_id'])) :
@@ -13,7 +14,7 @@ else :
     <!-- Navigation -->
     <nav id="home-nav" class="navbar navbar-expand-lg navbar-dark shadow fixed-top">
         <div class="container">
-            <a class="navbar-brand text-uppercase" href="/delectable/public_html/index2.php">Delectable</a>
+            <a class="navbar-brand text-uppercase" href="/delectable/public_html/index.php">Delectable</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -29,12 +30,13 @@ else :
                         <a class="nav-link" href="/delectable/public_html/admin/">Admin</a>
                     </li>
                 </ul>
+
             </div>
         </div>
     </nav>
     <!-- Full Page Image Header with Vertically Centered Content -->
 
-         
+
     // LIST RESTAURANT RESULTS
     <?php
     $listResults = false;
@@ -85,7 +87,7 @@ else :
 
                 //$stmt = $conn->query("SELECT * FROM restaurant");
                 while ($r = $sql->fetch()) {
-                    
+
                     echo htmlspecialchars($r["res_name"]) . "<br> \n";
                     echo htmlspecialchars($r["res_slogan"]) . "<br> \n";
                     echo htmlspecialchars($r["loc_address_1"]) . "  " . $r["loc_address_2"] . "<br> \n";
@@ -95,13 +97,13 @@ else :
                     echo htmlspecialchars($r["loc_phone"]) . "<br> \n";
                     echo htmlspecialchars($r['specialty']) . "<br> \n";
                     echo "<button type=\"button\"> RSVP </button><br>";
-                        //echo "SeachTerm: " . $searchTerm . "<br> \n";
+                    //echo "SeachTerm: " . $searchTerm . "<br> \n";
                     echo "<br><br>";
-                     
+
                     $name = $r["res_name"];
                 }
 
-                ?>                
+                ?>
 
             </div>
         </section>
