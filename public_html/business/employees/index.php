@@ -359,7 +359,7 @@ $employees = restaurant_employees($conn, $_SESSION['loc_id']);
 </div>
 
 <script type="text/javascript">
-	var lid = <?php echo $_SESSION['loc_id']; ?>;
+	var lid = <?php echo (isset($_SESSION['loc_id'])) ? $_SESSION['loc_id'] : 0; ?>;
 </script>
 <?php
 endif;
