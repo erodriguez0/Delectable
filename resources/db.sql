@@ -626,9 +626,27 @@ INSERT INTO administrator VALUES
 (1, 'Esteban', 'Rodriguez', 'esteban', '$2y$10$t2QL6MJRS7R81F/Uh9xW1eEs9JIW10Z9aMW/tT6WIdwOo4E6CtPIG', 'esteban@esteban.com', 1, 1, CURRENT_TIMESTAMP, 'Male', '1994-07-05', '123 Street Ave', NULL, 'Bakersfield', 'California', '93307', '661-123-4567', '2020-02-04', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 
+-- RESTAURANT INSERT QUERIES 
 INSERT INTO restaurant (res_name, res_slogan, res_description) VALUES ('BANGABURGER', 'Deliciousness with a BANG!', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ultricies urna sed rutrum lobortis. Nullam imperdiet libero et dignissim placerat. Etiam nunc massa, elementum id dui et, mattis iaculis tellus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Suspendisse volutpat ante lectus, quis varius nisi tempus ac.');
 
+INSERT INTO restaurant (res_name, res_slogan, res_description) VALUES ('BAMBOO!', 'Bamboo! Eat healthy!', 'Geat healthy alternative to the mainstream chinese food. Come eat at Bamboo for high quality food you will for sure love, Vegan food available.');
+INSERT INTO restaurant (res_name, res_slogan, res_description) VALUES ('Dumpling House', 'Amazing Dumplings!', 'Come eat soft chewy dumplings that have an explosion of flavor! Many options available to suit anyones tastes buds!');
+INSERT INTO restaurant (res_name, res_slogan, res_description) VALUES ('Lil` Italiano', 'Italian Food!', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ultricies urna sed rutrum lobortis. Nullam imperdiet libero et dignissim placerat. Etiam nunc massa, elementum id dui et, mattis iaculis tellus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Suspendisse volutpat ante lectus, quis varius nisi tempus ac.');
+INSERT INTO restaurant (res_name, res_slogan, res_description) VALUES ('Steak House', 'All you can eat!', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ultricies urna sed rutrum lobortis. Nullam imperdiet libero et dignissim placerat. Etiam nunc massa, elementum id dui et, mattis iaculis tellus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Suspendisse volutpat ante lectus, quis varius nisi tempus ac.');
+
+
+-- LOCATION INSERT QUERIES
 INSERT INTO location (loc_address_1, loc_address_2, loc_city, loc_state, loc_postal_code, loc_phone, fk_res_id)
 VALUES ('2550 California Ave', 'Suite #200', 'Bakersfield', 'California', '93308', '(661)-844-7071', 1);
 
+INSERT INTO location (loc_address_1, loc_address_2, loc_city, loc_state, loc_postal_code, loc_phone, fk_res_id)
+VALUES ('1701 New Stine Rd', '', 'Bakersfield', 'California', '93309', '(661)-832-1278', 4);
+INSERT INTO location (loc_address_1, loc_address_2, loc_city, loc_state, loc_postal_code, loc_phone, fk_res_id)
+VALUES ('8110 Rosedale Hwy', 'Suite #F', 'Bakersfield', 'California', '93312', '(661)-588-4879', 2);
+INSERT INTO location (loc_address_1, loc_address_2, loc_city, loc_state, loc_postal_code, loc_phone, fk_res_id)
+VALUES ('2217 Ashe Rd', '', 'Bakersfield', 'California', '93309', '(661)-473-1426', 3);
+INSERT INTO location (loc_address_1, loc_address_2, loc_city, loc_state, loc_postal_code, loc_phone, fk_res_id)
+VALUES ('5051 Stockdale Hwy', '', 'Bakersfield', 'California', '93309', '(661)-834-7850', 5);
+
+-- EMPLOYEE INSERT QUERIES
 INSERT INTO employee (emp_first_name, emp_last_name, emp_username, emp_password, emp_email, emp_job, emp_manager, fk_loc_id) VALUES ('Esteban', 'Rodriguez', 'erodriguez', '$2y$10$t2QL6MJRS7R81F/Uh9xW1eEs9JIW10Z9aMW/tT6WIdwOo4E6CtPIG', 'esteban@example.com', 'Owner/General Manager', 1, 1);

@@ -36,7 +36,7 @@ else :
     </nav>
     <!-- Full Page Image Header with Vertically Centered Content -->
 
-         
+
     // LIST RESTAURANT RESULTS
     <?php
     $listResults = false;
@@ -87,7 +87,7 @@ else :
 
                 //$stmt = $conn->query("SELECT * FROM restaurant");
                 while ($r = $sql->fetch()) {
-                    
+
                     echo htmlspecialchars($r["res_name"]) . "<br> \n";
                     echo htmlspecialchars($r["res_slogan"]) . "<br> \n";
                     echo htmlspecialchars($r["loc_address_1"]) . "  " . $r["loc_address_2"] . "<br> \n";
@@ -97,13 +97,13 @@ else :
                     echo htmlspecialchars($r["loc_phone"]) . "<br> \n";
                     echo htmlspecialchars($r['specialty']) . "<br> \n";
                     echo "<button type=\"button\"> RSVP </button><br>";
-                        //echo "SeachTerm: " . $searchTerm . "<br> \n";
+                    //echo "SeachTerm: " . $searchTerm . "<br> \n";
                     echo "<br><br>";
-                     
-                    //$name = $r["res_name"];
+
+                    $name = $r["res_name"];
                 }
 
-                ?>                
+                ?>
 
             </div>
         </section>
