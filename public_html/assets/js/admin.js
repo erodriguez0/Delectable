@@ -163,7 +163,7 @@ $(document).ready(function() {
 		}
 
 		$.ajax({
-			url: '',
+			url: '/delectable/public_html/assets/scripts/restaurant-edit.php',
 			type: 'POST',
 			data: {
 				'res_name': name,
@@ -184,7 +184,7 @@ $(document).ready(function() {
 				let row = '<tr>';
 	            row += '<td>' + data.name + '</td>';
 	            row += '<td>' + data.address_1 + ' ' + data.address_2 + ' ';
-	            row += data.city + ' ' + data.tate + ' ' + data.postal + '</td>';
+	            row += data.city + ' ' + data.state + ' ' + data.postal + '</td>';
 	            row += '<td>';
 	            row += '<a class="btn btn-sm btn-primary"';
 	            row += ' href="./edit/index.php?lid=' + data.loc_id + '">Edit</a>';

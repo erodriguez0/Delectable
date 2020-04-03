@@ -34,6 +34,22 @@ function is_invalid_name($string) {
 	return preg_match('/[^a-zA-Z\-\d ]/', $string);
 }
 
+function is_invalid_address($string) {
+	return preg_match('/[^a-zA-Z\-\d #,.]/', $string);
+}
+
+function is_invalid_zip($string) {
+	return preg_match('/[^\d\-]/', $string);
+}
+
+function is_invalid_phone($string) {
+	return preg_match('/[^\d\- ()]/', $string);
+}
+
+function is_invalid_text($string) {
+	return preg_match('/[^a-zA-Z\-\d .!]/', $string);
+}
+
 function is_invalid_price($number) {
 	return preg_match('/[^\d\.]/', $number);
 }
@@ -58,7 +74,7 @@ function post_fields_to_array_keys($arr) {
 // ADMIN DASHBOARD FUNCTIONS
 
 function restaurant_list($conn) {
-	$query = $conn->prepare("SELECT * FROM restaurant, location WHERE res_id = loc_id");
+	$query = $conn->prepare("SELECT * FROM restaurant, location WHERE res_id = fk_res_id");
 	try {
 		$query->execute();
 		return $query->fetchAll();
@@ -68,7 +84,7 @@ function restaurant_list($conn) {
 }
 
 function restaurant_info($conn, $id) {
-	$query = $conn->prepare("SELECT * FROM restaurant, location WHERE res_id = loc_id AND loc_id = :id");
+	$query = $conn->prepare("SELECT * FROM restaurant, location WHERE res_id = fk_res_id AND loc_id = :id");
 	$query->bindParam(":id", $id);
 
 	try {
