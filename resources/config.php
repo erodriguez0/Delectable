@@ -21,8 +21,8 @@ if(session_status() == PHP_SESSION_NONE) {
 	session_start(); 
 }
 
-error_reporting(E_ALL);
-ini_set('display_errors', true);
+// error_reporting(E_ALL);
+// ini_set('display_errors', true);
 
 // define paths
 define("LAYOUT_IMG_PATH", $_SERVER['DOCUMENT_ROOT'] . '/delectable/resources/img/');

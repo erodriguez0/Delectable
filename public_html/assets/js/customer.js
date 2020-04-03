@@ -1,10 +1,8 @@
 $(document).ready(function() {
-	if(modal) {
-		$("#create-account-modal").modal('show');
-	}
+	// if(modal) {
+	// 	$("#create-account-modal").modal('show');
+	// }
 
-	
-	
 });
 
 var usStates = [

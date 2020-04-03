@@ -19,7 +19,7 @@ require_once(INCLUDE_PATH . 'business/manager/dashboard.php');
 $cats = menu_item_categories($conn, $_SESSION['loc_id']);
 ?>
 
-<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 py-3 px-4">
 	<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
 	    <h1 class="h2">Menu</h1>
 	</div>
@@ -63,12 +63,18 @@ $cats = menu_item_categories($conn, $_SESSION['loc_id']);
 	                		<div class="row">
 		                		<div class="col-12 col-lg-8">
 		                			<input id="add-item-name" class="form-control rounded-0 mt-3" type="text" name="add-item-name" placeholder="Item name...">
+		                			<span id="add-item-name-counter">32</span><span> characters remaining</span>
 		                		</div>
 		                		<div class="col-12 col-lg-4">
 		                			<input id="add-item-price" class="form-control rounded-0 mt-3" type="number" name="add-item-price" placeholder="$0.00" min="0.00" max="10000.00" step="0.01">
 		                		</div>
 		                	</div>
 	                		<textarea id="add-item-description" class="form-control rounded-0 mt-3" name="add-item-description" placeholder="Item description..." rows="6"></textarea>
+	                		<span id="item-desc-counter">255</span><span> characters remaining</span>
+	                		<div class="custom-file mt-3">
+								<input type="file" id="add-item-image" class="custom-file-input" id="customFile" accept=".png, .jpg, .jpeg">
+								<label id="add-item-image-label" class="custom-file-label" for="customFile">Choose image file</label>
+							</div>
 	                		<button id="add-item-btn" class="btn btn-primary btn-block mt-3" role="button">Add Item</button>
 	                	</div>
 	                </div>
@@ -83,15 +89,18 @@ $cats = menu_item_categories($conn, $_SESSION['loc_id']);
                 	<h1 class="h3 subheader-border">Menu Preview</h1>
 
                 	<?php
+                	$count = 0;
                 	if(!empty($cats)):
 	                	foreach($cats as $k):
 	                		$name = htmlspecialchars($k["item_cat_name"]);
 	                		$desc = htmlspecialchars($k["item_cat_desc"]);
 	                		$cat_id = $k["item_cat_id"];
+	                		$bg_color = ($count % 2 == 0) ? "" : "";
+	                		$count += 1;
                 	?>
-
+                	<div class="cat-wrap <?php echo $bg_color; ?>">
                 	<!-- Menu Category -->
-            		<h1 class="h5 subheader-border mt-3 row mx-0 menu-cat">
+            		<h1 class="h5 subheader-border mt-3 row mx-0 menu-cat cat-<?php echo $cat_id; ?>">
             			<div class="col-9 pl-0">
             				<?php echo $name; ?>
             			</div>
@@ -115,12 +124,15 @@ $cats = menu_item_categories($conn, $_SESSION['loc_id']);
 	                			$item_name = htmlspecialchars($i["item_name"]);
 	                			$item_price = htmlspecialchars($i["item_price"]);
 	                			$item_desc = htmlspecialchars($i["item_description"]);
+	                			if(strlen($item_desc) < 1) {
+	                				$item_desc = "N/A";
+	                			}
 	                			$item_id = $i["item_id"];
                 		?>
                 		<!-- Menu Item -->
-                		<div class="menu-item row mt-3">
+                		<div class="menu-item row mt-3 item-<?php echo $item_id; ?>">
 	                		<div class="col-2 d-flex justify-content-center align-items-center pr-0">
-	                			<img src="https://via.placeholder.com/50" class="img-thumbnail rounded-0">
+	                			<img src="https://placekitten.com/50/50" class="img-thumbnail rounded-0">
 	                		</div>
 
 	                		<div class="col-8 d-flex justify-content-left align-items-center">
@@ -133,7 +145,7 @@ $cats = menu_item_categories($conn, $_SESSION['loc_id']);
             					</span>
                 			</div>
 
-	                		<div class="col-12 d-flex justify-content-center align-items-center text-muted mt-3"><small><i>
+	                		<div class="col-12 d-flex justify-content-left align-items-center text-muted mt-3 word-break"><small><i>
 	                			<?php echo $item_desc; ?>
                 			</i></small></div>
 
@@ -152,6 +164,7 @@ $cats = menu_item_categories($conn, $_SESSION['loc_id']);
 	                	
                 	</div>
                 	<!-- ./Menu Item List -->
+                	</div>
                 	<?php
                 		endforeach;
                 	endif;

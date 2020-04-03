@@ -2,7 +2,7 @@
 require_once($_SERVER['DOCUMENT_ROOT'] . '/delectable/resources/config.php');
 
 if(isset($_SESSION['admin_id']) || isset($_SESSION['emp_id']) || isset($_SESSION['cust_id'])):
-	header('Location: /delectable/public_html');
+	header('Location: /delectable/public_html/');
 else:
 
 $title = "Delectable | Admin Portal";
@@ -10,7 +10,7 @@ require_once(INCLUDE_PATH . 'header.php');
 ?>
 <nav id="home-nav" class="navbar navbar-expand-lg navbar-dark shadow fixed-top">
     <div class="container">
-        <a class="navbar-brand text-uppercase" href="#">Delectable</a>
+        <a class="navbar-brand text-uppercase" href="/delectable/public_html/">Delectable</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
         </button>
@@ -24,6 +24,9 @@ require_once(INCLUDE_PATH . 'header.php');
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/delectable/public_html/admin/">Admin</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/delectable/public_html/account/">Login | Sign Up</a>
                 </li>
             </ul>
         </div>
@@ -42,7 +45,7 @@ require_once(INCLUDE_PATH . 'header.php');
 								<?php echo $_SESSION['error']; ?>
 							</div>
 						<?php endif; ?>
-						<input class="form-control mb-3" type="text" placeholder="Username" value="<?php echo $_SESSION['login']['uname']; ?>" name="admin-username" required>
+						<input class="form-control mb-3" type="text" placeholder="Username" value="<?php echo (isset($_SESSION['login']['uname'])) ? $_SESSION['login']['uname'] : ""; ?>" name="admin-username" required>
 						<input class="form-control mb-3" type="password" placeholder="Password" name="admin-password" required>
 						<input class="btn btn-primary btn-block" type="submit" value="Login" name="admin-login">
 					</div>

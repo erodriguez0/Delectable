@@ -306,7 +306,7 @@ $res = restaurant_info($conn, $id);
 
 <script type="text/javascript">
     var lid = <?php echo $id; ?>;
-    var rid = <?php echo $res['fk_res_id']; ?>
+    var rid = <?php echo $res['fk_res_id']; ?>;
 </script>
 <?php
 require_once(INCLUDE_PATH . 'footer.php');

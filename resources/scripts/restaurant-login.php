@@ -19,7 +19,7 @@ if(isset($_POST['restaurant-login'])) {
 				$_SESSION['emp_status'] = $row['emp_status'];
 				$lid = $row['fk_loc_id'];
 				if(!empty($lid) && $lid > 0) {
-					$query = $conn->prepare("SELECT res_id, loc_id FROM location, restaurant WHERE loc_id = res_id AND loc_id = :lid");
+					$query = $conn->prepare("SELECT res_id, loc_id FROM location, restaurant WHERE res_id = fk_res_id AND loc_id = :lid");
 					$query->bindParam(":lid", $lid, PDO::PARAM_INT);
 					$query->execute();
 					$loc = $query->fetch();
