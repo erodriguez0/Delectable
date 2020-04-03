@@ -39,7 +39,7 @@ $(document).ready(function() {
 		}
 
 		if(description.length > 255) {
-			alert.html("Name must be between 0-255 characters");
+			alert.html("Description must be between 0-255 characters");
 			alert.addClass("alert-danger");
 			alert.removeClass("alert-success");
 			alert.removeClass("d-none");
@@ -47,14 +47,14 @@ $(document).ready(function() {
 		}
 
 		if(address_1.length == 0 || address_1.length > 64) {
-			alert.html("Name must be between 0-255 characters");
+			alert.html("Address must be between 0-255 characters");
 			alert.addClass("alert-danger");
 			alert.removeClass("alert-success");
 			alert.removeClass("d-none");
 			return;
 		}
 
-		if(address_2.length == 0 || address_2.length > 64) {
+		if(address_2.length > 64) {
 			alert.html("Name must be between 0-255 characters");
 			alert.addClass("alert-danger");
 			alert.removeClass("alert-success");
