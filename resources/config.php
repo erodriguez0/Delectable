@@ -8,21 +8,29 @@ $db = array(
 );
 
 $dsn = 'mysql:host=' . $db['host'] . ';dbname=' . $db['name'];
+try {
 $conn = new PDO($dsn, $db['user'], $db['pass']);
 $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+	print "Error!: " . $e->getMessage() . "<br/>";
+    die();
+}
 
 // intialize session
 if(session_status() == PHP_SESSION_NONE) { 
 	session_start(); 
 }
 
+error_reporting(E_ALL);
+ini_set('display_errors', true);
+
 // define paths
-define(LAYOUT_IMG_PATH, $_SERVER['DOCUMENT_ROOT'] . '/delectable/respurces/img/');
-define(RESOURCE_PATH, $_SERVER['DOCUMENT_ROOT'] . '/delectable/resources/');
-define(INCLUDE_PATH, $_SERVER['DOCUMENT_ROOT'] . '/delectable/resources/');
-define(HOME, $_SERVER['DOCUMENT_ROOT'] . '/delectable/public_html/');
-define(SCRIPTS_PATH, $_SERVER['DOCUMENT_ROOT'] . '/delectable/resources/scripts/');
-define(JS_PATH, '/delectable/public_html/assets/js/');
+define("LAYOUT_IMG_PATH", $_SERVER['DOCUMENT_ROOT'] . '/delectable/resources/img/');
+define("RESOURCE_PATH", $_SERVER['DOCUMENT_ROOT'] . '/delectable/resources/');
+define("INCLUDE_PATH", $_SERVER['DOCUMENT_ROOT'] . '/delectable/resources/');
+define("HOME", $_SERVER['DOCUMENT_ROOT'] . '/delectable/public_html/');
+define("SCRIPTS_PATH", $_SERVER['DOCUMENT_ROOT'] . '/delectable/resources/scripts/');
+define("JS_PATH", '/delectable/public_html/assets/js/');
 
 $scripts = array();
 $scripts[] = '<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>';
