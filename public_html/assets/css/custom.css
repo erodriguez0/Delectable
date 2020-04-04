@@ -135,6 +135,10 @@ B O O T S T R A P  B U T T O N S
 	transition: .3s;
 }
 
+.after-nav {
+	margin-top: 64px !important;
+}
+
 .vh-100 {
 	min-height: 100vh !important;
 	height: 100vh !important;

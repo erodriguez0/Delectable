@@ -282,8 +282,7 @@ CREATE TABLE IF NOT EXISTS `delectable`.`customer` (
   `cust_username` VARCHAR(64) NOT NULL,
   `cust_password` VARCHAR(255) NOT NULL,
   `cust_email` VARCHAR(255) NOT NULL,
-  `cust_access` INT NOT NULL,
-  `cust_status` INT NOT NULL,
+  `cust_status` INT NOT NULL DEFAULT 1,
   `cust_last_login` TIMESTAMP NULL,
   `cust_address_1` VARCHAR(64) NULL,
   `cust_address_2` VARCHAR(64) NULL,
@@ -650,3 +649,6 @@ VALUES ('5051 Stockdale Hwy', '', 'Bakersfield', 'California', '93309', '(661)-8
 
 -- EMPLOYEE INSERT QUERIES
 INSERT INTO employee (emp_first_name, emp_last_name, emp_username, emp_password, emp_email, emp_job, emp_manager, fk_loc_id) VALUES ('Esteban', 'Rodriguez', 'erodriguez', '$2y$10$t2QL6MJRS7R81F/Uh9xW1eEs9JIW10Z9aMW/tT6WIdwOo4E6CtPIG', 'esteban@example.com', 'Owner/General Manager', 1, 1);
+
+-- CUSTOMER INSERT QUERIES
+INSERT INTO customer (cust_first_name, cust_last_name, cust_username, cust_password, cust_email) VALUES ("Example", "McExample", "example0", "$2y$10$xqYrxNVkcBBAXyppmeKSJepHOmknTUBYJBER3niQgV8E/ueja.X2y", "example0@example.com");
