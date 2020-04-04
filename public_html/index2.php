@@ -1,6 +1,7 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'] . '/delectable/resources/config.php');
 
+
 if (isset($_SESSION['admin_id'])) :
     header('Location: /delectable/public_html/admin/dashboard/');
 elseif (isset($_SESSION['emp_id'])) :
@@ -13,7 +14,7 @@ else :
     <!-- Navigation -->
     <nav id="home-nav" class="navbar navbar-expand-lg navbar-dark shadow fixed-top">
         <div class="container">
-            <a class="navbar-brand text-uppercase" href="#">Delectable</a>
+            <a class="navbar-brand text-uppercase" href="/delectable/public_html/index.php">Delectable</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -29,6 +30,7 @@ else :
                         <a class="nav-link" href="/delectable/public_html/admin/">Admin</a>
                     </li>
                 </ul>
+
             </div>
         </div>
     </nav>
@@ -72,28 +74,33 @@ else :
                 State: <select id="state" name="states"></select>
                 City: <input type="text" id="city" name="city" placeholder="e.g. Bakersfield">
                 Zipcode: <input type="text" id="zipcode" name="zipcode" placeholder="e.g. 93309">
-                <br><br><hr>
+                <br><br>
+                <hr>
                 <!-- List of Restaurants: Queries -->
                 <?php
 
-                $stmt = $conn->query("SELECT restaurant.res_name, restaurant.res_slogan, location.loc_address_1, 
-                location.loc_address_2, location.loc_city, location.loc_state, location.loc_postal_code, 
-                location.loc_phone
+                $sql = $conn->query("SELECT restaurant.res_name, restaurant.res_slogan, restaurant.specialty, 
+                location.loc_address_1, location.loc_address_2, location.loc_city, location.loc_state, 
+                location.loc_postal_code, location.loc_phone
                 FROM restaurant
-                INNER JOIN location ON restaurant.res_id=location.fk_res_id");
+                INNER JOIN location ON restaurant.res_id=location.fk_res_id WHERE restaurant.specialty='$searchTerm'");
 
                 //$stmt = $conn->query("SELECT * FROM restaurant");
-                while ($row = $stmt->fetch()) {
-                    echo $row["res_name"] . "<br> \n";
-                    echo $row["res_slogan"] . "<br> \n";
-                    echo $row["loc_address_1"] . "  " . $row["loc_address_2"] . "<br> \n";
-                    echo $row["loc_state"] . "<br> \n";
-                    echo $row["loc_city"] . "<br> \n";
-                    echo $row["loc_postal_code"] . "<br> \n";
-                    echo $row["loc_phone"] . "<br> \n";
+                while ($r = $sql->fetch()) {
+
+                    echo htmlspecialchars($r["res_name"]) . "<br> \n";
+                    echo htmlspecialchars($r["res_slogan"]) . "<br> \n";
+                    echo htmlspecialchars($r["loc_address_1"]) . "  " . $r["loc_address_2"] . "<br> \n";
+                    echo htmlspecialchars($r["loc_state"]) . "<br> \n";
+                    echo htmlspecialchars($r["loc_city"]) . "<br> \n";
+                    echo htmlspecialchars($r["loc_postal_code"]) . "<br> \n";
+                    echo htmlspecialchars($r["loc_phone"]) . "<br> \n";
+                    echo htmlspecialchars($r['specialty']) . "<br> \n";
                     echo "<button type=\"button\"> RSVP </button><br>";
- 
+                    //echo "SeachTerm: " . $searchTerm . "<br> \n";
                     echo "<br><br>";
+
+                    $name = $r["res_name"];
                 }
 
                 ?>
