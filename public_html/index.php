@@ -181,9 +181,6 @@ require_once(INCLUDE_PATH . 'navbar.php');
                             </div>
                         </div>
                     </div>
-
-
-
                 </div>
             </div>
         </header>
