@@ -75,7 +75,7 @@ $res = restaurant_info($conn, $id);
                                 <button type="button" class="btn btn-alt btn-sm btn-sm-text remove w-100">Remove</button>
                                 <button type="button" class="btn btn-alt btn-sm btn-sm-text clear w-100">Clear</button>
                                 <!-- <button type="button" class="btn btn-alt btn-sm btn-sm-text export w-100">Export</button> -->
-                                <button type="button" class="btn btn-alt btn-sm btn-sm-text mode w-100">Mode</button>
+                                <button type="button" class="btn btn-alt btn-sm btn-sm-text save-layout w-100">Save</button>
                             </div>
                         </div>
                     </div>
@@ -84,7 +84,7 @@ $res = restaurant_info($conn, $id);
             <!-- ./Admin/Restaurant Mode -->
 
             <!-- Customer Mode -->
-            <div class="form-group customer-mode" style="display: none;">
+<!--             <div class="form-group customer-mode" style="display: none;">
                 <div class="row">
                     <div class="col-12">
                         <div class="btn-toolbar d-flex align-items-center justify-content-center" role="toolbar">
@@ -95,7 +95,7 @@ $res = restaurant_info($conn, $id);
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <!-- ./Customer Mode -->
 
             <!-- Layout Canvas -->

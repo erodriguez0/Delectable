@@ -2,6 +2,19 @@ function is_invalid_name(str) {
 	return /[^a-zA-Z\-\d ]/.test(str);
 }
 
+function invalid_name(str) {
+	return /[^a-zA-Z\d '".&-]/.test(str);
+}
+
+function invalid_username(str) {
+	return /[^a-zA-Z\d]/.test(str);
+}
+
+function valid_email(email) {
+    var re = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+    return re.test(String(email).toLowerCase());
+}
+
 function is_invalid_address(str) {
 	return /[^a-zA-Z\-\d #,.]/.test(str);
 }
@@ -41,3 +54,9 @@ function has_number(str) {
 function password_check(str) {
 	return (has_special_char(str) && has_letter(str) && has_number(str) && str.length >= 8);
 }
+
+$(document).ready(function() {
+	if(document.getElementById("NoJS") != null) {
+		$("#NoJS").addClass("d-none");
+	}
+});

@@ -20,7 +20,7 @@ function has_special_char($string) {
 // Check if password contains number, 
 // letter, special char, and length
 function password_check($pass = '') {
-	if(!has_number($pass) || !has_letter($pass) || !has_special_char($pass) || strlen($pass) < 8) { return false; }
+	if(!has_number($pass) || !has_letter($pass) || !has_special_char($pass) || strlen($pass) < 8 || strlen($pass) > 128) { return false; }
 
 	return true;
 }
