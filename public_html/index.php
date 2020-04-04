@@ -60,7 +60,7 @@ require_once(INCLUDE_PATH . 'navbar.php');
                     <div class="masthead-input mx-auto w-50">
                         <form method="GET">
                             <input class="form-control" type="text" name="restaurant-search" placeholder="Search restaurants" value="<?= $searchTerm ?>">
-                            <input type="submit" value="Search" />
+                            <!-- <input type="submit" value="Search" /> -->
                         </form>
                     </div>
                 </div>
