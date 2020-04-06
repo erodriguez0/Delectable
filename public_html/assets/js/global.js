@@ -51,9 +51,20 @@ function has_number(str) {
 	return /\d/.test(str);
 }
 
+function invalid_search(str) {
+	return /[^a-zA-Z\d .\-\']/.test(str);
+}
+
 function password_check(str) {
 	return (has_special_char(str) && has_letter(str) && has_number(str) && str.length >= 8);
 }
+
+$(window).on('load', function() {
+	// $("#cover").removeClass("d-flex");
+	// $("#cover").addClass("d-none");
+	$("#cover").hide();
+	// $(".spinner").hide();
+});
 
 $(document).ready(function() {
 	if(document.getElementById("NoJS") != null) {

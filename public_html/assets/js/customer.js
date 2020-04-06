@@ -1,4 +1,25 @@
+function validate_search() {
+	let term = $("#search-restaurants").val();
+	if(term == null || term.length < 1 || invalid_search(term)) {
+		return false;
+	}
+	return true;
+}
+
 $(document).ready(function() {
+	// $("#search-restaurants-btn").click(function() {
+	// 	let term = $("#search-restaurants").val();
+	// 	if(term != null && term.length > 0 && !invalid_search(term)) {
+
+	// 	}
+	// });
+
+	$("#search-restaurants").keyup(function(event) {
+		if(event.keyCode === 13) {
+			$("#search-restaurants-btn").click();
+		}
+	});
+
 	// if(modal) {
 	// 	$("#create-account-modal").modal('show');
 	// }

@@ -25,6 +25,10 @@ function password_check($pass = '') {
 	return true;
 }
 
+function invalid_search($term) {
+	return preg_match('/[^a-zA-Z\d .\-\']/', $term);
+}
+
 // Checks if number is formatted as N,2
 function is_currency($number) {
   return preg_match("/^-?[0-9]+(?:\.[0-9]{2})?$/", $number);
