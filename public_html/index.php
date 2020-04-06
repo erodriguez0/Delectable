@@ -19,15 +19,15 @@ if(invalid_searcH($term)) {
 <div id="search-results" class="container after-nav">
     <div class="row pt-3">
         <div class="col-12 px-0">
-            <div class="row">
-                <div class="sort-dd col-12 col-md-3 d-flex align-items-center">
+            <div class="row no-gutters">
+                <div class="sort-dd col-12 col-md-3 pl-0">
                     <!-- <span class="pr-2">Sort: </span> -->
                     <select class="form-control">
                         <option>Rating</option>
                         <option>Alphabetical</option>
                     </select>
                 </div>
-                <div class="search-box col-12 col-md-9 mt-3 mt-md-0">
+                <div class="search-box col-12 col-md-9 mt-3 mt-md-0 pl-3 pr-0">
                     <form class="w-100" method="GET" action="./">
                         <div class="input-group">
                             <input id="search-restaurants" type="text" class="form-control" placeholder="Look up restaurants" name="search" value="<?php echo $term; ?>">
@@ -42,7 +42,24 @@ if(invalid_searcH($term)) {
     </div>
     <div class="row">
         <div class="col-12 col-lg-3 col-xl-3 mt-3 bg-light p-3">
-            <label>Rating</label>
+            <form method="GET" action="./">
+            <label>Find Nearby</label>
+            <div class="cb-list"><div class="cb-list-child">
+                <input type="number" class="form-control" pattern="\b\d{5}\b" placeholder="Zip Code">
+                <select class="form-control w-25 d-inline mt-3">
+                    <option>5</option>
+                    <option>10</option>
+                    <option>15</option>
+                    <option>20</option>
+                    <option>25</option>
+                </select>
+                <span class="pl-3">Miles</span>
+            </div></div>
+            </form>
+            <!-- ./Distance Filter -->
+
+            <form method="GET" action="./">
+            <label class="mt-3">Rating</label>
             <div class="cb-list"><div class="cb-list-child">
                 <div class="form-check">
                     <label class="form-check-label">
@@ -91,8 +108,10 @@ if(invalid_searcH($term)) {
                     </label>
                 </div>
             </div></div>
+            </form>
             <!-- ./Rating Checkboxes -->
 
+            <form method="GET" action="./">
             <label class="mt-3">Restaurants</label>
             <div class="cb-list"><div class="cb-list-child">
                 <div class="form-check">
@@ -131,6 +150,8 @@ if(invalid_searcH($term)) {
                     </label>
                 </div>
             </div></div>
+            </form>
+            <!-- ./Restaurant List -->
         </div>
         <div class="col-12 col-lg-9 col-xl-9">
     </div>
