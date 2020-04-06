@@ -13,17 +13,6 @@
 	<link rel="stylesheet" href="/delectable/public_html/assets/css/custom.css">
 	<link rel="stylesheet" href="/delectable/public_html/assets/css/manager-dashboard-nav.css">
 	<link href="//cdn.bootcss.com/noUiSlider/8.5.1/nouislider.min.css" rel="stylesheet">
-	<style type="text/css">
-		#cover {
-			position: fixed; 
-			height: 100%; 
-			width: 100%; 
-			top:0; 
-			left: 0; 
-			background-color: #fff;
-			z-index:9999;
-		}
-	</style>
 </head>
 <body class="<?php echo (isset($bodyClasses)) ? $bodyClasses : ""; ?>">
 <div id="cover">
