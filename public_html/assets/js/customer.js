@@ -14,6 +14,19 @@ $(document).ready(function() {
 	// 	}
 	// });
 
+	$("#reset-radius").click(function() {
+		$("input[name='city']").val("");
+		$("select[name='state']").val("0");
+		$("input[name='zip']").val("");
+		$("select[name='miles']").val("5");
+		$("#restaurant-search").submit();
+	});
+
+	$("#reset-rating").click(function() {
+		$("input[name='rating']").val("");
+		$("#restaurant-search").submit();
+	});
+
 	$("#search-restaurants").keyup(function(event) {
 		if(event.keyCode === 13) {
 			$("#search-restaurants-btn").click();

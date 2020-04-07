@@ -58,12 +58,18 @@ function invalid_search(str) {
 function password_check(str) {
 	return (has_special_char(str) && has_letter(str) && has_number(str) && str.length >= 8);
 }
+
 function populate_state_select(el) {
     // let el = $("#" + div);
     var options = [ 'AL', 'AK', 'AS', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FM', 'FL', 'GA', 'GU', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MH', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'MP', 'OH', 'OK', 'OR', 'PW', 'PA', 'PR', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VI', 'VA', 'WA', 'WV', 'WI', 'WY' ];
     $.each(options, function(k, v) {
         el.append($('<option></option>').val(v).html(v));
     });
+}
+
+function selectElement(id, val) {
+	let element = $("#" + id);
+	element.val(val);
 }
 
 $(window).on('load', function() {
@@ -79,5 +85,10 @@ $(document).ready(function() {
 		$(".state-select").each(function() {
 			populate_state_select($(this));
 		});
+		selectElement("state-filter", state);
+	}
+
+	if(document.getElementsByClassName("miles-filter")) {
+		selectElement("mile-radius", miles);
 	}
 });
