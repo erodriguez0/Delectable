@@ -18,6 +18,7 @@ $city = (isset($_GET['city'])) ? $_GET['city'] : "";
 $state = (isset($_GET['state'])) ? (string) $_GET['state'] : 0;
 $res_select = (isset($_GET['res'])) ? $_GET['res'] : "";
 $cat_select = (isset($_GET['cat'])) ? $_GET['cat'] : "";
+$diet_select = (isset($_GET['diet'])) ? $_GET['diet'] : "";
 if(!empty($zip)) {
     $city = "";
     $state = "0";
@@ -30,22 +31,27 @@ if(invalid_searcH($term)) {
 <script type="text/javascript">
     var state = "<?php echo $state; ?>";
     var miles = "<?php echo $miles; ?>";
+    var rating = "<?php echo $rating; ?>";
     var res_select = <?php echo json_encode($res_select); ?>;
     var cat_select = <?php echo json_encode($cat_select); ?>;
+    var diet_select = <?php echo json_encode($diet_select); ?>;
 </script>
 <form method="GET" action="./" id="restaurant-search">
 <div id="search-results" class="container after-nav">
     <div class="row pt-3">
-        <div class="col-12 px-0">
+        <div class="col-12 px-md-0">
             <div class="row no-gutters">
-                <div class="sort-dd col-12 col-md-3 pl-0">
+                <div class="sort-dd col-6 col-md-3 pl-0 order-2 order-md-1 mt-3 mt-md-0">
                     <!-- <span class="pr-2">Sort: </span> -->
                     <select class="form-control">
                         <option>Rating</option>
                         <option>Alphabetical</option>
                     </select>
                 </div>
-                <div class="search-box col-12 col-md-9 mt-3 mt-md-0 pl-md-3 pr-0">
+                <div class="col-6 d-md-none order-2 order-md-1 mt-3 mt-md-0">
+                    <button class="btn btn-primary d-block d-lg-none btn-block border rounded mb-3" data-toggle="collapse" type="button" data-toggle="collapse" data-target="#filter-bar">Filter</button>
+                </div>
+                <div class="search-box col-12 col-md-9 mt-md-0 pl-md-3 pr-0 order-1 order-md-2">
                     <!-- <form class="w-100" method="GET" action="./"> -->
                         <div class="input-group">
                             <input id="search-restaurants" type="text" class="form-control" placeholder="Look up restaurants" name="search" value="<?php echo $term; ?>">
@@ -59,10 +65,9 @@ if(invalid_searcH($term)) {
         </div>
     </div>
     <div class="row">
-        <div class="col-12 col-lg-3 col-xl-3 mt-3 bg-light p-3 pb-4">
-            <button class="btn btn-primary d-block d-lg-none btn-block border rounded mb-3" data-toggle="collapse" type="button" data-toggle="collapse" data-target="#filter-bar">Filter</button>
+        <div class="col-12 col-lg-3 col-xl-3 mt-3 px-md-0">
 
-            <div id="filter-bar" class="collapse d-hidden d-lg-block">
+            <div id="filter-bar" class="collapse d-hidden d-lg-block bg-light p-3">
             <!-- <form method="GET" action="./"> -->
             <label>Find Nearby</label>
             <?php 
@@ -164,7 +169,7 @@ if(invalid_searcH($term)) {
                         No Reviews
                     </label>
                 </div>
-                <input type="submit" class="btn btn-primary rounded mb-2 mt-3 btn-block" value="Update">
+                <!-- <input type="submit" class="btn btn-primary rounded mb-2 mt-3 btn-block" value="Update"> -->
             </div>
             <!-- </form> -->
             <!-- ./Rating Checkboxes -->
@@ -211,7 +216,7 @@ if(invalid_searcH($term)) {
                     </label>
                 </div>
             </div>
-            <input type="submit" class="btn btn-primary rounded mt-3 btn-block" value="Update">
+            <!-- <input type="submit" class="btn btn-primary rounded mt-3 btn-block" value="Update"> -->
             </div>
 
             <!-- <form method="GET" action="./"> -->
@@ -257,86 +262,94 @@ if(invalid_searcH($term)) {
                     </label>
                 </div>
             </div>
-            <input type="submit" class="btn btn-primary rounded mt-3 btn-block" value="Update">
+            <!-- <input type="submit" class="btn btn-primary rounded mt-3 btn-block" value="Apply Filter"> -->
             </div>
             <!-- </form> -->
             <!-- ./Restaurant List -->
+
+                        <!-- <form method="GET" action="./"> -->
+            <label class="mt-3">Dietary Need</label>
+            <?php 
+            echo (isset($diet_select) && !empty($diet_select)) ? '
+            <button id="reset-diet-select" class="btn-link-alt table-link text-link pr-0 float-right mt-3">Reset</button>' : ""; 
+            ?>
+            <div class="cb-list diet-filter"><div class="cb-list-child">
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" value="1" name="diet[]">Res 1
+                    </label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" value="2" name="diet[]">Res 1
+                    </label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" value="3" name="diet[]">Res 1
+                    </label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" value="4" name="diet[]">Res 1
+                    </label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" value="5" name="diet[]">Res 1
+                    </label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" value="6" name="diet[]">Res 1
+                    </label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" value="7" name="diet[]">Res 1
+                    </label>
+                </div>
+            </div>
+            <input type="submit" class="btn btn-primary rounded mt-3 btn-block" value="Apply Filter">
+            </div>
+            <!-- </form> -->
+            <!-- ./Diet List -->
 
         </div>
         <!-- ./Filter Container -->
         </div>
         <div class="col-12 col-lg-9 col-xl-9">
-            <!-- Show restaurant list -->
-            <div class="restaurant-row py-3">
-                <div class="row">
-                    <div class="col-5 col-lg-3 d-flex justify-content-center">
-                        <div class="res-img-thumb d-flex justify-content-center align-items-center bg-light">
-                            <img class="img-thumb" src="https://via.placeholder.com/320x120">
-                        </div>
-                    </div>
-                    <div class="col-7 col-lg-7">
-                        <div class="res-title pt-1 d-flex align-items-center">
-                            <h5>BANGABURGER</h5>
-                        </div>
-                        <div class="res-slogan pt-1">
-                            <p>
-                                Eat Fresh
+            <div class="row">
+
+                <!-- Restaurant Card -->
+                <div class="col-12 col-sm-8 col-md-6 col-lg-4 pt-3">
+                    <div class="card">
+                        <img class="card-img" src="https://via.placeholder.com/150">
+                        <div class="card-body">
+                            <h4 class="card-title">Subway</h4>
+                            <h6 class="card-subtitle mb-2 text-muted d-flex align-items-center">
+                                <span class="fas fa-star star-checked"></span>
+                                <span class="fas fa-star star-checked"></span>
+                                <span class="fas fa-star star-checked"></span>
+                                <span class="fas fa-star star-checked"></span>
+                                <span class="fas fa-star"></span>
+                                <span class="ml-2">-</span>
+                                <span class="ml-2" style="color: #85bb65; font-family: Helvetica;">$$</span><span style="font-family: Helvetica;">$$$</span>
+                            </h6>
+                            <p class="card-text">
+                                The Vans All-Weather MTE Collection features footwear and apparel designed to withstand the elements whilst still looking cool.             
                             </p>
-                        </div>
-                        <div class="res-description overflow-hidden">
-                            <p class="text-muted mb-0">
-                                Praesent eu ex magna. Nam feugiat feugiat enim, vel cursus turpis ultrices vel. Mauris pretium quis odio in ultrices. In sed sapien neque. Proin fringilla nunc ut gravida rhoncus. Quisque efficitur vulputate varius.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="col-12 col-lg-2 d-lg-flex justify-content-center align-items-center">
-                        <div class="btn-group-vertical d-none d-lg-block">
-                            <a href="#" class="btn btn-primary rounded border mb-3">Menu</a>
-                            <a href="#" class="btn btn-primary rounded border">Reserve</a>
-                        </div>
-                        <div class="btn-group d-block d-lg-none mt-3 mt-lg-0">
-                            <a href="#" class="btn btn-primary rounded border btn-block">Menu</a>
-                            <a href="#" class="btn btn-primary rounded border btn-block">Reserve</a>
+                            <div class="d-flex align-items-center">
+                                <a href="#" class="btn btn-primary mt-3 btn-sm card-btn"><i class="fas fa-calendar-alt"></i> Reserve</a>
+                                <a href="#" class="btn btn-primary mt-3 btn-sm ml-2 card-btn"><i class="fas fa-shopping-cart"></i> Order</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+                <!-- ./Restaurant Card -->
 
-            <div class="restaurant-row py-3">
-                <div class="row">
-                    <div class="col-5 col-lg-3 d-flex justify-content-center">
-                        <div class="res-img-thumb d-flex justify-content-center align-items-center bg-light">
-                            <img class="img-thumb" src="https://via.placeholder.com/320x120">
-                        </div>
-                    </div>
-                    <div class="col-7 col-lg-7">
-                        <div class="res-title pt-1 d-flex align-items-center">
-                            <h5>BANGABURGER</h5>
-                        </div>
-                        <div class="res-slogan pt-1">
-                            <p>
-                                Eat Fresh
-                            </p>
-                        </div>
-                        <div class="res-description overflow-hidden">
-                            <p class="text-muted mb-0">
-                                Praesent eu ex magna. Nam feugiat feugiat enim, vel cursus turpis ultrices vel. Mauris pretium quis odio in ultrices. In sed sapien neque. Proin fringilla nunc ut gravida rhoncus. Quisque efficitur vulputate varius.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="col-12 col-lg-2 d-lg-flex justify-content-center align-items-center">
-                        <div class="btn-group-vertical d-none d-lg-block">
-                            <a href="#" class="btn btn-primary rounded border mb-3">Menu</a>
-                            <a href="#" class="btn btn-primary rounded border">Reserve</a>
-                        </div>
-                        <div class="btn-group d-block d-lg-none mt-3 mt-lg-0">
-                            <a href="#" class="btn btn-primary rounded border btn-block">Menu</a>
-                            <a href="#" class="btn btn-primary rounded border btn-block">Reserve</a>
-                        </div>
-                    </div>
-                </div>
             </div>
-
+            <!-- ./Restaurants List Row -->
         </div>
     </div>
 </div>

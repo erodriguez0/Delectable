@@ -107,4 +107,16 @@ $(document).ready(function() {
 			});
 		}
 	}
+
+	if(document.getElementsByClassName("rating-filter")) {
+		$("input[name='rating'][value='" + rating + "']").prop("checked", true);
+	}
+
+	if(document.getElementsByClassName("diet-filter")) {
+		if(diet_select.length > 0) {
+			$.each(diet_select, function(k, v) {
+				$("input[name='diet[]'][value='" + v + "'").prop("checked", true);
+			});
+		}
+	}
 });

@@ -6,6 +6,17 @@ function validate_search() {
 	return true;
 }
 
+$(window).resize(function() {
+	let width = $(this).width();
+	if(width < 768) {
+		$(".card-btn").each(function() {
+			$(".card-btn").removeClass("btn-sm");
+		});
+	} else if(width > 767 && !$(".card-btn").hasClass("btn-sm")) {
+		$(".card-btn").addClass("btn-sm");
+	}
+});
+
 $(document).ready(function() {
 	// $("#search-restaurants-btn").click(function() {
 	// 	let term = $("#search-restaurants").val();
@@ -13,6 +24,11 @@ $(document).ready(function() {
 
 	// 	}
 	// });
+	let win_width = $(window).width();
+
+	if(win_width < 768) {
+		$(".card-btn").removeClass("btn-sm");
+	}
 
 	$("#reset-radius").click(function() {
 		$("input[name='city']").val("");
@@ -36,6 +52,13 @@ $(document).ready(function() {
 
 	$("#reset-cat-select").click(function() {
 		$("input[name='cat[]']").each(function() {
+			$(this).prop("checked", false);
+			$("#restaurant-search").submit();
+		});
+	});
+
+	$("#reset-diet-select").click(function() {
+		$("input[name='diet[]']").each(function() {
 			$(this).prop("checked", false);
 			$("#restaurant-search").submit();
 		});

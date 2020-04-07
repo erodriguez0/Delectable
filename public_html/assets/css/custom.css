@@ -104,6 +104,10 @@ B O O T S T R A P  B U T T O N S
 	border: none;
 }
 
+.btn-danger {
+	background-color: #dc3545;
+}
+
 textarea:hover, 
 input:hover, 
 textarea:active, 
@@ -394,18 +398,18 @@ body {
 }
 
 .res-img-thumb {
-	min-width: 150px;
-	width: 150px;
-	max-width: 150px;
-	min-height: 150px;
-	height: 150px;
-	max-height: 150px;
+	min-width: 254px;
+	width: 254px;
+	max-width: 254px;
+	min-height: 200px;
+	height: 200px;
+	max-height: 200px;
 }
 
 .img-thumb {
 	display: block;
-	width: 100%;
-	height: auto;
+	height: 100%;
+	width: auto;
 }
 
 .res-title {
@@ -421,11 +425,26 @@ body {
  
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {  
-
+	.res-img-thumb {
+		min-width: 453px;
+		width: 453px;
+		max-width: 453px;
+	}
 }
  
 /* Medium devices (tablets, 768px and up) The navbar toggle appears at this breakpoint */
 @media (min-width: 768px) {  
+	.res-img-thumb {
+		min-width: 330px;
+		width: 330px;
+		max-width: 330px;
+	}
+
+	.img-thumb {
+		width: 100%;
+		height: auto;
+	}
+
 	.admin-form-wrap {
 		width: 300px;
 	}
@@ -433,6 +452,17 @@ body {
  
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) { 
+	.res-img-thumb {
+		min-width: 210px;
+		width: 210px;
+		max-width: 210px;
+	}
+
+	.img-thumb {
+		height: 100%;
+		width: auto;
+	}
+
 	.paragraph-container {
 		max-width: 50%;
 	}
@@ -448,7 +478,11 @@ body {
  
 /* Extra large devices (large desktops, 1200px and up) */
 @media (min-width: 1200px) {  
-
+	.res-img-thumb {
+		min-width: 254px;
+		width: 254px;
+		max-width: 254px;
+	}
 }
  
  
