@@ -2,6 +2,7 @@
 <html lang="en-us">
 <head>
 	<title><?php echo $title; ?></title>
+	<!-- <noscript><meta http-equiv="Refresh" content="0;URL=.html"> </noscript> -->
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
 	<meta http-equiv="Pragma" content="no-cache" />
@@ -14,3 +15,4 @@
 	<link href="//cdn.bootcss.com/noUiSlider/8.5.1/nouislider.min.css" rel="stylesheet">
 </head>
 <body class="<?php echo (isset($bodyClasses)) ? $bodyClasses : ""; ?>">
+<div id="NoJS" class="fixed-top w-100 after-nav alert text-danger rounded-0 py-4 px-3 text-uppercase text-center bg-light">JavaScript disabled. This site requires JavaScript to run properly.</div>
