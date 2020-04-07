@@ -27,6 +27,20 @@ $(document).ready(function() {
 		$("#restaurant-search").submit();
 	});
 
+	$("#reset-res-select").click(function() {
+		$("input[name='res[]']").each(function() {
+			$(this).prop("checked", false);
+			$("#restaurant-search").submit();
+		});
+	});
+
+	$("#reset-cat-select").click(function() {
+		$("input[name='cat[]']").each(function() {
+			$(this).prop("checked", false);
+			$("#restaurant-search").submit();
+		});
+	});
+
 	$("#search-restaurants").keyup(function(event) {
 		if(event.keyCode === 13) {
 			$("#search-restaurants-btn").click();

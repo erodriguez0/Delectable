@@ -16,6 +16,8 @@ $miles = (isset($_GET['miles'])) ? $_GET['miles'] : 5;
 $rating = (isset($_GET['rating'])) ? $_GET['rating'] : "";
 $city = (isset($_GET['city'])) ? $_GET['city'] : "";
 $state = (isset($_GET['state'])) ? (string) $_GET['state'] : 0;
+$res_select = (isset($_GET['res'])) ? $_GET['res'] : "";
+$cat_select = (isset($_GET['cat'])) ? $_GET['cat'] : "";
 if(!empty($zip)) {
     $city = "";
     $state = "0";
@@ -28,6 +30,8 @@ if(invalid_searcH($term)) {
 <script type="text/javascript">
     var state = "<?php echo $state; ?>";
     var miles = "<?php echo $miles; ?>";
+    var res_select = <?php echo json_encode($res_select); ?>;
+    var cat_select = <?php echo json_encode($cat_select); ?>;
 </script>
 <form method="GET" action="./" id="restaurant-search">
 <div id="search-results" class="container after-nav">
@@ -41,7 +45,7 @@ if(invalid_searcH($term)) {
                         <option>Alphabetical</option>
                     </select>
                 </div>
-                <div class="search-box col-12 col-md-9 mt-3 mt-md-0 pl-3 pr-0">
+                <div class="search-box col-12 col-md-9 mt-3 mt-md-0 pl-md-3 pr-0">
                     <!-- <form class="w-100" method="GET" action="./"> -->
                         <div class="input-group">
                             <input id="search-restaurants" type="text" class="form-control" placeholder="Look up restaurants" name="search" value="<?php echo $term; ?>">
@@ -56,6 +60,9 @@ if(invalid_searcH($term)) {
     </div>
     <div class="row">
         <div class="col-12 col-lg-3 col-xl-3 mt-3 bg-light p-3 pb-4">
+            <button class="btn btn-primary d-block d-lg-none btn-block border rounded mb-3" data-toggle="collapse" type="button" data-toggle="collapse" data-target="#filter-bar">Filter</button>
+
+            <div id="filter-bar" class="collapse d-hidden d-lg-block">
             <!-- <form method="GET" action="./"> -->
             <label>Find Nearby</label>
             <?php 
@@ -162,46 +169,91 @@ if(invalid_searcH($term)) {
             <!-- </form> -->
             <!-- ./Rating Checkboxes -->
 
+            <label class="mt-3">Cuisine</label>
+            <?php 
+            echo (isset($cat_select) && !empty($cat_select)) ? '
+            <button id="reset-cat-select" class="btn-link-alt table-link text-link pr-0 float-right mt-3">Reset</button>' : ""; 
+            ?>
+            <div class="cb-list cat-filter"><div class="cb-list-child">
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" value="1" name="cat[]">Res 1
+                    </label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" value="2" name="cat[]">Res 1
+                    </label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" value="3" name="cat[]">Res 1
+                    </label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" value="4" name="cat[]">Res 1
+                    </label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" value="5" name="cat[]">Res 1
+                    </label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" value="6" name="cat[]">Res 1
+                    </label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" value="7" name="cat[]">Res 1
+                    </label>
+                </div>
+            </div>
+            <input type="submit" class="btn btn-primary rounded mt-3 btn-block" value="Update">
+            </div>
+
             <!-- <form method="GET" action="./"> -->
             <label class="mt-3">Restaurants</label>
             <?php 
             echo (isset($res_select) && !empty($res_select)) ? '
             <button id="reset-res-select" class="btn-link-alt table-link text-link pr-0 float-right mt-3">Reset</button>' : ""; 
             ?>
-            <div class="cb-list"><div class="cb-list-child">
+            <div class="cb-list res-filter"><div class="cb-list-child">
                 <div class="form-check">
                     <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input" value="">Res 1
+                        <input type="checkbox" class="form-check-input" value="1" name="res[]">Res 1
                     </label>
                 </div>
                 <div class="form-check">
                     <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input" value="">Res 1
+                        <input type="checkbox" class="form-check-input" value="2" name="res[]">Res 1
                     </label>
                 </div>
                 <div class="form-check">
                     <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input" value="">Res 1
+                        <input type="checkbox" class="form-check-input" value="3" name="res[]">Res 1
                     </label>
                 </div>
                 <div class="form-check">
                     <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input" value="">Res 1
+                        <input type="checkbox" class="form-check-input" value="4" name="res[]">Res 1
                     </label>
                 </div>
                 <div class="form-check">
                     <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input" value="">Res 1
+                        <input type="checkbox" class="form-check-input" value="5" name="res[]">Res 1
                     </label>
                 </div>
                 <div class="form-check">
                     <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input" value="">Res 1
+                        <input type="checkbox" class="form-check-input" value="6" name="res[]">Res 1
                     </label>
                 </div>
                 <div class="form-check">
                     <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input" value="">Res 1
+                        <input type="checkbox" class="form-check-input" value="7" name="res[]">Res 1
                     </label>
                 </div>
             </div>
@@ -209,9 +261,84 @@ if(invalid_searcH($term)) {
             </div>
             <!-- </form> -->
             <!-- ./Restaurant List -->
+
+        </div>
+        <!-- ./Filter Container -->
         </div>
         <div class="col-12 col-lg-9 col-xl-9">
+            <!-- Show restaurant list -->
+            <div class="restaurant-row py-3">
+                <div class="row">
+                    <div class="col-5 col-lg-3 d-flex justify-content-center">
+                        <div class="res-img-thumb d-flex justify-content-center align-items-center bg-light">
+                            <img class="img-thumb" src="https://via.placeholder.com/320x120">
+                        </div>
+                    </div>
+                    <div class="col-7 col-lg-7">
+                        <div class="res-title pt-1 d-flex align-items-center">
+                            <h5>BANGABURGER</h5>
+                        </div>
+                        <div class="res-slogan pt-1">
+                            <p>
+                                Eat Fresh
+                            </p>
+                        </div>
+                        <div class="res-description overflow-hidden">
+                            <p class="text-muted mb-0">
+                                Praesent eu ex magna. Nam feugiat feugiat enim, vel cursus turpis ultrices vel. Mauris pretium quis odio in ultrices. In sed sapien neque. Proin fringilla nunc ut gravida rhoncus. Quisque efficitur vulputate varius.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-2 d-lg-flex justify-content-center align-items-center">
+                        <div class="btn-group-vertical d-none d-lg-block">
+                            <a href="#" class="btn btn-primary rounded border mb-3">Menu</a>
+                            <a href="#" class="btn btn-primary rounded border">Reserve</a>
+                        </div>
+                        <div class="btn-group d-block d-lg-none mt-3 mt-lg-0">
+                            <a href="#" class="btn btn-primary rounded border btn-block">Menu</a>
+                            <a href="#" class="btn btn-primary rounded border btn-block">Reserve</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="restaurant-row py-3">
+                <div class="row">
+                    <div class="col-5 col-lg-3 d-flex justify-content-center">
+                        <div class="res-img-thumb d-flex justify-content-center align-items-center bg-light">
+                            <img class="img-thumb" src="https://via.placeholder.com/320x120">
+                        </div>
+                    </div>
+                    <div class="col-7 col-lg-7">
+                        <div class="res-title pt-1 d-flex align-items-center">
+                            <h5>BANGABURGER</h5>
+                        </div>
+                        <div class="res-slogan pt-1">
+                            <p>
+                                Eat Fresh
+                            </p>
+                        </div>
+                        <div class="res-description overflow-hidden">
+                            <p class="text-muted mb-0">
+                                Praesent eu ex magna. Nam feugiat feugiat enim, vel cursus turpis ultrices vel. Mauris pretium quis odio in ultrices. In sed sapien neque. Proin fringilla nunc ut gravida rhoncus. Quisque efficitur vulputate varius.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-2 d-lg-flex justify-content-center align-items-center">
+                        <div class="btn-group-vertical d-none d-lg-block">
+                            <a href="#" class="btn btn-primary rounded border mb-3">Menu</a>
+                            <a href="#" class="btn btn-primary rounded border">Reserve</a>
+                        </div>
+                        <div class="btn-group d-block d-lg-none mt-3 mt-lg-0">
+                            <a href="#" class="btn btn-primary rounded border btn-block">Menu</a>
+                            <a href="#" class="btn btn-primary rounded border btn-block">Reserve</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
+    </div>
 </div>
 </form>
 

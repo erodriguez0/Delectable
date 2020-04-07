@@ -91,4 +91,20 @@ $(document).ready(function() {
 	if(document.getElementsByClassName("miles-filter")) {
 		selectElement("mile-radius", miles);
 	}
+
+	if(document.getElementsByClassName("res-filter")) {
+		if(res_select.length > 0) {
+			$.each(res_select, function(k, v) {
+				$("input[name='res[]'][value='" + v + "'").prop("checked", true);
+			});
+		}
+	}
+
+	if(document.getElementsByClassName("cat-filter")) {
+		if(cat_select.length > 0) {
+			$.each(cat_select, function(k, v) {
+				$("input[name='cat[]'][value='" + v + "'").prop("checked", true);
+			});
+		}
+	}
 });
