@@ -327,9 +327,11 @@ switch ($sort) {
         <!-- ./Filter Container -->
         </div>
         <div class="col-12 col-lg-9 col-xl-9 pr-md-0">
-            <div class="row">
                 <?php
                 if(!empty($restaurants)):
+                ?>
+                <div class="row">
+                <?php
                 foreach($restaurants as $res):
                     $rname = htmlspecialchars($res["res_name"]);
                     $rdes = htmlspecialchars($res["res_description"]);
@@ -371,6 +373,16 @@ switch ($sort) {
 
                 <?php
                 endforeach;
+                // Restaurants Found
+                else:
+                ?>
+                <div class="row d-flex justify-content-center">
+                    <div class="col-12 col-sm-8 col-md-6 col-lg-4 pt-3 text-center">
+                        <h5>No restaurants found</h5>
+                    </div>
+                </div>
+                <?php
+                // No Restaurants Found Message
                 endif;
                 ?>
             </div>
