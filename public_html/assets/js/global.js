@@ -72,6 +72,11 @@ function selectElement(id, val) {
 	element.val(val);
 }
 
+function selectStateElement(id, val) {
+	let element = $("." + id);
+	element.val(val);
+}
+
 $(window).on('load', function() {
 	$("#cover").hide();
 });
@@ -85,38 +90,57 @@ $(document).ready(function() {
 		$(".state-select").each(function() {
 			populate_state_select($(this));
 		});
-		selectElement("state-filter", state);
+
+		if(typeof(state) !== 'undefined') {
+			selectStateElement("state-select", state);
+		}
 	}
 
 	if(document.getElementsByClassName("miles-filter")) {
-		selectElement("mile-radius", miles);
+		if(typeof(miles) !== 'undefined') {
+			selectElement("mile-radius", miles);
+		}
+	}
+
+	if(document.getElementById("sort-restaurants")) {
+		if(typeof(sort) !== 'undefined') {
+			selectElement("sort-restaurants", sort);
+		}
 	}
 
 	if(document.getElementsByClassName("res-filter")) {
-		if(res_select.length > 0) {
-			$.each(res_select, function(k, v) {
-				$("input[name='res[]'][value='" + v + "'").prop("checked", true);
-			});
+		if(typeof(res_select) !== 'undefined') {
+			if(res_select.length > 0) {
+				$.each(res_select, function(k, v) {
+					$("input[name='res[]'][value='" + v + "'").prop("checked", true);
+				});
+			}
 		}
 	}
 
 	if(document.getElementsByClassName("cat-filter")) {
-		if(cat_select.length > 0) {
-			$.each(cat_select, function(k, v) {
-				$("input[name='cat[]'][value='" + v + "'").prop("checked", true);
-			});
+		if(typeof(cat_select) !== 'undefined') {
+			if(cat_select.length > 0) {
+				$.each(cat_select, function(k, v) {
+					$("input[name='cat[]'][value='" + v + "'").prop("checked", true);
+				});
+			}
 		}
 	}
 
 	if(document.getElementsByClassName("rating-filter")) {
-		$("input[name='rating'][value='" + rating + "']").prop("checked", true);
+		if(typeof(rating) !== 'undefined') {
+			$("input[name='rating'][value='" + rating + "']").prop("checked", true);
+		}
 	}
 
 	if(document.getElementsByClassName("diet-filter")) {
-		if(diet_select.length > 0) {
-			$.each(diet_select, function(k, v) {
-				$("input[name='diet[]'][value='" + v + "'").prop("checked", true);
-			});
+		if(typeof(diet_select) !== 'undefined') {
+			if(diet_select.length > 0) {
+				$.each(diet_select, function(k, v) {
+					$("input[name='diet[]'][value='" + v + "'").prop("checked", true);
+				});
+			}
 		}
 	}
 });

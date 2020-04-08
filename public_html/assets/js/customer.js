@@ -1,5 +1,5 @@
 function validate_search() {
-	let term = $("#search-restaurants").val();
+	let term = $("#search-restaurants").val().trim();
 	if(term == null || term.length < 1 || invalid_search(term)) {
 		return false;
 	}

@@ -10,42 +10,65 @@ $title = "Delectable | Delicious Food Waiting For You";
 require_once(INCLUDE_PATH . 'header.php');
 require_once(INCLUDE_PATH . 'navbar.php');
 require_once(INCLUDE_PATH . 'functions.php');
-$term = (isset($_GET['search'])) ? $_GET['search'] : "";
-$zip = (isset($_GET['zip'])) ? $_GET['zip'] : "";
-$miles = (isset($_GET['miles'])) ? $_GET['miles'] : 5;
-$rating = (isset($_GET['rating'])) ? $_GET['rating'] : "";
-$city = (isset($_GET['city'])) ? $_GET['city'] : "";
-$state = (isset($_GET['state'])) ? (string) $_GET['state'] : 0;
+$term = (isset($_GET['search'])) ? trim($_GET['search']) : "";
+$zip = (isset($_GET['zip'])) ? trim($_GET['zip']) : "";
+$miles = (isset($_GET['miles'])) ? trim($_GET['miles']) : 5;
+$rating = (isset($_GET['rating'])) ? trim($_GET['rating']) : "";
+$city = (isset($_GET['city'])) ? trim($_GET['city']) : "";
+$state = (isset($_GET['state'])) ? (string) trim($_GET['state']) : 0;
 $res_select = (isset($_GET['res'])) ? $_GET['res'] : "";
 $cat_select = (isset($_GET['cat'])) ? $_GET['cat'] : "";
 $diet_select = (isset($_GET['diet'])) ? $_GET['diet'] : "";
+$sort = (isset($_GET['sort'])) ? $_GET['sort'] : 0;
+if(!ctype_digit($sort)) {
+    $sort = 0;
+}
 if(!empty($zip)) {
     $city = "";
     $state = "0";
 }
 
-if(invalid_searcH($term)) {
+if(invalid_search($term)) {
     header('Location: /delectable/public_html/'); exit();
+}
+
+$restaurants = restaurant_filter($conn, $term, $city, $state, $zip, $miles, $rating);
+switch ($sort) {
+    case 1:
+        usort($restaurants, "sort_by_name_desc");
+        break;
+    case 2:
+        $sorted = $restaurants;
+        break;
+    case 3:
+        $sorted = $restaurants;
+        break;
+    default:
+        usort($restaurants, "sort_by_name_asc");
+        break;
 }
 ?>
 <script type="text/javascript">
     var state = "<?php echo $state; ?>";
     var miles = "<?php echo $miles; ?>";
     var rating = "<?php echo $rating; ?>";
+    var sort = "<?php echo $sort; ?>";
     var res_select = <?php echo json_encode($res_select); ?>;
     var cat_select = <?php echo json_encode($cat_select); ?>;
     var diet_select = <?php echo json_encode($diet_select); ?>;
 </script>
 <form method="GET" action="./" id="restaurant-search">
-<div id="search-results" class="container after-nav">
+<div id="search-results" class="container after-nav mb-3">
     <div class="row pt-3">
         <div class="col-12 px-md-0">
             <div class="row no-gutters">
                 <div class="sort-dd col-6 col-md-3 pl-0 order-2 order-md-1 mt-3 mt-md-0">
                     <!-- <span class="pr-2">Sort: </span> -->
-                    <select class="form-control">
-                        <option>Rating</option>
-                        <option>Alphabetical</option>
+                    <select id="sort-restaurants" class="form-control" name="sort">
+                        <option value="0">Alphabetical: A-Z</option>
+                        <option value="1">Alphabetical: Z-A</option>
+                        <option value="2">Rating: Ascending</option>
+                        <option value="3">Rating: Descending</option>
                     </select>
                 </div>
                 <div class="col-6 d-md-none order-2 order-md-1 mt-3 mt-md-0">
@@ -226,41 +249,26 @@ if(invalid_searcH($term)) {
             <button id="reset-res-select" class="btn-link-alt table-link text-link pr-0 float-right mt-3">Reset</button>' : ""; 
             ?>
             <div class="cb-list res-filter"><div class="cb-list-child">
+                <?php
+                $unique_res = array();
+                foreach ($restaurants as $k) {
+                    if(!isset($unique_res[$k["res_name"]])) {
+                        $unique_res[$k["res_name"]] = $k["res_id"];
+                    }
+                }
+                ksort($unique_res);
+                foreach ($unique_res as $k => $v):
+                    $name = htmlspecialchars($k);
+                    $rid = $v;
+                ?>
                 <div class="form-check">
                     <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input" value="1" name="res[]">Res 1
+                        <input type="checkbox" class="form-check-input" value="<?php echo $rid; ?>" name="res[]"><span><?php echo $name; ?></span>
                     </label>
                 </div>
-                <div class="form-check">
-                    <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input" value="2" name="res[]">Res 1
-                    </label>
-                </div>
-                <div class="form-check">
-                    <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input" value="3" name="res[]">Res 1
-                    </label>
-                </div>
-                <div class="form-check">
-                    <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input" value="4" name="res[]">Res 1
-                    </label>
-                </div>
-                <div class="form-check">
-                    <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input" value="5" name="res[]">Res 1
-                    </label>
-                </div>
-                <div class="form-check">
-                    <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input" value="6" name="res[]">Res 1
-                    </label>
-                </div>
-                <div class="form-check">
-                    <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input" value="7" name="res[]">Res 1
-                    </label>
-                </div>
+                <?php
+                endforeach;
+                ?>
             </div>
             <!-- <input type="submit" class="btn btn-primary rounded mt-3 btn-block" value="Apply Filter"> -->
             </div>
@@ -318,15 +326,23 @@ if(invalid_searcH($term)) {
         </div>
         <!-- ./Filter Container -->
         </div>
-        <div class="col-12 col-lg-9 col-xl-9">
+        <div class="col-12 col-lg-9 col-xl-9 pr-md-0">
             <div class="row">
-
+                <?php
+                if(!empty($restaurants)):
+                foreach($restaurants as $res):
+                    $name = htmlspecialchars($res["res_name"]);
+                    $des = htmlspecialchars($res["res_description"]);
+                    $lid = $res["loc_id"];
+                    $reserve = "./reserve/?lid=" . $lid;
+                    $order = "./order/?lid=" . $lid;
+                ?>
                 <!-- Restaurant Card -->
                 <div class="col-12 col-sm-8 col-md-6 col-lg-4 pt-3">
                     <div class="card">
                         <img class="card-img" src="https://via.placeholder.com/150">
                         <div class="card-body">
-                            <h4 class="card-title">Subway</h4>
+                            <h4 class="card-title"><?php echo $name; ?></h4>
                             <h6 class="card-subtitle mb-2 text-muted d-flex align-items-center">
                                 <span class="fas fa-star star-checked"></span>
                                 <span class="fas fa-star star-checked"></span>
@@ -336,18 +352,22 @@ if(invalid_searcH($term)) {
                                 <span class="ml-2">-</span>
                                 <span class="ml-2" style="color: #85bb65; font-family: Helvetica;">$$</span><span style="font-family: Helvetica;">$$$</span>
                             </h6>
-                            <p class="card-text">
-                                The Vans All-Weather MTE Collection features footwear and apparel designed to withstand the elements whilst still looking cool.             
+                            <p class="card-text mb-0 block-with-text">
+                                <?php echo $des; ?>          
                             </p>
                             <div class="d-flex align-items-center">
-                                <a href="#" class="btn btn-primary mt-3 btn-sm card-btn"><i class="fas fa-calendar-alt"></i> Reserve</a>
-                                <a href="#" class="btn btn-primary mt-3 btn-sm ml-2 card-btn"><i class="fas fa-shopping-cart"></i> Order</a>
+                                <a href="<?php echo $reserve; ?>" class="btn btn-primary mt-3 btn-sm card-btn"><i class="fas fa-calendar-alt"></i> Reserve</a>
+                                <a href="<?php echo $order; ?>" class="btn btn-primary mt-3 btn-sm ml-2 card-btn"><i class="fas fa-shopping-cart"></i> Order</a>
                             </div>
                         </div>
                     </div>
                 </div>
                 <!-- ./Restaurant Card -->
 
+                <?php
+                endforeach;
+                endif;
+                ?>
             </div>
             <!-- ./Restaurants List Row -->
         </div>

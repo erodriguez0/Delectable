@@ -178,9 +178,10 @@ select:focus {
 }
 
 .cb-list-child {
-	max-height: 122px;
+	max-height: 85px;
 	overflow: auto;
 }
+
 
 .fa-star {
 	font-size: .75em;
@@ -422,6 +423,13 @@ body {
 	min-height: 60px;
 	max-height: 60px;
 }
+
+.block-with-text {
+	overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical; 
+}
  
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {  
@@ -447,6 +455,11 @@ body {
 
 	.admin-form-wrap {
 		width: 300px;
+	}
+
+	.card-text {
+		min-height: 110px;
+		max-height: 110px;
 	}
 }
  
