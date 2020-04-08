@@ -11,11 +11,12 @@ require_once(INCLUDE_PATH . 'header.php');
 require_once(INCLUDE_PATH . 'navbar.php');
 require_once(INCLUDE_PATH . 'functions.php');
 $term = (isset($_GET['search'])) ? trim($_GET['search']) : "";
-$zip = (isset($_GET['zip'])) ? trim($_GET['zip']) : "";
-$miles = (isset($_GET['miles'])) ? trim($_GET['miles']) : 5;
+// $zip = (isset($_GET['zip'])) ? trim($_GET['zip']) : "";
+// $miles = (isset($_GET['miles'])) ? trim($_GET['miles']) : 5;
 $rating = (isset($_GET['rating'])) ? trim($_GET['rating']) : "";
 $city = (isset($_GET['city'])) ? trim($_GET['city']) : "";
 $state = (isset($_GET['state'])) ? (string) trim($_GET['state']) : 0;
+$state_name = convert_state_abbr($state);
 $res_select = (isset($_GET['res'])) ? $_GET['res'] : "";
 $cat_select = (isset($_GET['cat'])) ? $_GET['cat'] : "";
 $diet_select = (isset($_GET['diet'])) ? $_GET['diet'] : "";
@@ -23,16 +24,16 @@ $sort = (isset($_GET['sort'])) ? $_GET['sort'] : 0;
 if(!ctype_digit($sort)) {
     $sort = 0;
 }
-if(!empty($zip)) {
-    $city = "";
-    $state = "0";
-}
+// if(!empty($zip)) {
+//     $city = "";
+//     $state = "0";
+// }
 
 if(invalid_search($term)) {
     header('Location: /delectable/public_html/'); exit();
 }
 
-$restaurants = restaurant_filter($conn, $term, $city, $state, $zip, $miles, $rating);
+$restaurants = restaurant_search_filter($conn, $term, $city, $state_name, $res_select);
 switch ($sort) {
     case 1:
         usort($restaurants, "sort_by_name_desc");
@@ -50,7 +51,6 @@ switch ($sort) {
 ?>
 <script type="text/javascript">
     var state = "<?php echo $state; ?>";
-    var miles = "<?php echo $miles; ?>";
     var rating = "<?php echo $rating; ?>";
     var sort = "<?php echo $sort; ?>";
     var res_select = <?php echo json_encode($res_select); ?>;
@@ -108,7 +108,7 @@ switch ($sort) {
                         </select>
                     </div>
                 </div>
-                <div class="d-flex justify-content-center align-items-center row no-gutters">
+<!--                 <div class="d-flex justify-content-center align-items-center row no-gutters">
                     <div class="col-5">
                         <hr>
                     </div>
@@ -134,7 +134,7 @@ switch ($sort) {
                     <div class="col-5">
                         <input type="submit" class="btn btn-primary rounded mb-2 btn-block" value="Update">
                     </div>
-                </div>
+                </div> -->
             </div>
             <!-- </form> -->
             <!-- ./Distance Filter -->
@@ -327,12 +327,15 @@ switch ($sort) {
         <!-- ./Filter Container -->
         </div>
         <div class="col-12 col-lg-9 col-xl-9 pr-md-0">
-            <div class="row">
                 <?php
                 if(!empty($restaurants)):
+                ?>
+                <div class="row">
+                <?php
                 foreach($restaurants as $res):
-                    $name = htmlspecialchars($res["res_name"]);
-                    $des = htmlspecialchars($res["res_description"]);
+                    $rname = htmlspecialchars($res["res_name"]);
+                    $rdes = htmlspecialchars($res["res_description"]);
+                    $lcity = htmlspecialchars($res["loc_city"]);
                     $lid = $res["loc_id"];
                     $reserve = "./reserve/?lid=" . $lid;
                     $order = "./order/?lid=" . $lid;
@@ -342,7 +345,7 @@ switch ($sort) {
                     <div class="card">
                         <img class="card-img" src="https://via.placeholder.com/150">
                         <div class="card-body">
-                            <h4 class="card-title"><?php echo $name; ?></h4>
+                            <h4 class="card-title"><?php echo $rname; ?></h4>
                             <h6 class="card-subtitle mb-2 text-muted d-flex align-items-center">
                                 <span class="fas fa-star star-checked"></span>
                                 <span class="fas fa-star star-checked"></span>
@@ -351,13 +354,17 @@ switch ($sort) {
                                 <span class="fas fa-star"></span>
                                 <span class="ml-2">-</span>
                                 <span class="ml-2" style="color: #85bb65; font-family: Helvetica;">$$</span><span style="font-family: Helvetica;">$$$</span>
+                                <span class="ml-2">-</span>
+                                <span class="ml-2 d-flex align-items-center"><small><?php echo $lcity; ?></small></span>
                             </h6>
                             <p class="card-text mb-0 block-with-text">
-                                <?php echo $des; ?>          
+                                <?php echo $rdes; ?>          
                             </p>
                             <div class="d-flex align-items-center">
-                                <a href="<?php echo $reserve; ?>" class="btn btn-primary mt-3 btn-sm card-btn"><i class="fas fa-calendar-alt"></i> Reserve</a>
-                                <a href="<?php echo $order; ?>" class="btn btn-primary mt-3 btn-sm ml-2 card-btn"><i class="fas fa-shopping-cart"></i> Order</a>
+                                <a href="<?php echo $order; ?>" class="btn btn-primary mt-3 border rounded btn-sm card-btn"><i class="fas fa-shopping-cart"></i> Order</a>
+                                <?php if(isset($_SESSION['cust_id'])): ?>
+                                <a href="<?php echo $reserve; ?>" class="btn btn-primary mt-3 border rounded btn-sm card-btn ml-2"><i class="fas fa-calendar-alt"></i> Reserve</a>
+                                <?php endif; ?>
                             </div>
                         </div>
                     </div>
@@ -366,6 +373,16 @@ switch ($sort) {
 
                 <?php
                 endforeach;
+                // Restaurants Found
+                else:
+                ?>
+                <div class="row d-flex justify-content-center">
+                    <div class="col-12 col-sm-8 col-md-6 col-lg-4 pt-3 text-center">
+                        <h5>No restaurants found</h5>
+                    </div>
+                </div>
+                <?php
+                // No Restaurants Found Message
                 endif;
                 ?>
             </div>
