@@ -25,6 +25,26 @@ function password_check($pass = '') {
 	return true;
 }
 
+function sort_by_name_asc($a, $b) {
+	$a = $a["res_name"];
+	$b = $b["res_name"];
+
+	if($a == $b) return 0;
+	return ($a < $b) ? -1 : 1;
+}
+
+function sort_by_name_desc($a, $b) {
+	$a = $a["res_name"];
+	$b = $b["res_name"];
+
+	if($a == $b) return 0;
+	return ($a > $b) ? -1 : 1;
+}
+
+function invalid_search($term) {
+	return preg_match('/[^a-zA-Z\d .\-\']/', $term);
+}
+
 // Checks if number is formatted as N,2
 function is_currency($number) {
   return preg_match("/^-?[0-9]+(?:\.[0-9]{2})?$/", $number);
@@ -165,6 +185,16 @@ function menu_items($conn, $id) {
 	$sql = "SELECT item_id, item_name, item_description, item_price FROM menu_item WHERE fk_item_cat_id = :cid";
 	$query = $conn->prepare($sql);
 	$query->bindParam(":cid", $cid, PDO::PARAM_INT);
+	if($query->execute()) {
+		return $query->fetchAll();
+	}
+}
+
+function restaurant_filter($conn, $term, $city, $state, $zip, $miles, $rating) {
+	$term = "%" . $term . "%";
+	$sql = "SELECT res_id, res_name, res_slogan, res_description, loc_id, loc_city, loc_state FROM restaurant, location WHERE fk_res_id = res_id AND (res_name LIKE :term OR res_description LIKE :term)";
+	$query = $conn->prepare($sql);
+	$query->bindParam(":term", $term, PDO::PARAM_STR);
 	if($query->execute()) {
 		return $query->fetchAll();
 	}

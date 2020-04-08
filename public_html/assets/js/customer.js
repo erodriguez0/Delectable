@@ -1,4 +1,75 @@
+function validate_search() {
+	let term = $("#search-restaurants").val().trim();
+	if(term == null || term.length < 1 || invalid_search(term)) {
+		return false;
+	}
+	return true;
+}
+
+$(window).resize(function() {
+	let width = $(this).width();
+	if(width < 768) {
+		$(".card-btn").each(function() {
+			$(".card-btn").removeClass("btn-sm");
+		});
+	} else if(width > 767 && !$(".card-btn").hasClass("btn-sm")) {
+		$(".card-btn").addClass("btn-sm");
+	}
+});
+
 $(document).ready(function() {
+	// $("#search-restaurants-btn").click(function() {
+	// 	let term = $("#search-restaurants").val();
+	// 	if(term != null && term.length > 0 && !invalid_search(term)) {
+
+	// 	}
+	// });
+	let win_width = $(window).width();
+
+	if(win_width < 768) {
+		$(".card-btn").removeClass("btn-sm");
+	}
+
+	$("#reset-radius").click(function() {
+		$("input[name='city']").val("");
+		$("select[name='state']").val("0");
+		$("input[name='zip']").val("");
+		$("select[name='miles']").val("5");
+		$("#restaurant-search").submit();
+	});
+
+	$("#reset-rating").click(function() {
+		$("input[name='rating']").val("");
+		$("#restaurant-search").submit();
+	});
+
+	$("#reset-res-select").click(function() {
+		$("input[name='res[]']").each(function() {
+			$(this).prop("checked", false);
+			$("#restaurant-search").submit();
+		});
+	});
+
+	$("#reset-cat-select").click(function() {
+		$("input[name='cat[]']").each(function() {
+			$(this).prop("checked", false);
+			$("#restaurant-search").submit();
+		});
+	});
+
+	$("#reset-diet-select").click(function() {
+		$("input[name='diet[]']").each(function() {
+			$(this).prop("checked", false);
+			$("#restaurant-search").submit();
+		});
+	});
+
+	$("#search-restaurants").keyup(function(event) {
+		if(event.keyCode === 13) {
+			$("#search-restaurants-btn").click();
+		}
+	});
+
 	// if(modal) {
 	// 	$("#create-account-modal").modal('show');
 	// }
