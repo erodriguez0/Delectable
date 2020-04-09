@@ -14,12 +14,12 @@ else:
 ?>
 <div class="container py-3">
 	<div class="row after-nav">
-		<div class="col-12 col-lg-9 order-2 order-md-1">
+		<div class="col-12 col-lg-9 order-2 order-lg-1">
 			<div class="row no-gutters d-flex justify-content-center">
-				<div class="col-6 col-md-5 col-lg-5 col-xl-4 mt-3 mt-md-0">
+				<div class="col-6 col-md-5 col-lg-5 col-xl-4 mt-3 mt-lg-0">
 					<input id="datepicker" width="220" placeholder="MM/DD/YYYY">
 				</div>
-				<div class="col-6 col-md-4 col-lg-3 mt-3 mt-md-0">
+				<div class="col-6 col-md-4 col-lg-3 mt-3 mt-lg-0">
 					<select class="form-control">
 						<option value="0">Choose Time</option>
 					</select>
@@ -29,7 +29,7 @@ else:
 				<canvas id="canvas" width="720" height="540"></canvas>
 			</div>
 		</div>
-		<div class="col-12 col-lg-3 order-1 order-md-2 mt-md-3 mt-lg-0">
+		<div class="col-12 col-lg-3 order-1 order-lg-2 mt-md-3 mt-lg-0">
 			<h1 class="h3 subheader-border mb-3">Reservation</h1>
 				<label class="rsvn-checkout-label pr-2"><b>Place:</b></label>
 				<label id="rsvn-restaurant">BAMBOO!</label>
