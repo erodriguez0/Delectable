@@ -200,6 +200,26 @@ $(document).ready(function() {
 		}
 	});
 
+	if(document.getElementById("datepicker") !== null) {
+		$('#datepicker').datepicker({
+	        uiLibrary: 'bootstrap4',
+	        disableDates: function (date) {
+	        	const currentDate = new Date().setHours(0,0,0,0);
+		     	return date.setHours(0,0,0,0) >= currentDate ? true : false;
+	        }
+	    });
+
+        $('#datepicker').datepicker({
+		    datepicker: {
+		    disableDates:  function (date) {
+		    // allow for today
+		     const currentDate = new Date().setHours(0,0,0,0);
+		     return date.setHours(0,0,0,0) >= currentDate ? true : false;
+		    }},
+
+		});
+	}
+
 	var usStates = [
 		{ name: 'ALABAMA'},
 		{ name: 'ALASKA'},

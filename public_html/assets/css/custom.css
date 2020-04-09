@@ -182,6 +182,10 @@ select:focus {
 	overflow: auto;
 }
 
+.rsvn-checkout-label {
+	min-width: 50px;
+	max-width: 50px;
+}
 
 .fa-star {
 	font-size: .75em;

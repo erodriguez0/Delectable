@@ -241,6 +241,14 @@ function restaurant_search_filter($conn, $term, $city, $state, $res_list) {
 	}
 }
 
+function restaurant_schedule($conn, $lid) {
+	$query = $conn->prepare("SELECT * FROM location_hours WHERE fk_loc_id = :lid");
+	$query->bindParam(":lid", $lid, PDO::PARAM_INT);
+	if($query->execute()) {
+		return $query->fetchAll();
+	}
+}
+
 function convert_state_abbr($str) {
 	$us_state_abbrevs_names = array(
 		'AL'=>'ALABAMA',
