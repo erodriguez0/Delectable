@@ -314,6 +314,7 @@ CREATE TABLE IF NOT EXISTS `delectable`.`reservation` (
   `rsvn_updated` TIMESTAMP NULL,
   `fk_loc_id` INT UNSIGNED NOT NULL,
   `fk_cust_id` INT UNSIGNED NOT NULL,
+  `fk_table_id` INT UNSIGNED NOT NULL,
   PRIMARY KEY (`rsvn_id`),
   CONSTRAINT `fk_reservation_loc_id`
     FOREIGN KEY (`fk_loc_id`)
@@ -324,12 +325,19 @@ CREATE TABLE IF NOT EXISTS `delectable`.`reservation` (
     FOREIGN KEY (`fk_cust_id`)
     REFERENCES `delectable`.`customer` (`cust_id`)
     ON DELETE NO ACTION
+    ON UPDATE NO ACTION),
+  CONSTRAINT `fk_reservation_table_id`
+    FOREIGN KEY (`fk_table_id`)
+    REFERENCES `delectable`.`table` (`table_id`)
+    ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 CREATE INDEX `fk_loc_id_idx` ON `delectable`.`reservation` (`fk_loc_id` ASC) VISIBLE;
 
 CREATE INDEX `fk_cust_id_idx` ON `delectable`.`reservation` (`fk_cust_id` ASC) VISIBLE;
+
+CREATE INDEX `fk_table_id_idx` ON `delectable`.`reservation` (`fk_table_id` ASC) VISIBLE;
 
 
 -- -----------------------------------------------------
@@ -446,34 +454,6 @@ CREATE TABLE IF NOT EXISTS `delectable`.`table` (
 ENGINE = InnoDB;
 
 CREATE INDEX `fk_loc_id_idx` ON `delectable`.`table` (`fk_loc_id` ASC) VISIBLE;
-
-
--- -----------------------------------------------------
--- Table `delectable`.`table_reservation`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `delectable`.`table_reservation` ;
-
-CREATE TABLE IF NOT EXISTS `delectable`.`table_reservation` (
-  `table_rsvn_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `fk_table_id` INT UNSIGNED NOT NULL,
-  `fk_rsvn_id` INT UNSIGNED NOT NULL,
-  PRIMARY KEY (`table_rsvn_id`),
-  CONSTRAINT `fk_table_reservation_table_id`
-    FOREIGN KEY (`fk_table_id`)
-    REFERENCES `delectable`.`table` (`table_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_table_reservation_rsvn_id`
-    FOREIGN KEY (`fk_rsvn_id`)
-    REFERENCES `delectable`.`reservation` (`rsvn_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-CREATE INDEX `fk_table_id_idx` ON `delectable`.`table_reservation` (`fk_table_id` ASC) VISIBLE;
-
-CREATE INDEX `fk_rsvn_id_idx` ON `delectable`.`table_reservation` (`fk_rsvn_id` ASC) VISIBLE;
-
 
 -- -----------------------------------------------------
 -- Table `delectable`.`review`

@@ -28,7 +28,7 @@ else:
 				</div>
 				<div class="col-6 col-md-4 col-lg-3 mt-3 mt-lg-0">
 					<select id="rsvn-time-select" class="form-control">
-						<option value="0">Choose Time</option>
+						<option value="0">Choose Date</option>
 					</select>
 				</div>
 			</div>

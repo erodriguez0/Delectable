@@ -219,72 +219,82 @@ $(document).ready(function() {
 	    	d = "0" + d;
 	    }
 	    $("#datepicker").val(m + "/" + d + "/" + y);
-	    $.ajax({
-	    	url: '/delectable/public_html/assets/scripts/customer-reservation.php',
-	    	type: 'POST',
-	    	data: {
-	    		'loc_id': lid, 
-	    		'day': today.getDay(),
-	    		'restaurant_hours': true
-	    	}
-	    }).done(function(response) {
-	    	let res = JSON.parse(response);
-	    	let sel = $("#rsvn-time-select");
-	    	let start = +res.hours_open.split(':')[0];
-	    	let end = +res.hours_close.split(':')[0];
-	    	let o;
-	    	for(let i = start; i < end; i++) {
-	    		if(i > 12) {
-	    			o = '<option val="' + i + ':00' + '">' + i + ':00' + '</option>';
-	    		} else {
-	    			o = '<option val="' + i + ':00' + '">' + i + ':00' + '</option>';
-	    		}
-	    		sel.append(o);
-	    	}
-	    });
 	}
 
 	$("#update-date").click(function() {
-		let today = new Date();
-		let datepicker = $("#datepicker").val();
-		let month = datepicker.split('/')[0];
-		let day = datepicker.split('/')[1];
-		// day = datepicker.split('/')[1];
-		let year = datepicker.split('/')[2];
+		let sel = $("#rsvn-time-select");
+		let datepicker = ($("#datepicker").val().length > 0) ? $("#datepicker").val() : "";
+		let obj = (canvas.getActiveObject()) ? canvas.getActiveObject() : "";
 
-		if(month < 10) {
-			month = "0" + month;
+		if(obj == null || obj == undefined || obj.length < 1) {
+			sel.html("");
+			sel.append('<option value="0">Choose Table</option>');
+		} else if(datepicker == null || datepicker.length < 1) {
+			sel.html("");
+			sel.append('<option value="0">Choose Date</option>');
+		} else {
+			let today = new Date();
+			let month = datepicker.split('/')[0];
+			let day = datepicker.split('/')[1];
+			let year = datepicker.split('/')[2];
+
+			// Date format for DB
+			let jdate = new Date(year + "-" + month + "-" + day);
+			let date = year + "-" + month + "-" + day;
+			// console.log(date);
+			$.ajax({
+		    	url: '/delectable/public_html/assets/scripts/customer-reservation.php',
+		    	type: 'POST',
+		    	data: {
+		    		'loc_id': lid, 
+		    		'day': jdate.getDay(),
+		    		'rsvn_date': date,
+		    		'table_uuid': obj.id,
+		    		'available_hours': true
+		    	}
+		    }).done(function(response) {
+		    	let res = JSON.parse(response);
+		    	if(res.rsvn.length < 1) {
+			    	sel.html("");
+			    	sel.append('<option value="0">Choose Time</option>');
+			    	let start = +res.hours.hours_open.split(':')[0];
+			    	let end = +res.hours.hours_close.split(':')[0];
+			    	let o;
+			    	for(let i = start; i < end; i++) {
+			    		if(i > 12) {
+			    			o = '<option val="' + i + ':00' + '">' + i + ':00' + '</option>';
+			    		} else {
+			    			o = '<option val="' + i + ':00' + '">' + i + ':00' + '</option>';
+			    		}
+			    		sel.append(o);
+			    	}
+		    	} else {
+		    		// If there are reservations during the day
+		    		// Check if slot is taken
+		    		sel.html("");
+		    		sel.append('<option value="0">Choose Time</option>');
+		    		let start = +res.hours.hours_open.split(':')[0];
+			    	let end = +res.hours.hours_close.split(':')[0];
+			    	let o;
+			    	let taken = [];
+			    	$.each(res.rsvn, function(k, v) {
+			    		taken.push(v.rsvn_slot);
+			    	});
+			    	let tmp;
+			    	for(let i = start; i < end; i++) {
+			    		if(i < 10) {
+			    			tmp = "0" + i + ":00:00";
+			    		} else {
+			    			tmp = "" + i + ":00:00";
+			    		}
+
+			    		if(jQuery.inArray(tmp, taken) == -1) {
+			    			o = '<option val="' + i + ':00' + '">' + i + ':00' + '</option>';
+			    			sel.append(o);
+			    		}
+			    	}
+		    	}
+		    });
 		}
-
-		if(day < 10) {
-			day = "0" + day;
-		}
-
-		let date = new Date(year + "-" + month + "-" + day);
-		$.ajax({
-	    	url: '/delectable/public_html/assets/scripts/customer-reservation.php',
-	    	type: 'POST',
-	    	data: {
-	    		'loc_id': lid, 
-	    		'day': date.getDay(),
-	    		'restaurant_hours': true
-	    	}
-	    }).done(function(response) {
-	    	let res = JSON.parse(response);
-	    	let sel = $("#rsvn-time-select");
-	    	sel.html("");
-	    	sel.append('<option value="0">Choose Time</option>');
-	    	let start = +res.hours_open.split(':')[0];
-	    	let end = +res.hours_close.split(':')[0];
-	    	let o;
-	    	for(let i = start; i < end; i++) {
-	    		if(i > 12) {
-	    			o = '<option val="' + i + ':00' + '">' + i + ':00' + '</option>';
-	    		} else {
-	    			o = '<option val="' + i + ':00' + '">' + i + ':00' + '</option>';
-	    		}
-	    		sel.append(o);
-	    	}
-	    });
 	});
 });
