@@ -325,7 +325,7 @@ CREATE TABLE IF NOT EXISTS `delectable`.`reservation` (
     FOREIGN KEY (`fk_cust_id`)
     REFERENCES `delectable`.`customer` (`cust_id`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION),
+    ON UPDATE NO ACTION,
   CONSTRAINT `fk_reservation_table_id`
     FOREIGN KEY (`fk_table_id`)
     REFERENCES `delectable`.`table` (`table_id`)
@@ -628,9 +628,9 @@ VALUES ('2550 California Ave', 'Suite #200', 'Bakersfield', 'California', '93308
 INSERT INTO location (loc_address_1, loc_address_2, loc_city, loc_state, loc_postal_code, loc_phone, fk_res_id)
 VALUES ('1701 New Stine Rd', '', 'Bakersfield', 'California', '93309', '(661)-832-1278', 4);
 INSERT INTO location (loc_address_1, loc_address_2, loc_city, loc_state, loc_postal_code, loc_phone, fk_res_id)
-VALUES ('8110 Rosedale Hwy', 'Suite #F', 'Bakersfield', 'California', '93312', '(661)-588-4879', 2);
+VALUES ('8110 Rosedale Hwy', 'Suite #F', 'Seattle', 'Washington', '98101', '(206)-588-4879', 2);
 INSERT INTO location (loc_address_1, loc_address_2, loc_city, loc_state, loc_postal_code, loc_phone, fk_res_id)
-VALUES ('2217 Ashe Rd', '', 'Bakersfield', 'California', '93309', '(661)-473-1426', 3);
+VALUES ('2217 Ashe Rd', '', 'Los Angeles', 'California', '93309', '(661)-473-1426', 3);
 INSERT INTO location (loc_address_1, loc_address_2, loc_city, loc_state, loc_postal_code, loc_phone, fk_res_id)
 VALUES ('5051 Stockdale Hwy', '', 'Bakersfield', 'California', '93309', '(661)-834-7850', 5);
 
@@ -646,8 +646,16 @@ INSERT INTO menu_item_category (item_cat_name, item_cat_description, fk_loc_id) 
 -- MENU ITEM
 INSERT INTO menu_item (item_name, item_price, fk_item_cat_id) VALUES ("Shrimp with Vermicelli and Garlic", 14.99, 1);
 
+-- LAYOUT TABLES
+INSERT INTO `table` (`table_uuid`, `table_number`, `table_seats`, `table_type`, `table_height`, `table_width`, `table_left`, `table_top`, `table_angle`, `fk_loc_id`) VALUES
+('z9ukjjla5-karck0x29', '1', 1, 'rectangle', 76, 106, 600, 15, 45, 3),
+('e6nv27tda-72a8g6zw2', '2', 1, 'rectangle', 76, 106, 90, 390, 45, 3),
+('ni2uiynt6-63ob1yd5w', '3', 1, 'rectangle', 76, 106, 315, 215, 0, 3),
+('9imhdwtaz-crfiswa0s', '4', 1, 'rectangle', 76, 106, 45, 30, 0, 3),
+('o0toh8ljq-t63v0rhb5', '5', 1, 'rectangle', 76, 106, 570, 420, 0, 3);
+
 -- RESERVATION QUERY
-INSERT INTO reservation (rsvn_date, rsvn_slot, fk_loc_id, fk_cust_id) VALUES ("2020-05-01", "16:00:00", 3, 1);
+INSERT INTO reservation (rsvn_date, rsvn_slot, fk_loc_id, fk_cust_id, fk_table_id) VALUES ("2020-05-01", "16:00:00", 3, 1, 3);
 
 -- ORDER
 INSERT INTO `order` (order_total, fk_cust_id, fk_rsvn_id) VALUES (14.99, 1, 1);
