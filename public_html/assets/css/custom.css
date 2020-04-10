@@ -18,9 +18,18 @@ B O O T S T R A P  B U T T O N S
 	background-color: rgba(0,0,0,0);
 }
 
+.btn-secondary {
+	background-color: #6c757d;
+}
+
 .btn-sm-text {
 	font-size: .9em;
 }
+
+.btn-primary,
+.btn-primary:focus,
+.btn-primary:active:focus
+.btn-primary:visited:active
 
 .btn-primary,
 .btn-primary:focus,
@@ -95,6 +104,35 @@ B O O T S T R A P  B U T T O N S
 	border: none;
 }
 
+.btn-danger {
+	background-color: #dc3545;
+}
+
+textarea:hover, 
+input:hover, 
+textarea:active, 
+input:active, 
+textarea:focus, 
+input:focus,
+button:focus,
+button:active,
+button:hover,
+label:focus,
+/*select:active,
+select:focus,*/
+.btn:active,
+.btn.active {
+	outline: 0px !important;
+	/*-webkit-appearance: none;*/
+	box-shadow: none !important;
+}
+
+select:active,
+select:focus {
+	outline: 0px !important;
+	box-shadow: none !important;
+}
+
 /* The switch - the box around the slider */
 .switch {
 	position: relative;
@@ -135,6 +173,29 @@ B O O T S T R A P  B U T T O N S
 	transition: .3s;
 }
 
+.cb-list {
+	overflow: hidden;
+}
+
+.cb-list-child {
+	max-height: 85px;
+	overflow: auto;
+}
+
+.rsvn-checkout-label {
+	min-width: 50px;
+	max-width: 50px;
+}
+
+.fa-star {
+	font-size: .75em;
+	/*align-self: center;*/
+}
+
+.star-checked {
+	color: gold;
+}
+
 .after-nav {
 	margin-top: 64px !important;
 }
@@ -145,6 +206,62 @@ B O O T S T R A P  B U T T O N S
 	max-height: 100vh !important;
 	overflow: hidden;
 }
+
+/* LOADING ANIMATION */
+#cover {
+	position: fixed; 
+	height: 100%; 
+	width: 100%; 
+	top:0; 
+	left: 0; 
+	background-color: #5a0d0c;
+	z-index:9999;
+}
+
+.spinner {
+	margin: 100px auto 0;
+	width: 70px;
+	text-align: center;
+}
+
+.spinner > div {
+	width: 18px;
+	height: 18px;
+	background-color: #fff;
+
+	border-radius: 100%;
+	display: inline-block;
+	-webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+	animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+}
+
+.spinner .bounce1 {
+	-webkit-animation-delay: -0.32s;
+	animation-delay: -0.32s;
+}
+
+.spinner .bounce2 {
+	-webkit-animation-delay: -0.16s;
+	animation-delay: -0.16s;
+}
+
+@-webkit-keyframes sk-bouncedelay {
+	0%, 80%, 100% { -webkit-transform: scale(0) }
+	40% { -webkit-transform: scale(1.0) }
+}
+
+@keyframes sk-bouncedelay {
+	0%, 80%, 100% { 
+		-webkit-transform: scale(0);
+		transform: scale(0);
+	} 40% { 
+		-webkit-transform: scale(1.0);
+		transform: scale(1.0);
+	}
+}
+
+/* LOADING ANIMATION END */
+
 
 input:checked + .status-slider {
 	background-color: #2196F3;
@@ -284,21 +401,85 @@ body {
 .mh-textarea {
 	max-height: 300px;
 }
+
+.res-img-thumb {
+	min-width: 254px;
+	width: 254px;
+	max-width: 254px;
+	min-height: 200px;
+	height: 200px;
+	max-height: 200px;
+}
+
+.img-thumb {
+	display: block;
+	height: 100%;
+	width: auto;
+}
+
+.res-title {
+	min-height: 45px;
+	max-height: 45px;
+}
+
+.res-description {
+	overflow-y: hidden;
+	min-height: 60px;
+	max-height: 60px;
+}
+
+.block-with-text {
+	overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical; 
+}
  
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {  
-
+	.res-img-thumb {
+		min-width: 453px;
+		width: 453px;
+		max-width: 453px;
+	}
 }
  
 /* Medium devices (tablets, 768px and up) The navbar toggle appears at this breakpoint */
 @media (min-width: 768px) {  
+	.res-img-thumb {
+		min-width: 330px;
+		width: 330px;
+		max-width: 330px;
+	}
+
+	.img-thumb {
+		width: 100%;
+		height: auto;
+	}
+
 	.admin-form-wrap {
 		width: 300px;
+	}
+
+	.card-text {
+		min-height: 110px;
+		max-height: 110px;
 	}
 }
  
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) { 
+	.res-img-thumb {
+		min-width: 210px;
+		width: 210px;
+		max-width: 210px;
+	}
+
+	.img-thumb {
+		height: 100%;
+		width: auto;
+	}
+
 	.paragraph-container {
 		max-width: 50%;
 	}
@@ -314,7 +495,11 @@ body {
  
 /* Extra large devices (large desktops, 1200px and up) */
 @media (min-width: 1200px) {  
-
+	.res-img-thumb {
+		min-width: 254px;
+		width: 254px;
+		max-width: 254px;
+	}
 }
  
  

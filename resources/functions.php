@@ -25,6 +25,26 @@ function password_check($pass = '') {
 	return true;
 }
 
+function sort_by_name_asc($a, $b) {
+	$a = $a["res_name"];
+	$b = $b["res_name"];
+
+	if($a == $b) return 0;
+	return ($a < $b) ? -1 : 1;
+}
+
+function sort_by_name_desc($a, $b) {
+	$a = $a["res_name"];
+	$b = $b["res_name"];
+
+	if($a == $b) return 0;
+	return ($a > $b) ? -1 : 1;
+}
+
+function invalid_search($term) {
+	return preg_match('/[^a-zA-Z\d .\-\']/', $term);
+}
+
 // Checks if number is formatted as N,2
 function is_currency($number) {
   return preg_match("/^-?[0-9]+(?:\.[0-9]{2})?$/", $number);
@@ -168,5 +188,133 @@ function menu_items($conn, $id) {
 	if($query->execute()) {
 		return $query->fetchAll();
 	}
+}
+
+function restaurant_search_filter($conn, $term, $city, $state, $res_list) {
+	$count = 0;
+	$list = "";
+	$term = "%" . $term . "%";
+	$sql = "SELECT res_id, res_name, res_slogan, res_description, loc_id, loc_city, loc_state FROM restaurant, location WHERE fk_res_id = res_id AND (res_name LIKE :term OR res_description LIKE :term)";
+
+	if(strlen($city) > 0 && strlen($state) > 0) {
+		$sql .= " AND loc_city = :city AND loc_state = :state";
+		$count += 1;
+	}
+
+	if(!empty($res_list)) {
+		$sql .= " AND res_id IN (";
+		for($i = 0; $i < count($res_list); $i++) {
+			if($i != count($res_list) - 1) {
+				$sql .= ":res_" . $i . ", ";
+			} else {
+				$sql .= ":res_" . $i . ")";
+			}
+		}
+		$count += 2;
+	}
+
+	$query = $conn->prepare($sql);
+	$query->bindParam(":term", $term, PDO::PARAM_STR);
+	switch ($count) {
+		case 1:
+			$query->bindParam(":city", $city, PDO::PARAM_STR);
+			$query->bindParam(":state", $state, PDO::PARAM_STR);
+			break;
+		case 2:
+			for($i = 0; $i < count($res_list); $i++) {
+				$query->bindParam(":res_" . $i, $res_list[$i], PDO::PARAM_INT);
+			}
+			break;
+		case 3:
+			$query->bindParam(":city", $city, PDO::PARAM_STR);
+			$query->bindParam(":state", $state, PDO::PARAM_STR);
+			for($i = 0; $i < count($res_list); $i++) {
+				$query->bindParam(":res_" . $i, $res_list[$i], PDO::PARAM_INT);
+			}
+			break;
+		default:
+			break;
+	}
+
+	if($query->execute()) {
+		return $query->fetchAll();
+	}
+}
+
+function restaurant_schedule($conn, $lid) {
+	$query = $conn->prepare("SELECT * FROM location_hours WHERE fk_loc_id = :lid");
+	$query->bindParam(":lid", $lid, PDO::PARAM_INT);
+	if($query->execute()) {
+		return $query->fetchAll();
+	}
+}
+
+function convert_state_abbr($str) {
+	$us_state_abbrevs_names = array(
+		'AL'=>'ALABAMA',
+		'AK'=>'ALASKA',
+		'AS'=>'AMERICAN SAMOA',
+		'AZ'=>'ARIZONA',
+		'AR'=>'ARKANSAS',
+		'CA'=>'CALIFORNIA',
+		'CO'=>'COLORADO',
+		'CT'=>'CONNECTICUT',
+		'DE'=>'DELAWARE',
+		'DC'=>'DISTRICT OF COLUMBIA',
+		'FM'=>'FEDERATED STATES OF MICRONESIA',
+		'FL'=>'FLORIDA',
+		'GA'=>'GEORGIA',
+		'GU'=>'GUAM GU',
+		'HI'=>'HAWAII',
+		'ID'=>'IDAHO',
+		'IL'=>'ILLINOIS',
+		'IN'=>'INDIANA',
+		'IA'=>'IOWA',
+		'KS'=>'KANSAS',
+		'KY'=>'KENTUCKY',
+		'LA'=>'LOUISIANA',
+		'ME'=>'MAINE',
+		'MH'=>'MARSHALL ISLANDS',
+		'MD'=>'MARYLAND',
+		'MA'=>'MASSACHUSETTS',
+		'MI'=>'MICHIGAN',
+		'MN'=>'MINNESOTA',
+		'MS'=>'MISSISSIPPI',
+		'MO'=>'MISSOURI',
+		'MT'=>'MONTANA',
+		'NE'=>'NEBRASKA',
+		'NV'=>'NEVADA',
+		'NH'=>'NEW HAMPSHIRE',
+		'NJ'=>'NEW JERSEY',
+		'NM'=>'NEW MEXICO',
+		'NY'=>'NEW YORK',
+		'NC'=>'NORTH CAROLINA',
+		'ND'=>'NORTH DAKOTA',
+		'MP'=>'NORTHERN MARIANA ISLANDS',
+		'OH'=>'OHIO',
+		'OK'=>'OKLAHOMA',
+		'OR'=>'OREGON',
+		'PW'=>'PALAU',
+		'PA'=>'PENNSYLVANIA',
+		'PR'=>'PUERTO RICO',
+		'RI'=>'RHODE ISLAND',
+		'SC'=>'SOUTH CAROLINA',
+		'SD'=>'SOUTH DAKOTA',
+		'TN'=>'TENNESSEE',
+		'TX'=>'TEXAS',
+		'UT'=>'UTAH',
+		'VT'=>'VERMONT',
+		'VI'=>'VIRGIN ISLANDS',
+		'VA'=>'VIRGINIA',
+		'WA'=>'WASHINGTON',
+		'WV'=>'WEST VIRGINIA',
+		'WI'=>'WISCONSIN',
+		'WY'=>'WYOMING',
+		'AE'=>'ARMED FORCES AFRICA \ CANADA \ EUROPE \ MIDDLE EAST',
+		'AA'=>'ARMED FORCES AMERICA (EXCEPT CANADA)',
+		'AP'=>'ARMED FORCES PACIFIC'
+	);
+
+	return $us_state_abbrevs_names[$str];
 }
 ?>

@@ -1023,7 +1023,7 @@ function saveObjects() {
 		if(o[k].table) {
 			row = {
 				id: o[k].id,
-				number: o[k].number,
+				number: o[k]._objects[1].text,
 				type: o[k].type,
 				table: true,
 				left:  o[k].left,
@@ -1067,7 +1067,6 @@ function saveObjects() {
 		}
 	});
 
-	// TODO: Save rows to database
 	rows.sort(sortRowsByObjectNum);
 	
 	$.ajax({
@@ -1080,7 +1079,7 @@ function saveObjects() {
 			'save_layout': true
 		}
 	}).done(function(res) {
-		// console.log(res);
+		// Optional: to show it works
 		location.reload();
 	});
 }

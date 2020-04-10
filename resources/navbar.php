@@ -35,7 +35,7 @@
                     <a class="nav-link" href="/delectable/public_html/">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/delectable/public_html/about/">About</a>
+                    <a class="nav-link" href="/delectable/public_html/restaurants/">Restaurants</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/delectable/public_html/account/">Account</a>
@@ -61,6 +61,9 @@
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
                     <a class="nav-link" href="/delectable/public_html/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/delectable/public_html/restaurants/">Restaurants</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/delectable/public_html/business/">Business</a>
