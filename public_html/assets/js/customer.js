@@ -201,6 +201,7 @@ $(document).ready(function() {
 	});
 
 	if(document.getElementById("datepicker") !== null) {
+		let today = new Date();
 		$('#datepicker').datepicker({
 	        uiLibrary: 'bootstrap4',
 	        disableDates: function (date) {
@@ -208,87 +209,82 @@ $(document).ready(function() {
 		     	return date.setHours(0,0,0,0) >= currentDate ? true : false;
 	        }
 	    });
-
-        $('#datepicker').datepicker({
-		    datepicker: {
-		    disableDates:  function (date) {
-		    // allow for today
-		     const currentDate = new Date().setHours(0,0,0,0);
-		     return date.setHours(0,0,0,0) >= currentDate ? true : false;
-		    }},
-
-		});
+	    let m = today.getMonth() + 1;
+	    let d = today.getDate();
+	    let y = today.getFullYear();
+	    if(m < 10) {
+	    	m = "0" + m;
+	    }
+	    if(d < 10) {
+	    	d = "0" + d;
+	    }
+	    $("#datepicker").val(m + "/" + d + "/" + y);
+	    $.ajax({
+	    	url: '/delectable/public_html/assets/scripts/customer-reservation.php',
+	    	type: 'POST',
+	    	data: {
+	    		'loc_id': lid, 
+	    		'day': today.getDay(),
+	    		'restaurant_hours': true
+	    	}
+	    }).done(function(response) {
+	    	let res = JSON.parse(response);
+	    	let sel = $("#rsvn-time-select");
+	    	let start = +res.hours_open.split(':')[0];
+	    	let end = +res.hours_close.split(':')[0];
+	    	let o;
+	    	for(let i = start; i < end; i++) {
+	    		if(i > 12) {
+	    			o = '<option val="' + i + ':00' + '">' + i + ':00' + '</option>';
+	    		} else {
+	    			o = '<option val="' + i + ':00' + '">' + i + ':00' + '</option>';
+	    		}
+	    		sel.append(o);
+	    	}
+	    });
 	}
 
-	var usStates = [
-		{ name: 'ALABAMA'},
-		{ name: 'ALASKA'},
-		{ name: 'AMERICAN SAMOA'},
-		{ name: 'ARIZONA'},
-		{ name: 'ARKANSAS'},
-		{ name: 'CALIFORNIA'},
-		{ name: 'COLORADO'},
-		{ name: 'CONNECTICUT'},
-		{ name: 'DELAWARE'},
-		{ name: 'DISTRICT OF COLUMBIA'},
-		{ name: 'FEDERATED STATES OF MICRONESIA'},
-		{ name: 'FLORIDA'},
-		{ name: 'GEORGIA'},
-		{ name: 'GUAM'},
-		{ name: 'HAWAII'},
-		{ name: 'IDAHO'},
-		{ name: 'ILLINOIS'},
-		{ name: 'INDIANA'},
-		{ name: 'IOWA'},
-		{ name: 'KANSAS'},
-		{ name: 'KENTUCKY'},
-		{ name: 'LOUISIANA'},
-		{ name: 'MAINE'},
-		{ name: 'MARSHALL ISLANDS'},
-		{ name: 'MARYLAND'},
-		{ name: 'MASSACHUSETTS'},
-		{ name: 'MICHIGAN'},
-		{ name: 'MINNESOTA'},
-		{ name: 'MISSISSIPPI'},
-		{ name: 'MISSOURI'},
-		{ name: 'MONTANA'},
-		{ name: 'NEBRASKA'},
-		{ name: 'NEVADA'},
-		{ name: 'NEW HAMPSHIRE'},
-		{ name: 'NEW JERSEY'},
-		{ name: 'NEW MEXICO'},
-		{ name: 'NEW YORK'},
-		{ name: 'NORTH CAROLINA'},
-		{ name: 'NORTH DAKOTA'},
-		{ name: 'NORTHERN MARIANA ISLANDS'},
-		{ name: 'OHIO'},
-		{ name: 'OKLAHOMA'},
-		{ name: 'OREGON'},
-		{ name: 'PALAU'},
-		{ name: 'PENNSYLVANIA'},
-		{ name: 'PUERTO RICO'},
-		{ name: 'RHODE ISLAND'},
-		{ name: 'SOUTH CAROLINA'},
-		{ name: 'SOUTH DAKOTA'},
-		{ name: 'TENNESSEE'},
-		{ name: 'TEXAS'},
-		{ name: 'UTAH'},
-		{ name: 'VERMONT'},
-		{ name: 'VIRGIN ISLANDS'},
-		{ name: 'VIRGINIA'},
-		{ name: 'WASHINGTON'},
-		{ name: 'WEST VIRGINIA'},
-		{ name: 'WISCONSIN'},
-		{ name: 'WYOMING' }
-	];
+	$("#update-date").click(function() {
+		let today = new Date();
+		let datepicker = $("#datepicker").val();
+		let month = datepicker.split('/')[0];
+		let day = datepicker.split('/')[1];
+		// day = datepicker.split('/')[1];
+		let year = datepicker.split('/')[2];
 
-	if(document.getElementById("state") !== null) {
-		for(var i = 0;i<usStates.length;i++){
-			var option = document.createElement("option");
-			option.text = usStates[i].name;
-			option.value = i;
-			var select = document.getElementById("state");
-			select.appendChild(option);
+		if(month < 10) {
+			month = "0" + month;
 		}
-	}
+
+		if(day < 10) {
+			day = "0" + day;
+		}
+
+		let date = new Date(year + "-" + month + "-" + day);
+		$.ajax({
+	    	url: '/delectable/public_html/assets/scripts/customer-reservation.php',
+	    	type: 'POST',
+	    	data: {
+	    		'loc_id': lid, 
+	    		'day': date.getDay(),
+	    		'restaurant_hours': true
+	    	}
+	    }).done(function(response) {
+	    	let res = JSON.parse(response);
+	    	let sel = $("#rsvn-time-select");
+	    	sel.html("");
+	    	sel.append('<option value="0">Choose Time</option>');
+	    	let start = +res.hours_open.split(':')[0];
+	    	let end = +res.hours_close.split(':')[0];
+	    	let o;
+	    	for(let i = start; i < end; i++) {
+	    		if(i > 12) {
+	    			o = '<option val="' + i + ':00' + '">' + i + ':00' + '</option>';
+	    		} else {
+	    			o = '<option val="' + i + ':00' + '">' + i + ':00' + '</option>';
+	    		}
+	    		sel.append(o);
+	    	}
+	    });
+	});
 });

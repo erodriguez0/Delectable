@@ -17,10 +17,17 @@ else:
 		<div class="col-12 col-lg-9 order-2 order-lg-1">
 			<div class="row no-gutters d-flex justify-content-center">
 				<div class="col-6 col-md-5 col-lg-5 col-xl-4 mt-3 mt-lg-0">
-					<input id="datepicker" width="220" placeholder="MM/DD/YYYY">
+					<div class="row no-gutters">
+						<div class="col-8 d-flex justify-content-center">
+							<input id="datepicker" width="170" placeholder="MM/DD/YYYY">
+						</div>
+						<div class="col-4 d-flex justify-content-center">
+							<button id="update-date" class="btn btn-primary rounded border">Update</button>
+						</div>
+					</div>
 				</div>
 				<div class="col-6 col-md-4 col-lg-3 mt-3 mt-lg-0">
-					<select class="form-control">
+					<select id="rsvn-time-select" class="form-control">
 						<option value="0">Choose Time</option>
 					</select>
 				</div>

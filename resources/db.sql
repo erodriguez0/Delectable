@@ -251,8 +251,10 @@ CREATE INDEX `fk_item_cat_id_idx` ON `delectable`.`menu_item` (`fk_item_cat_id` 
 DROP TABLE IF EXISTS `delectable`.`menu_category` ;
 
 CREATE TABLE IF NOT EXISTS `delectable`.`menu_category` (
+  `menu_cat_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `fk_loc_id` INT UNSIGNED NOT NULL,
   `fk_cat_id` INT UNSIGNED NOT NULL,
+  PRIMARY KEY (`menu_cat_id`),
   CONSTRAINT `fk_menu_category_res_id`
     FOREIGN KEY (`fk_loc_id`)
     REFERENCES `delectable`.`restaurant` (`res_id`)
@@ -303,11 +305,12 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `delectable`.`reservation` ;
 
 CREATE TABLE IF NOT EXISTS `delectable`.`reservation` (
-  `rsvn_id` INT UNSIGNED NOT NULL,
-  `rsvn_timeslot` TIMESTAMP NOT NULL,
-  `rsvn_length` INT NOT NULL,
-  `rsvn_status` VARCHAR(64) NOT NULL,
-  `rsvn_created` TIMESTAMP NOT NULL,
+  `rsvn_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `rsvn_date` DATE NOT NULL,
+  `rsvn_slot` TIME NOT NULL,
+  `rsvn_length` INT NOT NULL DEFAULT 60,
+  `rsvn_status` VARCHAR(64) NOT NULL DEFAULT 1,
+  `rsvn_created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `rsvn_updated` TIMESTAMP NULL,
   `fk_loc_id` INT UNSIGNED NOT NULL,
   `fk_cust_id` INT UNSIGNED NOT NULL,
@@ -335,8 +338,10 @@ CREATE INDEX `fk_cust_id_idx` ON `delectable`.`reservation` (`fk_cust_id` ASC) V
 DROP TABLE IF EXISTS `delectable`.`reservation_staff` ;
 
 CREATE TABLE IF NOT EXISTS `delectable`.`reservation_staff` (
+  `staff_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `fk_rsvn_id` INT UNSIGNED NOT NULL,
   `fk_emp_id` INT UNSIGNED NOT NULL,
+  PRIMARY KEY (`staff_id`),
   CONSTRAINT `fk_reservation_staff_rsvn_id`
     FOREIGN KEY (`fk_rsvn_id`)
     REFERENCES `delectable`.`reservation` (`rsvn_id`)
@@ -362,7 +367,7 @@ DROP TABLE IF EXISTS `delectable`.`order` ;
 CREATE TABLE IF NOT EXISTS `delectable`.`order` (
   `order_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `order_total` DECIMAL(10,2) UNSIGNED NOT NULL,
-  `order_status` VARCHAR(64) NOT NULL,
+  `order_status` VARCHAR(64) NOT NULL DEFAULT 1,
   `order_message` VARCHAR(255) NULL,
   `order_created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `order_updated` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
@@ -392,10 +397,12 @@ CREATE INDEX `fk_rsvn_id_idx` ON `delectable`.`order` (`fk_rsvn_id` ASC) VISIBLE
 DROP TABLE IF EXISTS `delectable`.`order_item` ;
 
 CREATE TABLE IF NOT EXISTS `delectable`.`order_item` (
-  `order_price` DECIMAL(4,2) NULL,
-  `order_quantity` INT UNSIGNED NOT NULL,
+  `order_item_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `order_price` DECIMAL(10,2) NULL,
+  `order_quantity` INT UNSIGNED NOT NULL DEFAULT 1,
   `fk_order_id` INT UNSIGNED NOT NULL,
   `fk_menu_item_id` INT UNSIGNED NOT NULL,
+  PRIMARY KEY (`order_item_id`),
   CONSTRAINT `fk_order_item_order_id`
     FOREIGN KEY (`fk_order_id`)
     REFERENCES `delectable`.`order` (`order_id`)
@@ -652,3 +659,18 @@ INSERT INTO employee (emp_first_name, emp_last_name, emp_username, emp_password,
 
 -- CUSTOMER INSERT QUERIES
 INSERT INTO customer (cust_first_name, cust_last_name, cust_username, cust_password, cust_email) VALUES ("Example", "McExample", "example0", "$2y$10$xqYrxNVkcBBAXyppmeKSJepHOmknTUBYJBER3niQgV8E/ueja.X2y", "example0@example.com");
+
+-- MENU ITEM CATEGORY
+INSERT INTO menu_item_category (item_cat_name, item_cat_description, fk_loc_id) VALUES ("Seafood", "Offers a distinct flavor rich in essential vitamins", 3);
+
+-- MENU ITEM
+INSERT INTO menu_item (item_name, item_price, fk_item_cat_id) VALUES ("Shrimp with Vermicelli and Garlic", 14.99, 1);
+
+-- RESERVATION QUERY
+INSERT INTO reservation (rsvn_date, rsvn_slot, fk_loc_id, fk_cust_id) VALUES ("2020-05-01", "16:00:00", 3, 1);
+
+-- ORDER
+INSERT INTO `order` (order_total, fk_cust_id, fk_rsvn_id) VALUES (14.99, 1, 1);
+
+-- ORDER ITEM
+INSERT INTO order_item (order_price, order_quantity, fk_order_id, fk_menu_item_id) VALUES (14.99, 1, 1, 1);
