@@ -40,6 +40,7 @@ $scripts[] = '<script src="https://unpkg.com/feather-icons/dist/feather.min.js">
 $scripts[] = '<script> feather.replace(); </script>';
 $scripts[] = '<script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.7.11/fabric.min.js"></script>';
 $scripts[] = '<script src="//cdn.bootcss.com/noUiSlider/8.5.1/nouislider.js"></script>';
+$scripts[] = '<script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>';
 $scripts[] = '<script type="text/javascript" src="' . JS_PATH . 'global.js"></script>';
 if(isset($_SESSION['admin_id'])):
 	$scripts[] = '<script type="text/javascript" src="' . JS_PATH . 'layout.js"></script>';

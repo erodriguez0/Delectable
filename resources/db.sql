@@ -251,8 +251,10 @@ CREATE INDEX `fk_item_cat_id_idx` ON `delectable`.`menu_item` (`fk_item_cat_id` 
 DROP TABLE IF EXISTS `delectable`.`menu_category` ;
 
 CREATE TABLE IF NOT EXISTS `delectable`.`menu_category` (
+  `menu_cat_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `fk_loc_id` INT UNSIGNED NOT NULL,
   `fk_cat_id` INT UNSIGNED NOT NULL,
+  PRIMARY KEY (`menu_cat_id`),
   CONSTRAINT `fk_menu_category_res_id`
     FOREIGN KEY (`fk_loc_id`)
     REFERENCES `delectable`.`restaurant` (`res_id`)
@@ -303,14 +305,16 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `delectable`.`reservation` ;
 
 CREATE TABLE IF NOT EXISTS `delectable`.`reservation` (
-  `rsvn_id` INT UNSIGNED NOT NULL,
-  `rsvn_timeslot` TIMESTAMP NOT NULL,
-  `rsvn_length` INT NOT NULL,
-  `rsvn_status` VARCHAR(64) NOT NULL,
-  `rsvn_created` TIMESTAMP NOT NULL,
+  `rsvn_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `rsvn_date` DATE NOT NULL,
+  `rsvn_slot` TIME NOT NULL,
+  `rsvn_length` INT NOT NULL DEFAULT 60,
+  `rsvn_status` VARCHAR(64) NOT NULL DEFAULT 1,
+  `rsvn_created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `rsvn_updated` TIMESTAMP NULL,
   `fk_loc_id` INT UNSIGNED NOT NULL,
   `fk_cust_id` INT UNSIGNED NOT NULL,
+  `fk_table_id` INT UNSIGNED NOT NULL,
   PRIMARY KEY (`rsvn_id`),
   CONSTRAINT `fk_reservation_loc_id`
     FOREIGN KEY (`fk_loc_id`)
@@ -321,12 +325,19 @@ CREATE TABLE IF NOT EXISTS `delectable`.`reservation` (
     FOREIGN KEY (`fk_cust_id`)
     REFERENCES `delectable`.`customer` (`cust_id`)
     ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_reservation_table_id`
+    FOREIGN KEY (`fk_table_id`)
+    REFERENCES `delectable`.`table` (`table_id`)
+    ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 CREATE INDEX `fk_loc_id_idx` ON `delectable`.`reservation` (`fk_loc_id` ASC) VISIBLE;
 
 CREATE INDEX `fk_cust_id_idx` ON `delectable`.`reservation` (`fk_cust_id` ASC) VISIBLE;
+
+CREATE INDEX `fk_table_id_idx` ON `delectable`.`reservation` (`fk_table_id` ASC) VISIBLE;
 
 
 -- -----------------------------------------------------
@@ -335,8 +346,10 @@ CREATE INDEX `fk_cust_id_idx` ON `delectable`.`reservation` (`fk_cust_id` ASC) V
 DROP TABLE IF EXISTS `delectable`.`reservation_staff` ;
 
 CREATE TABLE IF NOT EXISTS `delectable`.`reservation_staff` (
+  `staff_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `fk_rsvn_id` INT UNSIGNED NOT NULL,
   `fk_emp_id` INT UNSIGNED NOT NULL,
+  PRIMARY KEY (`staff_id`),
   CONSTRAINT `fk_reservation_staff_rsvn_id`
     FOREIGN KEY (`fk_rsvn_id`)
     REFERENCES `delectable`.`reservation` (`rsvn_id`)
@@ -362,7 +375,7 @@ DROP TABLE IF EXISTS `delectable`.`order` ;
 CREATE TABLE IF NOT EXISTS `delectable`.`order` (
   `order_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `order_total` DECIMAL(10,2) UNSIGNED NOT NULL,
-  `order_status` VARCHAR(64) NOT NULL,
+  `order_status` VARCHAR(64) NOT NULL DEFAULT 1,
   `order_message` VARCHAR(255) NULL,
   `order_created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `order_updated` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
@@ -392,10 +405,12 @@ CREATE INDEX `fk_rsvn_id_idx` ON `delectable`.`order` (`fk_rsvn_id` ASC) VISIBLE
 DROP TABLE IF EXISTS `delectable`.`order_item` ;
 
 CREATE TABLE IF NOT EXISTS `delectable`.`order_item` (
-  `order_price` DECIMAL(4,2) NULL,
-  `order_quantity` INT UNSIGNED NOT NULL,
+  `order_item_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `order_price` DECIMAL(10,2) NULL,
+  `order_quantity` INT UNSIGNED NOT NULL DEFAULT 1,
   `fk_order_id` INT UNSIGNED NOT NULL,
   `fk_menu_item_id` INT UNSIGNED NOT NULL,
+  PRIMARY KEY (`order_item_id`),
   CONSTRAINT `fk_order_item_order_id`
     FOREIGN KEY (`fk_order_id`)
     REFERENCES `delectable`.`order` (`order_id`)
@@ -439,34 +454,6 @@ CREATE TABLE IF NOT EXISTS `delectable`.`table` (
 ENGINE = InnoDB;
 
 CREATE INDEX `fk_loc_id_idx` ON `delectable`.`table` (`fk_loc_id` ASC) VISIBLE;
-
-
--- -----------------------------------------------------
--- Table `delectable`.`table_reservation`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `delectable`.`table_reservation` ;
-
-CREATE TABLE IF NOT EXISTS `delectable`.`table_reservation` (
-  `table_rsvn_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `fk_table_id` INT UNSIGNED NOT NULL,
-  `fk_rsvn_id` INT UNSIGNED NOT NULL,
-  PRIMARY KEY (`table_rsvn_id`),
-  CONSTRAINT `fk_table_reservation_table_id`
-    FOREIGN KEY (`fk_table_id`)
-    REFERENCES `delectable`.`table` (`table_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_table_reservation_rsvn_id`
-    FOREIGN KEY (`fk_rsvn_id`)
-    REFERENCES `delectable`.`reservation` (`rsvn_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-CREATE INDEX `fk_table_id_idx` ON `delectable`.`table_reservation` (`fk_table_id` ASC) VISIBLE;
-
-CREATE INDEX `fk_rsvn_id_idx` ON `delectable`.`table_reservation` (`fk_rsvn_id` ASC) VISIBLE;
-
 
 -- -----------------------------------------------------
 -- Table `delectable`.`review`
@@ -641,9 +628,9 @@ VALUES ('2550 California Ave', 'Suite #200', 'Bakersfield', 'California', '93308
 INSERT INTO location (loc_address_1, loc_address_2, loc_city, loc_state, loc_postal_code, loc_phone, fk_res_id)
 VALUES ('1701 New Stine Rd', '', 'Bakersfield', 'California', '93309', '(661)-832-1278', 4);
 INSERT INTO location (loc_address_1, loc_address_2, loc_city, loc_state, loc_postal_code, loc_phone, fk_res_id)
-VALUES ('8110 Rosedale Hwy', 'Suite #F', 'Bakersfield', 'California', '93312', '(661)-588-4879', 2);
+VALUES ('8110 Rosedale Hwy', 'Suite #F', 'Seattle', 'Washington', '98101', '(206)-588-4879', 2);
 INSERT INTO location (loc_address_1, loc_address_2, loc_city, loc_state, loc_postal_code, loc_phone, fk_res_id)
-VALUES ('2217 Ashe Rd', '', 'Bakersfield', 'California', '93309', '(661)-473-1426', 3);
+VALUES ('2217 Ashe Rd', '', 'Los Angeles', 'California', '93309', '(661)-473-1426', 3);
 INSERT INTO location (loc_address_1, loc_address_2, loc_city, loc_state, loc_postal_code, loc_phone, fk_res_id)
 VALUES ('5051 Stockdale Hwy', '', 'Bakersfield', 'California', '93309', '(661)-834-7850', 5);
 
@@ -652,3 +639,26 @@ INSERT INTO employee (emp_first_name, emp_last_name, emp_username, emp_password,
 
 -- CUSTOMER INSERT QUERIES
 INSERT INTO customer (cust_first_name, cust_last_name, cust_username, cust_password, cust_email) VALUES ("Example", "McExample", "example0", "$2y$10$xqYrxNVkcBBAXyppmeKSJepHOmknTUBYJBER3niQgV8E/ueja.X2y", "example0@example.com");
+
+-- MENU ITEM CATEGORY
+INSERT INTO menu_item_category (item_cat_name, item_cat_description, fk_loc_id) VALUES ("Seafood", "Offers a distinct flavor rich in essential vitamins", 3);
+
+-- MENU ITEM
+INSERT INTO menu_item (item_name, item_price, fk_item_cat_id) VALUES ("Shrimp with Vermicelli and Garlic", 14.99, 1);
+
+-- LAYOUT TABLES
+INSERT INTO `table` (`table_uuid`, `table_number`, `table_seats`, `table_type`, `table_height`, `table_width`, `table_left`, `table_top`, `table_angle`, `fk_loc_id`) VALUES
+('z9ukjjla5-karck0x29', '1', 1, 'rectangle', 76, 106, 600, 15, 45, 3),
+('e6nv27tda-72a8g6zw2', '2', 1, 'rectangle', 76, 106, 90, 390, 45, 3),
+('ni2uiynt6-63ob1yd5w', '3', 1, 'rectangle', 76, 106, 315, 215, 0, 3),
+('9imhdwtaz-crfiswa0s', '4', 1, 'rectangle', 76, 106, 45, 30, 0, 3),
+('o0toh8ljq-t63v0rhb5', '5', 1, 'rectangle', 76, 106, 570, 420, 0, 3);
+
+-- RESERVATION QUERY
+INSERT INTO reservation (rsvn_date, rsvn_slot, fk_loc_id, fk_cust_id, fk_table_id) VALUES ("2020-05-01", "16:00:00", 3, 1, 3);
+
+-- ORDER
+INSERT INTO `order` (order_total, fk_cust_id, fk_rsvn_id) VALUES (14.99, 1, 1);
+
+-- ORDER ITEM
+INSERT INTO order_item (order_price, order_quantity, fk_order_id, fk_menu_item_id) VALUES (14.99, 1, 1, 1);

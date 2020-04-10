@@ -13,6 +13,7 @@
 	<link rel="stylesheet" href="/delectable/public_html/assets/css/custom.css">
 	<link rel="stylesheet" href="/delectable/public_html/assets/css/manager-dashboard-nav.css">
 	<link href="//cdn.bootcss.com/noUiSlider/8.5.1/nouislider.min.css" rel="stylesheet">
+	<link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css">
 </head>
 <body class="<?php echo (isset($bodyClasses)) ? $bodyClasses : ""; ?>">
 <div id="cover">

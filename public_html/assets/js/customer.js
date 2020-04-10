@@ -200,75 +200,101 @@ $(document).ready(function() {
 		}
 	});
 
-	var usStates = [
-		{ name: 'ALABAMA'},
-		{ name: 'ALASKA'},
-		{ name: 'AMERICAN SAMOA'},
-		{ name: 'ARIZONA'},
-		{ name: 'ARKANSAS'},
-		{ name: 'CALIFORNIA'},
-		{ name: 'COLORADO'},
-		{ name: 'CONNECTICUT'},
-		{ name: 'DELAWARE'},
-		{ name: 'DISTRICT OF COLUMBIA'},
-		{ name: 'FEDERATED STATES OF MICRONESIA'},
-		{ name: 'FLORIDA'},
-		{ name: 'GEORGIA'},
-		{ name: 'GUAM'},
-		{ name: 'HAWAII'},
-		{ name: 'IDAHO'},
-		{ name: 'ILLINOIS'},
-		{ name: 'INDIANA'},
-		{ name: 'IOWA'},
-		{ name: 'KANSAS'},
-		{ name: 'KENTUCKY'},
-		{ name: 'LOUISIANA'},
-		{ name: 'MAINE'},
-		{ name: 'MARSHALL ISLANDS'},
-		{ name: 'MARYLAND'},
-		{ name: 'MASSACHUSETTS'},
-		{ name: 'MICHIGAN'},
-		{ name: 'MINNESOTA'},
-		{ name: 'MISSISSIPPI'},
-		{ name: 'MISSOURI'},
-		{ name: 'MONTANA'},
-		{ name: 'NEBRASKA'},
-		{ name: 'NEVADA'},
-		{ name: 'NEW HAMPSHIRE'},
-		{ name: 'NEW JERSEY'},
-		{ name: 'NEW MEXICO'},
-		{ name: 'NEW YORK'},
-		{ name: 'NORTH CAROLINA'},
-		{ name: 'NORTH DAKOTA'},
-		{ name: 'NORTHERN MARIANA ISLANDS'},
-		{ name: 'OHIO'},
-		{ name: 'OKLAHOMA'},
-		{ name: 'OREGON'},
-		{ name: 'PALAU'},
-		{ name: 'PENNSYLVANIA'},
-		{ name: 'PUERTO RICO'},
-		{ name: 'RHODE ISLAND'},
-		{ name: 'SOUTH CAROLINA'},
-		{ name: 'SOUTH DAKOTA'},
-		{ name: 'TENNESSEE'},
-		{ name: 'TEXAS'},
-		{ name: 'UTAH'},
-		{ name: 'VERMONT'},
-		{ name: 'VIRGIN ISLANDS'},
-		{ name: 'VIRGINIA'},
-		{ name: 'WASHINGTON'},
-		{ name: 'WEST VIRGINIA'},
-		{ name: 'WISCONSIN'},
-		{ name: 'WYOMING' }
-	];
-
-	if(document.getElementById("state") !== null) {
-		for(var i = 0;i<usStates.length;i++){
-			var option = document.createElement("option");
-			option.text = usStates[i].name;
-			option.value = i;
-			var select = document.getElementById("state");
-			select.appendChild(option);
-		}
+	if(document.getElementById("datepicker") !== null) {
+		let today = new Date();
+		$('#datepicker').datepicker({
+	        uiLibrary: 'bootstrap4',
+	        disableDates: function (date) {
+	        	const currentDate = new Date().setHours(0,0,0,0);
+		     	return date.setHours(0,0,0,0) >= currentDate ? true : false;
+	        }
+	    });
+	    let m = today.getMonth() + 1;
+	    let d = today.getDate();
+	    let y = today.getFullYear();
+	    if(m < 10) {
+	    	m = "0" + m;
+	    }
+	    if(d < 10) {
+	    	d = "0" + d;
+	    }
+	    $("#datepicker").val(m + "/" + d + "/" + y);
 	}
+
+	$("#update-date").click(function() {
+		let sel = $("#rsvn-time-select");
+		let datepicker = ($("#datepicker").val().length > 0) ? $("#datepicker").val() : "";
+		let obj = (canvas.getActiveObject()) ? canvas.getActiveObject() : "";
+
+		if(obj == null || obj == undefined || obj.length < 1) {
+			sel.html("");
+			sel.append('<option value="0">Choose Table</option>');
+		} else if(datepicker == null || datepicker.length < 1) {
+			sel.html("");
+			sel.append('<option value="0">Choose Date</option>');
+		} else {
+			let today = new Date();
+			let month = datepicker.split('/')[0];
+			let day = datepicker.split('/')[1];
+			let year = datepicker.split('/')[2];
+
+			// Date format for DB
+			let jdate = new Date(year + "-" + month + "-" + day);
+			let date = year + "-" + month + "-" + day;
+			// console.log(date);
+			$.ajax({
+		    	url: '/delectable/public_html/assets/scripts/customer-reservation.php',
+		    	type: 'POST',
+		    	data: {
+		    		'loc_id': lid, 
+		    		'day': jdate.getDay(),
+		    		'rsvn_date': date,
+		    		'table_uuid': obj.id,
+		    		'available_hours': true
+		    	}
+		    }).done(function(response) {
+		    	let res = JSON.parse(response);
+		    	if(res.rsvn.length < 1) {
+			    	sel.html("");
+			    	sel.append('<option value="0">Choose Time</option>');
+			    	let start = +res.hours.hours_open.split(':')[0];
+			    	let end = +res.hours.hours_close.split(':')[0];
+			    	let o;
+			    	for(let i = start; i < end; i++) {
+			    		if(i > 12) {
+			    			o = '<option val="' + i + ':00' + '">' + i + ':00' + '</option>';
+			    		} else {
+			    			o = '<option val="' + i + ':00' + '">' + i + ':00' + '</option>';
+			    		}
+			    		sel.append(o);
+			    	}
+		    	} else {
+		    		// If there are reservations during the day
+		    		// Check if slot is taken
+		    		sel.html("");
+		    		sel.append('<option value="0">Choose Time</option>');
+		    		let start = +res.hours.hours_open.split(':')[0];
+			    	let end = +res.hours.hours_close.split(':')[0];
+			    	let o;
+			    	let taken = [];
+			    	$.each(res.rsvn, function(k, v) {
+			    		taken.push(v.rsvn_slot);
+			    	});
+			    	let tmp;
+			    	for(let i = start; i < end; i++) {
+			    		if(i < 10) {
+			    			tmp = "0" + i + ":00:00";
+			    		} else {
+			    			tmp = "" + i + ":00:00";
+			    		}
+
+			    		if(jQuery.inArray(tmp, taken) == -1) {
+			    			o = '<option val="' + i + ':00' + '">' + i + ':00' + '</option>';
+			    			sel.append(o);
+			    		}
+			    	}
+		    	}
+		    });
+		}
+	});
 });
