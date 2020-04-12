@@ -464,8 +464,8 @@ CREATE TABLE IF NOT EXISTS `delectable`.`review` (
   `review_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `review_text` TEXT NOT NULL,
   `review_rating` INT(1) UNSIGNED NOT NULL,
-  `review_thumbs_up` INT NOT NULL DEFAULT 0,
-  `review_thumbs_down` INT NOT NULL DEFAULT 0,
+  `review_thumbs_up` INT NULL DEFAULT 0,
+  `review_thumbs_down` INT NULL DEFAULT 0,
   `fk_cust_id` INT UNSIGNED NOT NULL,
   `fk_rsvn_id` INT UNSIGNED NOT NULL,
   PRIMARY KEY (`review_id`),
@@ -793,7 +793,20 @@ INSERT INTO `table` (`table_uuid`, `table_number`, `table_seats`, `table_type`, 
 -- RESERVATION QUERY
 INSERT INTO reservation (rsvn_date, rsvn_slot, fk_loc_id, fk_cust_id, fk_table_id) VALUES 
 ("2020-04-01", "16:00:00", 1, 1, 1),
-("2020-04-04", "16:00:00", 1, 2, 5),
+("2020-04-01", "10:00:00", 1, 2, 5),
+("2020-04-01", "12:00:00", 1, 3, 2),
+("2020-04-01", "13:00:00", 1, 4, 4),
+("2020-04-01", "19:00:00", 1, 5, 3),
+("2020-04-02", "16:00:00", 1, 1, 1),
+("2020-04-02", "10:00:00", 1, 2, 5),
+("2020-04-02", "12:00:00", 1, 3, 2),
+("2020-04-02", "13:00:00", 1, 4, 4),
+("2020-04-02", "19:00:00", 1, 5, 3),
+("2020-04-03", "16:00:00", 1, 1, 1),
+("2020-04-03", "10:00:00", 1, 2, 5),
+("2020-04-03", "12:00:00", 1, 3, 2),
+("2020-04-03", "13:00:00", 1, 4, 4),
+("2020-04-03", "19:00:00", 1, 5, 3),
 ("2020-04-20", "16:00:00", 1, 3, 2),
 ("2020-04-23", "16:00:00", 1, 4, 4),
 ("2020-04-24", "16:00:00", 1, 5, 3),
@@ -846,3 +859,21 @@ INSERT INTO reservation (rsvn_date, rsvn_slot, fk_loc_id, fk_cust_id, fk_table_i
 -- ORDER ITEM
 INSERT INTO order_item (order_quantity, fk_order_id, fk_menu_item_id) VALUES 
 (1, 1, 1);
+
+-- REVIEWS
+INSERT INTO review (review_text, review_rating, fk_cust_id, fk_rsvn_id) VALUES
+('Integer tincidunt ante vel ipsum. Praesent blandit lacinia erat. Vestibulum sed magna at nunc commodo placerat. Praesent blandit. Nam nulla. Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede.', 4, 1, 1),
+('Morbi porttitor lorem id ligula. Suspendisse ornare consequat lectus. In est risus, auctor sed, tristique in, tempus sit amet, sem.', 4, 2, 2),
+('Nullam sit amet turpis elementum ligula vehicula consequat. Morbi a ipsum. Integer a nibh.', 4, 3, 3),
+('In sagittis dui vel nisl. Duis ac nibh. Fusce lacus purus, aliquet at, feugiat non, pretium quis, lectus. Suspendisse potenti. In eleifend quam a odio. In hac habitasse platea dictumst.', 3, 4, 4),
+('Nam ultrices, libero non mattis pulvinar, nulla pede ullamcorper augue, a suscipit nulla elit ac nulla. Sed vel enim sit amet nunc viverra dapibus. Nulla suscipit ligula in lacus. Curabitur at ipsum ac tellus semper interdum. Mauris ullamcorper purus sit amet nulla. Quisque arcu libero, rutrum ac, lobortis vel, dapibus at, diam.', 2, 5, 5),
+('Vestibulum quam sapien, varius ut, blandit non, interdum in, ante. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae, Duis faucibus accumsan odio. Curabitur convallis. Duis consequat dui nec nisi volutpat eleifend. Donec ut dolor. Morbi vel lectus in quam fringilla rhoncus.', 4, 1, 6),
+('Sed sagittis. Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci. Nullam molestie nibh in lectus. Pellentesque at nulla. Suspendisse potenti. Cras in purus eu magna vulputate luctus.', 2, 2, 7),
+('Duis aliquam convallis nunc. Proin at turpis a pede posuere nonummy. Integer non velit. Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae, Donec pharetra, magna vestibulum aliquet ultrices, erat tortor sollicitudin mi, sit amet lobortis sapien sapien non mi. Integer ac neque. Duis bibendum. Morbi non quam nec dui luctus rutrum. Nulla tellus.', 5, 3, 8),
+('Aenean fermentum. Donec ut mauris eget massa tempor convallis. Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh. Quisque id justo sit amet sapien dignissim vestibulum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae, Nulla dapibus dolor vel est. Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros.', 4, 4, 9),
+('In congue. Etiam justo. Etiam pretium iaculis justo. In hac habitasse platea dictumst. Etiam faucibus cursus urna. Ut tellus.', 1, 5, 10),
+('Praesent id massa id nisl venenatis lacinia. Aenean sit amet justo. Morbi ut odio.', 1, 1, 11),
+('In hac habitasse platea dictumst. Etiam faucibus cursus urna. Ut tellus. Nulla ut erat id mauris vulputate elementum. Nullam varius. Nulla facilisi. Cras non velit nec nisi vulputate nonummy. Maecenas tincidunt lacus at velit. Vivamus vel nulla eget eros elementum pellentesque.', 4, 2, 12),
+('Phasellus sit amet erat. Nulla tempus. Vivamus in felis eu sapien cursus vestibulum. Proin eu mi. Nulla ac enim. In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem. Duis aliquam convallis nunc. Proin at turpis a pede posuere nonummy. Integer non velit.', 2, 3, 13),
+('Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin risus. Praesent lectus.', 3, 4, 14),
+('Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin risus. Praesent lectus.', 4, 5, 15);

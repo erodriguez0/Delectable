@@ -251,15 +251,33 @@ function restaurant_schedule($conn, $lid) {
 
 function restaurant_pending_orders($conn, $lid) {
 	// Limit orders between dates
-	// $date = date('Y-m-d');
+	$date = date('Y-m-d');
 
 	// Do not remove space at end of each $sql line
 	$sql = "SELECT order_id, rsvn_id, rsvn_date, rsvn_slot, rsvn_status ";
 	$sql .= "FROM `order` o, reservation r ";
-	$sql .= "WHERE r.rsvn_id = o.fk_rsvn_id AND r.fk_loc_id = :lid ";
+	$sql .= "WHERE r.rsvn_id = o.fk_rsvn_id AND r.fk_loc_id = :lid AND r.rsvn_date >= :rdate ";
 	$sql .= "ORDER BY rsvn_date ASC, rsvn_slot ASC";
 	$query = $conn->prepare($sql);
 	$query->bindParam(":lid", $lid, PDO::PARAM_INT);
+	$query->bindParam(":rdate", $date, PDO::PARAM_STR);
+	if($query->execute()) {
+		return $query->fetchAll();
+	}
+}
+
+function restaurant_archived_orders($conn, $lid) {
+	// Limit orders between dates
+	$date = date('Y-m-d');
+
+	// Do not remove space at end of each $sql line
+	$sql = "SELECT order_id, rsvn_id, rsvn_date, rsvn_slot, rsvn_status ";
+	$sql .= "FROM `order` o, reservation r ";
+	$sql .= "WHERE r.rsvn_id = o.fk_rsvn_id AND r.fk_loc_id = :lid AND r.rsvn_date < :rdate ";
+	$sql .= "ORDER BY rsvn_date DESC, rsvn_slot DESC";
+	$query = $conn->prepare($sql);
+	$query->bindParam(":lid", $lid, PDO::PARAM_INT);
+	$query->bindParam(":rdate", $date, PDO::PARAM_STR);
 	if($query->execute()) {
 		return $query->fetchAll();
 	}

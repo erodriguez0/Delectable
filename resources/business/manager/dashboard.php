@@ -51,9 +51,9 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/delectable/public_html/business/reports/">
+                <a class="nav-link" href="/delectable/public_html/business/archive/">
                 <span data-feather="bar-chart-2"></span>
-                Reports
+                Archive
                 </a>
             </li>
         </ul>

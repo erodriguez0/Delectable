@@ -21,6 +21,7 @@ if(session_status() == PHP_SESSION_NONE) {
 	session_start(); 
 }
 
+$page = basename(getcwd(), ".php");
 // error_reporting(E_ALL);
 // ini_set('display_errors', true);
 
@@ -46,7 +47,11 @@ if(isset($_SESSION['admin_id'])):
 	$scripts[] = '<script type="text/javascript" src="' . JS_PATH . 'layout.js"></script>';
 	$scripts[] = '<script type="text/javascript" src="' . JS_PATH . 'admin.js"></script>';
 elseif(isset($_SESSION['manager'])):
-	$scripts[] = '<script type="text/javascript" src="' . JS_PATH . 'layout.js"></script>';
+	if($page == "layout") {
+		$scripts[] = '<script type="text/javascript" src="' . JS_PATH . 'layout.js"></script>';
+	} else if($page == "reviews") {
+		$scripts[] = '<script type="text/javascript" src="' . JS_PATH . 'heatmap.js"></script>';
+	}
 	$scripts[] = '<script type="text/javascript" src="' . JS_PATH . 'manager.js"></script>';
 elseif(isset($_SESSION['emp_id']) && !isset($_SESSION['manager'])):
 	$scripts[] = '<script type="text/javascript" src="' . JS_PATH . 'tables.js"></script>';

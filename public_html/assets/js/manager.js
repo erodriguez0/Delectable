@@ -554,9 +554,6 @@ $(document).ready(function() {
 							row += "<td><a class='btn-sm btn-link-alt text-link table-link py-0 rounded' href='../employees/?eid=" + eid + "'>Profile</a></td></tr>";
 							$("#rsvn-staff tbody").append(row);
 						});
-					} else {
-						let row = "<td>No Staff Assigned</td>";
-						$("#rsvn-staff tbody").append(row);
 					}
 					$("#order-form").removeClass("d-none");
 				} else {
@@ -623,21 +620,19 @@ $(document).ready(function() {
 				if(!res.error) {
 					let staff = $("#rsvn-staff tbody");
 					let row;
-					let data = res.data;
-					$.each(data, function(k, v) {
-						let name = data[k].emp_first_name + " " + data[k].emp_last_name;
-						let eid = data[k].emp_id;
-						let job = (data[k].emp_job) ? data[k].emp_job : "N/A";
-						row = "<tr><td>" + name + "</td>";
-						row += "<td>" + job + "</td>";
-						row += "<td><a class='btn-sm btn-link-alt text-link table-link py-0 rounded' href='../employees/?eid=" + eid + "'>Profile</a></td></tr>";
-						staff.append(row);
-					});
 					$(".staff-cb").each(function() {
 						if($(this).prop('checked')) {
+							let eid = $(this).val();
+							let job = $(this).parent().prev().text();
+							let name = $(this).parent().prev().prev().text();
+							row = "<tr><td>" + name + "</td>";
+							row += "<td>" + job + "</td>";
+							row += "<td><a class='btn-sm btn-link-alt text-link table-link py-0 rounded' href='../employees/?eid=" + eid + "'>Profile</a></td></tr>";
+							staff.append(row);
 							$(this).parent().parent().remove();
 						}
-					})
+					});
+					$("#assign-staff-modal").modal('hide');
 				}
 			});
 		});
