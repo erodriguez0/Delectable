@@ -673,28 +673,28 @@ INSERT INTO employee (emp_first_name, emp_last_name, emp_username, emp_password,
 
 
 -- CUSTOMER INSERT QUERIES
-INSERT INTO customer (cust_first_name, cust_last_name, cust_username, cust_password, cust_email) VALUES 
-("Example", "McExample", "example0", "$2y$10$xqYrxNVkcBBAXyppmeKSJepHOmknTUBYJBER3niQgV8E/ueja.X2y", "example0@example.com"),
-('Issie', 'Flemmich', 'iflemmich00', "$2y$10$xqYrxNVkcBBAXyppmeKSJepHOmknTUBYJBER3niQgV8E/ueja.X2y", 'iflemmich0@gov.uk'),
-('Ermentrude', 'Busek', 'ebusek10', "$2y$10$xqYrxNVkcBBAXyppmeKSJepHOmknTUBYJBER3niQgV8E/ueja.X2y", 'ebusek1@oaic.gov.au'),
-('Dolli', 'Petrie', 'dpetrie20', "$2y$10$xqYrxNVkcBBAXyppmeKSJepHOmknTUBYJBER3niQgV8E/ueja.X2y", 'dpetrie2@hhs.gov'),
-('Les', 'Vernham', 'lvernham30', "$2y$10$xqYrxNVkcBBAXyppmeKSJepHOmknTUBYJBER3niQgV8E/ueja.X2y", 'lvernham3@desdev.cn'),
-('Allsun', 'Passingham', 'apassingham40', "$2y$10$xqYrxNVkcBBAXyppmeKSJepHOmknTUBYJBER3niQgV8E/ueja.X2y", 'apassingham4@1und1.de'),
-('Ki', 'Colleton', 'kcolleton50', "$2y$10$xqYrxNVkcBBAXyppmeKSJepHOmknTUBYJBER3niQgV8E/ueja.X2y", 'kcolleton5@ebay.co.uk'),
-('Vilma', 'Davers', 'vdavers60', "$2y$10$xqYrxNVkcBBAXyppmeKSJepHOmknTUBYJBER3niQgV8E/ueja.X2y", 'vdavers6@nifty.com'),
-('Any', 'Pashen', 'apashen70', "$2y$10$xqYrxNVkcBBAXyppmeKSJepHOmknTUBYJBER3niQgV8E/ueja.X2y", 'apashen7@github.io'),
-('Dwight', 'Batters', 'dbatters80', "$2y$10$xqYrxNVkcBBAXyppmeKSJepHOmknTUBYJBER3niQgV8E/ueja.X2y", 'dbatters8@xing.com'),
-('Jennifer', 'Piccop', 'jpiccop90', "$2y$10$xqYrxNVkcBBAXyppmeKSJepHOmknTUBYJBER3niQgV8E/ueja.X2y", 'jpiccop9@livejournal.com'),
-('Mackenzie', 'McQuilliam', 'mmcquilliama0', "$2y$10$xqYrxNVkcBBAXyppmeKSJepHOmknTUBYJBER3niQgV8E/ueja.X2y", 'mmcquilliama@macromedia.com'),
-('Linette', 'Kiehne', 'lkiehneb0', "$2y$10$xqYrxNVkcBBAXyppmeKSJepHOmknTUBYJBER3niQgV8E/ueja.X2y", 'lkiehneb@dyndns.org'),
-('Ferdinande', 'Housbey', 'fhousbeyc0', "$2y$10$xqYrxNVkcBBAXyppmeKSJepHOmknTUBYJBER3niQgV8E/ueja.X2y", 'fhousbeyc@cisco.com'),
-('Lynn', 'Dowker', 'ldowkerd0', "$2y$10$xqYrxNVkcBBAXyppmeKSJepHOmknTUBYJBER3niQgV8E/ueja.X2y", 'ldowkerd@ted.com'),
-('Mylo', 'Hegge', 'mheggee0', "$2y$10$xqYrxNVkcBBAXyppmeKSJepHOmknTUBYJBER3niQgV8E/ueja.X2y", 'mheggee@craigslist.org'),
-('Gamaliel', 'McCarlie', 'gmccarlief0', "$2y$10$xqYrxNVkcBBAXyppmeKSJepHOmknTUBYJBER3niQgV8E/ueja.X2y", 'gmccarlief@ucoz.com'),
-('Vergil', 'Blaxill', 'vblaxillg0', "$2y$10$xqYrxNVkcBBAXyppmeKSJepHOmknTUBYJBER3niQgV8E/ueja.X2y", 'vblaxillg@google.com.hk'),
-('Debra', 'Ellerton', 'dellertonh0', "$2y$10$xqYrxNVkcBBAXyppmeKSJepHOmknTUBYJBER3niQgV8E/ueja.X2y", 'dellertonh@edublogs.org'),
-('Frederique', 'Ruseworth', 'fruseworthi0', "$2y$10$xqYrxNVkcBBAXyppmeKSJepHOmknTUBYJBER3niQgV8E/ueja.X2y", 'fruseworthi@independent.co.uk'),
-('Sisely', 'Gange', 'sgangej0', "$2y$10$xqYrxNVkcBBAXyppmeKSJepHOmknTUBYJBER3niQgV8E/ueja.X2y", 'sgangej@hubpages.com');
+INSERT INTO customer (cust_first_name, cust_last_name, cust_username, cust_password, cust_email, cust_address_1, cust_city, cust_state, cust_postal_code, cust_phone) VALUES 
+("Example", "McExample", "example0", "$2y$10$xqYrxNVkcBBAXyppmeKSJepHOmknTUBYJBER3niQgV8E/ueja.X2y", "example0@example.com", '7 Judy Park', 'Yonkers', 'New York', '10705', '(914)-644-7367'),
+('Issie', 'Flemmich', 'iflemmich00', "$2y$10$xqYrxNVkcBBAXyppmeKSJepHOmknTUBYJBER3niQgV8E/ueja.X2y", 'iflemmich0@gov.uk', '19067 Roth Plaza', 'Atlanta', 'Georgia', '30340', '(770)-524-0542'),
+('Ermentrude', 'Busek', 'ebusek10', "$2y$10$xqYrxNVkcBBAXyppmeKSJepHOmknTUBYJBER3niQgV8E/ueja.X2y", 'ebusek1@oaic.gov.au', '2 Manufacturers Parkway', 'Raleigh', 'North Carolina', '27621', '(919)-434-3895'),
+('Dolli', 'Petrie', 'dpetrie20', "$2y$10$xqYrxNVkcBBAXyppmeKSJepHOmknTUBYJBER3niQgV8E/ueja.X2y", 'dpetrie2@hhs.gov', '66 Twin Pines Crossing', 'New York City', 'New York', '10203', '(212)-626-7497'),
+('Les', 'Vernham', 'lvernham30', "$2y$10$xqYrxNVkcBBAXyppmeKSJepHOmknTUBYJBER3niQgV8E/ueja.X2y", 'lvernham3@desdev.cn', '5901 Buell Point', 'Worcester', 'Massachusetts', '01605', '(508)-330-0231'),
+('Allsun', 'Passingham', 'apassingham40', "$2y$10$xqYrxNVkcBBAXyppmeKSJepHOmknTUBYJBER3niQgV8E/ueja.X2y", 'apassingham4@1und1.de', '203 Coleman Junction', 'Hollywood', 'Florida', '33028', '(305)-106-9690'),
+('Ki', 'Colleton', 'kcolleton50', "$2y$10$xqYrxNVkcBBAXyppmeKSJepHOmknTUBYJBER3niQgV8E/ueja.X2y", 'kcolleton5@ebay.co.uk', '8 Roth Lane', 'Inglewood', 'California', '90305', '(310)-970-7570'),
+('Vilma', 'Davers', 'vdavers60', "$2y$10$xqYrxNVkcBBAXyppmeKSJepHOmknTUBYJBER3niQgV8E/ueja.X2y", 'vdavers6@nifty.com', '179 Declaration Parkway', 'Philadelphia', 'Pennsylvania', '19131', '(215)-295-9026'),
+('Any', 'Pashen', 'apashen70', "$2y$10$xqYrxNVkcBBAXyppmeKSJepHOmknTUBYJBER3niQgV8E/ueja.X2y", 'apashen7@github.io', '33806 Charing Cross Circle', 'Warren', 'Ohio', '44485', '(330)-528-2217'),
+('Dwight', 'Batters', 'dbatters80', "$2y$10$xqYrxNVkcBBAXyppmeKSJepHOmknTUBYJBER3niQgV8E/ueja.X2y", 'dbatters8@xing.com', '5 Macpherson Park', 'Fresno', 'California', '93721', '(209)-694-9784'),
+('Jennifer', 'Piccop', 'jpiccop90', "$2y$10$xqYrxNVkcBBAXyppmeKSJepHOmknTUBYJBER3niQgV8E/ueja.X2y", 'jpiccop9@livejournal.com', '42 Fieldstone Alley', 'Montgomery', 'Alabama', '36134', '(334)-172-7759'),
+('Mackenzie', 'McQuilliam', 'mmcquilliama0', "$2y$10$xqYrxNVkcBBAXyppmeKSJepHOmknTUBYJBER3niQgV8E/ueja.X2y", 'mmcquilliama@macromedia.com', '99980 Rieder Place', 'Irvine', 'California', '92717', '(714)-394-9925'),
+('Linette', 'Kiehne', 'lkiehneb0', "$2y$10$xqYrxNVkcBBAXyppmeKSJepHOmknTUBYJBER3niQgV8E/ueja.X2y", 'lkiehneb@dyndns.org', '3 Superior Court', 'Bradenton', 'Florida', '34205', '(941)-355-7751'),
+('Ferdinande', 'Housbey', 'fhousbeyc0', "$2y$10$xqYrxNVkcBBAXyppmeKSJepHOmknTUBYJBER3niQgV8E/ueja.X2y", 'fhousbeyc@cisco.com', '106 Lerdahl Street', 'Sioux Falls', 'South Dakota', '57105', '(605)-484-0621'),
+('Lynn', 'Dowker', 'ldowkerd0', "$2y$10$xqYrxNVkcBBAXyppmeKSJepHOmknTUBYJBER3niQgV8E/ueja.X2y", 'ldowkerd@ted.com', '01 Lakewood Street', 'Saint Louis', 'Missouri', '63158', '(314)-477-4313'),
+('Mylo', 'Hegge', 'mheggee0', "$2y$10$xqYrxNVkcBBAXyppmeKSJepHOmknTUBYJBER3niQgV8E/ueja.X2y", 'mheggee@craigslist.org', '621 Morningstar Place', 'Mesquite', 'Texas', '75185', '(972)-583-8785'),
+('Gamaliel', 'McCarlie', 'gmccarlief0', "$2y$10$xqYrxNVkcBBAXyppmeKSJepHOmknTUBYJBER3niQgV8E/ueja.X2y", 'gmccarlief@ucoz.com', '47998 Stoughton Place', 'Washington', 'District of Columbia', '20319', '(202)-553-4706'),
+('Vergil', 'Blaxill', 'vblaxillg0', "$2y$10$xqYrxNVkcBBAXyppmeKSJepHOmknTUBYJBER3niQgV8E/ueja.X2y", 'vblaxillg@google.com.hk', '034 Redwing Junction', 'New York City', 'New York', '10131', '(212)-901-9750'),
+('Debra', 'Ellerton', 'dellertonh0', "$2y$10$xqYrxNVkcBBAXyppmeKSJepHOmknTUBYJBER3niQgV8E/ueja.X2y", 'dellertonh@edublogs.org', '3 Texas Place', 'Tacoma', 'Washington', '98447', '(253)-555-4764'),
+('Frederique', 'Ruseworth', 'fruseworthi0', "$2y$10$xqYrxNVkcBBAXyppmeKSJepHOmknTUBYJBER3niQgV8E/ueja.X2y", 'fruseworthi@independent.co.uk', '7 Dakota Court', 'Petaluma', 'California', '94975', '(707)-380-5074'),
+('Sisely', 'Gange', 'sgangej0', "$2y$10$xqYrxNVkcBBAXyppmeKSJepHOmknTUBYJBER3niQgV8E/ueja.X2y", 'sgangej@hubpages.com', '90 Dorton Point', 'Peoria', 'Illinois', '61614', '(309)-458-7287');
 
 -- MENU ITEM CATEGORY
 INSERT INTO menu_item_category (item_cat_name, item_cat_description, fk_loc_id) VALUES 

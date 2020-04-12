@@ -250,11 +250,13 @@ function restaurant_schedule($conn, $lid) {
 }
 
 function restaurant_pending_orders($conn, $lid) {
+	// Limit orders between dates
 	// $date = date('Y-m-d');
-	$sql = "SELECT cust_id, cust_first_name, cust_last_name, cust_address_1, cust_address_2, cust_city, cust_state, cust_postal_code, cust_phone, cust_email, ";
-	$sql .= "order_id, order_created, order_total, order_status, order_message, rsvn_id, rsvn_date, rsvn_slot, rsvn_length, rsvn_status, table_id, table_number ";
-	$sql .= "FROM customer c, `order` o, reservation r, `table` t ";
-	$sql .= "WHERE rsvn_id = fk_rsvn_id AND table_id = fk_table_id AND c.cust_id = r.fk_cust_id AND o.fk_cust_id = r.fk_cust_id AND r.fk_loc_id = :lid ";
+
+	// Do not remove space at end of each $sql line
+	$sql = "SELECT order_id, rsvn_id, rsvn_date, rsvn_slot, rsvn_status ";
+	$sql .= "FROM `order` o, reservation r ";
+	$sql .= "WHERE r.rsvn_id = o.fk_rsvn_id AND r.fk_loc_id = :lid ";
 	$sql .= "ORDER BY rsvn_date ASC, rsvn_slot ASC";
 	$query = $conn->prepare($sql);
 	$query->bindParam(":lid", $lid, PDO::PARAM_INT);
