@@ -542,7 +542,7 @@ $(document).ready(function() {
 					$("#cust-email").html(rsvn.cust_email);
 					$("#order-created").html(formatDate(rsvn.order_created));
 					$("#rsvn-date").html(formatDate(rsvn.rsvn_date));
-					$("#table-number").html(rsvn_table);
+					$("#table-number").html("Table " + rsvn_table);
 					$("#rsvn-staff tbody").html("");
 					if(emps.length > 0) {
 						$.each(emps, function(k, v) {
