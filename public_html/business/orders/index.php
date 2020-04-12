@@ -14,8 +14,11 @@ else:
 
 $title = "Delectable | For Restaurants";
 require_once(INCLUDE_PATH . 'header.php');
-
 require_once(INCLUDE_PATH . 'business/manager/dashboard.php');
+require_once(INCLUDE_PATH . 'functions.php');
+$lid = $_SESSION['loc_id'];
+$orders = restaurant_pending_orders($conn, $lid);
+// var_dump($orders);
 ?>
 
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
@@ -25,6 +28,34 @@ require_once(INCLUDE_PATH . 'business/manager/dashboard.php');
 	<div class="manager-main row">
 		<div class="col-12 col-lg-4 col-xl-3">
 			<h1 class="h3 subheader-border">Recent Orders</h1>
+
+			<table class="table">
+				<thead>
+					<th scope="col">Order #</th>
+					<th scope="col">Date</th>
+					<th scope="col">Time</th>
+					<th scope="col">View</th>
+				</thead>
+				<tbody>
+					<?php
+					foreach($orders as $o):
+					$order_id = $o["order_id"];
+					$rsvn_date = $o["rsvn_date"];
+					$rsvn_slot = $o["rsvn_slot"];
+					$rsvn_id = $o["rsvn_id"];
+					$time = strtotime($rsvn_slot);
+					?>
+					<tr>
+						<td><?php echo $order_id; ?></td>
+						<td><?php echo $rsvn_date; ?></td>
+						<td><?php echo date("h:i A", $time); ?></td>
+						<td><button class=" btn-link-alt table-link text-link rounded btn-sm py-0" value="<?php echo $rsvn_id; ?>">View</button></td>
+					</tr>
+					<?php
+					endforeach;
+					?>
+				</tbody>
+			</table>
 		</div>
 
 		<div class="col-12 col-lg-8 col-xl-9 mt-3 mt-lg-0">
