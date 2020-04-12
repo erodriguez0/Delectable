@@ -374,7 +374,7 @@ DROP TABLE IF EXISTS `delectable`.`order` ;
 
 CREATE TABLE IF NOT EXISTS `delectable`.`order` (
   `order_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `order_total` DECIMAL(10,2) UNSIGNED NOT NULL,
+  `order_total` DECIMAL(10,2) UNSIGNED NOT NULL DEFAULT 0.00,
   `order_status` VARCHAR(64) NOT NULL DEFAULT 1,
   `order_message` VARCHAR(255) NULL,
   `order_created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -435,8 +435,8 @@ DROP TABLE IF EXISTS `delectable`.`table` ;
 
 CREATE TABLE IF NOT EXISTS `delectable`.`table` (
   `table_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `table_uuid` VARCHAR(64) NOT NULL,
-  `table_number` VARCHAR(64) NOT NULL,
+  `table_uuid` VARCHAR(128) NOT NULL,
+  `table_number` VARCHAR(128) NOT NULL,
   `table_seats` INT NOT NULL DEFAULT 1,
   `table_type` ENUM('circle', 'rectangle', 'square') NOT NULL,
   `table_height` INT NOT NULL,
@@ -585,6 +585,16 @@ SET NEW.order_price = (SELECT item_price FROM menu_item WHERE item_id = NEW.fk_m
 END$$
 
 USE `delectable`$$
+DROP TRIGGER IF EXISTS `delectable`.`order_item_AFTER_INSERT` $$
+USE `delectable`$$
+CREATE DEFINER = CURRENT_USER TRIGGER `delectable`.`order_item_AFTER_INSERT` AFTER INSERT ON `order_item` FOR EACH ROW
+BEGIN
+UPDATE `order`
+SET order_total = order_total + (NEW.order_price * NEW.order_quantity)
+WHERE order_id = NEW.fk_order_id;
+END$$
+
+USE `delectable`$$
 DROP TRIGGER IF EXISTS `delectable`.`hours_AFTER_INSERT` $$
 USE `delectable`$$
 CREATE DEFINER = CURRENT_USER TRIGGER `delectable`.`hours_AFTER_INSERT` AFTER INSERT ON `location` FOR EACH ROW
@@ -600,6 +610,14 @@ BEGIN
   END WHILE;
 END$$
 
+USE `delectable`$$
+DROP TRIGGER IF EXISTS `delectable`.`rsvn_AFTER_INSERT` $$
+USE `delectable`$$
+CREATE DEFINER = CURRENT_USER TRIGGER `delectable`.`rsvn_AFTER_INSERT` AFTER INSERT ON `reservation` FOR EACH ROW
+BEGIN
+    INSERT INTO `order` (fk_cust_id, fk_rsvn_id) VALUES (NEW.fk_cust_id, NEW.rsvn_id);
+END$$
+
 
 DELIMITER ;
 
@@ -613,52 +631,218 @@ INSERT INTO administrator VALUES
 
 
 -- RESTAURANT INSERT QUERIES 
-INSERT INTO restaurant (res_name, res_slogan, res_description) VALUES ('BANGABURGER', 'Deliciousness with a BANG!', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ultricies urna sed rutrum lobortis. Nullam imperdiet libero et dignissim placerat. Etiam nunc massa, elementum id dui et, mattis iaculis tellus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Suspendisse volutpat ante lectus, quis varius nisi tempus ac.');
-
-INSERT INTO restaurant (res_name, res_slogan, res_description) VALUES ('BAMBOO!', 'Bamboo! Eat healthy!', 'Geat healthy alternative to the mainstream chinese food. Come eat at Bamboo for high quality food you will for sure love, Vegan food available.');
-INSERT INTO restaurant (res_name, res_slogan, res_description) VALUES ('Dumpling House', 'Amazing Dumplings!', 'Come eat soft chewy dumplings that have an explosion of flavor! Many options available to suit anyones tastes buds!');
-INSERT INTO restaurant (res_name, res_slogan, res_description) VALUES ('Lil` Italiano', 'Italian Food!', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ultricies urna sed rutrum lobortis. Nullam imperdiet libero et dignissim placerat. Etiam nunc massa, elementum id dui et, mattis iaculis tellus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Suspendisse volutpat ante lectus, quis varius nisi tempus ac.');
-INSERT INTO restaurant (res_name, res_slogan, res_description) VALUES ('Steak House', 'All you can eat!', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ultricies urna sed rutrum lobortis. Nullam imperdiet libero et dignissim placerat. Etiam nunc massa, elementum id dui et, mattis iaculis tellus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Suspendisse volutpat ante lectus, quis varius nisi tempus ac.');
+INSERT INTO restaurant (res_name, res_slogan, res_description) VALUES 
+('BANGABURGER', 'Deliciousness with a BANG!', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ultricies urna sed rutrum lobortis. Nullam imperdiet libero et dignissim placerat. Etiam nunc massa, elementum id dui et, mattis iaculis tellus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Suspendisse volutpat ante lectus, quis varius nisi tempus ac.'),
+('BAMBOO!', 'Bamboo! Eat healthy!', 'Geat healthy alternative to the mainstream chinese food. Come eat at Bamboo for high quality food you will for sure love, Vegan food available.'),
+('Dumpling House', 'Amazing Dumplings!', 'Come eat soft chewy dumplings that have an explosion of flavor! Many options available to suit anyones tastes buds!'),
+('Lil` Italiano', 'Italian Food!', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ultricies urna sed rutrum lobortis. Nullam imperdiet libero et dignissim placerat. Etiam nunc massa, elementum id dui et, mattis iaculis tellus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Suspendisse volutpat ante lectus, quis varius nisi tempus ac.'),
+('Steak House', 'All you can eat!', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ultricies urna sed rutrum lobortis. Nullam imperdiet libero et dignissim placerat. Etiam nunc massa, elementum id dui et, mattis iaculis tellus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Suspendisse volutpat ante lectus, quis varius nisi tempus ac.');
 
 
 -- LOCATION INSERT QUERIES
-INSERT INTO location (loc_address_1, loc_address_2, loc_city, loc_state, loc_postal_code, loc_phone, fk_res_id)
-VALUES ('2550 California Ave', 'Suite #200', 'Bakersfield', 'California', '93308', '(661)-844-7071', 1);
-
-INSERT INTO location (loc_address_1, loc_address_2, loc_city, loc_state, loc_postal_code, loc_phone, fk_res_id)
-VALUES ('1701 New Stine Rd', '', 'Bakersfield', 'California', '93309', '(661)-832-1278', 4);
-INSERT INTO location (loc_address_1, loc_address_2, loc_city, loc_state, loc_postal_code, loc_phone, fk_res_id)
-VALUES ('8110 Rosedale Hwy', 'Suite #F', 'Seattle', 'Washington', '98101', '(206)-588-4879', 2);
-INSERT INTO location (loc_address_1, loc_address_2, loc_city, loc_state, loc_postal_code, loc_phone, fk_res_id)
-VALUES ('2217 Ashe Rd', '', 'Los Angeles', 'California', '93309', '(661)-473-1426', 3);
-INSERT INTO location (loc_address_1, loc_address_2, loc_city, loc_state, loc_postal_code, loc_phone, fk_res_id)
-VALUES ('5051 Stockdale Hwy', '', 'Bakersfield', 'California', '93309', '(661)-834-7850', 5);
+INSERT INTO location (loc_address_1, loc_address_2, loc_city, loc_state, loc_postal_code, loc_phone, fk_res_id) VALUES 
+('2550 California Ave', 'Suite #200', 'Bakersfield', 'California', '93308', '(661)-844-7071', 1),
+('1701 New Stine Rd', '', 'Bakersfield', 'California', '93309', '(661)-832-1278', 2),
+('8110 Rosedale Hwy', 'Suite #F', 'Seattle', 'Washington', '98101', '(206)-588-4879', 3),
+('2217 Ashe Rd', '', 'Los Angeles', 'California', '93309', '(661)-473-1426', 4),
+('5051 Stockdale Hwy', '', 'Bakersfield', 'California', '93309', '(661)-834-7850', 5);
 
 -- EMPLOYEE INSERT QUERIES
-INSERT INTO employee (emp_first_name, emp_last_name, emp_username, emp_password, emp_email, emp_job, emp_manager, fk_loc_id) VALUES ('Esteban', 'Rodriguez', 'erodriguez', '$2y$10$t2QL6MJRS7R81F/Uh9xW1eEs9JIW10Z9aMW/tT6WIdwOo4E6CtPIG', 'esteban@example.com', 'Owner/General Manager', 1, 1);
+INSERT INTO employee (emp_first_name, emp_last_name, emp_username, emp_password, emp_email, emp_job, emp_manager, fk_loc_id) VALUES 
+('Esteban', 'Rodriguez', 'erodriguez', '$2y$10$t2QL6MJRS7R81F/Uh9xW1eEs9JIW10Z9aMW/tT6WIdwOo4E6CtPIG', 'esteban@example.com', 'Owner/General Manager', 1, 1),
+('Daven', 'Wilson', 'dwilson8', '$2y$10$t2QL6MJRS7R81F/Uh9xW1eEs9JIW10Z9aMW/tT6WIdwOo4E6CtPIG', 'dwilson8@ning.com', 'Owner/General Manager', 1, 2),
+('Cort', 'Haggas', 'chaggase', '$2y$10$t2QL6MJRS7R81F/Uh9xW1eEs9JIW10Z9aMW/tT6WIdwOo4E6CtPIG', 'chaggase@unc.edu', 'Owner/General Manager', 1, 3),
+('Manon', 'Jenks', 'mjenksi1', '$2y$10$t2QL6MJRS7R81F/Uh9xW1eEs9JIW10Z9aMW/tT6WIdwOo4E6CtPIG', 'mjenksi@ed.gov', 'Owner/General Manager', 1, 4),
+('Jasun', 'Holsey', 'jholsey0', '$2y$10$t2QL6MJRS7R81F/Uh9xW1eEs9JIW10Z9aMW/tT6WIdwOo4E6CtPIG', 'jholsey0@bravesites.com', 'Owner/General Manager', 1, 5),
+('Ilene', 'Caston', 'icastona', '$2y$10$t2QL6MJRS7R81F/Uh9xW1eEs9JIW10Z9aMW/tT6WIdwOo4E6CtPIG', 'icastona@1und1.de', 'Kitchen Manager', 1, 1),
+('Bram', 'De Gregorio', 'bdegregorio1', '$2y$10$t2QL6MJRS7R81F/Uh9xW1eEs9JIW10Z9aMW/tT6WIdwOo4E6CtPIG', 'bdegregorio1@ft.com', null, 0, 1),
+('Clayborn', 'Anger', 'clanger7', '$2y$10$t2QL6MJRS7R81F/Uh9xW1eEs9JIW10Z9aMW/tT6WIdwOo4E6CtPIG', 'canger7@list-manage.com', null, 0, 1),
+('Barbabas', 'Tomsu', 'btomsu9', '$2y$10$t2QL6MJRS7R81F/Uh9xW1eEs9JIW10Z9aMW/tT6WIdwOo4E6CtPIG', 'btomsu9@tuttocitta.it', null, 0, 2),
+('Breanne', 'Filyukov', 'bfilyukovd', '$2y$10$t2QL6MJRS7R81F/Uh9xW1eEs9JIW10Z9aMW/tT6WIdwOo4E6CtPIG', 'bfilyukovd@mac.com', null, 0, 2),
+('Giralda', 'Carlos', 'gcarlosh', '$2y$10$t2QL6MJRS7R81F/Uh9xW1eEs9JIW10Z9aMW/tT6WIdwOo4E6CtPIG', 'gcarlosh@samsung.com', 'Kitchen Manager', 1, 2),
+('Rodolfo', 'Gissing', 'rgissingj', '$2y$10$t2QL6MJRS7R81F/Uh9xW1eEs9JIW10Z9aMW/tT6WIdwOo4E6CtPIG', 'rgissingj@epa.gov', null, 0, 2),
+('Katti', 'Conen', 'kconen34', '$2y$10$t2QL6MJRS7R81F/Uh9xW1eEs9JIW10Z9aMW/tT6WIdwOo4E6CtPIG', 'kconen3@histats.com', null, 0, 3),
+('Anjela', 'Aveling', 'aavelingf', '$2y$10$t2QL6MJRS7R81F/Uh9xW1eEs9JIW10Z9aMW/tT6WIdwOo4E6CtPIG', 'aavelingf@is.gd', 'Kitchen Manager', 1, 3),
+('Misty', 'Southwell', 'msouthwellg', '$2y$10$t2QL6MJRS7R81F/Uh9xW1eEs9JIW10Z9aMW/tT6WIdwOo4E6CtPIG', 'msouthwellg@cocolog-nifty.com',null, 0, 3),
+('Shalom', 'Gillivrie', 'sgillivrie6', '$2y$10$t2QL6MJRS7R81F/Uh9xW1eEs9JIW10Z9aMW/tT6WIdwOo4E6CtPIG', 'sgillivrie6@fastcompany.com', null, 0, 3),
+('Audrye', 'Thonger', 'athonger2', '$2y$10$t2QL6MJRS7R81F/Uh9xW1eEs9JIW10Z9aMW/tT6WIdwOo4E6CtPIG', 'athonger2@desdev.cn', null, 0, 4),
+('Rich', 'Boliver', 'rboliver4', '$2y$10$t2QL6MJRS7R81F/Uh9xW1eEs9JIW10Z9aMW/tT6WIdwOo4E6CtPIG', 'rboliver4@baidu.com', null, 0, 4),
+('Gael', 'Caine', 'gcainec1', '$2y$10$t2QL6MJRS7R81F/Uh9xW1eEs9JIW10Z9aMW/tT6WIdwOo4E6CtPIG', 'gcainec@vistaprint.com', null, 0, 4),
+('Arlen', 'Narramore', 'anarramore5', '$2y$10$t2QL6MJRS7R81F/Uh9xW1eEs9JIW10Z9aMW/tT6WIdwOo4E6CtPIG', 'anarramore5@technorati.com', null, 0, 5),
+('Juliana', 'De Beneditti', 'jdebenedittib', '$2y$10$t2QL6MJRS7R81F/Uh9xW1eEs9JIW10Z9aMW/tT6WIdwOo4E6CtPIG', 'jdebenedittib@netvibes.com', null, 0, 5);
+
 
 -- CUSTOMER INSERT QUERIES
-INSERT INTO customer (cust_first_name, cust_last_name, cust_username, cust_password, cust_email) VALUES ("Example", "McExample", "example0", "$2y$10$xqYrxNVkcBBAXyppmeKSJepHOmknTUBYJBER3niQgV8E/ueja.X2y", "example0@example.com");
+INSERT INTO customer (cust_first_name, cust_last_name, cust_username, cust_password, cust_email, cust_address_1, cust_city, cust_state, cust_postal_code, cust_phone) VALUES 
+("Example", "McExample", "example0", "$2y$10$xqYrxNVkcBBAXyppmeKSJepHOmknTUBYJBER3niQgV8E/ueja.X2y", "example0@example.com", '7 Judy Park', 'Yonkers', 'New York', '10705', '(914)-644-7367'),
+('Issie', 'Flemmich', 'iflemmich00', "$2y$10$xqYrxNVkcBBAXyppmeKSJepHOmknTUBYJBER3niQgV8E/ueja.X2y", 'iflemmich0@gov.uk', '19067 Roth Plaza', 'Atlanta', 'Georgia', '30340', '(770)-524-0542'),
+('Ermentrude', 'Busek', 'ebusek10', "$2y$10$xqYrxNVkcBBAXyppmeKSJepHOmknTUBYJBER3niQgV8E/ueja.X2y", 'ebusek1@oaic.gov.au', '2 Manufacturers Parkway', 'Raleigh', 'North Carolina', '27621', '(919)-434-3895'),
+('Dolli', 'Petrie', 'dpetrie20', "$2y$10$xqYrxNVkcBBAXyppmeKSJepHOmknTUBYJBER3niQgV8E/ueja.X2y", 'dpetrie2@hhs.gov', '66 Twin Pines Crossing', 'New York City', 'New York', '10203', '(212)-626-7497'),
+('Les', 'Vernham', 'lvernham30', "$2y$10$xqYrxNVkcBBAXyppmeKSJepHOmknTUBYJBER3niQgV8E/ueja.X2y", 'lvernham3@desdev.cn', '5901 Buell Point', 'Worcester', 'Massachusetts', '01605', '(508)-330-0231'),
+('Allsun', 'Passingham', 'apassingham40', "$2y$10$xqYrxNVkcBBAXyppmeKSJepHOmknTUBYJBER3niQgV8E/ueja.X2y", 'apassingham4@1und1.de', '203 Coleman Junction', 'Hollywood', 'Florida', '33028', '(305)-106-9690'),
+('Ki', 'Colleton', 'kcolleton50', "$2y$10$xqYrxNVkcBBAXyppmeKSJepHOmknTUBYJBER3niQgV8E/ueja.X2y", 'kcolleton5@ebay.co.uk', '8 Roth Lane', 'Inglewood', 'California', '90305', '(310)-970-7570'),
+('Vilma', 'Davers', 'vdavers60', "$2y$10$xqYrxNVkcBBAXyppmeKSJepHOmknTUBYJBER3niQgV8E/ueja.X2y", 'vdavers6@nifty.com', '179 Declaration Parkway', 'Philadelphia', 'Pennsylvania', '19131', '(215)-295-9026'),
+('Any', 'Pashen', 'apashen70', "$2y$10$xqYrxNVkcBBAXyppmeKSJepHOmknTUBYJBER3niQgV8E/ueja.X2y", 'apashen7@github.io', '33806 Charing Cross Circle', 'Warren', 'Ohio', '44485', '(330)-528-2217'),
+('Dwight', 'Batters', 'dbatters80', "$2y$10$xqYrxNVkcBBAXyppmeKSJepHOmknTUBYJBER3niQgV8E/ueja.X2y", 'dbatters8@xing.com', '5 Macpherson Park', 'Fresno', 'California', '93721', '(209)-694-9784'),
+('Jennifer', 'Piccop', 'jpiccop90', "$2y$10$xqYrxNVkcBBAXyppmeKSJepHOmknTUBYJBER3niQgV8E/ueja.X2y", 'jpiccop9@livejournal.com', '42 Fieldstone Alley', 'Montgomery', 'Alabama', '36134', '(334)-172-7759'),
+('Mackenzie', 'McQuilliam', 'mmcquilliama0', "$2y$10$xqYrxNVkcBBAXyppmeKSJepHOmknTUBYJBER3niQgV8E/ueja.X2y", 'mmcquilliama@macromedia.com', '99980 Rieder Place', 'Irvine', 'California', '92717', '(714)-394-9925'),
+('Linette', 'Kiehne', 'lkiehneb0', "$2y$10$xqYrxNVkcBBAXyppmeKSJepHOmknTUBYJBER3niQgV8E/ueja.X2y", 'lkiehneb@dyndns.org', '3 Superior Court', 'Bradenton', 'Florida', '34205', '(941)-355-7751'),
+('Ferdinande', 'Housbey', 'fhousbeyc0', "$2y$10$xqYrxNVkcBBAXyppmeKSJepHOmknTUBYJBER3niQgV8E/ueja.X2y", 'fhousbeyc@cisco.com', '106 Lerdahl Street', 'Sioux Falls', 'South Dakota', '57105', '(605)-484-0621'),
+('Lynn', 'Dowker', 'ldowkerd0', "$2y$10$xqYrxNVkcBBAXyppmeKSJepHOmknTUBYJBER3niQgV8E/ueja.X2y", 'ldowkerd@ted.com', '01 Lakewood Street', 'Saint Louis', 'Missouri', '63158', '(314)-477-4313'),
+('Mylo', 'Hegge', 'mheggee0', "$2y$10$xqYrxNVkcBBAXyppmeKSJepHOmknTUBYJBER3niQgV8E/ueja.X2y", 'mheggee@craigslist.org', '621 Morningstar Place', 'Mesquite', 'Texas', '75185', '(972)-583-8785'),
+('Gamaliel', 'McCarlie', 'gmccarlief0', "$2y$10$xqYrxNVkcBBAXyppmeKSJepHOmknTUBYJBER3niQgV8E/ueja.X2y", 'gmccarlief@ucoz.com', '47998 Stoughton Place', 'Washington', 'District of Columbia', '20319', '(202)-553-4706'),
+('Vergil', 'Blaxill', 'vblaxillg0', "$2y$10$xqYrxNVkcBBAXyppmeKSJepHOmknTUBYJBER3niQgV8E/ueja.X2y", 'vblaxillg@google.com.hk', '034 Redwing Junction', 'New York City', 'New York', '10131', '(212)-901-9750'),
+('Debra', 'Ellerton', 'dellertonh0', "$2y$10$xqYrxNVkcBBAXyppmeKSJepHOmknTUBYJBER3niQgV8E/ueja.X2y", 'dellertonh@edublogs.org', '3 Texas Place', 'Tacoma', 'Washington', '98447', '(253)-555-4764'),
+('Frederique', 'Ruseworth', 'fruseworthi0', "$2y$10$xqYrxNVkcBBAXyppmeKSJepHOmknTUBYJBER3niQgV8E/ueja.X2y", 'fruseworthi@independent.co.uk', '7 Dakota Court', 'Petaluma', 'California', '94975', '(707)-380-5074'),
+('Sisely', 'Gange', 'sgangej0', "$2y$10$xqYrxNVkcBBAXyppmeKSJepHOmknTUBYJBER3niQgV8E/ueja.X2y", 'sgangej@hubpages.com', '90 Dorton Point', 'Peoria', 'Illinois', '61614', '(309)-458-7287');
 
 -- MENU ITEM CATEGORY
-INSERT INTO menu_item_category (item_cat_name, item_cat_description, fk_loc_id) VALUES ("Seafood", "Offers a distinct flavor rich in essential vitamins", 3);
+INSERT INTO menu_item_category (item_cat_name, item_cat_description, fk_loc_id) VALUES 
+("Burgers", null, 1),
+("Sides", null, 1),
+("Drinks", null, 1),
+("Appetizers", null, 2),
+("Soups", null, 2),
+("Fried Rice", null, 2),
+("Sushi", null, 3),
+("Seafood", null, 3),
+("Specialties", null, 3),
+("Pasta", null, 4),
+("Pizza", null, 4),
+("Salad", null, 4),
+("Starters", null, 5),
+("Steaks", null, 5),
+("Steakhouse Sides", null, 5);
 
 -- MENU ITEM
-INSERT INTO menu_item (item_name, item_price, fk_item_cat_id) VALUES ("Shrimp with Vermicelli and Garlic", 14.99, 1);
+INSERT INTO menu_item (item_name, item_price, fk_item_cat_id) VALUES 
+("Cheeseburger", 8.99, 1),
+("Veggie Burger", 6.99, 1),
+("Angus Burger", 12.99, 1),
+("French Fries", 4.99, 2),
+("Onion Rings", 4.99, 2),
+("House Salad", 3.99, 2),
+("Tea", 2.99, 3),
+("Soft Drink", 2.49, 3),
+("Coffee", 2.49, 3),
+("Egg Rolls", 2.99, 4),
+("Pot Stickers", 4.25, 4),
+("Crab Rangoon", 3.49, 4),
+("Egg Drop Soup", 6.25, 5),
+("Mixed Veggie Soup", 6.99, 5),
+("Wor Wonton Soup", 7.25, 5),
+("Pork", 11.99, 6),
+("Vegetable", 8.95, 6),
+("Beef", 10.95, 6),
+("Tempura", 8.99, 7),
+("Spicy Special Tuna", 10.99, 7),
+("King Crab", 10.99, 7),
+("Clams", 9.00, 8),
+("Mussels", 4.00, 8),
+("Calamari", 6.00, 8),
+("Chirashi Zushi", 8.00, 9),
+("Saikoro Steak", 15.00, 9),
+("Fried Soft Shell Crab", 10.00, 9),
+("Pasta Maria", 12.50, 10),
+("Cajun Pasta", 13.50, 10),
+("Pasta Francesco", 11.50, 10),
+("Margherita", 5.69, 11),
+("Meat Feast", 5.98, 11),
+("Hot Sea", 7.13, 11),
+("Blueberry and Chicken", 12.00, 12),
+("Shrimp Cobb Salad", 11.00, 12),
+("Classic Caesar", 8.00, 12),
+("Shrimp Cocktail", 5.99, 13),
+("Fried Mushrooms", 4.95, 13),
+("Cheese and Fruit Plate", 7.95, 13),
+("New York Strip", 20.49, 14),
+("Prime Rib", 24.99, 14),
+("Outlaw Ribeye", 25.99, 14),
+("Sweet Potato", 2.99, 15),
+("Fresh Steamed Broccoli", 2.99, 15),
+("Mashed Potatoes", 2.99, 15);
 
 -- LAYOUT TABLES
 INSERT INTO `table` (`table_uuid`, `table_number`, `table_seats`, `table_type`, `table_height`, `table_width`, `table_left`, `table_top`, `table_angle`, `fk_loc_id`) VALUES
-('z9ukjjla5-karck0x29', '1', 1, 'rectangle', 76, 106, 600, 15, 45, 3),
-('e6nv27tda-72a8g6zw2', '2', 1, 'rectangle', 76, 106, 90, 390, 45, 3),
-('ni2uiynt6-63ob1yd5w', '3', 1, 'rectangle', 76, 106, 315, 215, 0, 3),
-('9imhdwtaz-crfiswa0s', '4', 1, 'rectangle', 76, 106, 45, 30, 0, 3),
-('o0toh8ljq-t63v0rhb5', '5', 1, 'rectangle', 76, 106, 570, 420, 0, 3);
+('xs41wsw2d-bcnxc7jnp-siyu13xpn-njocx59d0', '1', 1, 'rectangle', 76, 106, 600, 15, 45, 1),
+('cljxm2nei-nfw8exn64-j197r2xlg-mkgs3tfwy', '2', 1, 'rectangle', 76, 106, 90, 390, 45, 1),
+('d609kd8o9-zmp1ybq6b-9yt6nvzbi-8ws3ebbzi', '3', 1, 'rectangle', 76, 106, 315, 215, 0, 1),
+('snjfyyaor-ua5jc4er7-2olrtlfl3-dn1ribmoe', '4', 1, 'rectangle', 76, 106, 45, 30, 0, 1),
+('fkwg3w5iv-2siy5ynfw-ho7qkny26-onoppgwqu', '5', 1, 'rectangle', 76, 106, 570, 420, 0, 1),
+('yfmwn38px-lg3cjj9i6-i37s33ra2-0ldjv9kx7', '1', 1, 'rectangle', 76, 106, 600, 15, 45, 2),
+('okpvuo6th-k8p9zrnzg-os965b1xc-dciino147', '2', 1, 'rectangle', 76, 106, 90, 390, 45, 2),
+('ctc5aimuu-zjcyo6r4m-rzalgt1uq-bdu3cofi4', '3', 1, 'rectangle', 76, 106, 315, 215, 0, 2),
+('n7nk513pu-pgnyd741k-dyu6awndb-afqv5sym0', '4', 1, 'rectangle', 76, 106, 45, 30, 0, 2),
+('n7oa1e8kl-g9q1ho3xi-h94i90za8-4d46a0duy', '5', 1, 'rectangle', 76, 106, 570, 420, 0, 2),
+('95z3k8u3c-xcawuuxui-s2yofrc92-qaro15txl', '1', 1, 'rectangle', 76, 106, 600, 15, 45, 3),
+('1vfrgqe83-lkr61hfx5-6mw1xsxkm-hehawldel', '2', 1, 'rectangle', 76, 106, 90, 390, 45, 3),
+('de23uiqcp-aavasnta9-5cmtezczp-f99gh43z7', '3', 1, 'rectangle', 76, 106, 315, 215, 0, 3),
+('6tcxjkufc-ynca7gja0-qc773wuvw-fc409fed1', '4', 1, 'rectangle', 76, 106, 45, 30, 0, 3),
+('act99xi7d-yoc1w2ayk-bs4y5pxyc-6cn3pvjar', '5', 1, 'rectangle', 76, 106, 570, 420, 0, 3),
+('du48j9goe-l83m2s3jx-7rqdn9kdm-cbqat0a96', '1', 1, 'rectangle', 76, 106, 600, 15, 45, 4),
+('ljxl75kpd-z3dx9de4z-zbzrfhr71-v5p56y3or', '2', 1, 'rectangle', 76, 106, 90, 390, 45, 4),
+('genr8ygyn-9xzauvdyp-apctzghmf-ghtii46lq', '3', 1, 'rectangle', 76, 106, 315, 215, 0, 4),
+('3boms66om-6g2motujs-29oo18wx2-ou5n4hp2u', '4', 1, 'rectangle', 76, 106, 45, 30, 0, 4),
+('yiuzzpl0i-v556brhai-svcw8lle3-bq6oruk37', '5', 1, 'rectangle', 76, 106, 570, 420, 0, 4),
+('rg6tc4vp8-o7ikrlyc4-7ewp7vzul-9cxev8o2w', '1', 1, 'rectangle', 76, 106, 600, 15, 45, 5),
+('tpj2w3kwg-6b8mwseox-t40g5b8zb-ccl2ej0v5', '2', 1, 'rectangle', 76, 106, 90, 390, 45, 5),
+('b9wxhsda7-fswcva8q3-zr5sgb4xx-x6gq9g8dj', '3', 1, 'rectangle', 76, 106, 315, 215, 0, 5),
+('ggq29yyez-kz510nqw5-dp5vz004u-a4jgt1ecf', '4', 1, 'rectangle', 76, 106, 45, 30, 0, 5),
+('x0hr08yyt-ve68pdmqg-owzs9jz7u-kt2o537es', '5', 1, 'rectangle', 76, 106, 570, 420, 0, 5);
 
 -- RESERVATION QUERY
-INSERT INTO reservation (rsvn_date, rsvn_slot, fk_loc_id, fk_cust_id, fk_table_id) VALUES ("2020-05-01", "16:00:00", 3, 1, 3);
-
--- ORDER
-INSERT INTO `order` (order_total, fk_cust_id, fk_rsvn_id) VALUES (14.99, 1, 1);
+INSERT INTO reservation (rsvn_date, rsvn_slot, fk_loc_id, fk_cust_id, fk_table_id) VALUES 
+("2020-04-01", "16:00:00", 1, 1, 1),
+("2020-04-04", "16:00:00", 1, 2, 5),
+("2020-04-20", "16:00:00", 1, 3, 2),
+("2020-04-23", "16:00:00", 1, 4, 4),
+("2020-04-24", "16:00:00", 1, 5, 3),
+("2020-04-25", "18:00:00", 1, 6, 1),
+("2020-04-25", "19:00:00", 1, 7, 5),
+("2020-04-25", "14:00:00", 1, 8, 2),
+("2020-04-25", "15:00:00", 1, 9, 4),
+("2020-04-28", "18:00:00", 2, 10, 3),
+("2020-04-01", "16:00:00", 2, 11, 1),
+("2020-04-04", "16:00:00", 2, 12, 5),
+("2020-04-20", "16:00:00", 2, 13, 2),
+("2020-04-23", "16:00:00", 2, 14, 4),
+("2020-04-24", "16:00:00", 2, 15, 3),
+("2020-04-25", "18:00:00", 2, 16, 1),
+("2020-04-25", "19:00:00", 2, 17, 5),
+("2020-04-25", "14:00:00", 2, 18, 2),
+("2020-04-25", "15:00:00", 2, 19, 4),
+("2020-04-28", "18:00:00", 2, 20, 3),
+("2020-04-01", "16:00:00", 3, 10, 1),
+("2020-04-04", "16:00:00", 3, 9, 5),
+("2020-04-20", "16:00:00", 3, 8, 2),
+("2020-04-23", "16:00:00", 3, 7, 4),
+("2020-04-24", "16:00:00", 3, 6, 3),
+("2020-04-25", "18:00:00", 3, 5, 1),
+("2020-04-25", "19:00:00", 3, 4, 5),
+("2020-04-25", "14:00:00", 3, 3, 2),
+("2020-04-25", "15:00:00", 3, 2, 4),
+("2020-04-28", "18:00:00", 3, 1, 3),
+("2020-04-01", "16:00:00", 4, 20, 1),
+("2020-04-04", "16:00:00", 4, 19, 5),
+("2020-04-20", "16:00:00", 4, 18, 2),
+("2020-04-23", "16:00:00", 4, 17, 4),
+("2020-04-24", "16:00:00", 4, 16, 3),
+("2020-04-25", "18:00:00", 4, 15, 1),
+("2020-04-25", "19:00:00", 4, 14, 5),
+("2020-04-25", "14:00:00", 4, 13, 2),
+("2020-04-25", "15:00:00", 4, 12, 4),
+("2020-04-28", "18:00:00", 4, 11, 3),
+("2020-04-01", "16:00:00", 5, 11, 1),
+("2020-04-04", "16:00:00", 5, 1, 5),
+("2020-04-20", "16:00:00", 5, 12, 2),
+("2020-04-23", "16:00:00", 5, 2, 4),
+("2020-04-24", "16:00:00", 5, 13, 3),
+("2020-04-25", "18:00:00", 5, 3, 1),
+("2020-04-25", "19:00:00", 5, 14, 5),
+("2020-04-25", "14:00:00", 5, 4, 2),
+("2020-04-25", "15:00:00", 5, 15, 4),
+("2020-04-28", "18:00:00", 5, 5, 3);
 
 -- ORDER ITEM
-INSERT INTO order_item (order_price, order_quantity, fk_order_id, fk_menu_item_id) VALUES (14.99, 1, 1, 1);
+INSERT INTO order_item (order_quantity, fk_order_id, fk_menu_item_id) VALUES 
+(1, 1, 1);

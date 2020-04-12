@@ -469,7 +469,7 @@ $(document).ready(function() {
 		});
 	});
 
-		// Revoke manager access
+	// Revoke manager access
 	$("#employee-list").each(function() {
 		$(this).on('click', '.emp-add-manager', function(e) {
 			let eid = $(this).val();
@@ -506,6 +506,138 @@ $(document).ready(function() {
 					$("#manager-list-alert").html("Error updating employee");
 					$("#manager-list-alert").addClass("alert-danger");
 					$("#manager-list-alert").removeClass("d-none");
+				}
+			});
+		});
+	});
+
+	// Fill reservation/order information and display
+	$("#order-list").each(function() {
+		$(this).on('click', '.order-row', function(e) {
+			let rsvn_id = $(this).val();
+			$.ajax({
+				url: '/delectable/public_html/assets/scripts/restaurant-order.php',
+				type: 'POST',
+				data: {
+					'order_details': true,
+					'rsvn_id': rsvn_id
+				}
+			}).done(function(response) {
+				let res = JSON.parse(response);
+				if(!res.error) {
+					$(".assign-staff").val(rsvn_id);
+					let emps = res.data.emp;
+					let rsvn = res.data.rsvn;
+					let address_1 = (rsvn.cust_address_1) ? rsvn.cust_address_1 : "Address: N/A";
+					let address_2 = (rsvn.cust_address_2) ? rsvn.cust_address_2 : "";
+					let city = (rsvn.cust_city) ? rsvn.cust_city + "," : "Address 2: N/A";
+					let state = (rsvn.cust_state) ? rsvn.cust_state : "";
+					let zip = (rsvn.cust_postal_code) ? rsvn.cust_postal_code : "";
+					let phone = (rsvn.cust_phone) ? rsvn.cust_phone : "Phone: N/A";
+					let rsvn_table = rsvn.table_number;
+					$("#cust-name").html(rsvn.cust_first_name + " " + rsvn.cust_last_name);
+					$("#cust-address-1").html(address_1 + " " + address_2);
+					$("#cust-address-2").html(city + " " + state + " " + zip);
+					$("#cust-phone").html(phone);
+					$("#cust-email").html(rsvn.cust_email);
+					$("#order-created").html(formatDate(rsvn.order_created));
+					$("#rsvn-date").html(formatDate(rsvn.rsvn_date));
+					$("#table-number").html(rsvn_table);
+					$("#rsvn-staff tbody").html("");
+					if(emps.length > 0) {
+						$.each(emps, function(k, v) {
+							let name = emps[k].emp_first_name + " " + emps[k].emp_last_name;
+							let eid = emps[k].emp_id;
+							let job = (emps[k].emp_job) ? emps[k].emp_job : "N/A";
+							let row = "<tr><td>" + name + "</td>";
+							row += "<td>" + job + "</td>";
+							row += "<td><a class='btn-sm btn-link-alt text-link table-link py-0 rounded' href='../employees/?eid=" + eid + "'>Profile</a></td></tr>";
+							$("#rsvn-staff tbody").append(row);
+						});
+					} else {
+						let row = "<td>No Staff Assigned</td>";
+						$("#rsvn-staff tbody").append(row);
+					}
+					$("#order-form").removeClass("d-none");
+				} else {
+					// Show 'soft' alert for error message
+				}
+			});
+		});
+	});
+
+
+	// List employees for restaurant not assigned to reservation
+	$(".staff-row").each(function() {
+		$(this).on('click', '.assign-staff', function(e) {
+			let rsvn_id = $(this).val();
+			$.ajax({
+				url: '/delectable/public_html/assets/scripts/restaurant-order.php',
+				type: 'POST',
+				data: {
+					'restaurant-employee-list': true,
+					'loc_id': lid,
+					'rsvn_id': rsvn_id
+				}
+			}).done(function(response) {
+				let res = JSON.parse(response);
+				$("#modal-assign-staff-table tbody").empty();
+				$.each(res, function(k,v) {
+					let name = res[k].emp_first_name + " " + res[k].emp_last_name;
+					let eid = res[k].emp_id;
+					let job = (res[k].emp_job) ? res[k].emp_job : "N/A";
+					let row = "<tr>";
+					row += "<td>" + name + "</td>";
+					row += "<td>" + job + "</td>";
+					row += "<td><input class='form-control staff-cb' type='checkbox' value='" + eid + "'></td>";
+					row += "</tr>";
+					$("#modal-assign-staff-table tbody").append(row);
+				});
+			});
+		});
+	});
+
+	// Assign staff to reservation
+	$("#assign-staff-modal").each(function() {
+		$(this).on('click', '.assign-staff-submit', function(e) {
+			let rsvn_id = $(".assign-staff").val();
+			let emps = [];
+			$(".staff-cb").each(function() {
+				if($(this).prop('checked')) {
+					emps.push({emp_id: $(this).val()});
+				}
+			})
+			if(emps.length < 1) {
+				return;
+			}
+			$.ajax({
+				url: '/delectable/public_html/assets/scripts/restaurant-order.php',
+				type: 'POST',
+				data: {
+					'assign_staff': true,
+					'rsvn_id': rsvn_id,
+					'emps': emps
+				}
+			}).done(function(response) {
+				let res = JSON.parse(response);
+				if(!res.error) {
+					let staff = $("#rsvn-staff tbody");
+					let row;
+					let data = res.data;
+					$.each(data, function(k, v) {
+						let name = data[k].emp_first_name + " " + data[k].emp_last_name;
+						let eid = data[k].emp_id;
+						let job = (data[k].emp_job) ? data[k].emp_job : "N/A";
+						row = "<tr><td>" + name + "</td>";
+						row += "<td>" + job + "</td>";
+						row += "<td><a class='btn-sm btn-link-alt text-link table-link py-0 rounded' href='../employees/?eid=" + eid + "'>Profile</a></td></tr>";
+						staff.append(row);
+					});
+					$(".staff-cb").each(function() {
+						if($(this).prop('checked')) {
+							$(this).parent().parent().remove();
+						}
+					})
 				}
 			});
 		});

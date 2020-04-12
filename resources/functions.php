@@ -249,6 +249,22 @@ function restaurant_schedule($conn, $lid) {
 	}
 }
 
+function restaurant_pending_orders($conn, $lid) {
+	// Limit orders between dates
+	// $date = date('Y-m-d');
+
+	// Do not remove space at end of each $sql line
+	$sql = "SELECT order_id, rsvn_id, rsvn_date, rsvn_slot, rsvn_status ";
+	$sql .= "FROM `order` o, reservation r ";
+	$sql .= "WHERE r.rsvn_id = o.fk_rsvn_id AND r.fk_loc_id = :lid ";
+	$sql .= "ORDER BY rsvn_date ASC, rsvn_slot ASC";
+	$query = $conn->prepare($sql);
+	$query->bindParam(":lid", $lid, PDO::PARAM_INT);
+	if($query->execute()) {
+		return $query->fetchAll();
+	}
+}
+
 function convert_state_abbr($str) {
 	$us_state_abbrevs_names = array(
 		'AL'=>'ALABAMA',

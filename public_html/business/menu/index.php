@@ -125,14 +125,14 @@ $cats = menu_item_categories($conn, $_SESSION['loc_id']);
 	                			$item_price = htmlspecialchars($i["item_price"]);
 	                			$item_desc = htmlspecialchars($i["item_description"]);
 	                			if(strlen($item_desc) < 1) {
-	                				$item_desc = "N/A";
+	                				$item_desc = "";
 	                			}
 	                			$item_id = $i["item_id"];
                 		?>
                 		<!-- Menu Item -->
                 		<div class="menu-item row mt-3 item-<?php echo $item_id; ?>">
 	                		<div class="col-2 d-flex justify-content-center align-items-center pr-0">
-	                			<img src="https://placekitten.com/50/50" class="img-thumbnail rounded-0">
+	                			<img src="https://via.placeholder.com/50" class="img-thumbnail rounded-0">
 	                		</div>
 
 	                		<div class="col-8 d-flex justify-content-left align-items-center">
@@ -148,13 +148,13 @@ $cats = menu_item_categories($conn, $_SESSION['loc_id']);
 	                		<div class="col-12 d-flex justify-content-left align-items-center text-muted mt-3 word-break"><small><i>
 	                			<?php echo $item_desc; ?>
                 			</i></small></div>
-
+<!-- 
 	                		<div class="col-12 mt-3">
 								<div class="btn-group special" role="group">
 									<button type="button" class="btn btn-primary btn-sm" value="<?php echo $item_id; ?>">Edit Item</button>
 									<button type="button" class="btn btn-primary btn-sm" value="<?php echo $item_id; ?>">Remove</button>
 								</div>
-	                		</div>
+	                		</div> -->
 	                	</div>
 	                	<!-- ./Menu Item -->
 		                <?php

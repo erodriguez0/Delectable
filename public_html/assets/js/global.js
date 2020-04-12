@@ -77,6 +77,20 @@ function selectStateElement(id, val) {
 	element.val(val);
 }
 
+function formatDate(str) {
+	let tmp = new Date(str);
+	let date = new Date(tmp.getFullYear(), tmp.getMonth(), tmp.getDate() + 1);
+	let day = date.getDate();
+	let month = date.getMonth();
+	if(day < 10) {
+		day = "0" + day;
+	}
+	if(month < 10) {
+		month = "0" + month;
+	}
+	return month + "-" + day + "-" + date.getFullYear();
+}
+
 $(window).on('load', function() {
 	$("#cover").hide();
 });
