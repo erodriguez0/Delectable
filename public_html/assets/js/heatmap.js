@@ -49,6 +49,28 @@ const wallShadow = 		'rgba(0, 0, 0, 0) 5px 5px 20px';
 
 // FUNCTIONS FOR FABRIC OBJECTS
 
+function convertAvgToHexColor(num) {
+	if(num >= 4.5) {
+		return "#085E08";
+	} else if(num >= 4.0 && num < 4.5) {
+		return "#5B8835";
+	} else if(num >= 3.5 && num < 4.0) {
+		return "#95B329";
+	} else if(num >= 3.0 && num < 3.5) {
+		return "#B7A524";
+	} else if(num >= 2.5 && num < 3.0) {
+		return "#E39F1C";
+	} else if(num >= 2.0 && num < 2.5) {
+		return "#E37B1C";
+	} else if(num >= 1.5 && num < 2.0) {
+		return "#E34E1C";
+	} else if(num >= 1.0 && num < 1.5) {
+		return "#D94A17";
+	} else {
+		return "#E31C23";
+	}
+}
+
 // Moves canvas lines to background
 function sendLinesToBack() {
 	canvas.getObjects().map(o => {
@@ -58,12 +80,12 @@ function sendLinesToBack() {
 	});
 }
 
-function addSquareTable(id, num, left, top, deg, width, height) {
+function addSquareTable(id, num, left, top, deg, width, height, customFill) {
 
 	const o = new fabric.Rect({
 		width: width,
 		height: height,
-		fill: tableFill,
+		fill: customFill,
 		stroke: tableFill,
 		strokeWidth: 1,
 		originX: 'center',
@@ -123,11 +145,11 @@ function addSquareTable(id, num, left, top, deg, width, height) {
 	return g;
 }
 
-function addCircleTable(id, num, left, top, deg, rad) {
+function addCircleTable(id, num, left, top, deg, rad, customFill) {
 
 	const o = new fabric.Circle({
 		radius: rad / 2,
-	    fill: tableFill,
+	    fill: customFill,
 	    stroke: tableFill,
 	    strokeWidth: 1,
 	    originX: 'center',
@@ -183,12 +205,12 @@ function addCircleTable(id, num, left, top, deg, rad) {
 	return g;
 }
 
-function addRectangleTable(id, num, left, top, deg, width, height) {
+function addRectangleTable(id, num, left, top, deg, width, height, customFill) {
 
 	const o = new fabric.Rect({
 		width: width,
 		height: height,
-		fill: tableFill,
+		fill: customFill,
 		stroke: tableFill,
 		strokeWidth: 1,
 		originX: 'center',
@@ -251,7 +273,6 @@ function addRectangleTable(id, num, left, top, deg, width, height) {
 		g.lockMovementY = true;
 		g.borderColor = "#38A62E";
 	}
-
 	canvas.add(g);
 	number++;
 	return g;
@@ -401,33 +422,38 @@ function initCanvas() {
 
 function addObjects() {
 	$.ajax({
-		url: '/delectable/public_html/assets/scripts/restaurant-layout.php',
+		url: '/delectable/public_html/assets/scripts/restaurant-reviews.php',
 		type: 'POST',
 		data: {
 			'loc_id': lid,
 			'load_layout': true
 		}
-	}).done(function(res) {
-		var objects = JSON.parse(res);
-		$.each(objects, function(k, v) {
-			switch(v.type) {
-				case "square":
-					addSquareTable(v.uuid, parseInt(v.num), parseInt(v.left), parseInt(v.top), parseInt(v.deg), parseInt(v.width), parseInt(v.height));
-					break;
-				case "rectangle":
-					addRectangleTable(v.uuid, parseInt(v.num), parseInt(v.left), parseInt(v.top), parseInt(v.deg), parseInt(v.width), parseInt(v.height));
-					break;
-				case "circle":
-					addCircleTable(v.uuid, parseInt(v.num), parseInt(v.left), parseInt(v.top), parseInt(v.deg), parseInt(v.width));
-					break;
-				case "chair":
-					addChair(v.uuid, parseInt(v.left), parseInt(v.top), parseInt(v.deg), parseInt(v.width), parseInt(v.height));
-					break;
-				case "other":
-					addObject("", v.uuid, parseInt(v.left), parseInt(v.top), parseInt(v.deg), parseInt(v.width), parseInt(v.height));
-					break;
+	}).done(function(response) {
+		var res = JSON.parse(response);
+		if(!res.error) {
+			let objects = res.data;
+			if(objects.length > 0) {
+				$.each(objects, function(k, v) {
+					switch(v.type) {
+						case "square":
+							addSquareTable(v.uuid, parseInt(v.num), parseInt(v.left), parseInt(v.top), parseInt(v.deg), parseInt(v.width), parseInt(v.height), convertAvgToHexColor(v.avg));
+							break;
+						case "rectangle":
+							const o = addRectangleTable(v.uuid, parseInt(v.num), parseInt(v.left), parseInt(v.top), parseInt(v.deg), parseInt(v.width), parseInt(v.height), convertAvgToHexColor(v.avg));
+							break;
+						case "circle":
+							addCircleTable(v.uuid, parseInt(v.num), parseInt(v.left), parseInt(v.top), parseInt(v.deg), parseInt(v.width), convertAvgToHexColor(v.avg));
+							break;
+						case "chair":
+							addChair(v.uuid, parseInt(v.left), parseInt(v.top), parseInt(v.deg), parseInt(v.width), parseInt(v.height));
+							break;
+						case "other":
+							addObject("", v.uuid, parseInt(v.left), parseInt(v.top), parseInt(v.deg), parseInt(v.width), parseInt(v.height));
+							break;
+					}
+				});
 			}
-		});
+		}
 	});
 }
 

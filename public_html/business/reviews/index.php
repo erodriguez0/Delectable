@@ -27,6 +27,10 @@ $orders = restaurant_archived_orders($conn, $lid);
 		</div>
 		<div class="col-12 col-lg-8 col-xl-9">
 			<h1 class="h3 subheader-border">Heat Map</h1>
+			<div class="mt-3">
+				<button id="view-reviews" class="btn btn-primary btn-sm">View Reviews</button>
+				<span class="ml-2"><small>Click On Table Then View Reviews</small></span>
+			</div>
 			<div class="mt-3 overflow-x">
                 <canvas id="canvas" width="720" height="540"></canvas>
             </div>
