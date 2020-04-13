@@ -63,9 +63,9 @@ function convertAvgToHexColor(num) {
 	} else if(num >= 2.0 && num < 2.5) {
 		return "#E37B1C";
 	} else if(num >= 1.5 && num < 2.0) {
-		return "#E34E1C";
-	} else if(num >= 1.0 && num < 1.5) {
 		return "#D94A17";
+	} else if(num >= 1.0 && num < 1.5) {
+		return "#c52e13";
 	} else {
 		return "#E31C23";
 	}

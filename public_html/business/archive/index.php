@@ -53,7 +53,7 @@ $orders = restaurant_archived_orders($conn, $lid);
 
 		<div class="col-12 col-lg-8 col-xl-9">
 			<h1 class="h3 subheader-border">Reservation Details</h1>
-						<div id="order-form" class="d-none">
+				<div id="order-form" class="d-none">
 				<div class="row">
 					<div class="col-12">
 

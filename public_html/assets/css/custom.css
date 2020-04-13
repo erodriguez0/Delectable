@@ -288,6 +288,23 @@ input:checked + .status-slider:before {
 	word-break: break-word !important;
 }
 
+.legend-box {
+	width: 10px;
+	height: 10px;
+	border: 1px solid #000;
+	display: inline-block;
+}
+
+.legend-1 { background-color: #E31C23; }
+.legend-2 { background-color: #c52e13; }
+.legend-3 { background-color: #D94A17; }
+.legend-4 { background-color: #E37B1C; }
+.legend-5 { background-color: #E39F1C; }
+.legend-6 { background-color: #B7A524; }
+.legend-7 { background-color: #95B329; }
+.legend-8 { background-color: #5B8835; }
+.legend-9 { background-color: #085E08; }
+
 /*
 ####################################################
 M E D I A  Q U E R I E S
