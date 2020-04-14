@@ -78,7 +78,8 @@ if(isset($_POST['table_reviews'])) {
 	$sql = "";
 	$sql = <<<'EOT'
 		SELECT
-		rsvn_id, review_text, review_rating, review_created, cust_first_name, cust_last_name
+			rsvn_id, review_text, review_rating, review_created, review_food_rating, 
+			review_service_rating, cust_first_name, cust_last_name
 		FROM
 			reservation r, review w, `table` t, customer c
 		WHERE

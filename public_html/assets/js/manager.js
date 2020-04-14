@@ -2,26 +2,44 @@ function review_column(data) {
 	let html = "";
 	let name = data.cust_first_name + " " + data.cust_last_name;
 	let rsvn_id = data.rsvn_id;
-	let rating = data.review_rating;
+	let overall = data.review_rating;
+	let food = data.review_food_rating;
+	let service = data.review_service_rating;
 	let review_date = formatDate(data.review_created);
 	let comment = data.review_text;
 	html += "<div class='col-12 review-wrap'>";
 	html += "<span>" + name + "</span>";
 	html += "<div class='review-title d-flex align-items-center'>";
-	html += "<span class='mr-2'>" + review_date + " | Rating:</span>";
-	html += "<div class='review-rating d-flex align-items-center'>";
+	html += "<span>" + review_date + " | </span>";
+	html += "<button class='btn btn-link-alt btn-sm table-link text-link text-capitalize order-row' value='" + rsvn_id + "' data-toggle='modal' data-target='.rsvn-modal'>View Details</button>";
+	html += "</div>";
+	html += "<div class='review-rating d-flex align-items-center pb-1'>";
+	html += "<span class='mr-2'>Overall: </span>";
 	for(let i = 0; i < 5; i++) {
-		if(i < rating) {
+		if(i < overall) {
+			html += "<span class='fa fa-star star-checked'></span>";
+		} else {
+			html += "<span class='fa fa-star'></span>";
+		}
+	}
+	html += "<span class='mx-2'>| Food: </span>";
+	for(let i = 0; i < 5; i++) {
+		if(i < food) {
+			html += "<span class='fa fa-star star-checked'></span>";
+		} else {
+			html += "<span class='fa fa-star'></span>";
+		}
+	}
+	html += "<span class='mx-2'>| Service: </span>";
+	for(let i = 0; i < 5; i++) {
+		if(i < service) {
 			html += "<span class='fa fa-star star-checked'></span>";
 		} else {
 			html += "<span class='fa fa-star'></span>";
 		}
 	}
 	html += "</div>";
-	html += "<span class='ml-1'> |</span>";
-	html += "<button class='btn btn-link-alt btn-sm table-link text-link text-capitalize order-row' value='" + rsvn_id + "' data-toggle='modal' data-target='.rsvn-modal'>View Details</button>";
-	html += "</div>";
-	html += "<p>" + comment + "</p>";
+	html += "<p>" + compact_paragraph(comment, 250) + "</p>";
 	html += "</div>";
 	$(".review-row").append(html);
 }
@@ -690,5 +708,16 @@ $(document).ready(function() {
 				}
 			});
 		}
+	});
+
+	$("#order-list").each(function() {
+		$(this).on("click", ".read-more", function() {
+			$(this).prev().toggleClass("d-none");
+			if($(this).html() == " Read Less") {
+				$(this).html("... Read More");
+			} else {
+				$(this).html(" Read Less");
+			}
+		});
 	});
 });

@@ -84,6 +84,18 @@ function formatDate(str) {
 	return m + "-" + d + "-" + y;
 }
 
+function compact_paragraph(text, limit) {
+	let html = "";
+	let sub = text.substr(0, limit);
+	let hide = text.substr(limit, text.length - limit);
+	html += sub;
+	if(text.length > limit) {
+		html += "<span class='d-none'>" + hide + "</span>";
+		html += "<button class='btn btn-link-alt btn-sm table-link text-link text-capitalize read-more pt-0' style='padding-bottom: 4px;'>... Read More</button>";
+	}
+	return html;
+}
+
 $(window).on('load', function() {
 	$("#cover").hide();
 });
