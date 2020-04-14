@@ -1,3 +1,31 @@
+function review_column(data) {
+	let html = "";
+	let name = data.cust_first_name + " " + data.cust_last_name;
+	let rsvn_id = data.rsvn_id;
+	let rating = data.review_rating;
+	let review_date = formatDate(data.review_created);
+	let comment = data.review_text;
+	html += "<div class='col-12 review-wrap'>";
+	html += "<span>" + name + "</span>";
+	html += "<div class='review-title d-flex align-items-center'>";
+	html += "<span class='mr-2'>" + review_date + " | Rating:</span>";
+	html += "<div class='review-rating d-flex align-items-center'>";
+	for(let i = 0; i < 5; i++) {
+		if(i < rating) {
+			html += "<span class='fa fa-star star-checked'></span>";
+		} else {
+			html += "<span class='fa fa-star'></span>";
+		}
+	}
+	html += "</div>";
+	html += "<span class='ml-1'> |</span>";
+	html += "<button class='btn btn-link-alt btn-sm table-link text-link text-capitalize' value='" + rsvn_id + "'>View Details</button>";
+	html += "</div>";
+	html += "<p>" + comment + "</p>";
+	html += "</div>";
+	$(".review-row").append(html);
+}
+
 $(document).ready(function() {
 	$("#add-item-price").on("change", function() {
 		$(this).val(parseFloat($(this).val()).toFixed(2));
@@ -636,5 +664,28 @@ $(document).ready(function() {
 				}
 			});
 		});
+	});
+
+	$("#view-reviews").click(function() {
+		if(canvas.getActiveObject()) {
+			const o = canvas.getActiveObject();
+			let uuid = o.id;
+			$.ajax({
+				url: '/delectable/public_html/assets/scripts/restaurant-reviews.php',
+				type: 'POST',
+				data: {
+					'table_reviews': true,
+					'table_uuid': uuid
+				}
+			}).done(function(response) {
+				let res = JSON.parse(response);
+				if(!res.error && res.data.length > 0) {
+					$(".review-row").html("");
+					$.each(res.data, function(k, v) {
+						review_column(res.data[k]);
+					});
+				}
+			});
+		}
 	});
 });

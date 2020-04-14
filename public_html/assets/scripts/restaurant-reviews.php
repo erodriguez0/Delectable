@@ -6,10 +6,20 @@ if(isset($_POST['load_layout'])) {
 	$lid = $_POST['loc_id'];
 	$res = array("error" => false, "error_msg" => "", "data" => array());
 	$sql = "";
-	$sql .= "SELECT AVG(w.review_rating) AS avg_rating, COUNT(*) AS num_of_reviews, t.* ";
-	$sql .= "FROM `table` t, review w, reservation r ";
-	$sql .= "WHERE t.table_id = r.fk_table_id AND w.fk_rsvn_id = r.rsvn_id AND r.fk_loc_id = :lid ";
-	$sql .= "GROUP BY t.table_id";
+	$sql = <<<'EOT'
+		SELECT
+			(SELECT AVG(w1.review_rating) 
+			FROM review w1, reservation r1, `table` t1 
+			WHERE w1.fk_rsvn_id = r1.rsvn_id AND r1.fk_table_id = t1.table_id 
+				AND r1.fk_loc_id = l.loc_id AND t1.table_id = t.table_id) as avg_rating,
+			(SELECT COUNT(w2.review_id) 
+			FROM review w2, reservation r2, `table` t2 
+			WHERE w2.fk_rsvn_id = r2.rsvn_id AND r2.fk_table_id = t2.table_id 
+				AND r2.fk_loc_id = l.loc_id AND t2.table_id = t.table_id) as num_of_reviews,
+			t.*
+		FROM location l, `table` t
+		WHERE t.fk_loc_id = l.loc_id AND l.loc_id = :lid	
+	EOT;
 	$query = $conn->prepare($sql);
 	$query->bindParam(":lid", $lid, PDO::PARAM_INT);
 	if($query->execute()) {
@@ -59,6 +69,32 @@ if(isset($_POST['load_layout'])) {
 	}
 	$res["error"] = true;
 	$res["error_msg"] = "Could not retrieve review information";
+	echo json_encode($res); exit();
+}
+
+if(isset($_POST['table_reviews'])) {
+	$uuid = $_POST['table_uuid'];
+	$res = array("error" => false, "error_msg" => "", "data" => array());
+	$sql = "";
+	$sql = <<<'EOT'
+		SELECT
+		rsvn_id, review_text, review_rating, review_created, cust_first_name, cust_last_name
+		FROM
+			reservation r, review w, `table` t, customer c
+		WHERE
+			w.fk_cust_id = c.cust_id AND
+			r.rsvn_id = w.fk_rsvn_id AND
+		    r.fk_table_id = t.table_id AND
+		    t.table_uuid = :uuid
+	EOT;
+	$query = $conn->prepare($sql);
+	$query->bindParam(":uuid", $uuid, PDO::PARAM_STR);
+	if($query->execute()) {
+		$res["data"] = $query->fetchAll();
+		echo json_encode($res); exit();
+	}
+	$res["error"] = true;
+	$res["error_msg"] = "Could not retrieve reviews for table";
 	echo json_encode($res); exit();
 }
 

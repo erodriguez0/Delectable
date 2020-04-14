@@ -119,7 +119,12 @@ function addSquareTable(id, num, left, top, deg, width, height, customFill) {
 		table: true,
 		id: id,
 		number: num,
-		new: false
+		new: false,
+		hasControls: false,
+		lockMovementX: true,
+		lockMovementY: true,
+		selectable: true,
+		borderColor: "#00A0DD"
 	});
 
 	// Set resizing controls
@@ -132,13 +137,6 @@ function addSquareTable(id, num, left, top, deg, width, height, customFill) {
 		mt: false,
 		mb: false
 	});
-
-	if(read_only_mode) {
-		g.hasControls = false;
-		g.lockMovementX = true;
-		g.lockMovementY = true;
-		g.borderColor = "#38A62E";
-	}
 
 	canvas.add(g);
 	number++;
@@ -179,7 +177,12 @@ function addCircleTable(id, num, left, top, deg, rad, customFill) {
 		table: true,
 		id: id,
 		number: num,
-		new: false
+		new: false,
+		hasControls: false,
+		lockMovementX: true,
+		lockMovementY: true,
+		selectable: true,
+		borderColor: "#00A0DD"
 	});
 
 	// Set resizing controls
@@ -193,13 +196,6 @@ function addCircleTable(id, num, left, top, deg, rad, customFill) {
 		mb: false
 	});
 
-	if(read_only_mode) {
-		g.hasControls = false;
-		g.lockMovementX = true;
-		g.lockMovementY = true;
-		g.borderColor = "#38A62E";
-	}
-
 	canvas.add(g);
 	number++;
 	return g;
@@ -211,7 +207,7 @@ function addRectangleTable(id, num, left, top, deg, width, height, customFill) {
 		width: width,
 		height: height,
 		fill: customFill,
-		stroke: tableFill,
+		stroke: customFill,
 		strokeWidth: 1,
 		originX: 'center',
 		originY: 'center',
@@ -243,7 +239,12 @@ function addRectangleTable(id, num, left, top, deg, width, height, customFill) {
 		table: true,
 		id: id,
 		number: num,
-		new: false
+		new: false,
+		hasControls: false,
+		lockMovementX: true,
+		lockMovementY: true,
+		selectable: true,
+		borderColor: "#00A0DD"
 	});
 
 	// Set resizing controls
@@ -267,12 +268,6 @@ function addRectangleTable(id, num, left, top, deg, width, height, customFill) {
 		});
 	}
 
-	if(read_only_mode) {
-		g.hasControls = false;
-		g.lockMovementX = true;
-		g.lockMovementY = true;
-		g.borderColor = "#38A62E";
-	}
 	canvas.add(g);
 	number++;
 	return g;
@@ -315,16 +310,13 @@ function addObject(text = "", id, left, top, deg, width, height) {
 		type: 'other',
 		table: false,
 		id: id,
-		new: false
+		new: false,
+		hasControls: false,
+		lockMovementX: true,
+		lockMovementY: true,
+		selectable: false,
+		borderColor: "#38A62E"
 	});
-
-	if(read_only_mode) {
-		o.hasControls = false;
-		o.lockMovementX = true;
-		o.lockMovementY = true;
-		o.borderColor = "#38A62E";
-		o.selectable = false;
-	}
 
 	canvas.add(g);
 	return g;
@@ -351,7 +343,12 @@ function addChair(id, left, top, deg, width, height) {
 		type: 'chair',
 		table: false,
 		id: id,
-		new: false
+		new: false,
+		hasControls: false,
+		lockMovementX: true,
+		lockMovementY: true,
+		selectable: false,
+		borderColor: "#38A62E"
 	});
 
 	// Set resizing controls
@@ -365,14 +362,6 @@ function addChair(id, left, top, deg, width, height) {
 		mb: false,
 		mr: false
 	});
-
-	if(read_only_mode) {
-		o.hasControls = false;
-		o.lockMovementX = true;
-		o.lockMovementY = true;
-		o.borderColor = "#38A62E";
-		o.selectable = false;
-	}
 
 	canvas.add(o);
 	return o;
@@ -432,26 +421,38 @@ function addObjects() {
 		var res = JSON.parse(response);
 		if(!res.error) {
 			let objects = res.data;
+			let customFill;
 			if(objects.length > 0) {
 				$.each(objects, function(k, v) {
+					if(v.num_of_reviews > 0) {
+						customFill = convertAvgToHexColor(v.avg);
+					} else {
+						customFill = tableFill;
+					}
 					switch(v.type) {
 						case "square":
-							addSquareTable(v.uuid, parseInt(v.num), parseInt(v.left), parseInt(v.top), parseInt(v.deg), parseInt(v.width), parseInt(v.height), convertAvgToHexColor(v.avg));
+							addSquareTable(v.uuid, parseInt(v.num), parseInt(v.left), parseInt(v.top), parseInt(v.deg), parseInt(v.width), parseInt(v.height), customFill);
 							break;
 						case "rectangle":
-							const o = addRectangleTable(v.uuid, parseInt(v.num), parseInt(v.left), parseInt(v.top), parseInt(v.deg), parseInt(v.width), parseInt(v.height), convertAvgToHexColor(v.avg));
+							const o = addRectangleTable(v.uuid, parseInt(v.num), parseInt(v.left), parseInt(v.top), parseInt(v.deg), parseInt(v.width), parseInt(v.height), customFill);
 							break;
 						case "circle":
-							addCircleTable(v.uuid, parseInt(v.num), parseInt(v.left), parseInt(v.top), parseInt(v.deg), parseInt(v.width), convertAvgToHexColor(v.avg));
+							addCircleTable(v.uuid, parseInt(v.num), parseInt(v.left), parseInt(v.top), parseInt(v.deg), parseInt(v.width), customFill);
 							break;
-						case "chair":
-							addChair(v.uuid, parseInt(v.left), parseInt(v.top), parseInt(v.deg), parseInt(v.width), parseInt(v.height));
-							break;
-						case "other":
-							addObject("", v.uuid, parseInt(v.left), parseInt(v.top), parseInt(v.deg), parseInt(v.width), parseInt(v.height));
+						// case "chair":
+						// 	addChair(v.uuid, parseInt(v.left), parseInt(v.top), parseInt(v.deg), parseInt(v.width), parseInt(v.height));
+						// 	break;
+						// case "other":
+						// 	addObject("", v.uuid, parseInt(v.left), parseInt(v.top), parseInt(v.deg), parseInt(v.width), parseInt(v.height));
+						// 	break;
+						default:
 							break;
 					}
 				});
+			} else {
+				$("#canvas-wrap").html("");
+				let tmp_msg = "<h1>No Layout Set</h1>";
+				$("#canvas-wrap").append(tmp_msg);
 			}
 		}
 	});

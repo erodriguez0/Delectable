@@ -23,17 +23,10 @@ $orders = restaurant_archived_orders($conn, $lid);
 	<div class="manager-main row">
 		<div class="col-12 col-lg-4 col-xl-3">
 			<h1 class="h3 subheader-border">Reservations</h1>
-			<table id="review-rsvn-table" class="table text-center">
-				<thead>
-					<th scope="col">RSVN</th>
-					<th scope="col">Date</th>
-					<th scope="col">Time</th>
-					<th scope="col">Link</th>
-				</thead>
-				<tbody>
 
-				</tbody>
-			</table>
+			<div class="review-row row no-gutters">
+				<!-- Reivew Comments -->
+			</div>
 		</div>
 		<div class="col-12 col-lg-8 col-xl-9">
 			<h1 class="h3 subheader-border">Ratings</h1>
@@ -41,7 +34,7 @@ $orders = restaurant_archived_orders($conn, $lid);
 				<button id="view-reviews" class="btn btn-primary btn-sm">View Reviews</button>
 				<span class="ml-2"><small>Click On Table Then View Reviews</small></span>
 			</div>
-			<div class="mt-3 overflow-x">
+			<div id="canvas-wrap" class="mt-3 overflow-x">
                 <canvas id="canvas" width="720" height="540"></canvas>
             </div>
             <div class="mt-3 d-flex align-items-center">
