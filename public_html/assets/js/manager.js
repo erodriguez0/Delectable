@@ -19,7 +19,7 @@ function review_column(data) {
 	}
 	html += "</div>";
 	html += "<span class='ml-1'> |</span>";
-	html += "<button class='btn btn-link-alt btn-sm table-link text-link text-capitalize' value='" + rsvn_id + "'>View Details</button>";
+	html += "<button class='btn btn-link-alt btn-sm table-link text-link text-capitalize order-row' value='" + rsvn_id + "' data-toggle='modal' data-target='.rsvn-modal'>View Details</button>";
 	html += "</div>";
 	html += "<p>" + comment + "</p>";
 	html += "</div>";
@@ -582,6 +582,9 @@ $(document).ready(function() {
 							row += "<td><a class='btn-sm btn-link-alt text-link table-link py-0 rounded' href='../employees/?eid=" + eid + "'>Profile</a></td></tr>";
 							$("#rsvn-staff tbody").append(row);
 						});
+					}
+					if($(".rsvn-modal-title")) {
+						$(".rsvn-modal-title").html("RSVN #" + rsvn_id);
 					}
 					$("#order-form").removeClass("d-none");
 				} else {
