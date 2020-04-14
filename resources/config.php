@@ -40,11 +40,12 @@ $scripts[] = '<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bo
 $scripts[] = '<script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>';
 $scripts[] = '<script> feather.replace(); </script>';
 $scripts[] = '<script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.7.11/fabric.min.js"></script>';
-$scripts[] = '<script src="//cdn.bootcss.com/noUiSlider/8.5.1/nouislider.js"></script>';
 $scripts[] = '<script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>';
 $scripts[] = '<script type="text/javascript" src="' . JS_PATH . 'global.js"></script>';
 if(isset($_SESSION['admin_id'])):
-	$scripts[] = '<script type="text/javascript" src="' . JS_PATH . 'layout.js"></script>';
+	if($page == "layout") {
+		$scripts[] = '<script type="text/javascript" src="' . JS_PATH . 'layout.js"></script>';
+	}
 	$scripts[] = '<script type="text/javascript" src="' . JS_PATH . 'admin.js"></script>';
 elseif(isset($_SESSION['manager'])):
 	if($page == "layout") {
@@ -57,7 +58,9 @@ elseif(isset($_SESSION['emp_id']) && !isset($_SESSION['manager'])):
 	$scripts[] = '<script type="text/javascript" src="' . JS_PATH . 'tables.js"></script>';
 	$scripts[] = '<script type="text/javascript" src="' . JS_PATH . 'employee.js"></script>';
 else:
-	$scripts[] = '<script type="text/javascript" src="' . JS_PATH . 'reserve.js"></script>';
+	if($page == "reserve") {
+		$scripts[] = '<script type="text/javascript" src="' . JS_PATH . 'reserve.js"></script>';
+	}
 	$scripts[] = '<script type="text/javascript" src="' . JS_PATH . 'customer.js"></script>';
 endif;
 ?>

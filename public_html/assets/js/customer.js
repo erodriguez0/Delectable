@@ -247,7 +247,7 @@ $(document).ready(function() {
 		    	type: 'POST',
 		    	data: {
 		    		'loc_id': lid, 
-		    		'day': jdate.getDay(),
+		    		'day': jdate.getDay() + 1,
 		    		'rsvn_date': date,
 		    		'table_uuid': obj.id,
 		    		'available_hours': true
