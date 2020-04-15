@@ -1,3 +1,25 @@
+@font-face {
+	font-family: 'Oswald';
+	font-weight: 400;
+	src: url('../webfonts/Oswald-Regular.ttf') format('woff'),
+		 url('../webfonts/Oswald-Regular.ttf') format('ttf');
+}
+
+@font-face {
+	font-family: 'Oswald';
+	font-weight: 300;
+	src: url('../webfonts/Oswald-Light.ttf') format('woff'),
+		 url('../webfonts/Oswald-Light.ttf') format('ttf');
+}
+
+@font-face {
+	font-family: 'Oswald';
+	font-weight: 700;
+	src: url('../webfonts/Oswald-Bold.ttf') format('woff'),
+		 url('../webfonts/Oswald-Bold.ttf') format('ttf');
+}
+
+
 /*
 ####################################################
 M O D I F I E D  B O O T S T R A P  C L A S S E S

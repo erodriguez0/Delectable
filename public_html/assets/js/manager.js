@@ -9,7 +9,7 @@ function review_column(data) {
 	let comment = data.review_text;
 	html += "<div class='col-12 review-wrap'>";
 	html += "<div class='review-title d-flex align-items-center'>";
-	html += "<span><b>" + name + "</b> | </span>";
+	html += "<span>" + name + " | </span>";
 	html += "<span class='ml-1'>" + review_date + " | </span>";
 	html += "<button class='btn btn-link-alt btn-sm table-link text-link text-capitalize order-row px-0 ml-1' value='" + rsvn_id + "' data-toggle='modal' data-target='.rsvn-modal'>View Details</button>";
 	html += "</div>";
