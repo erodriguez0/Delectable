@@ -18,7 +18,7 @@ if(isset($_POST['load_layout'])) {
 				AND r2.fk_loc_id = l.loc_id AND t2.table_id = t.table_id) as num_of_reviews,
 			t.*
 		FROM location l, `table` t
-		WHERE t.fk_loc_id = l.loc_id AND l.loc_id = :lid	
+		WHERE t.fk_loc_id = l.loc_id AND t.table_status = 1 AND l.loc_id = :lid	
 	EOT;
 	$query = $conn->prepare($sql);
 	$query->bindParam(":lid", $lid, PDO::PARAM_INT);

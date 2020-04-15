@@ -1256,7 +1256,7 @@ $(".save-layout").click(function() {
 	// $(".admin-mode").toggleClass("d-none");
 	// $(".customer-mode").toggleClass("d-block");
 	// toggle++;
-	// saveObjects();
+	saveObjects();
 });
 
 // INITIALIZE CANVAS AND OBJECTS
