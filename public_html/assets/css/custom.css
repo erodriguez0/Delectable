@@ -289,8 +289,10 @@ input:checked + .status-slider:before {
 }
 
 .legend-box {
-	width: 10px;
-	height: 10px;
+	width: 15px;
+	height: 13px;
+	max-width: 13px;
+	max-height: auto;
 	border: 1px solid #000;
 	display: inline-block;
 }

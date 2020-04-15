@@ -37,7 +37,7 @@ $orders = restaurant_archived_orders($conn, $lid);
 			<div id="canvas-wrap" class="mt-3 overflow-x">
                 <canvas id="canvas" width="720" height="540"></canvas>
             </div>
-            <div class="mt-3 d-flex align-items-center">
+            <div class="mt-3 d-flex align-items-center ml-2 ml-lg-0">
             	<span class="legend-box legend-1"></span><span class="ml-2">0.0-1.0</span>
             	<span class="legend-box legend-2 ml-2"></span><span class="ml-2">1.0-1.5</span>
             	<span class="legend-box legend-3 ml-2"></span><span class="ml-2">1.5-2.0</span>
@@ -48,6 +48,7 @@ $orders = restaurant_archived_orders($conn, $lid);
             	<span class="legend-box legend-8 ml-2"></span><span class="ml-2">4.0-4.5</span>
             	<span class="legend-box legend-9 ml-2"></span><span class="ml-2">4.5-5.0</span>
 			</div>
+			<span><small>Based on overall rating</small></span>
 		</div>
 	</div>
 </main>

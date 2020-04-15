@@ -283,6 +283,60 @@ function restaurant_archived_orders($conn, $lid) {
 	}
 }
 
+function restaurant_emp_info($conn, $eid, $lid) {
+	$data = array("error" => false, "emp" => array(), "work" => array());
+	$sql = <<<'EOT'
+		SELECT
+			emp_first_name, emp_last_name, emp_username, 
+			emp_email, emp_status, emp_last_login, emp_address_1, 
+			emp_address_2, emp_city, emp_state, emp_postal_code, 
+			emp_phone, emp_job, emp_manager, emp_hire_date, emp_dismissed, 
+			fk_loc_id
+		FROM 
+			employee
+		WHERE 
+			emp_id = :eid
+	EOT;
+	$query = $conn->prepare($sql);
+	$query->bindParam(":eid", $eid, PDO::PARAM_INT);
+	if($query->execute()) {
+		$row = $query->fetch();
+		if($row["fk_loc_id"] != $lid) {
+			$data["error"] = true;
+			return $data;
+		}
+		$data["emp"] = $row;
+		$sql =<<<'EOT'
+			SELECT DISTINCT 
+				r.rsvn_id, r.rsvn_date, r.rsvn_slot, r.rsvn_status, s.fk_emp_id, w.*
+			FROM 
+				reservation r
+			LEFT JOIN 
+				review w 
+			ON 	r.rsvn_id = w.fk_rsvn_id
+			LEFT JOIN
+				reservation_staff s
+			ON	s.fk_rsvn_id = r.rsvn_id
+			WHERE
+				s.fk_emp_id = :eid
+			ORDER BY 
+				r.rsvn_date ASC,
+			    r.rsvn_slot ASC
+		EOT;
+
+		$query = $conn->prepare($sql);
+		$query->bindParam(":eid", $eid, PDO::PARAM_INT);
+		if($query->execute()) {
+			$rows = $query->fetchAll();
+			$data["work"] = $rows;
+			return $data;
+		}
+		$data["emp"] = "";
+		$data["error"] = true;
+		return $data;
+	}
+}
+
 function convert_state_abbr($str) {
 	$us_state_abbrevs_names = array(
 		'AL'=>'ALABAMA',

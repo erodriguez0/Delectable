@@ -8,10 +8,10 @@ function review_column(data) {
 	let review_date = formatDate(data.review_created);
 	let comment = data.review_text;
 	html += "<div class='col-12 review-wrap'>";
-	html += "<span>" + name + "</span>";
 	html += "<div class='review-title d-flex align-items-center'>";
-	html += "<span>" + review_date + " | </span>";
-	html += "<button class='btn btn-link-alt btn-sm table-link text-link text-capitalize order-row' value='" + rsvn_id + "' data-toggle='modal' data-target='.rsvn-modal'>View Details</button>";
+	html += "<span><b>" + name + "</b> | </span>";
+	html += "<span class='ml-1'>" + review_date + " | </span>";
+	html += "<button class='btn btn-link-alt btn-sm table-link text-link text-capitalize order-row px-0 ml-1' value='" + rsvn_id + "' data-toggle='modal' data-target='.rsvn-modal'>View Details</button>";
 	html += "</div>";
 	html += "<div class='review-rating d-flex align-items-center pb-1'>";
 	html += "<span class='mr-2'>Overall: </span>";
