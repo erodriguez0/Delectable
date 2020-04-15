@@ -78,17 +78,22 @@ function selectStateElement(id, val) {
 }
 
 function formatDate(str) {
-	let tmp = new Date(str);
-	let date = new Date(tmp.getFullYear(), tmp.getMonth(), tmp.getDate() + 1);
-	let day = date.getDate();
-	let month = date.getMonth();
-	if(day < 10) {
-		day = "0" + day;
+	let y = str.split('-')[0];
+	let m = str.split('-')[1];
+	let d = str.split('-')[2].split(' ')[0];
+	return m + "-" + d + "-" + y;
+}
+
+function compact_paragraph(text, limit) {
+	let html = "";
+	let sub = text.substr(0, limit);
+	let hide = text.substr(limit, text.length - limit);
+	html += sub;
+	if(text.length > limit) {
+		html += "<span class='d-none'>" + hide + "</span>";
+		html += "<button class='btn btn-link-alt btn-sm table-link text-link text-capitalize read-more pt-0' style='padding-bottom: 4px;'>... Read More</button>";
 	}
-	if(month < 10) {
-		month = "0" + month;
-	}
-	return month + "-" + day + "-" + date.getFullYear();
+	return html;
 }
 
 $(window).on('load', function() {

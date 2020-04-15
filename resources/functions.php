@@ -251,17 +251,89 @@ function restaurant_schedule($conn, $lid) {
 
 function restaurant_pending_orders($conn, $lid) {
 	// Limit orders between dates
-	// $date = date('Y-m-d');
+	$date = date('Y-m-d');
 
 	// Do not remove space at end of each $sql line
 	$sql = "SELECT order_id, rsvn_id, rsvn_date, rsvn_slot, rsvn_status ";
 	$sql .= "FROM `order` o, reservation r ";
-	$sql .= "WHERE r.rsvn_id = o.fk_rsvn_id AND r.fk_loc_id = :lid ";
+	$sql .= "WHERE r.rsvn_id = o.fk_rsvn_id AND r.fk_loc_id = :lid AND r.rsvn_date >= :rdate ";
 	$sql .= "ORDER BY rsvn_date ASC, rsvn_slot ASC";
 	$query = $conn->prepare($sql);
 	$query->bindParam(":lid", $lid, PDO::PARAM_INT);
+	$query->bindParam(":rdate", $date, PDO::PARAM_STR);
 	if($query->execute()) {
 		return $query->fetchAll();
+	}
+}
+
+function restaurant_archived_orders($conn, $lid) {
+	// Limit orders between dates
+	$date = date('Y-m-d');
+
+	// Do not remove space at end of each $sql line
+	$sql = "SELECT order_id, rsvn_id, rsvn_date, rsvn_slot, rsvn_status ";
+	$sql .= "FROM `order` o, reservation r ";
+	$sql .= "WHERE r.rsvn_id = o.fk_rsvn_id AND r.fk_loc_id = :lid AND r.rsvn_date < :rdate ";
+	$sql .= "ORDER BY rsvn_date DESC, rsvn_slot DESC";
+	$query = $conn->prepare($sql);
+	$query->bindParam(":lid", $lid, PDO::PARAM_INT);
+	$query->bindParam(":rdate", $date, PDO::PARAM_STR);
+	if($query->execute()) {
+		return $query->fetchAll();
+	}
+}
+
+function restaurant_emp_info($conn, $eid, $lid) {
+	$data = array("error" => false, "emp" => array(), "work" => array());
+	$sql = <<<'EOT'
+		SELECT
+			emp_first_name, emp_last_name, emp_username, 
+			emp_email, emp_status, emp_last_login, emp_address_1, 
+			emp_address_2, emp_city, emp_state, emp_postal_code, 
+			emp_phone, emp_job, emp_manager, emp_hire_date, emp_dismissed, 
+			fk_loc_id
+		FROM 
+			employee
+		WHERE 
+			emp_id = :eid
+	EOT;
+	$query = $conn->prepare($sql);
+	$query->bindParam(":eid", $eid, PDO::PARAM_INT);
+	if($query->execute()) {
+		$row = $query->fetch();
+		if($row["fk_loc_id"] != $lid) {
+			$data["error"] = true;
+			return $data;
+		}
+		$data["emp"] = $row;
+		$sql =<<<'EOT'
+			SELECT DISTINCT 
+				r.rsvn_id, r.rsvn_date, r.rsvn_slot, r.rsvn_status, s.fk_emp_id, w.*
+			FROM 
+				reservation r
+			LEFT JOIN 
+				review w 
+			ON 	r.rsvn_id = w.fk_rsvn_id
+			LEFT JOIN
+				reservation_staff s
+			ON	s.fk_rsvn_id = r.rsvn_id
+			WHERE
+				s.fk_emp_id = :eid
+			ORDER BY 
+				r.rsvn_date ASC,
+			    r.rsvn_slot ASC
+		EOT;
+
+		$query = $conn->prepare($sql);
+		$query->bindParam(":eid", $eid, PDO::PARAM_INT);
+		if($query->execute()) {
+			$rows = $query->fetchAll();
+			$data["work"] = $rows;
+			return $data;
+		}
+		$data["emp"] = "";
+		$data["error"] = true;
+		return $data;
 	}
 }
 

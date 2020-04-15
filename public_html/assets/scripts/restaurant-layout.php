@@ -32,7 +32,7 @@ if(isset($_POST['save_layout'])) {
 	if(!empty($deleteTables)) {
 		foreach($deleteTables as $key => $value) {
 			$uuid = $deleteTables[$key]["id"];
-			$query = $conn->prepare("DELETE FROM `table` WHERE `table_uuid` = :uuid");
+			$query = $conn->prepare("UPDATE `table` SET table_status = 0 WHERE `table_uuid` = :uuid");
 			$query->bindParam(":uuid", $uuid, PDO::PARAM_STR);
 			$query->execute();
 		}
@@ -150,7 +150,7 @@ if(isset($_POST['save_layout'])) {
 if(isset($_POST['load_layout'])) {
 	$lid = $_POST['loc_id'];
 	$tables = array();
-	$query = $conn->prepare("SELECT * FROM `table`, location WHERE loc_id = fk_loc_id AND loc_id = :lid");
+	$query = $conn->prepare("SELECT * FROM `table`, location WHERE loc_id = fk_loc_id AND table_status = 1 AND loc_id = :lid");
 	$query->bindParam(":lid", $lid, PDO::PARAM_INT);
 	$query->execute();
 	$rows = $query->fetchAll();

@@ -1,3 +1,49 @@
+function review_column(data) {
+	let html = "";
+	let name = data.cust_first_name + " " + data.cust_last_name;
+	let rsvn_id = data.rsvn_id;
+	let overall = data.review_rating;
+	let food = data.review_food_rating;
+	let service = data.review_service_rating;
+	let review_date = formatDate(data.review_created);
+	let comment = data.review_text;
+	html += "<div class='col-12 review-wrap'>";
+	html += "<div class='review-title d-flex align-items-center'>";
+	html += "<span><b>" + name + "</b> | </span>";
+	html += "<span class='ml-1'>" + review_date + " | </span>";
+	html += "<button class='btn btn-link-alt btn-sm table-link text-link text-capitalize order-row px-0 ml-1' value='" + rsvn_id + "' data-toggle='modal' data-target='.rsvn-modal'>View Details</button>";
+	html += "</div>";
+	html += "<div class='review-rating d-flex align-items-center pb-1'>";
+	html += "<span class='mr-2'>Overall: </span>";
+	for(let i = 0; i < 5; i++) {
+		if(i < overall) {
+			html += "<span class='fa fa-star star-checked'></span>";
+		} else {
+			html += "<span class='fa fa-star'></span>";
+		}
+	}
+	html += "<span class='mx-2'>| Food: </span>";
+	for(let i = 0; i < 5; i++) {
+		if(i < food) {
+			html += "<span class='fa fa-star star-checked'></span>";
+		} else {
+			html += "<span class='fa fa-star'></span>";
+		}
+	}
+	html += "<span class='mx-2'>| Service: </span>";
+	for(let i = 0; i < 5; i++) {
+		if(i < service) {
+			html += "<span class='fa fa-star star-checked'></span>";
+		} else {
+			html += "<span class='fa fa-star'></span>";
+		}
+	}
+	html += "</div>";
+	html += "<p>" + compact_paragraph(comment, 250) + "</p>";
+	html += "</div>";
+	$(".review-row").append(html);
+}
+
 $(document).ready(function() {
 	$("#add-item-price").on("change", function() {
 		$(this).val(parseFloat($(this).val()).toFixed(2));
@@ -542,7 +588,7 @@ $(document).ready(function() {
 					$("#cust-email").html(rsvn.cust_email);
 					$("#order-created").html(formatDate(rsvn.order_created));
 					$("#rsvn-date").html(formatDate(rsvn.rsvn_date));
-					$("#table-number").html(rsvn_table);
+					$("#table-number").html("Table " + rsvn_table);
 					$("#rsvn-staff tbody").html("");
 					if(emps.length > 0) {
 						$.each(emps, function(k, v) {
@@ -554,9 +600,9 @@ $(document).ready(function() {
 							row += "<td><a class='btn-sm btn-link-alt text-link table-link py-0 rounded' href='../employees/?eid=" + eid + "'>Profile</a></td></tr>";
 							$("#rsvn-staff tbody").append(row);
 						});
-					} else {
-						let row = "<td>No Staff Assigned</td>";
-						$("#rsvn-staff tbody").append(row);
+					}
+					if($(".rsvn-modal-title")) {
+						$(".rsvn-modal-title").html("RSVN #" + rsvn_id);
 					}
 					$("#order-form").removeClass("d-none");
 				} else {
@@ -623,23 +669,55 @@ $(document).ready(function() {
 				if(!res.error) {
 					let staff = $("#rsvn-staff tbody");
 					let row;
-					let data = res.data;
-					$.each(data, function(k, v) {
-						let name = data[k].emp_first_name + " " + data[k].emp_last_name;
-						let eid = data[k].emp_id;
-						let job = (data[k].emp_job) ? data[k].emp_job : "N/A";
-						row = "<tr><td>" + name + "</td>";
-						row += "<td>" + job + "</td>";
-						row += "<td><a class='btn-sm btn-link-alt text-link table-link py-0 rounded' href='../employees/?eid=" + eid + "'>Profile</a></td></tr>";
-						staff.append(row);
-					});
 					$(".staff-cb").each(function() {
 						if($(this).prop('checked')) {
+							let eid = $(this).val();
+							let job = $(this).parent().prev().text();
+							let name = $(this).parent().prev().prev().text();
+							row = "<tr><td>" + name + "</td>";
+							row += "<td>" + job + "</td>";
+							row += "<td><a class='btn-sm btn-link-alt text-link table-link py-0 rounded' href='../employees/?eid=" + eid + "'>Profile</a></td></tr>";
+							staff.append(row);
 							$(this).parent().parent().remove();
 						}
-					})
+					});
+					$("#assign-staff-modal").modal('hide');
 				}
 			});
+		});
+	});
+
+	$("#view-reviews").click(function() {
+		if(canvas.getActiveObject()) {
+			const o = canvas.getActiveObject();
+			let uuid = o.id;
+			$.ajax({
+				url: '/delectable/public_html/assets/scripts/restaurant-reviews.php',
+				type: 'POST',
+				data: {
+					'table_reviews': true,
+					'table_uuid': uuid
+				}
+			}).done(function(response) {
+				let res = JSON.parse(response);
+				if(!res.error && res.data.length > 0) {
+					$(".review-row").html("");
+					$.each(res.data, function(k, v) {
+						review_column(res.data[k]);
+					});
+				}
+			});
+		}
+	});
+
+	$("#order-list").each(function() {
+		$(this).on("click", ".read-more", function() {
+			$(this).prev().toggleClass("d-none");
+			if($(this).html() == " Read Less") {
+				$(this).html("... Read More");
+			} else {
+				$(this).html(" Read Less");
+			}
 		});
 	});
 });

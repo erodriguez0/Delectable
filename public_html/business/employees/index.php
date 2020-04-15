@@ -2,25 +2,18 @@
 require_once($_SERVER['DOCUMENT_ROOT'] . '/delectable/resources/config.php');
 
 // Redirect if not logged in
-if(isset($_SESSION['admin_id']) || !isset($_SESSION['emp_id'])):
-	header('Location: /delectable/public_html/');
-
-// Display message if no manager access granted
-elseif(isset($_SESSION['emp_id']) && !isset($_SESSION['manager'])):
-	header('Location: /delectable/public_html/business/dashboard/');
+if(!isset($_SESSION['manager'])):
+	header('Location: /delectable/public_html/'); exit();
 
 // Display dashboard if they have manager access
 else:
-
-require_once(INCLUDE_PATH . 'functions.php');
-
 $title = "Delectable | For Restaurants";
 require_once(INCLUDE_PATH . 'header.php');
-
 require_once(INCLUDE_PATH . 'business/manager/dashboard.php');
+require_once(INCLUDE_PATH . 'functions.php');
 
+if(!isset($_GET['eid']) || empty($_GET['eid']) || !ctype_digit($_GET['eid'])):
 $managers = restaurant_managers($conn, $_SESSION['loc_id']);
-
 $employees = restaurant_employees($conn, $_SESSION['loc_id']);
 ?>
 
@@ -162,7 +155,7 @@ $employees = restaurant_employees($conn, $_SESSION['loc_id']);
 						<tr>
 							<td><?php echo $name; ?></td>
 							<td><?php echo $uname; ?></td>
-							<td><button class="btn-link-alt border-0 text-link table-link" value="<?php echo $eid; ?>" data-toggle="modal" data-target="#profile-modal">Profile</button></td>
+							<td><a class="btn-link-alt border-0 text-link table-link" href="./?eid=<?php echo $eid; ?>">Profile</a></td>
 							<td class="d-flex justify-content-center"><div class="custom-control custom-checkbox">
 								<input class="custom-control-input" type="checkbox" name="" disabled="true" <?php echo $status; ?>>
 								<label class="custom-control-label"></label>
@@ -200,7 +193,7 @@ $employees = restaurant_employees($conn, $_SESSION['loc_id']);
 						<tr>
 							<td><?php echo $name; ?></td>
 							<td><?php echo $uname; ?></td>
-							<td><button class="btn-link-alt border-0 text-link table-link profile-link" value="<?php echo $eid; ?>">Profile</button></td>
+							<td><a class="btn-link-alt border-0 text-link table-link profile-link" href="./?eid=<?php echo $eid; ?>">Profile</a></td>
 							<td class="d-flex justify-content-center"><div class="custom-control custom-checkbox">
 								<input class="custom-control-input" type="checkbox" name="" disabled="true" <?php echo $status; ?>>
 								<label class="custom-control-label"></label>
@@ -358,10 +351,51 @@ $employees = restaurant_employees($conn, $_SESSION['loc_id']);
     </div>
 </div>
 
+<?php 
+// Check if employee id is selected
+elseif (isset($_GET['eid'])):
+// Remove get var if invalid / redirect to employees page
+if(empty($_GET['eid']) || !ctype_digit($_GET['eid'])):
+	header('Location: ./'); exit();
+endif;
+
+$emp = restaurant_emp_info($conn, $_GET['eid'], $_SESSION['loc_id']);
+// LEFT JOIN review (if exists) AND reservation details
+if($emp["error"] == true) {
+	header('Location: ./'); exit();
+}
+?>
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4 mb-3">
+	<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+	    <h1 class="h2">Employee Profile</h1>
+	    <a class="btn btn-alt" href="./">< Back</a>
+	</div>
+	<div class="manager-main row">
+		<div class="col-12 col-lg-6 restaurant-edit-form-wrap">
+			<h1 class="h3 subheader-border">Employee Details</h1>
+			<!-- Form to update profile/account -->
+
+		</div>
+
+		<div class="col-12 col-lg-6 restaurant-edit-form-wrap mt-3 mt-lg-0">
+			<h1 class="h3 subheader-border">Overall Rating</h1>
+			<div id="overall-emp-rating" class="mb-3">
+				<!-- Display rating in rating-based color -->
+			</div>
+			<h1 class="h3 subheader-border">Assigned Work</h1>
+			<div class="emp-rsvn-list row no-gutters">
+				<!-- Show all work assigned as display any ratings if any -->
+
+			</div>
+		</div>
+	</div>
+</main>
+<?php endif; ?>
+
 <script type="text/javascript">
 	var lid = <?php echo (isset($_SESSION['loc_id'])) ? $_SESSION['loc_id'] : 0; ?>;
 </script>
 <?php
-endif;
 require_once(INCLUDE_PATH . 'footer.php');
+endif;
 ?>

@@ -62,31 +62,13 @@ if(isset($_POST['assign_staff'])) {
 		}
 
 		if($query->execute()) {
-			$sql = "SELECT emp_id, emp_first_name, emp_last_name, emp_job FROM employee WHERE emp_id IN (";
-			for($i = 0; $i < count($emps); $i++) {
-				$sql .= ":eid" . $i;
-				if($i == count($emps) - 1) {
-					$sql .= ")";
-				} else {
-					$sql .= ", ";
-				}
-			}
-
-			$query = $conn->prepare($sql);
-			for($i = 0; $i < count($emps); $i++) {
-				$query->bindParam(":eid" . $i, $emps[$i]["emp_id"], PDO::PARAM_INT);
-			}
-
-			if($query->execute()) {
-				$res["data"] = $query->fetchAll();
-				echo json_encode($res); exit();
-			}
+			echo json_encode($res); exit();
 		}
 	}
 
 	$res["error"] = true;
 	$res["error_msg"] = "Error assigning staff";
-	echo json_encode($res);
+	echo json_encode($res); exit();
 }
 
 ?>
