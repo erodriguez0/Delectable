@@ -490,19 +490,19 @@ $service_bg = convertAvgToHexColorClass($service_avg);
 			<h1 class="h3 subheader-border">Rating</h1>
 			<div id="overall-emp-rating" class="my-3 d-flex justify-content-between px-5">
 				<!-- Display rating in rating-based color -->
-				<div class="box-score-wrap d-inline-block <?php echo $overall_bg; ?>">
+				<div class="box-score-wrap d-inline-block rounded <?php echo $overall_bg; ?>">
 					<div class="box-score d-flex justify-content-center align-items-center flex-column">
 						<span><?php echo $overall_avg; ?></span>
 						<small>Overall</small>
 					</div>
 				</div>
-				<div class="box-score-wrap d-inline-block <?php echo $food_bg; ?>">
+				<div class="box-score-wrap d-inline-block rounded <?php echo $food_bg; ?>">
 					<div class="box-score d-flex justify-content-center align-items-center flex-column">
 						<?php echo $food_avg; ?>
 						<small>Food</small>
 					</div>
 				</div>
-				<div class="box-score-wrap d-inline-block <?php echo $service_bg; ?>">
+				<div class="box-score-wrap d-inline-block rounded <?php echo $service_bg; ?>">
 					<div class="box-score d-flex justify-content-center align-items-center flex-column">
 						<?php echo $service_avg; ?>
 						<small>Service</small>
