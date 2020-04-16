@@ -414,6 +414,22 @@ body {
 	height: auto;
 }
 
+.profile-img-wrap {
+	max-height: auto;
+	max-width: 100%;
+	min-height: 250px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.profile-img {
+	display: block;
+	width: auto;
+	min-height: 250px;
+	max-height: 250px;
+}
+
 .emp-profile-img {
 	display: block;
 	max-width: 350px;
@@ -474,6 +490,31 @@ body {
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical; 
+}
+
+.profile-label {
+	margin-bottom: .25rem;
+}
+
+.box-score-wrap {
+	min-width:  75px;
+	max-width:  75px;
+	min-height: 75px;
+	max-height: 75px;
+	border: 1px solid #000;
+}
+
+.box-score {
+	min-width:  75px;
+	max-width:  75px;
+	min-height: 75px;
+	max-height: 75px;
+	font-size: 20px;
+	color: #fff;
+}
+
+.line-height-one {
+	line-height: 1.2 !important;
 }
  
 /* Small devices (landscape phones, 576px and up) */
