@@ -4,15 +4,14 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/delectable/resources/config.php');
 // Redirect if not logged in
 if(!isset($_SESSION['manager'])):
 	header('Location: /delectable/public_html/'); exit();
-
 // Display dashboard if they have manager access
 else:
+
+if(!isset($_GET['eid']) || empty($_GET['eid']) || !ctype_digit($_GET['eid'])):
 $title = "Delectable | For Restaurants";
 require_once(INCLUDE_PATH . 'header.php');
 require_once(INCLUDE_PATH . 'business/manager/dashboard.php');
 require_once(INCLUDE_PATH . 'functions.php');
-
-if(!isset($_GET['eid']) || empty($_GET['eid']) || !ctype_digit($_GET['eid'])):
 $managers = restaurant_managers($conn, $_SESSION['loc_id']);
 $employees = restaurant_employees($conn, $_SESSION['loc_id']);
 ?>
@@ -184,12 +183,15 @@ elseif (isset($_GET['eid'])):
 if(empty($_GET['eid']) || !ctype_digit($_GET['eid'])):
 	header('Location: ./'); exit();
 endif;
-
+$title = "Delectable | For Restaurants";
+require_once(INCLUDE_PATH . 'functions.php');
 $data = restaurant_emp_info($conn, $_GET['eid'], $_SESSION['loc_id']);
 // LEFT JOIN review (if exists) AND reservation details
-if($data["error"] == true) {
+if($data["error"]):
 	header('Location: ./'); exit();
-}
+endif;
+require_once(INCLUDE_PATH . 'header.php');
+require_once(INCLUDE_PATH . 'business/manager/dashboard.php');
 
 $emp = $data["emp"];
 $work = $data["work"];
@@ -530,6 +532,7 @@ endif;
 			<div id="order-list" class="emp-rsvn-list row no-gutters">
 				<!-- Show all work assigned as display any ratings if any -->
 				<?php
+				if(!empty($work)):
 				foreach($work AS $k):
 				$overall = (isset($k["review_rating"])) ? $k["review_rating"] : "";
 				$food = (isset($k["review_food_rating"])) ? $k["review_food_rating"] : "";
@@ -582,7 +585,12 @@ endif;
 					<?php endif; ?>
 				</div>
 				<!-- ./RSVN row -->
-				<?php endforeach;?>
+				<?php 
+				endforeach;
+				else: 
+				?>
+
+				<?php endif; ?>
 			</div>
 		</div>
 	</div>
