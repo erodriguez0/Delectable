@@ -405,4 +405,26 @@ function convert_state_abbr($str) {
 
 	return $us_state_abbrevs_names[$str];
 }
+
+function convertAvgToHexColorClass($num) {
+	if($num >= 4.5) {
+		return "legend-9";
+	} else if($num >= 4.0 && $num < 4.5) {
+		return "legend-8";
+	} else if($num >= 3.5 && $num < 4.0) {
+		return "legend-7";
+	} else if($num >= 3.0 && $num < 3.5) {
+		return "legend-6";
+	} else if($num >= 2.5 && $num < 3.0) {
+		return "legend-5";
+	} else if($num >= 2.0 && $num < 2.5) {
+		return "legend-4";
+	} else if($num >= 1.5 && $num < 2.0) {
+		return "legend-3";
+	} else if($num >= 1.0 && $num < 1.5) {
+		return "legend-2";
+	} else {
+		return "legend-1";
+	}
+}
 ?>

@@ -17,7 +17,7 @@ $managers = restaurant_managers($conn, $_SESSION['loc_id']);
 $employees = restaurant_employees($conn, $_SESSION['loc_id']);
 ?>
 
-<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4 mb-3">
+<main role="main" class="col-md-10 ml-sm-auto col-lg-10 pt-3 px-4 mb-3">
 	<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
 	    <h1 class="h2">Employees</h1>
 	</div>
@@ -89,40 +89,6 @@ $employees = restaurant_employees($conn, $_SESSION['loc_id']);
 						<label class="ml-3">Grant Manager Access</label>
 					</div>
 				</div>
-
-<!-- 				<div class="row">
-					<div class="col-2 d-flex align-items-center justify-content-left">
-						<small class="">Optional</small>
-					</div>
-					<div class="col-10">
-						<hr>
-					</div>
-				</div>
-
-				<div class="row mt-3">
-					<div class="col-12">
-						<input type="text" name="emp-address-1" class="form-control" placeholder="Address">
-					</div>
-				</div>
-				<div class="row mt-3">
-					<div class="col-12 col-lg-4">
-						<input type="text" name="emp-address-2" class="form-control" placeholder="Apt/Ste">
-					</div>
-					<div class="col-12 col-lg-5">
-						<input type="tel" name="emp-phone" class="form-control mt-3 mt-lg-0" placeholder="Phone #">
-					</div>
-					<div class="col-12 col-lg-3">
-						<input type="text" name="emp-postal-code" class="form-control mt-3 mt-lg-0" placeholder="Zip">
-					</div>
-				</div>
-				<div class="row mt-3">
-					<div class="col-12 col-lg-8">
-						<input type="text" name="emp-city" class="form-control" placeholder="City">
-					</div>
-					<div class="col-12 col-lg-4">
-						<input type="text" name="emp-state" class="form-control mt-3 mt-lg-0" placeholder="State">
-					</div>
-				</div> -->
 				<div class="row mt-3">
 					<div class="col-12">
 						<button type="button" name="emp-create-account" class="btn btn-primary btn-block" id="create-employee-account">Create Account</button>
@@ -211,146 +177,6 @@ $employees = restaurant_employees($conn, $_SESSION['loc_id']);
 	</div>
 </main>
 
-<!-- Profile Modal -->
-<div class="modal fade" id="profile-modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="profile-modal-title">Employee Profile</h5>
-                <button type="button" class="close" data-dismiss="modal">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="row py-1 bg-light">
-                	<div class="col-3 text-right border-right my-auto">
-                		<span><b>First Name</b></span>
-                	</div>
-                	<div class="col-9 my-auto">
-                		<span class="break-word">Esteban</span>
-                	</div>
-                </div>
-                <div class="row py-1">
-                	<div class="col-3 text-right border-right my-auto">
-                		<span><b>Last Name</b></span>
-                	</div>
-                	<div class="col-9 my-auto">
-                		<span class="break-word">Rodriguez</span>
-                	</div>
-                </div>
-                <div class="row py-1 bg-light">
-                	<div class="col-3 text-right border-right my-auto">
-                		<span><b>Username</b></span>
-                	</div>
-                	<div class="col-9 my-auto">
-                		<span class="break-word">erodriguez</span>
-                	</div>
-                </div>
-                <div class="row py-1">
-                	<div class="col-3 text-right border-right my-auto">
-                		<span><b>Email</b></span>
-                	</div>
-                	<div class="col-9 my-auto">
-                		<span class="break-word">example1@example.com</span>
-                	</div>
-                </div>
-                <div class="row py-1 bg-light">
-                	<div class="col-3 text-right border-right my-auto">
-                		<span><b>Phone</b></span>
-                	</div>
-                	<div class="col-9 my-auto">
-                		<span class="break-word">6611234567</span>
-                	</div>
-                </div>
-                <div class="row py-1">
-                	<div class="col-3 text-right border-right my-auto">
-                		<span><b>Position</b></span>
-                	</div>
-                	<div class="col-9 my-auto">
-                		<span class="break-word">General Manager</span>
-                	</div>
-                </div>
-                <div class="row py-1 bg-light">
-                	<div class="col-3 text-right border-right my-auto">
-                		<span><b>Salary</b></span>
-                	</div>
-                	<div class="col-9 my-auto">
-                		<span class="break-word">$42,000</span>
-                	</div>
-                </div>
-                <div class="row py-1">
-                	<div class="col-3 text-right border-right my-auto">
-                		<span><b>Address</b></span>
-                	</div>
-                	<div class="col-9 my-auto">
-                		<span class="break-word">123 California Ave.</span>
-                	</div>
-                </div>
-                <div class="row py-1 bg-light">
-                	<div class="col-3 text-right border-right my-auto">
-                		<span><b>Apt/Ste</b></span>
-                	</div>
-                	<div class="col-9 my-auto">
-                		<span class="break-word">N/A</span>
-                	</div>
-                </div>
-                <div class="row py-1">
-                	<div class="col-3 text-right border-right my-auto">
-                		<span><b>City</b></span>
-                	</div>
-                	<div class="col-9 my-auto">
-                		<span class="break-word">Bakersfield</span>
-                	</div>
-                </div>
-                <div class="row py-1 bg-light">
-                	<div class="col-3 text-right border-right my-auto">
-                		<span><b>State</b></span>
-                	</div>
-                	<div class="col-9 my-auto">
-                		<span class="break-word">CA</span>
-                	</div>
-                </div>
-                <div class="row py-1">
-                	<div class="col-3 text-right border-right my-auto">
-                		<span><b>Zip</b></span>
-                	</div>
-                	<div class="col-9 my-auto">
-                		<span class="break-word">93305</span>
-                	</div>
-                </div>
-                <div class="row py-1 bg-light">
-                	<div class="col-3 text-right border-right my-auto">
-                		<span><b>Birth Date</b></span>
-                	</div>
-                	<div class="col-9 my-auto">
-                		<span class="break-word">01/01/1901</span>
-                	</div>
-                </div>
-                <div class="row py-1">
-                	<div class="col-3 text-right border-right my-auto">
-                		<span><b>Hired</b></span>
-                	</div>
-                	<div class="col-9 my-auto">
-                		<span class="break-word">01/01/1901</span>
-                	</div>
-                </div>
-                <div class="row py-1 bg-light">
-                	<div class="col-3 text-right border-right my-auto">
-                		<span><b>Dismissed</b></span>
-                	</div>
-                	<div class="col-9 my-auto">
-                		<span class="break-word">N/A</span>
-                	</div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-alt" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Update</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 <?php 
 // Check if employee id is selected
 elseif (isset($_GET['eid'])):
@@ -359,13 +185,40 @@ if(empty($_GET['eid']) || !ctype_digit($_GET['eid'])):
 	header('Location: ./'); exit();
 endif;
 
-$emp = restaurant_emp_info($conn, $_GET['eid'], $_SESSION['loc_id']);
+$data = restaurant_emp_info($conn, $_GET['eid'], $_SESSION['loc_id']);
 // LEFT JOIN review (if exists) AND reservation details
-if($emp["error"] == true) {
+if($data["error"] == true) {
 	header('Location: ./'); exit();
 }
+
+$emp = $data["emp"];
+$work = $data["work"];
+$fname = htmlspecialchars($emp["emp_first_name"]);
+$lname = htmlspecialchars($emp["emp_last_name"]);
+$name = $fname . " " . $lname;
+$uname = htmlspecialchars($emp["emp_username"]);
+$email = htmlspecialchars($emp["emp_email"]);
+$position = (isset($emp["emp_job"])) ? htmlspecialchars($emp["emp_job"]) : "N/A";
+$manager = ($emp["emp_manager"]) ? "Yes" : "No";
+$pay = (isset($emp["emp_pay"])) ? $emp["emp_pay"] : "N/A";
+$rate = (isset($emp["emp_pay_rate"])) ? htmlspecialchars($emp["emp_pay_rate"]) : "N/A";
+$hired = (isset($emp["emp_hire_date"])) ? htmlspecialchars($emp["emp_hire_date"]) : "N/A";
+$dismissed = (isset($emp["emp_dismissed"])) ? htmlspecialchars($emp["emp_dismissed"]) : "N/A";
+$form_position = ($position == "N/A") ? "" : $position;
+$form_manager = ($manager == "No") ? "" : "checked";
+$form_pay = ($pay == "N/A") ? "" : $pay;
+$form_rate = ($rate == "N/A") ? "" : $rate;
+$add1 = (isset($emp["emp_address_1"])) ? htmlspecialchars($emp["emp_address_1"]) : "";
+$add2 = (isset($emp["emp_address_2"])) ? htmlspecialchars($emp["emp_address_2"]) : "";
+$city = (isset($emp["emp_city"])) ? htmlspecialchars($emp["emp_city"]) : "";
+$state = (isset($emp["emp_state"])) ? htmlspecialchars($emp["emp_state"]) : "";
+$zip = (isset($emp["emp_postal_code"])) ? htmlspecialchars($emp["emp_postal_code"]) : "";
+$phone = (isset($emp["emp_phone"])) ? htmlspecialchars($emp["emp_phone"]) : "";
+$address = $add1 . " " . $add2 . " " . $city . " " . $state . " " . $zip;
+$concat_add = (empty(trim($address))) ? "N/A" : $address;
+
 ?>
-<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4 mb-3">
+<main role="main" class="col-md-10 ml-sm-auto col-lg-10 pt-3 px-4 mb-3">
 	<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
 	    <h1 class="h2">Employee Profile</h1>
 	    <a class="btn btn-alt" href="./">< Back</a>
@@ -374,13 +227,287 @@ if($emp["error"] == true) {
 		<div class="col-12 col-lg-6 restaurant-edit-form-wrap">
 			<h1 class="h3 subheader-border">Employee Details</h1>
 			<!-- Form to update profile/account -->
+			<div class="alert update-emp-alert d-none"></div>
 
+			<!-- Profile - At a glance -->
+			<div class="row no-gutters mt-3">
+				<div class="col-2">
+					<label class="bg-light w-100 profile-label">Name: </label>
+					<br>
+					<label class="profile-label">Username: </label>
+					<br>
+					<label class="bg-light w-100 profile-label">Email: </label>
+					<br>
+					<label class="profile-label">Position: </label>
+					<br>
+					<label class="bg-light w-100 profile-label">Manager: </label>
+					<br>
+					<label class="profile-label">Pay: </label>
+					<br>
+					<label class="bg-light w-100 profile-label">Pay Rate: </label>
+					<br>
+					<label class="profile-label">Hired: </label>
+					<br>
+					<label class="bg-light w-100 profile-label">Dismissed: </label>
+					<br>
+					<label class="profile-label">Address: </label>
+				</div>
+
+				<div class="col-10 border-left">
+					<label class="bg-light w-100 pl-2 profile-label"><?php echo $name; ?></label>
+					<br>
+					<label class="pl-2 profile-label"><?php echo $uname; ?></label>
+					<br>
+					<label class="bg-light w-100 pl-2 profile-label"><?php echo $email; ?></label>
+					<br>
+					<label class="pl-2 profile-label"><?php echo $position; ?></label>
+					<br>
+					<label class="bg-light w-100 pl-2 profile-label"><?php echo $manager; ?></label>
+					<br>
+					<label class="pl-2 profile-label"><?php echo $pay; ?></label>
+					<br>
+					<label class="bg-light w-100 pl-2 profile-label"><?php echo ucfirst($rate); ?></label>
+					<br>
+					<label class="pl-2 profile-label"><?php echo $hired; ?></label>
+					<br>
+					<label class="bg-light w-100 pl-2 profile-label"><?php echo $dismissed; ?></label>
+					<br>
+					<label class="pl-2 profile-label"><?php echo $concat_add; ?></label>
+				</div>
+			</div>			
+
+			<!-- Accordion with update forms -->
+			<div id="accordion">
+				<!-- UPDATE ACCOUNT -->
+				<div class="card border-0">
+					<div class="card-header px-0 bg-transparent">
+						<button class="btn btn-link-alt table-link text-link text-capitalize px-0 btn-block text-left" data-toggle="collapse" data-target="#change-account-info">
+							<span class="float-left">Update Account</span>
+							<i class="fas fa-angle-down float-right pt-1"></i>
+						</button>
+					</div>
+					<div id="change-account-info" class="collapse" data-parent="#accordion">
+						<div class="card-body px-0">
+							<div class="row">
+								<div class="col-12 col-lg-6">
+									<input type="text" name="emp-first-name" class="form-control" placeholder="First Name" id="update-emp-first-name" value="<?php echo $fname; ?>">
+								</div>
+								<div class="col-12 col-lg-6">
+									<input type="text" name="emp-last-name" class="form-control mt-3 mt-lg-0" placeholder="Last Name" id="update-emp-last-name" value="<?php echo $fname; ?>">
+								</div>
+							</div>
+							<div class="row mt-3">
+								<div class="col-12">
+									<input type="email" name="emp-email" class="form-control" placeholder="Enter Email" id="update-emp-email" value="<?php echo $email; ?>">
+								</div>
+							</div>
+							<div class="row mt-3">
+								<div class="col-12">
+									<input type="text" name="emp-job" class="form-control" placeholder="Job Title" id="update-emp-job"
+									 value="<?php echo $form_position; ?>">
+								</div>
+							</div>
+							<div class="row mt-3">
+								<div class="col-6">
+									<input type="number" name="emp-pay-rate" class="form-control" placeholder="$0.00" id="update-emp-pay" min="0.00" step="0.01" max="10000000"
+									 value="<?php echo $form_pay; ?>">
+								</div>
+								<div class="col-6">
+									<select name="emp-pay-rate-unit" class="form-control" id="update-emp-pay-rate" value="<?php echo $form_rate; ?>">
+										<option value="none">Choose Pay Rate</option>
+										<optgroup label="Wage">
+											<option value="hourly">Hourly</option>
+										</optgroup>
+										<optgroup label="Salary">
+											<option value="weekly">Weekly</option>
+											<option value="biweekly">Bi-weekly</option>
+											<option value="semimonthly">Semi-monthly</option>
+											<option value="monthly">Monthly</option>
+											<option value="semiannual">Semi-Annual</option>
+											<option value="annual">Annual</option>
+										</optgroup>
+									</select>
+								</div>
+							</div>
+							<div class="row mt-3">
+								<div class="col-12">
+									<label class="switch">
+										<input id="update-emp-manager" type="checkbox" name="emp-manager-access" <?php echo $form_manager; ?>>
+										<span class="status-slider"></span>
+									</label>
+									<label class="ml-3">Grant Manager Access</label>
+								</div>
+							</div>
+							<div class="row mt-3">
+								<div class="col-12">
+									<button type="button" name="emp-create-account" class="btn btn-primary btn-block" id="create-employee-account">Update Account</button>
+								</div>
+							</div>
+						</div>
+						<!-- ./Card Body -->
+					</div>
+					<!-- ./Collapse -->
+				</div>
+				<!-- ./Card -->
+
+				<!-- UPDATE CONTACT INFO -->
+				<div class="card border-0">
+					<div class="card-header px-0 bg-transparent">
+						<button class="btn btn-link-alt table-link text-link text-capitalize px-0 btn-block text-left" data-toggle="collapse" data-target="#change-contact-info">
+							<span class="float-left">Update Contact Info</span>
+							<i class="fas fa-angle-down float-right pt-1"></i>
+						</button>
+					</div>
+					<div id="change-contact-info" class="collapse" data-parent="#accordion">
+						<div class="card-body px-0">
+							<div class="row">
+								<div class="col-12">
+									<input type="text" name="emp-address-1" class="form-control" placeholder="Address" value="<?php echo $add1; ?>">
+								</div>
+							</div>
+							<div class="row mt-3">
+								<div class="col-12 col-lg-4">
+									<input type="text" name="emp-address-2" class="form-control" placeholder="Apt/Ste" value="<?php echo $add2; ?>">
+								</div>
+								<div class="col-12 col-lg-5">
+									<input type="tel" name="emp-phone" class="form-control mt-3 mt-lg-0" placeholder="Phone #" value="<?php echo $phone; ?>">
+								</div>
+								<div class="col-12 col-lg-3">
+									<input type="text" name="emp-postal-code" class="form-control mt-3 mt-lg-0" placeholder="Zip" value="<?php echo $zip; ?>">
+								</div>
+							</div>
+							<div class="row mt-3">
+								<div class="col-12 col-lg-8">
+									<input type="text" name="emp-city" class="form-control" placeholder="City" value="<?php echo $city; ?>">
+								</div>
+								<div class="col-12 col-lg-4">
+									<input type="text" name="emp-state" class="form-control mt-3 mt-lg-0" placeholder="State" value="<?php echo $state; ?>">
+								</div>
+							</div>
+							<div class="row mt-3">
+								<div class="col-12">
+									<button type="button" name="emp-create-account" class="btn btn-primary btn-block" id="create-employee-account">Update Contact Info</button>
+								</div>
+							</div>
+						</div>
+						<!-- ./Card Body -->
+					</div>
+					<!-- ./Collapse -->
+				</div>
+				<!-- ./Card -->
+
+				<!-- UPDATE USERNAME -->
+				<div class="card border-0">
+					<div class="card-header px-0 bg-transparent">
+						<button class="btn btn-link-alt table-link text-link text-capitalize px-0 btn-block text-left" data-toggle="collapse" data-target="#change-username">
+							<span class="float-left">Change Username</span>
+							<i class="fas fa-angle-down float-right pt-1"></i>
+						</button>
+					</div>
+					<div id="change-username" class="collapse" data-parent="#accordion">
+						<div class="card-body px-0">
+							<div class="row">
+								<div class="col-12">
+									<input type="text" name="emp-username" class="form-control" placeholder="Change Username" id="update-emp-username" value="<?php echo $uname; ?>">
+								</div>
+							</div>
+
+							<div class="row mt-3">
+								<div class="col-12">
+									<button type="button" name="emp-create-account" class="btn btn-primary btn-block" id="update-employee-username">Update Username</button>
+								</div>
+							</div>
+						</div>
+						<!-- ./Card Body -->
+					</div>
+					<!-- ./Collapse -->
+				</div>
+				<!-- ./Card -->
+
+				<!-- UPDATE PASSWORD -->
+				<div class="card border-0">
+					<div class="card-header px-0 bg-transparent">
+						<button class="btn btn-link-alt table-link text-link text-capitalize px-0 btn-block text-left" data-toggle="collapse" data-target="#change-password">
+							<span class="float-left">Change Password</span>
+							<i class="fas fa-angle-down float-right pt-1"></i>
+						</button>
+					</div>
+					<div id="change-password" class="collapse" data-parent="#accordion">
+						<div class="card-body px-0">
+							<div class="row">
+								<div class="col-12">
+									<input type="password" name="emp-password-1" class="form-control" placeholder="Current Password" id="update-emp-password-0">
+								</div>
+							</div>
+							<div class="row mt-3">
+								<div class="col-12">
+									<input type="password" name="emp-password-1" class="form-control" placeholder="Create Password" id="update-emp-password-1">
+								</div>
+							</div>
+							<div class="row mt-3">
+								<div class="col-12">
+									<input type="password" name="emp-password-2" class="form-control" placeholder="Confirm Password" id="update-emp-password-2">
+								</div>
+							</div>
+							<div class="row mt-3">
+								<div class="col-12">
+									<button type="button" name="emp-update-password" class="btn btn-primary btn-block" id="update-employee-password">Update Password</button>
+								</div>
+							</div>
+						</div>
+						<!-- ./Card Body -->
+					</div>
+					<!-- ./Collapse -->
+				</div>
+				<!-- ./Card -->
+			</div>
+			<!-- ./Accordion -->
 		</div>
+		<!-- ./Col -->
+
+<?php
+$overall_rating_sum = 0;
+$food_rating_sum = 0;
+$service_rating_sum = 0;
+$count = 0;
+foreach($work as $k):
+	if(isset($k["review_rating"])):
+		$count++;
+		$overall_rating_sum += $k["review_rating"];
+		$food_rating_sum += $k["review_food_rating"];
+		$service_rating_sum += $k["review_service_rating"];
+	endif;
+endforeach;
+$overall_avg = round($overall_rating_sum / $count, 2);
+$food_avg = round($food_rating_sum / $count, 2);
+$service_avg = round($service_rating_sum / $count, 2);
+$overall_bg = convertAvgToHexColorClass($overall_avg);
+$food_bg = convertAvgToHexColorClass($food_avg);
+$service_bg = convertAvgToHexColorClass($service_avg);
+?>
 
 		<div class="col-12 col-lg-6 restaurant-edit-form-wrap mt-3 mt-lg-0">
-			<h1 class="h3 subheader-border">Overall Rating</h1>
-			<div id="overall-emp-rating" class="mb-3">
+			<h1 class="h3 subheader-border">Rating</h1>
+			<div id="overall-emp-rating" class="my-3 d-flex justify-content-between px-5">
 				<!-- Display rating in rating-based color -->
+				<div class="box-score-wrap d-inline-block <?php echo $overall_bg; ?>">
+					<div class="box-score d-flex justify-content-center align-items-center flex-column">
+						<span><?php echo $overall_avg; ?></span>
+						<small>Overall</small>
+					</div>
+				</div>
+				<div class="box-score-wrap d-inline-block <?php echo $food_bg; ?>">
+					<div class="box-score d-flex justify-content-center align-items-center flex-column">
+						<?php echo $food_avg; ?>
+						<small>Food</small>
+					</div>
+				</div>
+				<div class="box-score-wrap d-inline-block <?php echo $service_bg; ?>">
+					<div class="box-score d-flex justify-content-center align-items-center flex-column">
+						<?php echo $service_avg; ?>
+						<small>Service</small>
+					</div>
+				</div>
 			</div>
 			<h1 class="h3 subheader-border">Assigned Work</h1>
 			<div class="emp-rsvn-list row no-gutters">

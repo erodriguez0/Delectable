@@ -475,6 +475,27 @@ body {
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical; 
 }
+
+.profile-label {
+	margin-bottom: .25rem;
+}
+
+.box-score-wrap {
+	min-width:  75px;
+	max-width:  75px;
+	min-height: 75px;
+	max-height: 75px;
+	border: 1px solid #cdcdcd;
+}
+
+.box-score {
+	min-width:  75px;
+	max-width:  75px;
+	min-height: 75px;
+	max-height: 75px;
+	font-size: 20px;
+	color: #fff;
+}
  
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {  

@@ -96,6 +96,28 @@ function compact_paragraph(text, limit) {
 	return html;
 }
 
+function convertAvgToHexColor(num) {
+	if(num >= 4.5) {
+		return "#085E08";
+	} else if(num >= 4.0 && num < 4.5) {
+		return "#5B8835";
+	} else if(num >= 3.5 && num < 4.0) {
+		return "#95B329";
+	} else if(num >= 3.0 && num < 3.5) {
+		return "#B7A524";
+	} else if(num >= 2.5 && num < 3.0) {
+		return "#E39F1C";
+	} else if(num >= 2.0 && num < 2.5) {
+		return "#E37B1C";
+	} else if(num >= 1.5 && num < 2.0) {
+		return "#D94A17";
+	} else if(num >= 1.0 && num < 1.5) {
+		return "#c52e13";
+	} else {
+		return "#E31C23";
+	}
+}
+
 $(window).on('load', function() {
 	$("#cover").hide();
 });
