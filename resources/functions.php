@@ -308,7 +308,7 @@ function restaurant_emp_info($conn, $eid, $lid) {
 		$data["emp"] = $row;
 		$sql =<<<'EOT'
 			SELECT DISTINCT 
-				r.rsvn_id, r.rsvn_date, r.rsvn_slot, r.rsvn_status, s.fk_emp_id, w.*
+				c.cust_first_name, c.cust_last_name, r.rsvn_id, r.rsvn_date, r.rsvn_slot, r.rsvn_status, s.fk_emp_id, w.*
 			FROM 
 				reservation r
 			LEFT JOIN 
@@ -317,6 +317,9 @@ function restaurant_emp_info($conn, $eid, $lid) {
 			LEFT JOIN
 				reservation_staff s
 			ON	s.fk_rsvn_id = r.rsvn_id
+			LEFT JOIN
+				customer c
+			ON c.cust_id = r.fk_cust_id
 			WHERE
 				s.fk_emp_id = :eid
 			ORDER BY 
@@ -335,6 +338,30 @@ function restaurant_emp_info($conn, $eid, $lid) {
 		$data["error"] = true;
 		return $data;
 	}
+}
+
+function compact_paragraph($text, $limit) {
+	$html = "";
+	$sub = $text.substr(0, $limit);
+	$hide = $text.substr($limit, strlen($text) - $limit);
+	$html += $sub;
+	if(strlen($text) > $limit) {
+		$html += "<span class='d-none'>" + $hide + "</span>";
+		$html += "<button class='btn btn-link-alt btn-sm table-link text-link text-capitalize read-more pt-0' style='padding-bottom: 4px;'>... Read More</button>";
+	}
+	echo $html;
+}
+
+function rating_to_stars($rating) {
+	$html = "";
+	for($i = 0; $i < 5; $i++) {
+		if($i < $rating) {
+			$html .= '<span class="fas fa-star star-checked"></span>';
+		} else {
+			$html .= '<span class="fas fa-star"></span>';
+		}
+	}
+	echo $html;
 }
 
 function convert_state_abbr($str) {

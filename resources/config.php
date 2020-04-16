@@ -47,7 +47,7 @@ $scripts[] = '<script> feather.replace(); </script>';
 $scripts[] = '<script type="text/javascript" src="' . JS_PATH . 'fabric.min.js"></script>';
 // $scripts[] = '<script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>';
 $scripts[] = '<script type="text/javascript" src="' . JS_PATH . 'gijgo.min.js"></script>';
-$scripts[] = '<script type="text/javascript" src="' . JS_PATH . 'global.js"></script>';
+$scripts[] = '<script defer type="text/javascript" src="' . JS_PATH . 'global.js"></script>';
 if(isset($_SESSION['admin_id'])):
 	if($page == "layout") {
 		$scripts[] = '<script type="text/javascript" src="' . JS_PATH . 'layout.js"></script>';

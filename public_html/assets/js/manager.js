@@ -720,4 +720,10 @@ $(document).ready(function() {
 			}
 		});
 	});
+
+	$(".comment-collapse").each(function() {
+		$(this).click(function() {
+			$(this).next().collapse('toggle');
+		});
+	});
 });

@@ -229,6 +229,10 @@ $concat_add = (empty(trim($address))) ? "N/A" : $address;
 			<!-- Form to update profile/account -->
 			<div class="alert update-emp-alert d-none"></div>
 
+			<div class="profile-img-wrap mt-3">
+				<img src="https://via.placeholder.com/150" class="profile-img">
+			</div>
+
 			<!-- Profile - At a glance -->
 			<div class="row no-gutters mt-3">
 				<div class="col-2">
@@ -280,8 +284,8 @@ $concat_add = (empty(trim($address))) ? "N/A" : $address;
 			<div id="accordion">
 				<!-- UPDATE ACCOUNT -->
 				<div class="card border-0">
-					<div class="card-header px-0 bg-transparent">
-						<button class="btn btn-link-alt table-link text-link text-capitalize px-0 btn-block text-left" data-toggle="collapse" data-target="#change-account-info">
+					<div class="card-header p-0 bg-transparent border-top">
+						<button class="btn btn-link-alt table-link text-link text-capitalize px-0 btn-block text-left h-100" data-toggle="collapse" data-target="#change-account-info">
 							<span class="float-left">Update Account</span>
 							<i class="fas fa-angle-down float-right pt-1"></i>
 						</button>
@@ -352,7 +356,7 @@ $concat_add = (empty(trim($address))) ? "N/A" : $address;
 
 				<!-- UPDATE CONTACT INFO -->
 				<div class="card border-0">
-					<div class="card-header px-0 bg-transparent">
+					<div class="card-header p-0 bg-transparent">
 						<button class="btn btn-link-alt table-link text-link text-capitalize px-0 btn-block text-left" data-toggle="collapse" data-target="#change-contact-info">
 							<span class="float-left">Update Contact Info</span>
 							<i class="fas fa-angle-down float-right pt-1"></i>
@@ -398,7 +402,7 @@ $concat_add = (empty(trim($address))) ? "N/A" : $address;
 
 				<!-- UPDATE USERNAME -->
 				<div class="card border-0">
-					<div class="card-header px-0 bg-transparent">
+					<div class="card-header p-0 bg-transparent">
 						<button class="btn btn-link-alt table-link text-link text-capitalize px-0 btn-block text-left" data-toggle="collapse" data-target="#change-username">
 							<span class="float-left">Change Username</span>
 							<i class="fas fa-angle-down float-right pt-1"></i>
@@ -426,7 +430,7 @@ $concat_add = (empty(trim($address))) ? "N/A" : $address;
 
 				<!-- UPDATE PASSWORD -->
 				<div class="card border-0">
-					<div class="card-header px-0 bg-transparent">
+					<div class="card-header p-0 bg-transparent">
 						<button class="btn btn-link-alt table-link text-link text-capitalize px-0 btn-block text-left" data-toggle="collapse" data-target="#change-password">
 							<span class="float-left">Change Password</span>
 							<i class="fas fa-angle-down float-right pt-1"></i>
@@ -478,12 +482,21 @@ foreach($work as $k):
 		$service_rating_sum += $k["review_service_rating"];
 	endif;
 endforeach;
-$overall_avg = round($overall_rating_sum / $count, 2);
-$food_avg = round($food_rating_sum / $count, 2);
-$service_avg = round($service_rating_sum / $count, 2);
-$overall_bg = convertAvgToHexColorClass($overall_avg);
-$food_bg = convertAvgToHexColorClass($food_avg);
-$service_bg = convertAvgToHexColorClass($service_avg);
+if($count > 0):
+	$overall_avg = round($overall_rating_sum / $count, 2);
+	$food_avg = round($food_rating_sum / $count, 2);
+	$service_avg = round($service_rating_sum / $count, 2);
+	$overall_bg = convertAvgToHexColorClass($overall_avg);
+	$food_bg = convertAvgToHexColorClass($food_avg);
+	$service_bg = convertAvgToHexColorClass($service_avg);
+else:
+	$overall_avg = "N/A";
+	$food_avg = "N/A";
+	$service_avg = "N/A";
+	$overall_bg = "bg-dark";
+	$food_bg = "bg-dark";
+	$service_bg = "bg-dark"; 
+endif;
 ?>
 
 		<div class="col-12 col-lg-6 restaurant-edit-form-wrap mt-3 mt-lg-0">
@@ -492,31 +505,193 @@ $service_bg = convertAvgToHexColorClass($service_avg);
 				<!-- Display rating in rating-based color -->
 				<div class="box-score-wrap d-inline-block rounded <?php echo $overall_bg; ?>">
 					<div class="box-score d-flex justify-content-center align-items-center flex-column">
-						<span><?php echo $overall_avg; ?></span>
+						<span class="line-height-one"><?php echo $overall_avg; ?></span>
 						<small>Overall</small>
 					</div>
 				</div>
 				<div class="box-score-wrap d-inline-block rounded <?php echo $food_bg; ?>">
 					<div class="box-score d-flex justify-content-center align-items-center flex-column">
-						<?php echo $food_avg; ?>
+						<span class="line-height-one"><?php echo $food_avg; ?></span>
 						<small>Food</small>
 					</div>
 				</div>
 				<div class="box-score-wrap d-inline-block rounded <?php echo $service_bg; ?>">
 					<div class="box-score d-flex justify-content-center align-items-center flex-column">
-						<?php echo $service_avg; ?>
+						<span class="line-height-one"><?php echo $service_avg; ?></span>
 						<small>Service</small>
 					</div>
 				</div>
 			</div>
-			<h1 class="h3 subheader-border">Assigned Work</h1>
-			<div class="emp-rsvn-list row no-gutters">
-				<!-- Show all work assigned as display any ratings if any -->
+			<div class="text-center">
+				<small>Based on reservations they worked on and have customer feedback</small>
+			</div>
 
+			<h1 class="h3 subheader-border mt-3">Assigned Work</h1>
+			<div id="order-list" class="emp-rsvn-list row no-gutters">
+				<!-- Show all work assigned as display any ratings if any -->
+				<?php
+				foreach($work AS $k):
+				$overall = (isset($k["review_rating"])) ? $k["review_rating"] : "";
+				$food = (isset($k["review_food_rating"])) ? $k["review_food_rating"] : "";
+				$service = (isset($k["review_service_rating"])) ? $k["review_service_rating"] : "";
+				$comment = (isset($k["review_text"])) ? htmlspecialchars($k["review_text"]) : "";
+				$fname = htmlspecialchars($k["cust_first_name"]);
+				$lname = htmlspecialchars($k["cust_last_name"]);
+				$name = $fname . " " . $lname;
+				$date = date("m-d-Y", strtotime($k["rsvn_date"]));
+				$rsvn_id = $k["rsvn_id"];
+				?>
+				<div class="col-12 emp-rsvn-header mt-1">
+					<div class="rsvn-customer d-flex align-items-center">
+						<span><?php echo $name; ?></span> 
+						<span class="mx-1"> | </span>
+						<span><?php echo $date; ?></span> 
+						<span class="mx-1"> | </span>
+						<button class="btn btn-link-alt btn-sm table-link text-link text-capitalize px-0 order-row" value="<?php echo $rsvn_id; ?>" data-toggle="modal" data-target=".rsvn-modal">View Details</button>
+					</div>
+					<?php if(!empty($overall)): ?>
+					<div class="rsvn-rating d-flex align-items-center pb-1">
+						<span class="mr-1">Overall: </span>
+						<?php echo rating_to_stars($overall); ?>
+
+						<span class="mx-1"> | </span>
+
+						<span class="mr-1">Food: </span>
+						<?php echo rating_to_stars($food); ?>
+
+						<span class="mx-1"> | </span>
+
+						<span class="mr-1">Service: </span>
+						<?php echo rating_to_stars($service); ?>
+					</div>
+					<!-- ./Rating -->
+					<div class="rsvn-comment">
+						<button class="btn btn-link-alt table-link text-link text-capitalize px-0 pt-0 btn-block text-left h-100 btn-sm comment-collapse">
+							<span class="float-left">Feedback</span>
+							<i class="fas fa-angle-down float-right pt-1"></i>
+						</button>
+						<div class="collapse bg-light">
+							<p class="mb-0 px-3 py-2"><?php echo $comment; ?></p>
+						</div>
+					</div>
+					<!-- ./RSVN Comment -->
+					<?php else: ?>
+					<div class="rsvn-rating d-flex align-items-center pb-1">
+						<span>Customer did not provide feedback</span>
+					</div>
+					<?php endif; ?>
+				</div>
+				<!-- ./RSVN row -->
+				<?php endforeach;?>
 			</div>
 		</div>
 	</div>
 </main>
+
+<div class="mt-3 modal fade rsvn-modal" tabindex="-1" role="dialog">
+	<div class="modal-dialog modal-lg  modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title rsvn-modal-title">RSVN# </h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<h1 class="h3 subheader-border">Reservation Details</h1>
+				<div id="order-form" class="d-none">
+					<div class="row">
+						<div class="col-12">
+
+				    		<div class="invoice-details">
+				    			<div class="row">
+
+				    				<div class="col-6 col-md-4 mb-3 mb-md-0">
+				    					<address class="mb-0">
+				    						<strong id="cust-name"></strong><br>
+				    						<span id="cust-address-1"></span><br>
+				    						<span id="cust-address-2"></span><br>
+				    						<span id="cust-phone"></span><br>
+				    					</address>
+				    				</div>
+
+				    				<div class="col-6 col-md-4 mb-3 mb-md-0">
+				    					<!-- <b>Payment Method:</b><br>
+				    					<span>Visa **** 1234</span><br> -->
+				    					<b>Email:</b><br>
+										<span id="cust-email"></span>
+				    				</div>
+
+				    				<div class="col-12 col-md-4">
+				    					<b>Order Date:</b><br>
+				    					<span id="order-created"></span><br>
+
+				    					<b>Reservation Date:</b><br>
+				    					<span id="rsvn-date"></span><br>
+
+				    					<b>Reserved:</b><br>
+				    					<span id="table-number"></span><br>
+				    				</div>
+
+				    			</div>
+
+				    			<div class="row mt-3">
+
+				    				<div class="col-12 staff-row">
+
+				    					<b>Staff</b>
+				    					<table id="rsvn-staff" class="table">
+				    						<thead>
+				    							<th scope="col">Name</th>
+				    							<th scope="col">Position</th>
+				    							<th scope="col">Link</th>
+				    						</thead>
+				    						<tbody>
+				    							
+				    						</tbody>
+				    					</table>
+
+				    				</div>
+
+				    			</div>
+
+				    			<div class="row mt-3">
+
+				    				<div class="col-12 order-items-row">
+
+				    					<b>Order Items</b>
+				    					<table class="table order-items">
+				    						<thead>
+				    							<th scope="col">Item</th>
+				    							<th scope="col">Price</th>
+				    							<th scope="col">Qty</th>
+				    							<th scope="col">Total</th>
+				    						</thead>
+
+				    						<tbody>
+				    							<tr>
+				    								<td>Super Banger Burger</td>
+				    								<td>$4.99</td>
+				    								<td>2</td>
+				    								<td>$9.98</td>
+				    							</tr>
+				    						</tbody>
+				    					</table>
+
+				    				</div>
+
+				    			</div>
+
+				    		</div>
+
+				    	</div>
+					</div>
+				</div>
+				<!-- ./Order Form -->
+			</div>
+		</div>
+	</div>
+</div>
 <?php endif; ?>
 
 <script type="text/javascript">
