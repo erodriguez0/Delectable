@@ -411,7 +411,7 @@ require_once(INCLUDE_PATH . 'navbar.php');
                     <p class="lead text-white">
                         Skip the line. Table reservations at your fingertips.
                     </p>
-                    <div class="masthead-input mx-auto w-50">
+                    <div class="masthead-input mx-auto">
                         <form method="GET" action="./">
                         <div class="input-group mb-3">
                             <input id="search-restaurants" type="text" class="form-control" placeholder="Look up restaurants" name="search">
@@ -426,13 +426,74 @@ require_once(INCLUDE_PATH . 'navbar.php');
         </div>
     </div>
 </header>
-<!-- Page Content -->
-<section class="py-5">
-    <div class="container">
-        <h2 class="font-weight-light">Page Content</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellendus ab nulla dolorum autem nisi officiis blanditiis voluptatem hic, assumenda aspernatur facere ipsam nemo ratione cumque magnam enim fugiat reprehenderit expedita.</p>
+<div class="container">
+    <div class="row">
+        <div class="col-12 my-5 overflow-x-hidden">
+            <div class="overflow-x-auto d-flex flex-row mx-auto menu-categories">
+                <div class="menu-cat-square mr-5 d-flex flex-column">
+                    <a class="menu-cat-link" href="#">
+                        <img class="rounded" src="/delectable/public_html/assets/img/italian.jpg">
+                    </a>
+                    <span class="mx-auto cat-text">Italian</span>
+                </div>
+                <div class="menu-cat-square mr-5 d-flex flex-column">
+                    <a class="menu-cat-link" href="#">
+                        <img class="rounded" src="/delectable/public_html/assets/img/mexican.jpg">
+                    </a>
+                    <span class="mx-auto cat-text">Mexican</span>
+                </div>
+                <div class="menu-cat-square mr-5 d-flex flex-column">
+                    <a class="menu-cat-link" href="#">
+                        <img class="rounded" src="/delectable/public_html/assets/img/chinese.jpg">
+                    </a>
+                    <span class="mx-auto cat-text">Chinese</span>
+                </div>
+                <div class="menu-cat-square mr-5 d-flex flex-column">
+                    <a class="menu-cat-link" href="#">
+                        <img class="rounded" src="/delectable/public_html/assets/img/japanese.jpg">
+                    </a>
+                    <span class="mx-auto cat-text">Japanese</span>
+                </div>
+                <div class="menu-cat-square mr-5 d-flex flex-column">
+                    <a class="menu-cat-link" href="#">
+                        <img class="rounded" src="/delectable/public_html/assets/img/vietnamese.jpg">
+                    </a>
+                    <span class="mx-auto cat-text">Vietnamese</span>
+                </div>
+                <div class="menu-cat-square mr-5 d-flex flex-column">
+                    <a class="menu-cat-link" href="#">
+                        <img class="rounded" src="/delectable/public_html/assets/img/korean.jpg">
+                    </a>
+                    <span class="mx-auto cat-text">Korean</span>
+                </div>
+                <div class="menu-cat-square mr-5 d-flex flex-column">
+                    <a class="menu-cat-link" href="#">
+                        <img class="rounded" src="/delectable/public_html/assets/img/indian.jpg">
+                    </a>
+                    <span class="mx-auto cat-text">Indian</span>
+                </div>
+                <div class="menu-cat-square mr-5 d-flex flex-column">
+                    <a class="menu-cat-link" href="#">
+                        <img class="rounded" src="/delectable/public_html/assets/img/thai.png">
+                    </a>
+                    <span class="mx-auto cat-text">Thai</span>
+                </div>
+                <div class="menu-cat-square mr-5 d-flex flex-column">
+                    <a class="menu-cat-link" href="#">
+                        <img class="rounded" src="/delectable/public_html/assets/img/mediterranean.jpg">
+                    </a>
+                    <span class="mx-auto cat-text">Mediterranean</span>
+                </div>
+                <div class="menu-cat-square mr-5 d-flex flex-column">
+                    <a class="menu-cat-link" href="#">
+                        <img class="rounded" src="/delectable/public_html/assets/img/french.jpg">
+                    </a>
+                    <span class="mx-auto cat-text">French</span>
+                </div>
+            </div>
+        </div>
     </div>
-</section>
+</div>
 <?php
 endif;
 unset($_SESSION['error']);
