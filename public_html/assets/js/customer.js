@@ -29,9 +29,7 @@ $(document).ready(function() {
 	if(win_width < 768) {
 		$(".card-btn").removeClass("btn-sm");
 	}
-
-	$(".menu-categories").scrollRight();
-
+	
 	$("#reset-radius").click(function() {
 		$("input[name='city']").val("");
 		$("select[name='state']").val("0");

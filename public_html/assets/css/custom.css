@@ -562,8 +562,8 @@ body {
 } 
 
 .overflow-x-auto::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
+    width: 5px;
+    height: 5px;
 }
  
 .overflow-x-auto::-webkit-scrollbar-track {
