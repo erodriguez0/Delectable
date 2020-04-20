@@ -1,12 +1,10 @@
 function validate_search() {
 	let term = $("#search-restaurants").val().trim();
-	if(term == null || term.length < 1 || invalid_search(term)) {
-		return false;
-	}
-	return true;
+	return !(term == null || term.length < 1 || invalid_search(term));
+
 }
 
-$(window).resize(function() {
+$(window).on("resize", function() {
 	let width = $(this).width();
 	if(width < 768) {
 		$(".card-btn").each(function() {
@@ -30,43 +28,41 @@ $(document).ready(function() {
 		$(".card-btn").removeClass("btn-sm");
 	}
 	
-	$("#reset-radius").click(function() {
-		$("input[name='city']").val("");
-		$("select[name='state']").val("0");
-		$("input[name='zip']").val("");
-		$("select[name='miles']").val("5");
-		$("#restaurant-search").submit();
+	$("#reset-radius").on("click", function() {
+		$("#city-filter").val("");
+		$("#state-filter").val("0");
+		$("#restaurant-search").trigger("click");
 	});
 
-	$("#reset-rating").click(function() {
+	$("#reset-rating").on("click", function() {
 		$("input[name='rating']").val("");
-		$("#restaurant-search").submit();
+		$("#restaurant-search").trigger("click");
 	});
 
-	$("#reset-res-select").click(function() {
+	$("#reset-res-select").on("click", function() {
 		$("input[name='res[]']").each(function() {
 			$(this).prop("checked", false);
-			$("#restaurant-search").submit();
+			$("#restaurant-search").trigger("click");
 		});
 	});
 
-	$("#reset-cat-select").click(function() {
+	$("#reset-cat-select").on("click", function() {
 		$("input[name='cat[]']").each(function() {
 			$(this).prop("checked", false);
-			$("#restaurant-search").submit();
+			$("#restaurant-search").trigger("click");
 		});
 	});
 
-	$("#reset-diet-select").click(function() {
+	$("#reset-diet-select").on("click", function() {
 		$("input[name='diet[]']").each(function() {
 			$(this).prop("checked", false);
-			$("#restaurant-search").submit();
+			$("#restaurant-search").trigger("click");
 		});
 	});
 
-	$("#search-restaurants").keyup(function(event) {
-		if(event.keyCode === 13) {
-			$("#search-restaurants-btn").click();
+	$("#search-restaurants").on("keyup", function(event) {
+		if(event.key === "Enter") {
+			$("#search-restaurants-btn").trigger("click");
 		}
 	});
 
@@ -84,46 +80,46 @@ $(document).ready(function() {
 		customer.push($("#add-customer-email").val());
 		customer.push($("#add-customer-password-1").val());
 		customer.push($("#add-customer-password-2").val());
-		let error_msg = "";
 		let tmp = false;
 		$.each(customer, function(k, v) {
 			tmp = false;
 			// Empty fields
-			if(v == null || v.length == 0) {
+			if(v == null || v.length === 0) {
 				tmp = true;
 			}
 
 			// Illegal chars in first and last name
-			if((k == 0 || k == 1) && (invalid_name(v) || v.length > 32)) {
+			if((k === 0 || k === 1) && (invalid_name(v) || v.length > 32)) {
 				tmp = true;
 			}
 
 			// Username not alphanumeric
-			if(k == 2 && (invalid_username(v) || v.length < 8 || v.length > 32)) {
+			if(k === 2 && (invalid_username(v) || v.length < 8 || v.length > 32)) {
 				tmp = true;
 			}
 
 			// Email validation
-			if(k == 3 && !valid_email(v)) {
+			if(k === 3 && !valid_email(v)) {
 				tmp = true;
 			}
 
 			// Password is 8-32 chars and passwords are the same
-			if(k == 4 && (customer[k+1] != v || v.length < 8 || v.length > 32)) {
+			if(k === 4 && (customer[k+1] !== v || v.length < 8 || v.length > 32)) {
 				tmp = true;
 			}
 
-			if(k == 5 && (customer[k-1] != v || v.length < 8 || v.length > 32)) {
+			if(k === 5 && (customer[k-1] !== v || v.length < 8 || v.length > 32)) {
 				tmp = true;
 			}
 
 			// Show red border around inputs with errors
-			if(tmp == true) {
+			if(tmp === true) {
+				let sign_alert = $(".signup-alert");
 				$("#" + fields[k]).addClass("border-danger");
-				$(".signup-alert").removeClass("alert-success");
-				$(".signup-alert").addClass("alert-danger");
-				$(".signup-alert").html("Invalid/Empty value(s)");
-				$(".signup-alert").removeClass("d-none");
+				sign_alert.removeClass("alert-success");
+				sign_alert.addClass("alert-danger");
+				sign_alert.html("Invalid/Empty value(s)");
+				sign_alert.removeClass("d-none");
 			} else {
 				$("#" + fields[k]).removeClass("border-danger");
 			}
@@ -147,51 +143,57 @@ $(document).ready(function() {
 				if(!res.error) {
 					location.href = '../';
 				} else {
-					$(".signup-alert").html(res.error_msg);
-					$(".signup-alert").removeClass("d-none");
+					let signup_alert = $(".signup-alert");
+					signup_alert.html(res.error_msg);
+					signup_alert.removeClass("d-none");
 				}
 			});
 		}
 	});
 
 	$("#customer-login-btn").on('click', function() {
-		let uname = $("#customer-username").val();
-		let passw = $("#customer-password").val();
+		let uname = $("#customer-username");
+		let passw = $("#customer-password");
+		let alert = $(".login-alert");
 		let tmp = false;
 
-		if(uname == null || uname.length < 8 || uname.length > 32 || invalid_username(uname)) {
-			$("#customer-username").addClass("border-danger");
-			$(".login-alert").html("Invalid username");
-			$(".login-alert").removeClass("d-none");
+		if(uname.val() == null || uname.val().length < 8 || uname.val().length > 32 || invalid_username(uname.val())) {
+			uname.addClass("border-danger");
+			alert.html("Invalid username");
+			alert.removeClass("d-none");
 			tmp = true;
 			return;
 		} else {
-			$("#customer-username").removeClass("border-danger");
+			uname.removeClass("border-danger");
 		}
 
-		if(passw == null || passw.length < 8 || passw.length > 32) {
-			$("#customer-password").addClass("border-danger");
-			$(".login-alert").html("Invalid password");
-			$(".login-alert").removeClass("d-none");
+		if(passw.val() == null || passw.val().length < 8 || passw.val().length > 32) {
+			passw.addClass("border-danger");
+			alert.html("Invalid password");
+			alert.removeClass("d-none");
 			tmp = true;
 			return;
 		} else {
-			$("#customer-password").removeClass("border-danger");
+			passw.removeClass("border-danger");
 		}
 
-		if(tmp == false) {
+		if(tmp === false) {
 			$.ajax({
 				url: '/delectable/public_html/assets/scripts/customer-login.php',
 				type: 'POST',
-				data: {'customer_login': true, 'username': uname, 'password': passw}
+				data: {
+					'customer_login': true,
+					'username': uname.val(),
+					'password': passw.val()
+				}
 			}).done(function(response) {
 				res = JSON.parse(response);
 				if(!res.error) {
 					// location.reload();
 					location.href = '../';
 				} else {
-					$(".login-alert").html(res.error_msg);
-					$(".login-alert").removeClass("d-none");
+					alert.html(res.error_msg);
+					alert.removeClass("d-none");
 					if(res.field.length > 0) {
 						$(res.field).addClass("border-danger");
 					}
@@ -226,7 +228,7 @@ $(document).ready(function() {
 		let datepicker = ($("#datepicker").val().length > 0) ? $("#datepicker").val() : "";
 		let obj = (canvas.getActiveObject()) ? canvas.getActiveObject() : "";
 
-		if(obj == null || obj == undefined || obj.length < 1) {
+		if(obj === null || obj === undefined || obj.length < 1) {
 			sel.html("");
 			sel.append('<option value="0">Choose Table</option>');
 		} else if(datepicker == null || datepicker.length < 1) {
@@ -262,9 +264,9 @@ $(document).ready(function() {
 			    	let o;
 			    	for(let i = start; i < end; i++) {
 			    		if(i > 12) {
-			    			o = '<option val="' + i + ':00' + '">' + i + ':00' + '</option>';
+			    			o = '<option value="' + i + ':00' + '">' + i + ':00' + '</option>';
 			    		} else {
-			    			o = '<option val="' + i + ':00' + '">' + i + ':00' + '</option>';
+			    			o = '<option value="' + i + ':00' + '">' + i + ':00' + '</option>';
 			    		}
 			    		sel.append(o);
 			    	}
@@ -288,8 +290,8 @@ $(document).ready(function() {
 			    			tmp = "" + i + ":00:00";
 			    		}
 
-			    		if(jQuery.inArray(tmp, taken) == -1) {
-			    			o = '<option val="' + i + ':00' + '">' + i + ':00' + '</option>';
+			    		if(jQuery.inArray(tmp, taken) === -1) {
+			    			o = '<option value="' + i + ':00' + '">' + i + ':00' + '</option>';
 			    			sel.append(o);
 			    		}
 			    	}

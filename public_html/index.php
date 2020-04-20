@@ -100,7 +100,7 @@ switch ($sort) {
             <div class="cb-list">
                 <div class="row no-gutters">
                     <div class="col-8 pr-2">
-                        <input type="text" class="form-control" placeholder="City" name="city" value="<?php echo $city; ?>">
+                        <input id="city-filter" type="text" class="form-control" placeholder="City" name="city" value="<?php echo $city; ?>">
                     </div>
                     <div class="col-4">
                         <select id="state-filter" class="form-control state-select" name="state" value="<?php echo $state; ?>">

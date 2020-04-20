@@ -8,14 +8,10 @@
 	<meta http-equiv="Pragma" content="no-cache" />
 	<meta http-equiv="Expires" content="0" />
 	<link rel="icon" type="image/png" href="/delectable/public_html/assets/img/favicon.ico">
-	<!-- <link href="https://fonts.googleapis.com/css?family=Oswald:300,400,700&display=swap" rel="stylesheet"> -->
-	<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
 	<link rel="stylesheet" href="/delectable/public_html/assets/css/bootstrap-4.min.css">
-	<!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"> -->
 	<link rel="stylesheet" href="/delectable/public_html/assets/css/all.css">
 	<link rel="stylesheet" href="/delectable/public_html/assets/css/custom.css">
 	<link rel="stylesheet" href="/delectable/public_html/assets/css/manager-dashboard-nav.css">
-	<!-- <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css"> -->
 	<link rel="stylesheet" href="/delectable/public_html/assets/css/gijgo.min.css">
 </head>
 <body class="<?php echo (isset($bodyClasses)) ? $bodyClasses : ""; ?>">
