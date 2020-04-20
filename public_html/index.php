@@ -100,7 +100,7 @@ switch ($sort) {
             <div class="cb-list">
                 <div class="row no-gutters">
                     <div class="col-8 pr-2">
-                        <input type="text" class="form-control" placeholder="City" name="city" value="<?php echo $city; ?>">
+                        <input id="city-filter" type="text" class="form-control" placeholder="City" name="city" value="<?php echo $city; ?>">
                     </div>
                     <div class="col-4">
                         <select id="state-filter" class="form-control state-select" name="state" value="<?php echo $state; ?>">
@@ -341,7 +341,7 @@ switch ($sort) {
                     $order = "./order/?lid=" . $lid;
                 ?>
                 <!-- Restaurant Card -->
-                <div class="col-12 col-sm-8 col-md-6 col-lg-4 pt-3">
+                <div class="col-12 col-md-6 col-lg-4 pt-3">
                     <div class="card">
                         <img class="card-img" src="https://via.placeholder.com/150">
                         <div class="card-body">
@@ -411,7 +411,7 @@ require_once(INCLUDE_PATH . 'navbar.php');
                     <p class="lead text-white">
                         Skip the line. Table reservations at your fingertips.
                     </p>
-                    <div class="masthead-input mx-auto w-50">
+                    <div class="masthead-input mx-auto">
                         <form method="GET" action="./">
                         <div class="input-group mb-3">
                             <input id="search-restaurants" type="text" class="form-control" placeholder="Look up restaurants" name="search">
@@ -426,13 +426,234 @@ require_once(INCLUDE_PATH . 'navbar.php');
         </div>
     </div>
 </header>
-<!-- Page Content -->
-<section class="py-5">
-    <div class="container">
-        <h2 class="font-weight-light">Page Content</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellendus ab nulla dolorum autem nisi officiis blanditiis voluptatem hic, assumenda aspernatur facere ipsam nemo ratione cumque magnam enim fugiat reprehenderit expedita.</p>
+<div class="container">
+    <div class="row">
+        <div class="col-12 mt-5 overflow-x-hidden">
+            <div class="overflow-x-auto d-flex flex-row mx-auto menu-categories">
+                <div class="menu-cat-square mr-5 d-flex flex-column">
+                    <a class="menu-cat-link text-center" href="#">
+                        <img class="rounded" src="/delectable/public_html/assets/img/italian.jpg">
+                        <span class="mx-auto cat-text">Italian</span>
+                    </a>
+                </div>
+                <div class="menu-cat-square mr-5 d-flex flex-column">
+                    <a class="menu-cat-link text-center" href="#">
+                        <img class="rounded" src="/delectable/public_html/assets/img/mexican.jpg">
+                        <span class="mx-auto cat-text">Mexican</span>
+                    </a>
+                </div>
+                <div class="menu-cat-square mr-5 d-flex flex-column">
+                    <a class="menu-cat-link text-center" href="#">
+                        <img class="rounded" src="/delectable/public_html/assets/img/chinese.jpg">
+                        <span class="mx-auto cat-text">Chinese</span>
+                    </a>
+                </div>
+                <div class="menu-cat-square mr-5 d-flex flex-column">
+                    <a class="menu-cat-link text-center" href="#">
+                        <img class="rounded" src="/delectable/public_html/assets/img/japanese.jpg">
+                        <span class="mx-auto cat-text">Japanese</span>
+                    </a>
+                </div>
+                <div class="menu-cat-square mr-5 d-flex flex-column">
+                    <a class="menu-cat-link text-center" href="#">
+                        <img class="rounded" src="/delectable/public_html/assets/img/vietnamese.jpg">
+                        <span class="mx-auto cat-text">Vietnamese</span>
+                    </a>
+                </div>
+                <div class="menu-cat-square mr-5 d-flex flex-column">
+                    <a class="menu-cat-link text-center" href="#">
+                        <img class="rounded" src="/delectable/public_html/assets/img/korean.jpg">
+                        <span class="mx-auto cat-text">Korean</span>
+                    </a>
+                </div>
+                <div class="menu-cat-square mr-5 d-flex flex-column">
+                    <a class="menu-cat-link text-center" href="#">
+                        <img class="rounded" src="/delectable/public_html/assets/img/indian.jpg">
+                        <span class="mx-auto cat-text">Indian</span>
+                    </a>
+                </div>
+                <div class="menu-cat-square mr-5 d-flex flex-column">
+                    <a class="menu-cat-link text-center" href="#">
+                        <img class="rounded" src="/delectable/public_html/assets/img/thai.png">
+                        <span class="mx-auto cat-text">Thai</span>
+                    </a>
+                </div>
+                <div class="menu-cat-square mr-5 d-flex flex-column">
+                    <a class="menu-cat-link text-center" href="#">
+                        <img class="rounded" src="/delectable/public_html/assets/img/mediterranean.jpg">
+                        <span class="mx-auto cat-text">Mediterranean</span>
+                    </a>
+                </div>
+                <div class="menu-cat-square mr-5 d-flex flex-column">
+                    <a class="menu-cat-link text-center" href="#">
+                        <img class="rounded" src="/delectable/public_html/assets/img/french.jpg">
+                        <span class="mx-auto cat-text">French</span>
+                    </a>
+                </div>
+            </div>
+            <!-- ./Menu-Categories Wrap -->
+        </div>
+        <!-- ./Menu-Categories Col -->
     </div>
-</section>
+    <!-- ./Row -->
+
+    <!-- Filters -->
+    <div class="row mt-4">
+        <div class="col-12 col-lg-4">
+            <div class="input-group">
+                <input id="search-restaurants" type="text" class="form-control" placeholder="Search restaurants" name="search">
+                <div class="input-group-append">
+                    <input id="search-restaurants-btn" class="btn btn btn-primary rounded-right border" type="submit" value="Search" onclick="return validate_search();">
+                </div>
+            </div>
+        </div>
+        <!-- <div id="search-filters" class="collapse"> -->
+            <div class="col-12 col-lg-3 mt-3 mt-lg-0">
+                <select class="form-control">
+                    <option>Alphabetical: A-Z</option>
+                </select>
+            </div>
+            <div class="col-8 col-lg-3 mt-3 mt-lg-0">
+                <input type="text" name="" class="form-control" placeholder="City">
+            </div>
+            <div class="col-4 col-lg-2 mt-3 mt-lg-0">
+                <select id="state-filter" class="form-control state-select" name="state" value="">
+                    <option value="0">State</option>
+                </select>
+            </div>
+<!--         </div>
+        <div class="col-12 mt-3">
+            <button class="btn btn-primary btn-block d-block d-lg-none" data-target="#search-filters" data-toggle="collapse">Filters</button>
+        </div> -->
+    </div>
+    <!-- Filters Row -->
+
+    <div class="row mt-3 mb-4">
+        <!-- Restaurant Card -->
+        <div class="col-12 col-md-6 col-lg-4 col-xl-3 pt-3">
+            <div class="card">
+                <img class="card-img" src="https://via.placeholder.com/150">
+                <div class="card-body">
+                    <h4 class="card-title">BAMBOO!</h4>
+                    <h6 class="card-subtitle mb-2 text-muted d-flex align-items-center">
+                        <span class="fas fa-star star-checked"></span>
+                        <span class="fas fa-star star-checked"></span>
+                        <span class="fas fa-star star-checked"></span>
+                        <span class="fas fa-star star-checked"></span>
+                        <span class="fas fa-star"></span>
+                        <span class="ml-2">-</span>
+                        <span class="ml-2" style="color: #85bb65; font-family: Helvetica;">$$</span><span style="font-family: Helvetica;">$$$</span>
+                        <span class="ml-2">-</span>
+                        <span class="ml-2 d-flex align-items-center"><small>Bakersfield</small></span>
+                    </h6>
+                    <p class="card-text mb-0 block-with-text">
+                        Something something         
+                    </p>
+                    <div class="d-flex align-items-center">
+                        <a href="" class="btn btn-primary mt-3 border rounded btn-sm card-btn"><i class="fas fa-shopping-cart"></i> Order</a>
+                        <?php if(isset($_SESSION['cust_id'])): ?>
+                        <a href="" class="btn btn-primary mt-3 border rounded btn-sm card-btn ml-2"><i class="fas fa-calendar-alt"></i> Reserve</a>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ./Restaurant Card -->
+
+        <!-- Restaurant Card -->
+        <div class="col-12 col-md-6 col-lg-4 col-xl-3 pt-3">
+            <div class="card">
+                <img class="card-img" src="https://via.placeholder.com/150">
+                <div class="card-body">
+                    <h4 class="card-title">BAMBOO!</h4>
+                    <h6 class="card-subtitle mb-2 text-muted d-flex align-items-center">
+                        <span class="fas fa-star star-checked"></span>
+                        <span class="fas fa-star star-checked"></span>
+                        <span class="fas fa-star star-checked"></span>
+                        <span class="fas fa-star star-checked"></span>
+                        <span class="fas fa-star"></span>
+                        <span class="ml-2">-</span>
+                        <span class="ml-2" style="color: #85bb65; font-family: Helvetica;">$$</span><span style="font-family: Helvetica;">$$$</span>
+                        <span class="ml-2">-</span>
+                        <span class="ml-2 d-flex align-items-center"><small>Bakersfield</small></span>
+                    </h6>
+                    <p class="card-text mb-0 block-with-text">
+                        Something something         
+                    </p>
+                    <div class="d-flex align-items-center">
+                        <a href="" class="btn btn-primary mt-3 border rounded btn-sm card-btn"><i class="fas fa-shopping-cart"></i> Order</a>
+                        <?php if(isset($_SESSION['cust_id'])): ?>
+                        <a href="" class="btn btn-primary mt-3 border rounded btn-sm card-btn ml-2"><i class="fas fa-calendar-alt"></i> Reserve</a>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ./Restaurant Card -->
+
+        <!-- Restaurant Card -->
+        <div class="col-12 col-md-6 col-lg-4 col-xl-3 pt-3">
+            <div class="card">
+                <img class="card-img" src="https://via.placeholder.com/150">
+                <div class="card-body">
+                    <h4 class="card-title">BAMBOO!</h4>
+                    <h6 class="card-subtitle mb-2 text-muted d-flex align-items-center">
+                        <span class="fas fa-star star-checked"></span>
+                        <span class="fas fa-star star-checked"></span>
+                        <span class="fas fa-star star-checked"></span>
+                        <span class="fas fa-star star-checked"></span>
+                        <span class="fas fa-star"></span>
+                        <span class="ml-2">-</span>
+                        <span class="ml-2" style="color: #85bb65; font-family: Helvetica;">$$</span><span style="font-family: Helvetica;">$$$</span>
+                        <span class="ml-2">-</span>
+                        <span class="ml-2 d-flex align-items-center"><small>Bakersfield</small></span>
+                    </h6>
+                    <p class="card-text mb-0 block-with-text">
+                        Something something         
+                    </p>
+                    <div class="d-flex align-items-center">
+                        <a href="" class="btn btn-primary mt-3 border rounded btn-sm card-btn"><i class="fas fa-shopping-cart"></i> Order</a>
+                        <?php if(isset($_SESSION['cust_id'])): ?>
+                        <a href="" class="btn btn-primary mt-3 border rounded btn-sm card-btn ml-2"><i class="fas fa-calendar-alt"></i> Reserve</a>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ./Restaurant Card -->
+
+        <!-- Restaurant Card -->
+        <div class="col-12 col-md-6 col-lg-4 col-xl-3 pt-3">
+            <div class="card">
+                <img class="card-img" src="https://via.placeholder.com/150">
+                <div class="card-body">
+                    <h4 class="card-title">BAMBOO!</h4>
+                    <h6 class="card-subtitle mb-2 text-muted d-flex align-items-center">
+                        <span class="fas fa-star star-checked"></span>
+                        <span class="fas fa-star star-checked"></span>
+                        <span class="fas fa-star star-checked"></span>
+                        <span class="fas fa-star star-checked"></span>
+                        <span class="fas fa-star"></span>
+                        <span class="ml-2">-</span>
+                        <span class="ml-2" style="color: #85bb65; font-family: Helvetica;">$$</span><span style="font-family: Helvetica;">$$$</span>
+                        <span class="ml-2">-</span>
+                        <span class="ml-2 d-flex align-items-center"><small>Bakersfield</small></span>
+                    </h6>
+                    <p class="card-text mb-0 block-with-text">
+                        Something something         
+                    </p>
+                    <div class="d-flex align-items-center">
+                        <a href="" class="btn btn-primary mt-3 border rounded btn-sm card-btn"><i class="fas fa-shopping-cart"></i> Order</a>
+                        <?php if(isset($_SESSION['cust_id'])): ?>
+                        <a href="" class="btn btn-primary mt-3 border rounded btn-sm card-btn ml-2"><i class="fas fa-calendar-alt"></i> Reserve</a>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ./Restaurant Card -->
+</div>
+<!-- ./Container -->
 <?php
 endif;
 unset($_SESSION['error']);
